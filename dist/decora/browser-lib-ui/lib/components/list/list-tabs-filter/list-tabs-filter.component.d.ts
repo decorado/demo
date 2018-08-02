@@ -1,0 +1,34 @@
+import { EventEmitter, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DecListFetchMethod, DecListTabsFilter } from './../list.models';
+export declare class DecListTabsFilterComponent implements OnDestroy {
+    private route;
+    private router;
+    selectedTabUid: string;
+    name: string;
+    countReport: any;
+    service: any;
+    customFetchMethod: DecListFetchMethod;
+    filters: DecListTabsFilter[];
+    private defaultTab;
+    private _filters;
+    private wathUrlSubscription;
+    private _countEndpoint;
+    countEndpoint: string;
+    search: EventEmitter<any>;
+    tabChange: EventEmitter<any>;
+    constructor(route: ActivatedRoute, router: Router);
+    ngOnDestroy(): void;
+    doFirstLoad: () => void;
+    getCountOf(count: string | Function): any;
+    selectTab(tab: any): void;
+    reloadCountReport(payload: any): void;
+    selectedTab(): DecListTabsFilter;
+    readonly visibleFilters: DecListTabsFilter[];
+    private detectDefaultTab();
+    private onSearch;
+    private componentTabName();
+    private setTabInUrlQuery(tab);
+    private watchTabInUrlQuery();
+    private stopWatchingTabInUrlQuery();
+}

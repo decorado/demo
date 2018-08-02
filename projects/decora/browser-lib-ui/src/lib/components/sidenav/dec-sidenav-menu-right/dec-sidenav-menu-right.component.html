@@ -1,0 +1,9 @@
+<ng-container *ngIf="customTitle">
+  <div class="menu-title">
+    <ng-content select="dec-dec-sidenav-menu-title"></ng-content>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="items">
+  <dec-sidenav-menu [items]="items.toArray()"></dec-sidenav-menu>
+</ng-container>

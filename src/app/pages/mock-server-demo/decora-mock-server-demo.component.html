@@ -1,0 +1,51 @@
+<app-demo-container readmeSrc="/assets/docs/browser-lib-ui/mock-server/README.md">
+
+  <h2>Authentication</h2>
+
+  <!-- <form [formGroup]="authForm" (ngSubmit)="auth(authForm)">
+    <mat-form-field>
+      <input matInput formControlName="username" placeholder="Username" autocomplete="off">
+      <mat-error>
+        Required field
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="password" formControlName="password" placeholder="Password" autocomplete="off">
+      <mat-error>
+        Required field
+      </mat-error>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit" [disabled]="authForm.invalid">Auth</button>
+  </form> -->
+
+  <h2>List</h2>
+
+  <p *ngFor="let people of peoples">{{people.id}} - {{people.name}}
+    <button mat-icon-button (click)="removeCharacter(people.id)">
+      <mat-icon>delete_sweep</mat-icon>
+    </button>
+  </p>
+
+  <h2>Insert</h2>
+  <form [formGroup]="newCharacterForm" (ngSubmit)="addNewCharacter(newCharacterForm)">
+    <mat-form-field>
+      <input matInput formControlName="name" placeholder="Name" autocomplete="off">
+      <mat-error>
+        Required field
+      </mat-error>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit" [disabled]="newCharacterForm.invalid">Add</button>
+  </form>
+
+  <h2>Edit</h2>
+  <form [formGroup]="editCharacterForm" (ngSubmit)="editCharacter(editCharacterForm)">
+    <mat-form-field>
+      <input matInput formControlName="name" placeholder="Name" autocomplete="off">
+      <mat-error>
+        Required field
+      </mat-error>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit" [disabled]="editCharacterForm.invalid">Edit</button>
+  </form>
+
+</app-demo-container>

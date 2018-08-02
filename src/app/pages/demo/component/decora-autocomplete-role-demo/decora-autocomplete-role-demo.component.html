@@ -1,0 +1,14 @@
+<app-demo-container readmeSrc="/assets/docs/browser-lib-ui/components/autocomplete-role/README.md">
+
+  Types: {{ types | json }}
+  <br>
+  Role Selected: {{ role }}
+
+  <hr>
+
+  <dec-autocomplete-role [(ngModel)]="role"
+  [types]="types"
+  (selected)="optionSelected($event)">
+  </dec-autocomplete-role>
+
+</app-demo-container>

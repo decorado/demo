@@ -1,0 +1,11 @@
+<dec-autocomplete
+[disabled]="disabled"
+[required]="required"
+[name]="name"
+[placeholder]="placeholder"
+(optionSelected)="optionSelected.emit($event)"
+[endpoint]="endpoint"
+[(ngModel)]="value"
+[labelFn]="labelFn"
+[valueAttr]="valueAttr"
+(blur)="blur.emit($event)"></dec-autocomplete>

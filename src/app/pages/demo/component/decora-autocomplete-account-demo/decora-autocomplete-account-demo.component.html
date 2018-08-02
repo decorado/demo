@@ -1,0 +1,13 @@
+<app-demo-container readmeSrc="/assets/docs/browser-lib-ui/components/autocomplete-account/README.md">
+
+  Types: {{ types | json }}
+  <br>
+  Account Selected: {{ account }}
+
+  <hr>
+
+  <dec-autocomplete-account [(ngModel)]="account"
+  [types]="types"
+  (selected)="optionSelected($event)"></dec-autocomplete-account>
+
+</app-demo-container>

@@ -1,0 +1,21 @@
+<app-demo-container readmeSrc="/assets/docs/browser-lib-ui/components/tabs/README.md">
+
+  <dec-tabs name="tabs-test"
+  [activeTab]="activeTab"
+  [destroyOnBlur]="true"
+  [persist]="true">
+
+    <dec-tab label="Tab 1" name="tab-1">
+      <ng-template>
+        Conteúdo da aba 1
+      </ng-template>
+    </dec-tab>
+
+    <dec-tab label="Tab 2" name="tab-2">
+      <ng-template>
+        Conteúdo da aba 2
+      </ng-template>
+    </dec-tab>
+  </dec-tabs>
+
+</app-demo-container>

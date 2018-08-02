@@ -1,0 +1,11 @@
+<dec-autocomplete
+[disabled]="disabled"
+[required]="required"
+[name]="name"
+[placeholder]="placeholder"
+(optionSelected)="optionSelected.emit($event)"
+[customFetchFunction]="customFetchFunction"
+[(ngModel)]="value"
+[labelAttr]="labelAttr"
+[valueAttr]="valueAttr"
+(blur)="blur.emit($event)"></dec-autocomplete>

@@ -1,0 +1,20 @@
+<ng-container [ngSwitch]="mode == 'input'">
+
+  <mat-form-field *ngSwitchCase="true">
+    <input matInput
+    type="text"
+    [name]="name"
+    [(ngModel)]="valueAsString"
+    [placeholder]="placeholder">
+  </mat-form-field>
+
+  <mat-form-field *ngSwitchCase="false">
+    <textarea matInput
+    [rows]="rows"
+    [name]="name"
+    [(ngModel)]="valueAsString"
+    [placeholder]="placeholder">
+    </textarea>
+  </mat-form-field>
+
+</ng-container>

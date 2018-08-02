@@ -1,0 +1,44 @@
+<div class="dec-sidenav-wraper">
+  <!-- TOOLBAR -->
+  <ng-container *ngIf="toolbar">
+    <ng-content select="dec-sidenav-toolbar"></ng-content>
+  </ng-container>
+  <!-- / TOOLBAR -->
+
+  <!-- PROGRESS BAR -->
+  <div class="progress-bar-wrapper" *ngIf="progressBarVisible | async">
+    <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+  </div>
+  <!-- / PROGRESS BAR -->
+
+  <mat-sidenav-container [ngClass]="{'with-toolbar': toolbar}">
+
+    <!-- LEFT MENU -->
+    <mat-sidenav *ngIf="leftMenu"
+    [mode]="leftMenu.leftMenuMode | async"
+    [opened]="leftMenu.leftMenuVisible | async"
+    position="start"
+    (openedChange)="leftSidenavOpenedChange($event)"
+    #leftSidenav>
+      <ng-content select="dec-sidenav-menu-left"></ng-content>
+    </mat-sidenav>
+    <!-- / LEFT MENU -->
+
+    <!-- CONTENT -->
+    <ng-content select="dec-sidenav-content"></ng-content>
+    <!-- / CONTENT -->
+
+    <!-- RIGHT MENU -->
+    <mat-sidenav *ngIf="rightMenu"
+    [mode]="rightMenu.rightMenuMode | async"
+    [opened]="rightMenu.rightMenuVisible | async"
+    position="end"
+    (openedChange)="rightSidenavOpenedChange($event)"
+    #rightSidenav>
+      <ng-content select="dec-sidenav-menu-right"></ng-content>
+    </mat-sidenav>
+    <!-- / RIGHT MENU -->
+
+  </mat-sidenav-container>
+
+</div>

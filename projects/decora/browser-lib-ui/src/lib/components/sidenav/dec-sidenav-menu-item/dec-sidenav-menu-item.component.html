@@ -1,0 +1,29 @@
+<ng-template let-treeLevel="treeLevel" #template>
+
+  <mat-list-item class="click dec-sidenav-menu-item"
+  (click)="subitems.length ? toggleSubmenu() : openLink()"
+  [ngStyle]="{backgroundColor: 'rgba(0, 0, 0, ' + treeLevel/6 + ')'}">
+
+    <div class="item-wrapper">
+
+      <div [ngStyle]="{paddingLeft: treeLevel * 16 + 'px'}" class="item-content">
+        <ng-content></ng-content>
+      </div>
+
+      <a *ngIf="subitems.length" class="text-right">
+        <ng-container [ngSwitch]="showSubmenu">
+          <span *ngSwitchCase="false"><i class="arrow down"></i></span>
+          <span *ngSwitchCase="true"><i class="arrow up"></i></span>
+        </ng-container>
+      </a>
+    </div>
+
+  </mat-list-item>
+
+  <div class="subitem-menu" *ngIf="showSubmenu">
+
+    <dec-sidenav-menu [items]="subitems" [treeLevel]="treeLevel"></dec-sidenav-menu>
+
+  </div>
+
+</ng-template>

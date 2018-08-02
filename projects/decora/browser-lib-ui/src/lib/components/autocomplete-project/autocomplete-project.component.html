@@ -1,0 +1,27 @@
+<div *ngIf="(endpoint && companyId) else fakeDisabled">
+  <dec-autocomplete
+  #autocomplete
+  [endpoint]="endpoint"
+  [labelFn]="labelFn"
+  [name]="name"
+  [placeholder]="placeholder"
+  [required]="required"
+  [valueAttr]="valueAttr"
+  [(ngModel)]="value"
+  [disabled]="disabled"
+  [customFetchFunction]="customFetchFunction"
+  (optionSelected)="optionSelected.emit($event)"
+  (blur)="blur.emit($event)"></dec-autocomplete>
+</div>
+
+<ng-template #fakeDisabled>
+  <mat-form-field>
+    <input matInput
+    [attr.aria-label]="name"
+    [name]="name"
+    [required]="required"
+    [disabled]="true"
+    [placeholder]="placeholder">
+  </mat-form-field>
+</ng-template>
+

@@ -1,0 +1,25 @@
+{
+  "label": {
+    "Home": "Início",
+    "active": "Ativo",
+    "amount-loaded-of-total": "Carregados {{loaded}} de um total de {{total}}",
+    "development": "Desenvolvimento",
+    "error": "Erro",
+    "info": "Info",
+    "local": "Local",
+    "Keyword": "Palavra chave",
+    "one-record-found": "1 registro encontrado",
+    "page-forbiden": "Conteúdo bloqueado",
+    "page-forbiden-help": "Desculpe. Você não tem permissão para acessar este conteúdo.",
+    "page-not-found": "Página não encontrada",
+    "page-not-found-help": "Desculpe. Nós não encontramos nenhuma página correspondente ao endereço informado.",
+    "qa": "Controle de Qualidade",
+    "record-not-found": "No registro encontrado",
+    "records-found": "{{count}} registros encontrados",
+    "show-more": "Mostrar mais",
+    "success": "Sucesso",
+    "warn": "Aviso",
+    "image-link": "Link da imagem",
+    "History": "Histórico"
+  }
+}

@@ -1,0 +1,67 @@
+<div class="list-component-wrapper">
+
+  <div *ngIf="filter">
+    <ng-content select="dec-list-filter"></ng-content>
+  </div>
+
+  <div *ngIf="report">
+
+    <div fxLayout="column" fxLayoutGap="16px">
+
+      <div fxFlex class="text-right" *ngIf="tableAndGridAreSet()">
+        <button type="button" mat-icon-button (click)="toggleListMode()">
+          <mat-icon title="Switch to table mode" aria-label="Switch to table mode" color="primary" contrastFontWithBg *ngIf="listMode === 'grid'">view_headline</mat-icon>
+          <mat-icon title="Switch to grid mode" aria-label="Switch to grid mode" color="primary" contrastFontWithBg *ngIf="listMode === 'table'">view_module</mat-icon>
+        </button>
+      </div>
+
+      <div fxFlex>
+        <div *ngIf="listMode == 'grid' then gridTemplate else listTemplate"></div>
+      </div>
+
+      <!-- FOOTER CONTENT -->
+      <div fxFlex>
+        <div *ngIf="showFooter && !loading then footerTemplate"></div>
+      </div>
+
+      <!-- LOADING SPINNER -->
+      <div fxFlex *ngIf="loading" class="text-center loading-spinner-wrapper">
+        <dec-spinner></dec-spinner>
+      </div>
+
+      <!-- LOAD MORE BUTTON -->
+      <div fxFlex *ngIf="!isLastPage && !loading && !disableShowMoreButton" class="text-center">
+        <button type="button" mat-raised-button (click)="showMore()">{{'label.show-more' | translate}}</button>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- GRID TEMPLATE -->
+<ng-template #gridTemplate>
+  <ng-content select="dec-list-grid"></ng-content>
+</ng-template>
+
+<!-- TABLE TEMPLATE -->
+<ng-template #listTemplate>
+  <ng-content select="dec-list-table"></ng-content>
+</ng-template>
+
+<!-- FOOTER TEMPLATE -->
+<ng-template #footerTemplate>
+
+  <ng-content select="dec-list-footer"></ng-content>
+
+  <p class="list-footer">
+    {{ 'label.amount-loaded-of-total' |
+      translate:{
+        loaded: report?.result?.rows?.length,
+        total: report?.result?.count
+      }
+    }}
+  </p>
+
+</ng-template>

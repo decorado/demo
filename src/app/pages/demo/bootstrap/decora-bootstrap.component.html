@@ -1,0 +1,14 @@
+<h2>Decora Bootstrap</h2>
+<p>A set of CSS styles used to help developing rich interfaces.</p>
+
+<nav mat-tab-nav-bar color="accent">
+  <a mat-tab-link
+  *ngFor="let link of navLinks"
+  [routerLink]="link.path"
+  routerLinkActive #rla="routerLinkActive"
+  [active]="rla.isActive">
+    {{link.label}}
+  </a>
+</nav>
+
+<router-outlet></router-outlet>

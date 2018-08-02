@@ -1,0 +1,8 @@
+/* You can add global styles to this file, and also import other style files */
+@import './../dist/decora/browser-lib-ui/bootstrap/decora_bootstrap';
+
+// LOAD DECORA THEMING
+@import './../dist/decora/browser-lib-ui/bootstrap/third-party/material/theming';
+
+// import global app styles
+@import './assets/styles/global';

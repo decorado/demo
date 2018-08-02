@@ -1,0 +1,25 @@
+.dec-sidenav-wraper {
+
+  .mat-sidenav-container {
+    height: 100vh;
+
+    &.with-toolbar {
+
+      height: calc(100vh - 64px);
+
+    }
+
+    .mat-sidenav {
+      width: 256px;
+    }
+
+  }
+
+  .progress-bar-wrapper {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 100%;
+  }
+
+}

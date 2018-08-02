@@ -1,0 +1,81 @@
+// https://swimlane.gitbook.io/ngx-datatable/themeing
+
+::ng-deep {
+
+  // #### NGX-DATATABLE
+  $dt-cell-padding: 16px;
+
+  .ngx-datatable .overflow-visible {
+    overflow: visible !important;
+  }
+
+  datatable-scroller {
+    width: 100% !important;
+  }
+
+  .ngx-datatable {
+
+    &.no-overflow {
+      overflow: auto;
+    }
+    &.no-padding {
+      .datatable-body-row .datatable-body-cell .datatable-body-cell-label {
+        padding: 0px;
+      }
+    }
+    .datatable-header {
+      padding: 11px $dt-cell-padding;
+      .datatable-header-cell-label {
+        font-size: 12px;
+        font-weight: 500;
+        //padding-right: 20px;
+      }
+    }
+
+    .datatable-body-row {
+      .datatable-body-cell {
+        font-size: 13px;
+        font-weight: 400;
+
+        overflow: hidden;
+        min-height: 100%;
+        display: table;
+
+        //select row text
+        -webkit-user-select: initial;
+        -moz-user-select: initial;
+        -ms-user-select: initial;
+        -o-user-select: initial;
+        user-select: initial;
+
+        .datatable-body-cell-label {
+          padding: $dt-cell-padding;
+          display: table-cell;
+          vertical-align: middle;
+          word-break: break-all;
+        }
+        &.cell-top .datatable-body-cell-label {
+          vertical-align: top;
+        }
+      }
+    }
+    .datatable-row-detail {
+      padding: 10px;
+    }
+    .sort-btn {
+      width: 0;
+      height: 0;
+
+    }
+    .icon-down {
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+    }
+    .icon-up {
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+    }
+  }
+
+
+}

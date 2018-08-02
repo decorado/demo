@@ -1,0 +1,108 @@
+.list-filter-wrapper {
+
+  margin: 0 0 16px 0;
+
+  position: relative;
+
+  .mat-icon {
+    color: #999;
+  }
+
+  .search-term-input {
+    width: 500px;
+    margin-right: 8px;
+  }
+
+  .inline-form {
+    display: inline-block;
+  }
+
+  .advanced-search-container {
+    position: absolute;
+    top: 74px;
+    z-index: 1;
+    right: 30px;
+    width: 552px;
+
+    &.remove-button-enabled {
+      right: 62px;
+      width: 551px;
+    }
+
+    .btn-close-advanced-search {
+      cursor: pointer;
+    }
+
+  }
+}
+
+/* FROM GRID PAGE FILTER - THERE IS A NEW IMPLEMENTATION IN THE END OF THE HT<ML THATDOES NOT USES IT */
+.search-container {
+
+  .input-search-container {
+    transition: all 300ms ease;
+    overflow: hidden;
+    width: 40px;
+    height: 50px;
+
+    &.active {
+      background: #f8f8fa;
+      color: #999;
+      width: 600px;
+
+      .btn-open-advanced-search {
+        display: inline;
+      }
+    }
+
+    .input-search {
+
+      width: 100%;
+
+      input {
+        font: inherit;
+        background: 0 0;
+        color: currentColor;
+        border: none;
+        outline: 0;
+        padding: 0;
+        width: 100%;
+        vertical-align: bottom;
+      }
+
+    }
+
+    .btn-open-advanced-search {
+      display: none;
+    }
+
+  }
+
+  .btn-clear-search {
+    padding-right: 15px;
+    cursor: pointer;
+    color: #999;
+    width: 90px;
+  }
+
+  .btn-toogle-search {
+    font-size: 21px;
+    cursor: pointer;
+    height: 21px;
+    color: #999;
+  }
+
+  .btn-info {
+    font-size: 21px;
+    cursor: pointer;
+    height: 21px;
+    color: #999;
+  }
+
+  .bar-h {
+    border-right: 2px solid #D0D0D0;
+    height: 21px;
+    margin: auto 0 auto 0;
+    display: inline-block;
+  }
+}

@@ -1,0 +1,27 @@
+<div class="demo-container">
+
+  <dec-tabs [name]="name" [destroyOnBlur]="false">
+
+    <dec-tab name="overview" label= "Overview">
+
+      <ng-template>
+
+        <dec-markdown [src]="readmeSrc"></dec-markdown>
+
+      </ng-template>
+
+    </dec-tab>
+
+    <dec-tab name="examples" label="Examples">
+
+      <ng-template>
+
+        <ng-content></ng-content>
+
+      </ng-template>
+
+    </dec-tab>
+
+  </dec-tabs>
+
+</div>

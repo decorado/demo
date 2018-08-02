@@ -1,0 +1,56 @@
+<div class="product-spinner-wrapper" *ngIf="scenes">
+  <div [ngSwitch]="loadingImages ? true : false">
+
+    <div *ngSwitchCase="true" class="overlay">
+      <!-- Loading spinner -->
+      <div [ngStyle]="{'background-image':'url(' + loadingImage + ')'}">{{loaderPercentage()}}%</div>
+    </div>
+
+    <div *ngSwitchCase="false" class="overlay">
+
+      <!-- Overlay over the image (hand icon) -->
+      <img class="frame" *ngIf="!onlyModal" src="//s3-sa-east-1.amazonaws.com/static-files-prod/platform/drag-horizontally.png" alt="" (click)="onlyModal ? '' : start($event)">
+
+    </div>
+
+  </div>
+
+  <div [ngSwitch]="started ? true : false">
+
+    <div *ngSwitchCase="true" class="frame">
+      <!-- Images -->
+      <img *ngFor="let scene of scenes; let i = index;"
+        [src]="scene"
+        draggable="false"
+        class="no-drag image-only"
+        (load)="markAsLoaded($event)"
+        [ngClass]="frameShown === i && !loadingImages ? 'current-scene' : 'next-scene'">
+
+    </div>
+
+    <div *ngSwitchCase="false" class="frame">
+
+      <!-- Placeholder image -->
+      <img
+        [src]="scenes[frameShown]"
+        draggable="false"
+        class="no-drag"
+        (click)="onlyModal ? onOpen($event) : start($event)"
+        [ngClass]="{'image-only': onlyModal}">
+
+      <!-- Loading spinner -->
+      <button
+      *ngIf="showOpenDialogButton && !onlyModal"
+      mat-icon-button
+      (click)="onOpen($event)"
+      [matTooltip]="'label.open' | translate"
+      class="dialog-button"
+      type="button"
+      color="default">
+        <mat-icon aria-label="Swap between Reference and Render images" color="primary" contrastFontWithBg >fullscreen</mat-icon>
+      </button>
+
+    </div>
+
+  </div>
+</div>

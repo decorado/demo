@@ -1,0 +1,25 @@
+<ng-container [ngSwitch]="(progresses && progresses.length) ? true : false">
+  <ng-container *ngSwitchCase="false">
+    <span (click)="openFileSelection()" class="click">
+      <ng-content></ng-content>
+    </span>
+  </ng-container>
+  <ng-container *ngSwitchCase="true">
+    <div *ngFor="let uploadProgress of progresses" class="dec-upload-progress-wrapper">
+      <mat-progress-bar
+        color="primary"
+        [mode]="getProgressbarMode(uploadProgress)"
+        [value]="getProgressValueBasedOnMode(uploadProgress)">
+      </mat-progress-bar>
+      <div class="text-center">
+        <small>
+          {{ uploadProgress.value }}% - {{ uploadProgress.fileName }}
+        </small>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>
+
+
+<input type="file" #inputFile (change)="filesChanged($event)" [multiple]="multiple" [disabled]="disabled">
+

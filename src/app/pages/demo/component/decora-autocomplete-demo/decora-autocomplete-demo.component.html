@@ -1,0 +1,309 @@
+<app-demo-container readmeSrc="/assets/docs/browser-lib-ui/components/autocomplete/README.md">
+
+  <div fxLayout="row" fxLayoutGap="16px">
+    <div fxFlex>
+      <h3>Disabled mode</h3>
+
+      Option Selected: <span class="highlight-text">{{ models.disabled }}</span>
+
+      <dec-autocomplete name="models.disabled"
+      [(ngModel)]="models.disabled"
+      (optionSelected)="optionSelected($event)"
+      [options]="fakeStringOptions"
+      [disabled]="true"></dec-autocomplete>
+    </div>
+    <div fxFlex>
+      <h3>Required mode</h3>
+
+      Option Selected: <span class="highlight-text">{{ models.required }}</span>
+
+      <dec-autocomplete name="models.required"
+      [(ngModel)]="models.required"
+      (optionSelected)="optionSelected($event)"
+      [options]="fakeStringOptions"
+      [required]="true"></dec-autocomplete>
+    </div>
+    <div fxFlex>
+      <h3>Passing only an array of strings</h3>
+
+      Option Selected: <span class="highlight-text">{{ models.fromArrayOfStringOnly }}</span>
+
+      <dec-autocomplete name="models.fromArrayOfStringOnly"
+      [(ngModel)]="models.fromArrayOfStringOnly"
+      (optionSelected)="optionSelected($event)"
+      [options]="fakeStringOptions"></dec-autocomplete>
+    </div>
+  </div>
+
+  <div fxLayout="row" fxLayoutGap="16px">
+    <div fxFlex>
+      <h2>Getting options from array</h2>
+      <ng-container *ngTemplateOutlet="arrayExamples"></ng-container>
+    </div>
+    <div fxFlex>
+      <h2>Getting options using endpoint</h2>
+      <ng-container *ngTemplateOutlet="apiExamples"></ng-container>
+    </div>
+    <div fxFlex>
+      <h2>Getting options using customFetchMethod</h2>
+      <ng-container *ngTemplateOutlet="customFetchExamples"></ng-container>
+    </div>
+  </div>
+</app-demo-container>
+
+<ng-template #arrayExamples>
+
+  <h3>Passing only an array of objects</h3>
+
+  Option Selected: <span class="highlight-text">{{ models.fromArrayOfObjectsOnly | json }}</span>
+
+  <dec-autocomplete name="models.fromArrayOfObjectsOnly"
+  [(ngModel)]="models.fromArrayOfObjectsOnly"
+  (optionSelected)="optionSelected($event)"
+  [options]="fakeCountryOptions"></dec-autocomplete>
+
+  <h3>Array of objects with labelAttr</h3>
+
+  Option Selected: <span class="highlight-text">{{ models.fromArrayOfObjectWithLabelAttr | json }}</span>
+
+  <dec-autocomplete name="models.fromArrayOfObjectWithLabelAttr"
+  [(ngModel)]="models.fromArrayOfObjectWithLabelAttr"
+  (optionSelected)="optionSelected($event)"
+  [options]="fakeCountryOptions"
+  [labelAttr]="labelAttr"></dec-autocomplete>
+
+  <h3>Array of objects with valueAttr</h3>
+
+  Option Selected: <span class="highlight-text">{{ models.fromArrayOfObjectWithValueAttr }}</span>
+
+  <dec-autocomplete name="models.fromArrayOfObjectWithValueAttr"
+  [(ngModel)]="models.fromArrayOfObjectWithValueAttr"
+  (optionSelected)="optionSelected($event)"
+  [options]="fakeCountryOptions"
+  [valueAttr]="valueAttr"></dec-autocomplete>
+
+  <h3>Array of objects with valueAttr and labelAttr</h3>
+
+  Option Selected: <span class="highlight-text">{{ models.fromArrayOfObjectWithValueAndLabelAttr }}</span>
+
+  <dec-autocomplete name="models.fromArrayOfObjectWithValueAndLabelAttr"
+  [(ngModel)]="models.fromArrayOfObjectWithValueAndLabelAttr"
+  (optionSelected)="optionSelected($event)"
+  [options]="fakeCountryOptions"
+  [labelAttr]="labelAttr"
+  [valueAttr]="valueAttr"></dec-autocomplete>
+
+  <h3>Array of objects with labelFn</h3>
+
+  Option Selected: <span class="highlight-text">{{ models.fromArrayOfObjectWithLabelFn | json }}</span>
+
+  <dec-autocomplete name="models.fromArrayOfObjectWithLabelFn"
+  [(ngModel)]="models.fromArrayOfObjectWithLabelFn"
+  (optionSelected)="optionSelected($event)"
+  [options]="fakeCountryOptions"
+  [labelFn]="labelFn"></dec-autocomplete>
+
+  <h3>Array of objects with valueFn</h3>
+
+  Option Selected: <span class="highlight-text">{{ models.fromArrayOfObjectWithValueFn }}</span>
+
+  <dec-autocomplete name="models.fromArrayOfObjectWithValueFn"
+  [(ngModel)]="models.fromArrayOfObjectWithValueFn"
+  (optionSelected)="optionSelected($event)"
+  [options]="fakeCountryOptions"
+  [valueFn]="valueFn"></dec-autocomplete>
+
+  <h3>Array of objects with valueFn and labelFn</h3>
+
+  Option Selected: <span class="highlight-text">{{ models.fromArrayOfObjectWithValueAndLabelFn }}</span>
+
+  <dec-autocomplete name="models.fromArrayOfObjectWithValueAndLabelFn"
+  [(ngModel)]="models.fromArrayOfObjectWithValueAndLabelFn"
+  (optionSelected)="optionSelected($event)"
+  [options]="fakeCountryOptions"
+  [labelFn]="labelFn"
+  [valueFn]="valueFn"></dec-autocomplete>
+
+  <h3>Starting with initial value</h3>
+
+  Option Selected: <span class="highlight-text">{{ models.fromArrayOfObjectsWithInitialValue }}</span>
+
+  <dec-autocomplete name="models.fromArrayOfObjectsWithInitialValue"
+  [(ngModel)]="models.fromArrayOfObjectsWithInitialValue"
+  (optionSelected)="optionSelected($event)"
+  [options]="fakeCountryOptions"
+  [labelAttr]="labelAttr"
+  [valueAttr]="valueAttr"></dec-autocomplete>
+
+</ng-template>
+
+<ng-template #apiExamples>
+  <h3>Passing only the endpoint of array of objects</h3>
+
+  Option Selected: <span class="highlight-text">{{ models.fromEndpointOnly | json }}</span>
+
+  <dec-autocomplete name="models.fromEndpointOnly"
+  [(ngModel)]="models.fromEndpointOnly"
+  (optionSelected)="optionSelected($event)"
+  [endpoint]="endpoint"
+  ></dec-autocomplete>
+
+  <h3>Endpoint with labelAttr</h3>
+
+  Option Selected: <span class="highlight-text">{{ models.fromEndpointLabelAttr | json }}</span>
+
+  <dec-autocomplete name="models.fromEndpointLabelAttr"
+  [(ngModel)]="models.fromEndpointLabelAttr"
+  (optionSelected)="optionSelected($event)"
+  [endpoint]="endpoint"
+  [labelAttr]="labelAttr"></dec-autocomplete>
+
+  <h3>Endpoint with valueAttr</h3>
+
+  Option Selected: <span class="highlight-text">{{ models.fromEndpointValueAttr }}</span>
+
+  <dec-autocomplete name="models.fromEndpointValueAttr"
+  [(ngModel)]="models.fromEndpointValueAttr"
+  (optionSelected)="optionSelected($event)"
+  [endpoint]="endpoint"
+  [valueAttr]="valueAttr"></dec-autocomplete>
+
+  <h3>Endpoint with labelAttr and valueAttr</h3>
+
+  Option Selected: <span class="highlight-text">{{ models.fromEndpointLabelAndValueAttr }}</span>
+
+  <dec-autocomplete name="models.fromEndpointLabelAndValueAttr"
+  [(ngModel)]="models.fromEndpointLabelAndValueAttr"
+  (optionSelected)="optionSelected($event)"
+  [endpoint]="endpoint"
+  [labelAttr]="labelAttr"
+  [valueAttr]="valueAttr"></dec-autocomplete>
+
+  <h3>Endpoint with labelFn</h3>
+
+  Option Selected: <span class="highlight-text">{{ models.fromEndpointLabelFn | json }}</span>
+
+  <dec-autocomplete name="models.fromEndpointLabelFn"
+  [(ngModel)]="models.fromEndpointLabelFn"
+  (optionSelected)="optionSelected($event)"
+  [endpoint]="endpoint"
+  [labelFn]="labelFn"></dec-autocomplete>
+
+  <h3>Endpoint with valueFn</h3>
+
+  Option Selected: <span class="highlight-text">{{ models.fromEndpointValueFn }}</span>
+
+  <dec-autocomplete name="models.fromEndpointValueFn"
+  [(ngModel)]="models.fromEndpointValueFn"
+  (optionSelected)="optionSelected($event)"
+  [endpoint]="endpoint"
+  [valueFn]="valueFn"></dec-autocomplete>
+
+  <h3>Endpoint with labelFn and valueFn</h3>
+
+  Option Selected: <span class="highlight-text">{{ models.fromEndpointLabelAndValueFn }}</span>
+
+  <dec-autocomplete name="models.fromEndpointLabelAndValueFn"
+  [(ngModel)]="models.fromEndpointLabelAndValueFn"
+  (optionSelected)="optionSelected($event)"
+  [endpoint]="endpoint"
+  [labelFn]="labelFn"
+  [valueFn]="valueFn"></dec-autocomplete>
+
+  <h3>Endpoint starting with initial value</h3>
+
+  Option Selected: <span class="highlight-text">{{ models.fromEndpointWithInitialValue }}</span>
+
+  <dec-autocomplete name="models.fromEndpointWithInitialValue"
+  [(ngModel)]="models.fromEndpointWithInitialValue"
+  (optionSelected)="optionSelected($event)"
+  [endpoint]="endpoint"
+  [labelAttr]="labelAttr"
+  [valueAttr]="valueAttr"></dec-autocomplete>
+</ng-template>
+
+<ng-template #customFetchExamples>
+  <h3>Passing only the customFetchMethod of array of objects</h3>
+
+  Option Selected: <span class="highlight-text">{{ models.fromCustomFetchOnly | json }}</span>
+
+  <dec-autocomplete name="models.fromCustomFetchOnly"
+  [(ngModel)]="models.fromCustomFetchOnly"
+  (optionSelected)="optionSelected($event)"
+  [customFetchFunction]="customFetchFunction"
+  ></dec-autocomplete>
+
+  <h3>CustomFetchMethod with labelAttr</h3>
+
+  Option Selected: <span class="highlight-text">{{ models.fromCustomFetchLabelAttr | json }}</span>
+
+  <dec-autocomplete name="models.fromCustomFetchLabelAttr"
+  [(ngModel)]="models.fromCustomFetchLabelAttr"
+  (optionSelected)="optionSelected($event)"
+  [customFetchFunction]="customFetchFunction"
+  [labelAttr]="labelAttr"></dec-autocomplete>
+
+  <h3>CustomFetchMethod with valueAttr</h3>
+
+  Option Selected: <span class="highlight-text">{{ models.fromCustomFetchValueAttr }}</span>
+
+  <dec-autocomplete name="models.fromCustomFetchValueAttr"
+  [(ngModel)]="models.fromCustomFetchValueAttr"
+  (optionSelected)="optionSelected($event)"
+  [customFetchFunction]="customFetchFunction"
+  [valueAttr]="valueAttr"></dec-autocomplete>
+
+  <h3>CustomFetchMethod with labelAttr and valueAttr</h3>
+
+  Option Selected: <span class="highlight-text">{{ models.fromCustomFetchLabelAndValueAttr }}</span>
+
+  <dec-autocomplete name="models.fromCustomFetchLabelAndValueAttr"
+  [(ngModel)]="models.fromCustomFetchLabelAndValueAttr"
+  (optionSelected)="optionSelected($event)"
+  [customFetchFunction]="customFetchFunction"
+  [labelAttr]="labelAttr"
+  [valueAttr]="valueAttr"></dec-autocomplete>
+
+  <h3>CustomFetchMethod with labelFn</h3>
+
+  Option Selected: <span class="highlight-text">{{ models.fromCustomFetchLabelFn | json }}</span>
+
+  <dec-autocomplete name="models.fromCustomFetchLabelFn"
+  [(ngModel)]="models.fromCustomFetchLabelFn"
+  (optionSelected)="optionSelected($event)"
+  [customFetchFunction]="customFetchFunction"
+  [labelFn]="labelFn"></dec-autocomplete>
+
+  <h3>CustomFetchMethod with valueFn</h3>
+
+  Option Selected: <span class="highlight-text">{{ models.fromCustomFetchValueFn }}</span>
+
+  <dec-autocomplete name="models.fromCustomFetchValueFn"
+  [(ngModel)]="models.fromCustomFetchValueFn"
+  (optionSelected)="optionSelected($event)"
+  [customFetchFunction]="customFetchFunction"
+  [valueFn]="valueFn"></dec-autocomplete>
+
+  <h3>CustomFetchMethod with labelFn and valueFn</h3>
+
+  Option Selected: <span class="highlight-text">{{ models.fromCustomFetchLabelAndValueFn }}</span>
+
+  <dec-autocomplete name="models.fromCustomFetchLabelAndValueFn"
+  [(ngModel)]="models.fromCustomFetchLabelAndValueFn"
+  (optionSelected)="optionSelected($event)"
+  [customFetchFunction]="customFetchFunction"
+  [labelFn]="labelFn"
+  [valueAttr]="valueAttr"></dec-autocomplete>
+
+  <h3>CustomFetchMethod starting with initial value</h3>
+
+  Option Selected: <span class="highlight-text">{{ models.fromCustomFetchWithInitialValue }}</span>
+
+  <dec-autocomplete name="models.fromCustomFetchWithInitialValue"
+  [(ngModel)]="models.fromCustomFetchWithInitialValue"
+  (optionSelected)="optionSelected($event)"
+  [customFetchFunction]="customFetchFunction"
+  [labelAttr]="labelAttr"
+  [valueAttr]="valueAttr"></dec-autocomplete>
+
+</ng-template>

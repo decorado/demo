@@ -1,0 +1,35 @@
+<app-demo-container readmeSrc="/assets/docs/browser-lib-ui/services/ws-client/README.md">
+
+  <ng-container *ngIf="decWsConnection">
+
+    <div>Send a message:</div>
+    <small>Send
+      <strong>reload</strong> to hard reload the page.</small>
+
+    <form (submit)="sendMessage()">
+      <mat-form-field>
+        <input matInput type="text" [(ngModel)]="messageToSend" name="messageToSend">
+        <button mat-raised-button color="primary" matSuffix type="submit">Enviar</button>
+      </mat-form-field>
+    </form>
+
+    <div *ngIf="(decWsConnection.messages | async) as messages">
+
+      <h3>Last message</h3>
+      {{ messages[0] }}
+
+      <h4>Messages log</h4>
+      <p *ngFor="let message of messages">
+        {{message}}
+      </p>
+
+    </div>
+  </ng-container>
+
+</app-demo-container>
+
+
+
+
+
+

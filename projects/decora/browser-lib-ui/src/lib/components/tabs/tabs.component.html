@@ -1,0 +1,36 @@
+<div *ngIf="!hidden">
+
+  <!-- TABS -->
+  <mat-tab-group [selectedIndex]="activeTabIndex" (focusChange)="onChangeTab($event)" [dynamicHeight]="true">
+
+    <!-- TAB -->
+    <mat-tab *ngFor="let tab of tabs;" [disabled]="tab.disabled">
+
+      <!-- TAB LABEL -->
+      <ng-template mat-tab-label>
+        {{ tab.label }}
+        <span class="badge badge-pill badge-small" *ngIf="tab.total >= 0">{{ parseTotal(tab.total) }}</span>
+      </ng-template>
+
+      <!-- TAB CONTENT WRAPPER -->
+      <ng-container *ngIf="shoulTabBeDisplayed(tab)">
+
+        <!-- TAB MENU -->
+        <div *ngIf="tabMenuComponent" class="menu-wrapper">
+          <ng-container *ngTemplateOutlet="tabMenuComponent.content; context: { activeTab: activeTab }"></ng-container>
+        </div>
+
+        <!-- TABS CONTENT -->
+        <div [ngClass]="{'tab-padding': padding}">
+
+          <ng-container *ngTemplateOutlet="tab.content"></ng-container>
+
+        </div>
+
+      </ng-container>
+
+    </mat-tab>
+
+  </mat-tab-group>
+
+</div>

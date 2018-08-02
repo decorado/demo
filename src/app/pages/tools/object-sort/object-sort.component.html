@@ -1,0 +1,24 @@
+<div fxLayout="column" fxLayoutGap="16px">
+
+  <div fxFlex>
+    <h3>Object</h3>
+    <mat-form-field>
+      <textarea matInput matTextareaAutosize [(ngModel)]="data" matAutosizeMinRows="3" matAutosizeMaxRows="10" placeholder="place your object here"></textarea>
+    </mat-form-field>
+  </div>
+
+  <div fxFlex *ngIf="sortedObject">
+    <h3>Result</h3>
+
+    <div fxflex>
+      <button mat-raised-button (click)="copyToClipboard()">Copy</button>
+    </div>
+
+    <pre [innerHtml]="sortedObject | prettyjson:2" #prettyObjectElement></pre>
+
+    <div fxflex>
+      <button mat-raised-button (click)="copyToClipboard()">Copy</button>
+    </div>
+  </div>
+
+</div>

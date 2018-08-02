@@ -1,0 +1,30 @@
+@import './../../../../../bootstrap/constants/colors';
+
+.dec-list-active-filter-resume-wrapper {
+  margin: 16px 0 8px 0;
+
+  .item-wrapper {
+    max-width: 15em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .item-wrapper,
+  .material-icons{
+    color: #969696;
+  }
+
+  .filter-content {
+    margin-right: 8px;
+  }
+
+  .mat-chip {
+    cursor: pointer;
+  }
+
+  .value-wrapper {
+    color: $dec-color-accent;
+  }
+}
+

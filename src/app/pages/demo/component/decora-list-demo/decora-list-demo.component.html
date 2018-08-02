@@ -1,0 +1,100 @@
+<app-demo-container readmeSrc="/assets/docs/browser-lib-ui/components/list/README.md">
+
+  <h3>Passing rows</h3>
+  <dec-list name="list-test-using-rows" [rows]="rows">
+
+    <dec-list-grid>
+      <ng-template let-row="row">
+        <div class="test-grid-wrapper">
+          <p>teste grid</p>
+          {{ row.id }}
+        </div>
+      </ng-template>
+    </dec-list-grid>
+
+    <dec-list-table>
+      <dec-list-table-column title="#ID">
+        <ng-template let-row="row">
+          {{ row.id }}
+        </ng-template>
+      </dec-list-table-column>
+      <dec-list-table-column title="Name">
+        <ng-template let-row="row">
+          {{ row.name }}
+        </ng-template>
+      </dec-list-table-column>
+    </dec-list-table>
+
+  </dec-list>
+
+  <h3>Using customFetchMethod</h3>
+  <dec-list name="list-test-custom-fetch-method" [customFetchMethod]="myCustomDecListFetchMethod">
+
+    <dec-list-grid>
+      <ng-template let-row="row">
+        <div class="test-grid-wrapper">
+          <p>teste grid</p>
+          {{ row.id }}
+        </div>
+      </ng-template>
+    </dec-list-grid>
+
+    <dec-list-table>
+      <dec-list-table-column title="#ID">
+        <ng-template let-row="row">
+          {{ row.id }}
+        </ng-template>
+      </dec-list-table-column>
+      <dec-list-table-column title="Name">
+        <ng-template let-row="row">
+          {{ row.name }}
+        </ng-template>
+      </dec-list-table-column>
+    </dec-list-table>
+
+  </dec-list>
+
+  <h3>Using DecApi - {{ listTabsFilter?.selectedTabUid }}</h3>
+
+  <dec-list name="list-test-decora-api" endpoint="report/accounts" [searchableProperties]="['name', 'email', '_id']">
+
+    <dec-list-filter>
+
+      <dec-list-tabs-filter [filters]="tabs" #listTabsFilter></dec-list-tabs-filter>
+
+      <dec-list-advanced-filter>
+
+        <ng-template let-form="form">
+
+          advanced
+
+        </ng-template>
+
+      </dec-list-advanced-filter>
+
+    </dec-list-filter>
+
+    <dec-list-grid>
+      <ng-template let-row="row">
+        <div class="test-grid-wrapper">
+          <p>teste grid</p>
+          {{ row.id }}
+        </div>
+      </ng-template>
+    </dec-list-grid>
+
+    <dec-list-table>
+      <dec-list-table-column title="Name">
+        <ng-template let-row="row">
+          {{ row.name }}
+        </ng-template>
+      </dec-list-table-column>
+      <dec-list-table-column title="Email">
+        <ng-template let-row="row">
+          {{ row.email }}
+        </ng-template>
+      </dec-list-table-column>
+    </dec-list-table>
+
+  </dec-list>
+</app-demo-container>

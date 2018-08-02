@@ -1,0 +1,8 @@
+<ng-container [ngSwitch]="src ? true : false">
+  <markdown [src]="src" *ngSwitchCase="true">
+    <ng-content></ng-content>
+  </markdown>
+  <markdown *ngSwitchCase="false">
+    <ng-content></ng-content>
+  </markdown>
+</ng-container>

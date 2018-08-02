@@ -1,0 +1,95 @@
+<app-demo-container readmeSrc="/assets/docs/browser-lib-ui/services/api/README.md">
+
+  <p><strong>Host set in forRoot:</strong> {{ decoraApiHost }}</p>
+
+  <h3>Authentication</h3>
+
+
+  <div *ngIf="(user$ | async) as user else loginForm">
+
+    <p><strong>User Name</strong> {{user?.name}}</p>
+
+    <button mat-raised-button color="warn" (click)="logout()" [disabled]="!user">Logout</button>
+
+    <button mat-button color="warn" (click)="changePassword(user?.id)" [disabled]="!user">Change password</button>
+
+  </div>
+
+  <hr>
+
+  <h3>Request by resource</h3>
+
+  <p><small>Open the console in dev tools to see the http call</small></p>
+
+  <mat-menu #calltypesMenu="matMenu">
+    <button mat-menu-item (click)="callType = 'get'">GET</button>
+    <button mat-menu-item (click)="callType = 'post'">POST</button>
+    <button mat-menu-item (click)="callType = 'put'">PUT</button>
+    <button mat-menu-item (click)="callType = 'upsert'">UPSERT</button>
+    <button mat-menu-item (click)="callType = 'delete'">DELETE</button>
+  </mat-menu>
+
+  <mat-form-field>
+    <input type="text" matInput [(ngModel)]="callContentType" placeholder="Content type" />
+  </mat-form-field>
+
+  <ng-container *ngIf="callType === 'get'">
+
+    <mat-form-field>
+      <input type="number" matInput [(ngModel)]="pageSize" placeholder="Page size" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <input type="number" matInput [(ngModel)]="page" placeholder="Page" />
+    </mat-form-field>
+
+  </ng-container>
+
+  <mat-form-field>
+    <textarea matInput matTextareaAutosize [(ngModel)]="callBody" placeholder="Object data or params"></textarea>
+  </mat-form-field>
+
+  <mat-form-field>
+    <button mat-button [matMenuTriggerFor]="calltypesMenu" matPrefix>
+      {{ (callType | uppercase) || 'Method' }}
+    </button>
+    <input type="text" matInput [(ngModel)]="resource" placeholder="Resource" />
+    <button mat-raised-button color="primary" matSuffix (click)="test()">Test</button>
+  </mat-form-field>
+
+  <div>
+
+    <p *ngIf="responseStatus >= 0">
+      Response status: {{ responseStatus }}
+    </p>
+
+    <p *ngIf="responseMessage">
+      Response message: {{ responseMessage }}
+    </p>
+
+    <p *ngIf="response">
+      Response message: {{ response | json }}
+    </p>
+
+  </div>
+
+</app-demo-container>
+
+
+<ng-template #loginForm>
+  <form role="form" (submit)="auth()">
+    <mat-form-field>
+
+      <input type="text" matInput [(ngModel)]="email" name="email" placeholder="E-mail" />
+
+    </mat-form-field>
+
+    <mat-form-field>
+
+      <input type="password" matInput [(ngModel)]="password" name="password" placeholder="Password" />
+
+      <button mat-raised-button color="primary" matSuffix [disabled]="!email || !password" type="submit">Auth</button>
+
+    </mat-form-field>
+  </form>
+</ng-template>

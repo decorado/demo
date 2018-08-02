@@ -1,0 +1,102 @@
+<app-demo-container readmeSrc="assets/docs/browser-lib-ui/components/sidenav/README.md">
+
+  <dec-sidenav #mainSidenav [loading]="progressBarVisible">
+
+    <dec-sidenav-toolbar color="default">
+
+      <dec-sidenav-toolbar-title>Custom title</dec-sidenav-toolbar-title>
+
+      Custom toolbar content
+
+    </dec-sidenav-toolbar>
+
+    <dec-sidenav-menu-left [open]="leftMenuVisible" [mode]="leftMenuMode" (openedChange)="leftMenuVisible = $event;">
+
+      <dec-sidenav-menu-item>item 1</dec-sidenav-menu-item>
+
+      <dec-sidenav-menu-item>Item 2
+
+        <dec-sidenav-menu-item>Item 2.1
+
+          <dec-sidenav-menu-item>Item 2.1.1</dec-sidenav-menu-item>
+
+          <dec-sidenav-menu-item>Item 2.1.2</dec-sidenav-menu-item>
+
+        </dec-sidenav-menu-item>
+
+        <dec-sidenav-menu-item>Item 2.2</dec-sidenav-menu-item>
+
+      </dec-sidenav-menu-item>
+
+    </dec-sidenav-menu-left>
+
+    <dec-sidenav-menu-right [open]="rightMenuVisible" [mode]="rightMenuMode" (openedChange)="rightMenuVisible = $event;">
+
+      <dec-sidenav-menu-title>Custom title</dec-sidenav-menu-title>
+
+      <dec-sidenav-menu-item>item 1</dec-sidenav-menu-item>
+
+      <dec-sidenav-menu-item>Item 2</dec-sidenav-menu-item>
+
+    </dec-sidenav-menu-right>
+
+    <dec-sidenav-content>
+      <h1>Dec Sidenav Demo</h1>
+
+      <h3>Inputs</h3>
+
+      <h5>Progress Bar</h5>
+      <button type="button" mat-raised-button color="primary" (click)="progressBarVisible = !progressBarVisible">Toggle Progress Bar</button>
+      <button type="button" mat-raised-button color="primary" (click)="progressBarVisible = true">Show Progress Bar</button>
+      <button type="button" mat-raised-button color="primary" (click)="progressBarVisible = false">Hide Progress Bar</button>
+
+      <h5>Left Menu</h5>
+      <button type="button" mat-raised-button color="primary" (click)="leftMenuVisible = !leftMenuVisible">Toggle Left Menu</button>
+      <button type="button" mat-raised-button color="primary" (click)="leftMenuMode = 'side'">Left Mode Side</button>
+      <button type="button" mat-raised-button color="primary" (click)="leftMenuMode = 'over'">Left Mode Over</button>
+      <button type="button" mat-raised-button color="primary" (click)="leftMenuMode = 'push'">Left Mode Push</button>
+
+      <h5>Right Menu</h5>
+      <button type="button" mat-raised-button color="primary" (click)="rightMenuVisible = !rightMenuVisible">Toggle Right Menu</button>
+      <button type="button" mat-raised-button color="primary" (click)="rightMenuMode = 'side'">Right Mode Side</button>
+      <button type="button" mat-raised-button color="primary" (click)="rightMenuMode = 'over'">Right Mode Over</button>
+      <button type="button" mat-raised-button color="primary" (click)="rightMenuMode = 'push'">Right Mode Side</button>
+
+
+      <h3>Api</h3>
+
+      <h5>Both Menus</h5>
+      <button type="button" mat-raised-button color="primary" (click)="mainSidenav.openBothMenus()">Open Both Menus</button>
+      <button type="button" mat-raised-button color="primary" (click)="mainSidenav.closeBothMenus()">Close Both Menus</button>
+      <button type="button" mat-raised-button color="primary" (click)="mainSidenav.toggleBothMenus()">Toggle Both Menus</button>
+      <button type="button" mat-raised-button color="primary" (click)="mainSidenav.setBothMenusMode('side')">Both Menus Mode Side</button>
+      <button type="button" mat-raised-button color="primary" (click)="mainSidenav.setBothMenusMode('over')">Both Menus Mode Over</button>
+      <button type="button" mat-raised-button color="primary" (click)="mainSidenav.setBothMenusMode('push')">Both Menus Mode Push</button>
+
+      <h5>Left Menu</h5>
+      <button type="button" mat-raised-button color="primary" (click)="mainSidenav.openLeftMenu()">Open Left Menu</button>
+      <button type="button" mat-raised-button color="primary" (click)="mainSidenav.closeLeftMenu()">Close Left Menu</button>
+      <button type="button" mat-raised-button color="primary" (click)="mainSidenav.toggleLeftMenu()">Toggle Left Menu</button>
+      <button type="button" mat-raised-button color="primary" (click)="mainSidenav.setLeftMenuMode('side')">Left Menu Mode Side</button>
+      <button type="button" mat-raised-button color="primary" (click)="mainSidenav.setLeftMenuMode('over')">Left Menu Mode Over</button>
+      <button type="button" mat-raised-button color="primary" (click)="mainSidenav.setLeftMenuMode('push')">Left Menu Mode Push</button>
+
+      <h5>Right Menu</h5>
+      <button type="button" mat-raised-button color="primary" (click)="mainSidenav.openRightMenu()">Open Right Menu</button>
+      <button type="button" mat-raised-button color="primary" (click)="mainSidenav.closeRightMenu()">Close Right Menu</button>
+      <button type="button" mat-raised-button color="primary" (click)="mainSidenav.toggleRightMenu()">Toggle Right Menu</button>
+      <button type="button" mat-raised-button color="primary" (click)="mainSidenav.setRightMenuMode('side')">Right Menu Mode Side</button>
+      <button type="button" mat-raised-button color="primary" (click)="mainSidenav.setRightMenuMode('over')">Right Menu Mode Over</button>
+      <button type="button" mat-raised-button color="primary" (click)="mainSidenav.setRightMenuMode('push')">Right Menu Mode Push</button>
+
+      <h5>Progress Bar</h5>
+      <button type="button" mat-raised-button color="primary" (click)="mainSidenav.toggleProgressBar()">Toggle Progress Bar</button>
+      <button type="button" mat-raised-button color="primary" (click)="mainSidenav.showProgressBar()">Show Progress Bar</button>
+      <button type="button" mat-raised-button color="primary" (click)="mainSidenav.hideProgressBar()">Hide Progress Bar</button>
+
+    </dec-sidenav-content>
+
+  </dec-sidenav>
+
+</app-demo-container>
+

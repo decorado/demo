@@ -1,0 +1,96 @@
+<div class="list-filter-wrapper">
+  <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+    <!--
+      Counter
+    -->
+    <div fxFlex="30">
+      <ng-container *ngIf="count >= 0 && !loading">
+        <span *ngIf="count === 0" class="dec-body-strong">{{ "label.record-not-found" | translate }}</span>
+        <span *ngIf="count === 1" class="dec-body-strong">{{ "label.one-record-found" | translate }}</span>
+        <span *ngIf="count > 1" class="dec-body-strong"> {{ "label.records-found" | translate:{count:count} }}</span>
+      </ng-container>
+    </div>
+
+    <div fxFlex="70" class="text-right">
+
+      <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="end center" class="search-container">
+        <div>
+
+          <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center" class="input-search-container" [class.active]="showSearchInput">
+            <!-- gap -->
+            <div></div>
+            <a class="btn-toogle-search">
+              <mat-icon (click)="toggleSearchInput()">search</mat-icon>
+            </a>
+            <form fxFlex role="form" (submit)="onSearch()">
+              <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start center" class="input-search">
+                <span class="bar-h"></span>
+                <input fxFlex #inputSearch name="search" [(ngModel)]="filterForm.search">
+                <div *ngIf="advancedFilterComponent" class="click" (click)="toggleAdvancedFilter($event)">
+                  <span class="dec-small btn-open-advanced-search">{{"label.advanced-options" | translate}}</span>
+                </div>
+                <!--gap-->
+                <div></div>
+              </div>
+            </form>
+          </div>
+
+        </div>
+
+        <!--Refresh search-->
+        <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
+          <a class="btn-info margin-icon" (click)="onSearch()">
+            <mat-icon>refresh</mat-icon>
+          </a>
+        </div>
+        <!--Clear filters-->
+        <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center" *ngIf="filterGroupsWithoutTabs?.length">
+          <a class="btn-info" (click)="onClear()">
+            <mat-icon>clear</mat-icon>
+          </a>
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center" *ngIf="showInfoButton">
+          <a class="btn-info" (click)="onClickInfo()">
+            <mat-icon>info_outline</mat-icon>
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+
+  <div *ngIf="showAdvancedFilter">
+
+    <mat-card class="advanced-search-container" [ngClass]="{'remove-button-enabled': filterGroupsWithoutTabs?.length}">
+
+      <div fxLayout="row" fxLayoutAlign="end center">
+
+        <a (click)="closeFilters()" class="btn-close-advanced-search">
+
+          <i class="material-icons">close</i>
+
+        </a>
+
+      </div>
+
+      <div>
+
+        <ng-content select="dec-list-advanced-filter"></ng-content>
+
+      </div>
+
+    </mat-card>
+
+  </div>
+
+  <dec-list-active-filter-resume
+    *ngIf="filterGroupsWithoutTabs?.length"
+    [filterGroups]="filterGroupsWithoutTabs"
+    (remove)="removeDecFilterGroup($event)"
+    (edit)="editDecFilterGroup($event)"></dec-list-active-filter-resume>
+
+  <ng-content select="dec-list-tabs-filter"></ng-content>
+</div>

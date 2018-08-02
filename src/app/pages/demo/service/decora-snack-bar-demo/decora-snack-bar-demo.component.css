@@ -1,0 +1,24 @@
+.snack-success {
+    color: #FFF !important;
+    background: #4dbd74 !important;
+}
+
+.snack-primary {
+    color: #FFF !important;
+    background: #232e38 !important;
+}
+
+.snack-info {
+    color: #FFF !important;
+    background: #63c2de !important;
+}
+
+.snack-warn {
+    color: #FFF !important;
+    background: #f8cb00 !important;
+}
+
+.snack-error {
+    color: #FFF;
+    background: #f44336 !important;
+}

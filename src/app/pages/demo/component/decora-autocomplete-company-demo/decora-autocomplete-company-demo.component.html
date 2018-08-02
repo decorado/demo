@@ -1,0 +1,12 @@
+<app-demo-container readmeSrc="/assets/docs/browser-lib-ui/components/autocomplete-company/README.md">
+
+  Company Selected: {{ company }}
+
+  <hr>
+
+  <dec-autocomplete-company
+  [(ngModel)]="company"
+  (selected)="optionSelected($event)">
+  </dec-autocomplete-company>
+
+</app-demo-container>

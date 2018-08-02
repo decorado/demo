@@ -1,0 +1,1121 @@
+import {AfterViewInit, Component, ContentChild, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {DecListGridComponent} from './list-grid/list-grid.component';
+import {DecListTableComponent} from './list-table/list-table.component';
+import { DecListFilterComponent} from './list-filter/list-filter.component';
+import { Observable, BehaviorSubject, Subscription, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, tap, switchMap } from 'rxjs/operators';
+import { DecApiService } from './../../services/api/decora-api.service';
+import { DecListFetchMethod } from './list.models';
+import { FilterData, DecFilter, FilterGroups, FilterGroup } from './../../services/api/decora-api.model';
+
+@Component({
+  selector: 'dec-list',
+  templateUrl: './list.component.html',
+  styleUrls: ['./list.component.scss']
+})
+export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
+
+  /*
+   * loading
+   *
+   *
+   */
+  set loading(v) {
+
+    this._loading = v;
+
+    if (this.filter) {
+
+      this.filter.loading = v;
+
+    }
+
+  }
+
+  get loading() {
+    return this._loading;
+  }
+
+  /*
+   * filterGroups
+   *
+   *
+   */
+  get filterGroups(): FilterGroups {
+    return this.filter ? this.filter.filterGroups : [];
+  }
+
+  /*
+   * report
+   *
+   *
+   */
+  report;
+
+  /*
+   * isLastPage
+   *
+   *
+   */
+  isLastPage: boolean;
+
+  /*
+   * filterData
+   *
+   *
+   */
+  private filterData: Subject<FilterData> = new Subject<FilterData>();
+
+  /*
+   * _loading;
+   *
+   *
+   */
+  private _loading = true;
+
+  /*
+   * clearAndReloadReport
+   *
+   *
+   */
+  private clearAndReloadReport;
+
+  /*
+   * filterSubscription
+   *
+   *
+   */
+  private filterSubscription: Subscription;
+
+  /*
+   * reactiveReport
+   *
+   *
+   */
+  private reactiveReport: Observable<any>;
+
+  /*
+   * reactiveReportSubscription
+   *
+   *
+   */
+  private reactiveReportSubscription: Subscription;
+
+  /*
+   * scrollableContainer
+   *
+   *
+   */
+  private scrollableContainer: Element;
+
+  /*
+   * scrollEventEmiter
+   *
+   *
+   */
+  private scrollEventEmiter = new EventEmitter<any>();
+
+  /*
+   * scrollEventEmiterSubscription
+   *
+   *
+   */
+  private scrollEventEmiterSubscription: Subscription;
+
+  /*
+   * tabsChangeSubscription
+   *
+   *
+   */
+  private tabsChangeSubscription: Subscription;
+
+  /*
+   * tableSortSubscription
+   *
+   *
+   */
+  private tableSortSubscription: Subscription;
+
+  /*
+   * payload
+   *
+   *
+   */
+  private payload: DecFilter;
+
+  /*
+   * _endpoint internall
+   *
+   *
+   */
+  private _endpoint: string;
+
+  /*
+   * customFetchMethod
+   *
+   * method used to fetch data from back-end
+   */
+  @Input() customFetchMethod: DecListFetchMethod;
+
+  /*
+   * columnsSortConfig
+   *
+   * used to get a sorted list from backend
+   * can be pased via attribute to sort the first load
+   */
+  @Input() columnsSortConfig;
+
+  /*
+   * disableShowMoreButton
+   *
+   * used to hide the show more button
+   */
+  @Input() disableShowMoreButton: boolean;
+
+  /*
+   * endpoint
+   *
+   *
+   */
+  @Input()
+  set endpoint(v: string) {
+
+    if (this._endpoint !== v) {
+
+      this._endpoint = (v[0] && v[0] === '/') ? v.replace('/', '') : v;
+
+    }
+
+  }
+
+  get endpoint(): string {
+
+    return this._endpoint;
+
+  }
+
+  /*
+   * name
+   *
+   *
+   */
+  private _name: string;
+
+  @Input()
+  set name(v: string) {
+    if (this._name !== v) {
+      this._name = v;
+      this.setFiltersComponentsBasePathAndNames();
+    }
+  }
+
+  get name() {
+    return this._name;
+  }
+
+  /*
+   * rows
+   *
+   *
+   */
+  @Input('rows')
+
+  set rows(rows) {
+    this.setRows(rows);
+  }
+
+  get rows() {
+    return this.report ? this.report.result.rows : undefined;
+  }
+
+  /*
+   * limit
+   *
+   *
+   */
+  @Input() limit = 10;
+
+  /*
+   * scrollableContainerClass
+   *
+   * Where the scroll watcher should be listening
+   */
+  @Input() scrollableContainerClass = 'mat-sidenav-content';
+
+  /*
+   * searchableProperties
+   *
+   * Properties to be searched when using basic search
+   */
+  @Input() searchableProperties: string[];
+
+  /*
+   * showFooter
+   *
+   *
+   */
+  @Input() showFooter = true;
+
+  /*
+   * postSearch
+   *
+   * This middleware is used to trigger events after every search
+   */
+  @Output() postSearch = new EventEmitter<any>();
+
+  /*
+   * rowClick
+   *
+   * Emits an event when a row or card is clicked
+   */
+  @Output() rowClick: EventEmitter<any> = new EventEmitter<any>();
+
+  /*
+   * grid
+   *
+   *
+   */
+  @ContentChild(DecListGridComponent) grid: DecListGridComponent;
+
+  /*
+   * table
+   *
+   *
+   */
+  @ContentChild(DecListTableComponent) table: DecListTableComponent;
+
+  /*
+   * filter
+   *
+   *
+   */
+  private _filter: DecListFilterComponent;
+
+  @ContentChild(DecListFilterComponent)
+  set filter(v: DecListFilterComponent) {
+    if (this._filter !== v) {
+      this._filter = v;
+      this.setFiltersComponentsBasePathAndNames();
+    }
+  }
+
+  get filter() {
+    return this._filter;
+  }
+
+  /*
+   * listMode
+   *
+   *
+   */
+  @Input() listMode;
+
+  /*
+   * getListMode
+   *
+   *
+   */
+  @Input() getListMode = () => {
+
+    let listMode = this.listMode;
+
+    if (this.filter && this.filter.tabsFilterComponent) {
+
+      const selectedTab = this.filter.tabsFilterComponent.selectedTab();
+
+      if (selectedTab && selectedTab.listMode) {
+
+        listMode = selectedTab.listMode;
+
+      } else {
+
+        listMode = this.table ? 'table' : 'grid';
+
+      }
+
+    }
+
+    return listMode;
+
+  }
+
+  /*
+   * ngOnInit
+   *
+   *
+   */
+  constructor(
+    private service: DecApiService
+  ) { }
+
+  /*
+   * ngOnInit
+   *
+   * Starts a fresh component and prepare it to run
+   *
+   * - Start the Reactive Report
+   * - Subscribe to the Reactive Report
+   * - Start watching window Scroll
+   * - Ensure unique name
+   */
+  ngOnInit() {
+    this.watchFilterData();
+    this.ensureUniqueName();
+    this.detectListModeBasedOnGridAndTablePresence();
+  }
+
+  /*
+  * ngAfterViewInit
+  *
+  * Wait for the subcomponents to start before run the component
+  *
+  * - Start watching Filter
+  * - Do the first load
+  */
+ ngAfterViewInit() {
+   this.watchFilter();
+   this.doFirstLoad();
+   this.detectListMode();
+   this.watchTabsChange();
+   this.watchTableSort();
+   this.registerChildWatchers();
+   this.watchScroll();
+   this.watchScrollEventEmitter();
+  }
+
+  /*
+   * ngOnDestroy
+   *
+   * Destroy watcher to free meemory and remove unnecessary triggers
+   *
+   * - Unsubscribe from the Reactive Report
+   * - Stop watching window Scroll
+   * - Stop watching Filter
+   */
+  ngOnDestroy() {
+    this.unsubscribeToReactiveReport();
+    this.stopWatchingScroll();
+    this.stopWatchingFilter();
+    this.stopWatchingTabsChange();
+    this.stopWatchingTableSort();
+    this.stopWatchingScrollEventEmitter();
+  }
+
+  /*
+   * reloadCountReport
+   *
+   */
+  reloadCountReport() {
+
+    if (this.filter) {
+
+      this.filter.reloadCountReport(this.payload);
+
+    }
+
+  }
+
+  /*
+   * removeItem
+   *
+   * Removes an item from the list
+   */
+  removeItem(id) {
+
+    const item = this.rows.find(_item => _item.id === id);
+
+    if (item) {
+
+      const itemIndex = this.rows.indexOf(item);
+
+      if (itemIndex >= 0) {
+
+        this.rows.splice(itemIndex, 1);
+
+      }
+
+    }
+
+    if (this.endpoint) {
+      this.reloadCountReport();
+    }
+
+  }
+
+  /*
+   * restart
+   *
+   * Clear the list and reload the first page
+   */
+  restart() {
+
+    this.loadReport(true);
+
+  }
+
+  /*
+   * showMore
+   *
+   */
+  showMore() {
+
+    return this.loadReport();
+
+  }
+
+  /*
+   * tableAndGridAreSet
+   *
+   * Return true if there are both GRID and TABLE definition inside the list
+   */
+  tableAndGridAreSet() {
+    return this.grid && this.table;
+  }
+
+  /*
+   * toggleListMode
+   *
+   * Changes between GRID and TABLE visualizatoin modes
+   */
+  toggleListMode() {
+
+    this.listMode = this.listMode === 'grid' ? 'table' : 'grid';
+
+    if (this.listMode === 'table') {
+
+      setTimeout(() => {
+
+        this.table.tableComponent.recalculate();
+
+      }, 1);
+
+    }
+
+  }
+
+  /*
+   * actByScrollPosition
+   *
+   * This method detect if there is scrooling action on window to fetch and show more rows when the scrolling down.
+   */
+  private actByScrollPosition = ($event) => {
+
+    if ($event['path']) {
+
+      const elementWithCdkOverlayClass = $event['path'].find(path => {
+
+        const className = path['className'] || '';
+
+        const insideOverlay = className.indexOf('cdk-overlay') >= 0;
+
+        const insideFullscreanDialogContainer = className.indexOf('fullscrean-dialog-container') >= 0;
+
+        return insideOverlay || insideFullscreanDialogContainer;
+
+      });
+
+      if (!elementWithCdkOverlayClass) { // avoid closing filter from any open dialog
+
+        if (!this.isLastPage) {
+
+          const target: any = $event['target'];
+
+          const limit = target.scrollHeight - target.clientHeight;
+
+          if (target.scrollTop >= (limit - 16)) {
+
+            this.showMore();
+
+          }
+
+        }
+      }
+
+    }
+
+  }
+
+  /*
+   * detectListMode
+   *
+   * Set the list mode based on filterTabs configuration or custom function overridden by getListMode input
+   */
+  private detectListMode() {
+
+    this.listMode = this.getListMode();
+
+  }
+
+  /*
+   * detectListModeBasedOnGridAndTablePresence()
+   *
+   * Set the list mode based on declaration of table and grid. This is necessary to bootastrap the component with only grid or only table
+   * This only work if no mode is provided by @Input otherwise the @Input value will be used
+   */
+  private detectListModeBasedOnGridAndTablePresence() {
+
+    this.listMode = this.listMode ? this.listMode : this.table ? 'table' : 'grid';
+
+  }
+
+  /*
+   * emitScrollEvent
+   *
+   *
+   */
+  private emitScrollEvent = ($event) => {
+
+    if (!this.loading) {
+
+      this.scrollEventEmiter.emit($event);
+
+    }
+
+  }
+
+  /*
+   * isTabsFilterDefined
+   *
+   * Return true if the Tabs Filter is defined inside the list
+   */
+  private isTabsFilterDefined() {
+    return this.filter && this.filter.tabsFilterComponent;
+  }
+
+  /*
+   * doFirstLoad
+   *
+   */
+  private doFirstLoad() {
+    if (this.isTabsFilterDefined()) {
+      this.doFirstLoadByTabsFilter();
+    } else {
+      this.doFirstLoadLocally(true);
+    }
+  }
+
+  /*
+   * doFirstLoadByTabsFilter
+   *
+   */
+  private doFirstLoadByTabsFilter() {
+    this.filter.tabsFilterComponent.doFirstLoad();
+  }
+
+  /*
+   * doFirstLoadLocally
+   *
+   */
+  private doFirstLoadLocally(refresh) {
+    this.loadReport(refresh);
+  }
+
+  /*
+   * ensureUniqueName
+   *
+   */
+  private ensureUniqueName() {
+    if (!this.name) {
+      const error = 'ListComponentError: The list component must have an unique name to be used in url filter.'
+      + ' Please, ensure that you have passed an unique namme to the component.';
+      throw new Error(error);
+    }
+  }
+
+  /*
+   * loadReport
+   *
+   */
+  private loadReport(clearAndReloadReport?: boolean): Promise<any> {
+
+
+    return new Promise((res, rej) => {
+
+      if (clearAndReloadReport && this.rows) {
+
+        this.setRows(this.rows);
+
+      }
+
+      this.clearAndReloadReport = clearAndReloadReport;
+
+      this.loading = true;
+
+      if (this.endpoint) {
+
+        const filterGroups = this.filter ? this.filter.filterGroups : undefined;
+
+        const payload: DecFilter = {};
+
+        payload.limit = this.limit;
+
+        let selectedTab;
+
+        if (this.filter && this.filter.tabsFilterComponent) {
+          selectedTab = this.filter.tabsFilterComponent.selectedTab();
+        }
+
+        if (filterGroups) {
+
+          payload.filterGroups = filterGroups;
+
+        }
+
+        if (this.columnsSortConfig) {
+
+          payload.columns = this.columnsSortConfig;
+
+        }
+
+        if (!clearAndReloadReport && this.report) {
+
+          payload.page = this.report.page + 1;
+
+          payload.limit = this.report.limit;
+
+        }
+
+        this.payload = payload;
+
+        this.filterData.next({ endpoint: this.endpoint, payload: payload, cbk: res, clear: clearAndReloadReport });
+
+      } else if (this.customFetchMethod) {
+
+        this.filterData.next();
+
+      } else if (!this.rows) {
+
+        setTimeout(() => {
+
+          if (!this.rows) {
+
+            rej('No endpoint, customFetchMethod or rows set');
+
+          }
+
+          this.loading = false;
+
+        }, 1);
+
+      }
+
+    });
+
+
+  }
+
+  /*
+   * setFiltersComponentsBasePathAndNames
+   *
+   */
+  private setFiltersComponentsBasePathAndNames() {
+
+    if (this.filter) {
+
+      this.filter.name = this.name;
+
+
+      if (this.filter.tabsFilterComponent) {
+
+        this.filter.tabsFilterComponent.name = this.name;
+
+        if (this.customFetchMethod) {
+
+          this.filter.tabsFilterComponent.customFetchMethod = this.customFetchMethod;
+
+        } else {
+
+          this.filter.tabsFilterComponent.service = this.service;
+
+        }
+
+
+
+      }
+
+    }
+
+  }
+
+  /*
+   * setRows
+   *
+   */
+  private setRows(rows = []) {
+
+    this.report = {
+
+      page: 1,
+
+      result: {
+
+        rows: rows,
+
+        count: rows.length
+
+      }
+    };
+
+    this.detectLastPage(rows, rows.length);
+
+    this.updateContentChildren();
+  }
+
+  /*
+   * watchScrollEventEmitter
+   *
+   *
+   */
+  private watchScrollEventEmitter() {
+
+    this.scrollEventEmiterSubscription = this.scrollEventEmiter
+    .pipe(
+      debounceTime(150),
+      distinctUntilChanged()
+    ).subscribe(this.actByScrollPosition);
+
+  }
+
+  /*
+   * stopWatchingScrollEventEmitter
+   *
+   *
+   */
+  private stopWatchingScrollEventEmitter() {
+
+    if (this.scrollEventEmiterSubscription) {
+
+      this.scrollEventEmiterSubscription.unsubscribe();
+
+    }
+
+  }
+
+  /*
+   * watchFilterData
+   *
+   */
+  private watchFilterData() {
+    this.reactiveReport = this.filterData
+    .pipe(
+      debounceTime(150), // avoid muiltiple request when the filter or tab change too fast
+      switchMap((filterData: FilterData) => {
+
+        const observable = new BehaviorSubject<any>(undefined);
+
+        const fetchMethod: DecListFetchMethod = this.customFetchMethod || this.service.get;
+
+        const endpoint = filterData ? filterData.endpoint : undefined;
+
+        const payloadWithSearchableProperties = this.getPayloadWithSearchTransformedIntoSearchableProperties();
+
+        if (filterData && filterData.clear) {
+          this.setRows([]);
+        }
+
+        fetchMethod(endpoint, payloadWithSearchableProperties)
+        .subscribe(res => {
+
+          observable.next(res);
+
+          if (filterData && filterData.cbk) {
+
+            setTimeout(() => { // wait for subscribers to refresh their rows
+
+              filterData.cbk(new Promise((resolve, rej) => {
+
+                resolve(res);
+
+              }));
+
+            }, 1);
+          }
+          return res;
+        });
+
+        return observable;
+      })
+
+    );
+    this.subscribeToReactiveReport();
+  }
+
+  private getPayloadWithSearchTransformedIntoSearchableProperties() {
+
+    const payloadCopy = {...this.payload};
+
+    if (payloadCopy.filterGroups && this.searchableProperties) {
+
+      payloadCopy.filterGroups = [...this.payload.filterGroups];
+
+      const filterGroupThatContainsBasicSearch = this.getFilterGroupThatContainsTheBasicSearch(payloadCopy.filterGroups);
+
+      if (filterGroupThatContainsBasicSearch) {
+
+        this.removeFilterGroup(payloadCopy.filterGroups, filterGroupThatContainsBasicSearch);
+
+        this.appendFilterGroupsBasedOnSearchableProperties(filterGroupThatContainsBasicSearch, payloadCopy);
+
+      }
+
+      return payloadCopy;
+
+
+    } else {
+
+      return this.payload;
+
+    }
+
+  }
+
+  private appendFilterGroupsBasedOnSearchableProperties(filterGroupsModel, payload) {
+
+    const basicSearch = filterGroupsModel.filters.find(filter => filter.property === 'search');
+
+    const basicSearchIndex = filterGroupsModel.filters.indexOf(basicSearch);
+
+    this.searchableProperties.forEach(property => {
+
+      const newFilterGroup: FilterGroup = {
+        filters: [...filterGroupsModel.filters]
+      };
+
+      newFilterGroup.filters[basicSearchIndex] = {
+        property: property,
+        value: basicSearch.value
+      };
+
+      payload.filterGroups.push(newFilterGroup);
+
+    });
+
+  }
+
+  private removeFilterGroup(filterGroups, filterGroupThatContainsBasicSearch) {
+
+    const filterGroupThatContainsBasicSearchIndex = filterGroups.indexOf(filterGroupThatContainsBasicSearch);
+
+    filterGroups.splice(filterGroupThatContainsBasicSearchIndex, 1);
+
+  }
+
+  private getFilterGroupThatContainsTheBasicSearch(filterGroups) {
+
+    return filterGroups.find(filterGroup => {
+
+      const basicSerchFilter = filterGroup.filters.find(filter => filter.property === 'search');
+
+      return basicSerchFilter ? true : false;
+
+    });
+
+  }
+
+  /*
+   * subscribeToReactiveReport
+   *
+   */
+  private subscribeToReactiveReport() {
+    this.reactiveReportSubscription = this.reactiveReport
+    .pipe(
+      tap(res => {
+        if (res) {
+          this.loading = false;
+        }
+      })
+    )
+    .subscribe(data => {
+      if (data && data.result && data.result.rows) {
+
+        if (!this.clearAndReloadReport) {
+          data.result.rows = this.report.result.rows.concat(data.result.rows);
+        }
+
+        this.report = data;
+
+        this.postSearch.emit(data);
+
+        this.updateContentChildren();
+
+        this.detectLastPage(data.result.rows, data.result.count);
+
+        }
+      });
+  }
+
+  private detectLastPage(rows, count) {
+
+    const numberOfrows = rows.length;
+
+    const emptList = numberOfrows === 0;
+
+    const singlePageList = numberOfrows === count;
+
+    this.isLastPage = emptList || singlePageList;
+
+  }
+
+  /*
+   * unsubscribeToReactiveReport
+   *
+   */
+  private unsubscribeToReactiveReport() {
+    if (this.reactiveReportSubscription) {
+      this.reactiveReportSubscription.unsubscribe();
+    }
+  }
+
+  /*
+   * updateContentChildren
+   *
+   */
+  private updateContentChildren() {
+
+    const rows = this.endpoint ? this.report.result.rows : this.rows;
+    if (this.grid) {
+      this.grid.rows = rows;
+    }
+    if (this.table) {
+      this.table.rows = rows;
+    }
+    if (this.filter) {
+      this.filter.count = this.report.result.count;
+    }
+  }
+
+  /*
+   * registerChildWatchers
+   *
+   * Watch for children outputs
+   */
+  private registerChildWatchers() {
+
+    if (this.grid) {
+      this.watchGridRowClick();
+    }
+
+    if (this.table) {
+      this.watchTableRowClick();
+    }
+
+  }
+
+  /*
+   * watchGridRowClick
+   *
+   */
+  private watchGridRowClick() {
+    this.grid.rowClick.subscribe(($event) => {
+      this.rowClick.emit($event);
+    });
+  }
+
+  /*
+   * watchTableRowClick
+   *
+   */
+  private watchTableRowClick() {
+    this.table.rowClick.subscribe(($event) => {
+      this.rowClick.emit($event);
+    });
+  }
+
+  /*
+   * watchFilter
+   *
+   */
+  private watchFilter() {
+    if (this.filter) {
+      this.filterSubscription = this.filter.search.subscribe(event => {
+        this.loadReport(true)
+          .then((res) => {
+            if (event.recount) {
+              this.reloadCountReport();
+            }
+          });
+      });
+    }
+  }
+
+  /*
+   * watchFilter
+   *
+   */
+  private stopWatchingFilter() {
+    if (this.filterSubscription) {
+      this.filterSubscription.unsubscribe();
+    }
+  }
+
+  /*
+   * watchScroll
+   *
+   */
+  private watchScroll() {
+    setTimeout(() => {
+      this.scrollableContainer = document.getElementsByClassName(this.scrollableContainerClass)[0];
+      if (this.scrollableContainer) {
+        this.scrollableContainer.addEventListener('scroll', this.emitScrollEvent, true);
+      }
+    }, 1);
+  }
+
+  /*
+   * stopWatchingScroll
+   *
+   */
+  private stopWatchingScroll() {
+    if (this.scrollableContainer) {
+      this.scrollableContainer.removeEventListener('scroll', this.emitScrollEvent, true);
+    }
+  }
+
+  /*
+   * subscribeToReactiveReport
+   *
+   */
+  private watchTabsChange() {
+    if (this.filter && this.filter.tabsFilterComponent) {
+      this.tabsChangeSubscription = this.filter.tabsFilterComponent.tabChange.subscribe(tab => {
+        this.detectListMode();
+      });
+    }
+  }
+
+  /*
+   * subscribeToTabsChange
+   *
+   */
+  private stopWatchingTabsChange() {
+    if (this.tabsChangeSubscription) {
+      this.tabsChangeSubscription.unsubscribe();
+    }
+  }
+
+  /*
+   * watchTableSort
+   *
+   */
+  private watchTableSort() {
+    if (this.table) {
+      this.tableSortSubscription = this.table.sort.subscribe(columnsSortConfig => {
+        if (this.columnsSortConfig !== columnsSortConfig) {
+          this.columnsSortConfig = columnsSortConfig;
+          this.loadReport(true);
+        }
+      });
+    }
+  }
+
+  /*
+   * stopWatchingTableSort
+   *
+   */
+  private stopWatchingTableSort() {
+    if (this.tableSortSubscription) {
+      this.tableSortSubscription.unsubscribe();
+    }
+  }
+
+}

@@ -1,0 +1,13 @@
+<app-demo-container readmeSrc="/assets/docs/browser-lib-ui/components/autocomplete-country/README.md">
+
+  Country Selected: {{ country }}
+
+  <hr>
+
+  <dec-autocomplete-country
+  [(ngModel)]="country"
+  (selected)="optionSelected($event)">
+  </dec-autocomplete-country>
+
+</app-demo-container>
+

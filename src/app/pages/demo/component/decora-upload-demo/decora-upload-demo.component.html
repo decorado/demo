@@ -1,0 +1,18 @@
+<app-demo-container readmeSrc="/assets/docs/browser-lib-ui/components/upload/README.md">
+
+  <dec-upload (uploaded)="uploaded($event)" [(ngModel)]="singleFileData">
+    <button mat-raised-button color="primary" type="buton">Upload single file</button>
+  </dec-upload>
+
+  {{ singleFileData | json }}
+
+  <hr>
+
+  <dec-upload [multiple]="true" (uploaded)="uploaded($event)" [(ngModel)]="multipleFileData">
+    <button mat-raised-button color="primary" type="buton">Upload multiple files</button>
+  </dec-upload>
+
+  {{ multipleFileData | json }}
+
+</app-demo-container>
+

@@ -1,0 +1,42 @@
+<div *ngIf="filterGroups?.length" class="dec-list-active-filter-resume-wrapper">
+
+  <mat-chip-list>
+
+    <ng-container *ngFor="let group of filterGroups; let groupIndex = index;">
+      <mat-chip *ngIf="group?.filters" (click)="editDecFilterGroup($event, groupIndex)">
+
+        <span *ngFor="let filter of group?.filters; let lastFilter = last;" class="item-wrapper">
+
+          <span [ngSwitch]="filter.property !== 'search'">
+
+            <span *ngSwitchCase="true">{{ 'label.' + filter.property | translate }}</span>
+
+            <span *ngSwitchDefault>{{ 'label.Keyword' | translate }}</span>
+
+          </span>
+
+          <span>:&nbsp;</span>
+
+          <span [ngSwitch]="getValuetype(filter.value)" class="value-wrapper">
+
+            <span *ngSwitchCase="'date'">{{ filter.value | date }}</span>
+
+            <span *ngSwitchDefault>{{ filter.value }}</span>
+
+          </span >
+
+          <span *ngIf="!lastFilter">,</span>
+
+          &nbsp;
+
+        </span>
+
+        <i class="material-icons" (click)="removeDecFilterGroup($event, groupIndex)">remove_circle</i>
+
+      </mat-chip>
+
+    </ng-container>
+
+  </mat-chip-list>
+
+</div>

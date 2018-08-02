@@ -1,0 +1,25 @@
+@import './../dist/decora/browser-lib-ui/bootstrap/appearance/dec-colors.scss';
+
+h1 {
+  color: $dec-color-primary;
+}
+
+h2 {
+  color: $dec-color-grey;
+}
+
+h3 {
+  color: $dec-color-green;
+}
+
+h4 {
+  color: $dec-color-blue;
+}
+
+h5 {
+  color: $dec-color-accent;
+}
+
+h6 {
+  color: $dec-color-blue;
+}

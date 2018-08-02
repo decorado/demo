@@ -1,0 +1,31 @@
+<ngx-datatable #tableComponent
+  columnMode="flex"
+  headerHeight="24px"
+  rowHeight="auto"
+  [externalSorting]="true"
+  [messages]="{emptyMessage:''}"
+  [rows]="rows"
+  (sort)="onSort($event)"
+  (activate)="onItemClick($event)">
+
+  <ngx-datatable-column *ngFor="let column of columns;"
+                         name="{{column.title | translate}}"
+                         [flexGrow]="column.colSpan"
+                         [prop]="column.prop"
+                         [sortable]="column.prop ? true : false">
+
+    <ng-template *ngIf="column.template ? true : false"
+      let-row="row"
+      let-index="rowIndex"
+      ngx-datatable-cell-template>
+
+      <ng-container
+        [ngTemplateOutlet]="column.template"
+        [ngTemplateOutletContext]="{row: row || {}, list: rows || [], index: index}"
+      ></ng-container>
+
+    </ng-template>
+
+  </ngx-datatable-column>
+
+</ngx-datatable>

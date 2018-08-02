@@ -1,0 +1,10 @@
+<div fxLayout="row wrap" [fxLayoutGap]="itemGap" >
+  <div *ngFor="let row of rows; let i = index;" (click)="onItemClick($event, row, rows, i)" [fxFlex]="itemWidth">
+    <div [ngStyle]="{margin: itemGap}">
+      <ng-container
+        [ngTemplateOutlet]="templateRef"
+        [ngTemplateOutletContext]="{row: row || {}, list: rows || [], index: i}"
+      ></ng-container>
+    </div>
+  </div>
+</div>

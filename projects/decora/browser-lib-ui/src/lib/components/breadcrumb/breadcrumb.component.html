@@ -1,0 +1,27 @@
+<div fxLayout="row" class="dec-breadcrumb-wrapper">
+
+  <div fxFlex>
+    <div fxLayout="column">
+      <div class="title">
+        <h1>{{feature}}</h1>
+      </div>
+      <div class="breadcrumb">
+        {{breadcrumb}}
+      </div>
+    </div>
+  </div>
+
+  <div fxFlex fxFlexAlign="center" fxLayoutAlign="end">
+    <div fxLayout="row">
+      <div fxFlex>
+        <!-- CONTENT  -->
+        <ng-content></ng-content>
+        <!-- BACK BUTTON -->
+        <button type="button" mat-raised-button color="default" *ngIf="backButtonPath" (click)="goBack()">{{ backLabel }}</button>
+        <!-- FORWARD BUTTON -->
+        <button type="button" mat-raised-button color="default" *ngIf="forwardButton" (click)="goForward()">{{ forwardLabel }}</button>
+      </div>
+    </div>
+  </div>
+
+</div>

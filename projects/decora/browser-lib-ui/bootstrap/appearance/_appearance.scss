@@ -1,0 +1,36 @@
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.click {
+  cursor: pointer;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.lowercase {
+    text-transform: lowercase;
+}
+
+.capitalize {
+    text-transform: capitalize;
+}
+
+.smaller-font {
+  font-size: 12px;
+}
+
+.bigger-font {
+  font-size: 18px;
+}
+
+.dec-font-500, strong {
+  font-weight: 500;
+};
+
+.break-word {
+  word-wrap: break-word;
+}

@@ -1,0 +1,28 @@
+<div fxLayout="column" fxLayoutGap="16px">
+
+  <div fxFlex>
+
+    <ng-container
+      [ngTemplateOutlet]="templateRef"
+      [ngTemplateOutletContext]="{form: form}"
+    ></ng-container>
+
+  </div>
+
+  <div fxFlex>
+
+    <div fxLayout="row" fxLayoutAlign="end end" fxLayoutGap="8px">
+
+      <button type="button" mat-raised-button color="primary" (click)="submit()">{{ 'label.search' | translate | uppercase }}</button>
+
+      <button type="button" mat-button (click)="reset()">{{ 'label.reset' | translate | uppercase }}</button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+

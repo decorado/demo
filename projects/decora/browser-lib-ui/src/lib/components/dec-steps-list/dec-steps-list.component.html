@@ -1,0 +1,47 @@
+<div class="history-container" [ngClass]="{'limited-height': maxHeight}" [style.maxHeight]="maxHeight || '100%'">
+
+  <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px" class="dec-color-grey-dark">
+
+    <mat-icon fxFlex="24px">{{icon}}</mat-icon>
+
+    <span class="bigger-font">{{ title }}</span>
+
+  </div>
+
+  <br>
+
+  <div fxLayout="column" fxLayoutGap="16px">
+
+    <div class="history-item" *ngFor="let item of stepsList; let i = index">
+
+      <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="left start" class="dec-color-grey">
+
+        <mat-icon class="smaller-icon dec-color-grey-dark" fxFlex="24px">{{ i === stepsList.length - 1 ? 'radio_button_unchecked' : 'lens' }}</mat-icon>
+
+        <div fxLayout="column" fxLayoutGap="4px">
+
+          <div>
+
+            <strong *ngIf="item.title">{{ item.title }}</strong>
+
+            <span *ngIf="item.date">
+              {{ item.date | date }}
+              <span *ngIf="showTime"> | {{ item.date | date: 'mediumTime' }}</span>
+            </span>
+
+          </div>
+
+          <div *ngIf="item.description" class="dec-color-grey-dark">
+            <strong class="dec-color-black">{{ item.description }}</strong>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+</div>

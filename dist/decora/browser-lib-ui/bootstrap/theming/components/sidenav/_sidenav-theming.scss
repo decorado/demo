@@ -1,0 +1,58 @@
+@import '~@angular/material/theming';
+@import './../../../../bootstrap/constants/colors';
+
+// Sidenav custom style
+@mixin dec-sidenav-theming($theme) {
+  .mat-sidenav-container {
+    background-color: #ffffff;
+    color: inherit;
+  }
+
+  .mat-sidenav, .mat-drawer.mat-drawer-push {
+    background-color: $dec-color-primary;
+    color: $dec-color-primary-contrast;
+
+    .mat-list, .mat-nav-list {
+      .mat-list-item {
+        background-color: $dec-color-primary;
+        color: $dec-color-primary-contrast !important;
+
+        i {
+          color: $dec-color-primary-contrast !important;
+          border-color: $dec-color-primary-contrast !important;
+        }
+
+        &:hover {
+          background-color: $dec-color-accent !important;
+          color: $dec-color-accent-contrast !important;
+
+          i {
+            color: $dec-color-accent-contrast !important;
+            border-color: $dec-color-accent-contrast !important;
+          }
+
+        }
+      }
+    }
+  }
+
+  .ribbon {
+    &.ribbon-blue {
+      background: $dec-color-blue;
+
+      &::before { background: $dec-color-blue }
+    }
+
+    &.ribbon-red {
+      background: $dec-color-red;
+
+      &::before { background: $dec-color-red }
+    }
+
+    &.ribbon-green {
+      background: $dec-color-green;
+
+      &::before { background: $dec-color-green }
+    }
+  }
+}

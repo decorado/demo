@@ -1,0 +1,23 @@
+.list-tabs-filter-wrapper {
+
+  margin-top: 8px;
+
+  .dec-tab-header {
+    &.bottom {
+      border-bottom: 0;
+    }
+
+    .badge {
+      margin-left: 8px;
+      &.badge-pill {
+        padding: 8px;
+        font-size: small;
+        border-radius: 24px;
+        &.badge-small {
+          font-size: x-small;
+          padding: 4px;
+        }
+      }
+    }
+  }
+}

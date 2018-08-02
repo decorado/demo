@@ -1,0 +1,22 @@
+<app-demo-container readmeSrc="/assets/docs/src/app/pages/best-practices/forms/README.md">
+
+  <h1>FormsBestPractices</h1>
+
+  This section was meant to be the guide to form construction. We should be carefull when not folowing this patterns
+
+  <h2>Select</h2>
+
+  <h3>Empty option</h3>
+
+  <p>Always use an empty option to allow the user to unselect the current value:</p>
+
+  <mat-form-field>
+    <mat-select placeholder="'Options'">
+      <mat-option></mat-option>
+      <mat-option *ngFor="let option of ['Option a', 'Option b', 'Option c']" [value]="option">
+         option
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+</app-demo-container>

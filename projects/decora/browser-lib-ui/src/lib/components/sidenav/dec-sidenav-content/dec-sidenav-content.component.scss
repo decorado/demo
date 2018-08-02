@@ -1,0 +1,6 @@
+@import './../../../../../bootstrap/constants/positioning';
+
+.dec-sidenav-container-wrapper {
+  min-width: 1024px;
+  padding: $sidenav-and-dialog-content-padding;
+}

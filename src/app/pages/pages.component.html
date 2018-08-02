@@ -1,0 +1,113 @@
+<div class="app-sidenav">
+
+  <dec-sidenav #mainSidenav [loading]="progressBarVisible">
+
+    <dec-sidenav-toolbar color="default" [environment]="environment.profile">
+
+      <dec-sidenav-toolbar-title routerLink="/" class="click">Decora Browser Lib UI</dec-sidenav-toolbar-title>
+
+    </dec-sidenav-toolbar>
+
+    <dec-sidenav-menu-left [open]="leftMenuVisible" [mode]="leftMenuMode" (openedChange)="leftMenuVisible = $event;" [persistVisibilityMode]="true">
+
+      <dec-sidenav-menu-item routerLink="/">
+        <mat-icon>home</mat-icon>
+        Home
+      </dec-sidenav-menu-item>
+
+      <dec-sidenav-menu-item>
+        <mat-icon>Best practices</mat-icon>
+        Best practices
+        <dec-sidenav-menu-item routerLink="/best-practices/component-styles">Component styles</dec-sidenav-menu-item>
+        <dec-sidenav-menu-item routerLink="/best-practices/forms">Forms</dec-sidenav-menu-item>
+        <dec-sidenav-menu-item routerLink="/best-practices/presentation-components">Presentation component</dec-sidenav-menu-item>
+      </dec-sidenav-menu-item>
+
+      <dec-sidenav-menu-item>
+        <mat-icon>view_quilt</mat-icon>
+        Components
+
+        <dec-sidenav-menu-item>
+          Autocomplete
+          <dec-sidenav-menu-item routerLink="/demo/component/autocomplete">Basic autocomplete</dec-sidenav-menu-item>
+          <dec-sidenav-menu-item routerLink="/demo/component/autocomplete-account">Account</dec-sidenav-menu-item>
+          <dec-sidenav-menu-item routerLink="/demo/component/autocomplete-country">Country</dec-sidenav-menu-item>
+          <dec-sidenav-menu-item routerLink="/demo/component/autocomplete-company">Company</dec-sidenav-menu-item>
+          <dec-sidenav-menu-item routerLink="/demo/component/autocomplete-department">Department</dec-sidenav-menu-item>
+          <dec-sidenav-menu-item routerLink="/demo/component/autocomplete-project">Project</dec-sidenav-menu-item>
+          <dec-sidenav-menu-item routerLink="/demo/component/autocomplete-quote">Quote</dec-sidenav-menu-item>
+          <dec-sidenav-menu-item routerLink="/demo/component/autocomplete-role">Roles</dec-sidenav-menu-item>
+        </dec-sidenav-menu-item>
+
+        <dec-sidenav-menu-item routerLink="/demo/component/list">List</dec-sidenav-menu-item>
+
+        <dec-sidenav-menu-item routerLink="/demo/component/mock-server">Mock server</dec-sidenav-menu-item>
+
+        <dec-sidenav-menu-item routerLink="/demo/component/breadcrumb">Breadcrumb</dec-sidenav-menu-item>
+
+        <dec-sidenav-menu-item routerLink="/demo/component/gallery">Gallery</dec-sidenav-menu-item>
+
+        <dec-sidenav-menu-item routerLink="/demo/component/page-forbiden">Page forbiden</dec-sidenav-menu-item>
+
+        <dec-sidenav-menu-item routerLink="/demo/component/product-spin">Product spin</dec-sidenav-menu-item>
+
+        <dec-sidenav-menu-item routerLink="/demo/component/sidenav">Sidenav</dec-sidenav-menu-item>
+
+        <dec-sidenav-menu-item routerLink="/demo/component/steps-list">Steps List</dec-sidenav-menu-item>
+
+        <dec-sidenav-menu-item routerLink="/demo/component/tabs">Tabs</dec-sidenav-menu-item>
+
+        <dec-sidenav-menu-item routerLink="/demo/component/upload">Upload</dec-sidenav-menu-item>
+
+      </dec-sidenav-menu-item>
+
+      <dec-sidenav-menu-item>
+        <mat-icon>view_quilt</mat-icon>
+        Directives
+        <dec-sidenav-menu-item routerLink="/demo/directive/image">Image</dec-sidenav-menu-item>
+        <dec-sidenav-menu-item routerLink="/demo/directive/permission">Permission</dec-sidenav-menu-item>
+      </dec-sidenav-menu-item>
+
+      <dec-sidenav-menu-item>
+        <mat-icon>settings_input_component</mat-icon>
+        Patterns
+
+        <dec-sidenav-menu-item routerLink="/patterns/structure">Folder structure</dec-sidenav-menu-item>
+        <dec-sidenav-menu-item routerLink="/patterns/style-guide">Style-Guide</dec-sidenav-menu-item>
+        <dec-sidenav-menu-item routerLink="/patterns/typography">Typography</dec-sidenav-menu-item>
+      </dec-sidenav-menu-item>
+
+      <dec-sidenav-menu-item>
+        <mat-icon>opacity</mat-icon>
+        Style
+        <dec-sidenav-menu-item routerLink="/demo/bootstrap/overview">Bootstrap</dec-sidenav-menu-item>
+      </dec-sidenav-menu-item>
+
+      <dec-sidenav-menu-item>
+        <mat-icon>play_circle_outline</mat-icon>
+        Services
+        <dec-sidenav-menu-item routerLink="/demo/service/api">Api</dec-sidenav-menu-item>
+        <dec-sidenav-menu-item routerLink="/demo/service/permission-guard">Permission Guard</dec-sidenav-menu-item>
+        <dec-sidenav-menu-item routerLink="/demo/service/snack-bar">Snackbar</dec-sidenav-menu-item>
+        <dec-sidenav-menu-item routerLink="/demo/service/websocket">Websocket</dec-sidenav-menu-item>
+      </dec-sidenav-menu-item>
+
+      <dec-sidenav-menu-item>
+        <mat-icon>build</mat-icon>
+        Tools
+        <dec-sidenav-menu-item routerLink="/tools/object-sort">Object Sort</dec-sidenav-menu-item>
+      </dec-sidenav-menu-item>
+
+      <dec-sidenav-menu-item routerLink="http://decoracontent.com/platform">Legacy Platform</dec-sidenav-menu-item>
+
+    </dec-sidenav-menu-left>
+
+    <dec-sidenav-content>
+
+      <router-outlet></router-outlet>
+
+    </dec-sidenav-content>
+
+  </dec-sidenav>
+
+</div>

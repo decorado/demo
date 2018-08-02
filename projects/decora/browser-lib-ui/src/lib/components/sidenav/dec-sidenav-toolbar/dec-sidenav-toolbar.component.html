@@ -1,0 +1,25 @@
+<mat-toolbar [color]="color" *ngIf="initialized">
+
+  <span class="items-icon item-left" *ngIf="leftMenuTriggerVisible" (click)="toggleLeftMenu.emit()">
+    &#9776;
+  </span>
+
+  <span *ngIf="customTitle">
+    <ng-content select="dec-sidenav-toolbar-title"></ng-content>
+  </span>
+
+  <div class="ribbon {{ribbon}}" *ngIf="notProduction">
+    <span>{{label | translate}}</span>
+  </div>
+
+  <span class="dec-sidenav-toolbar-custom-content">
+    <ng-content></ng-content>
+  </span>
+
+  <span class="items-spacer"></span>
+
+  <span class="items-icon item-right" *ngIf="rightMenuTriggerVisible" (click)="toggleRightMenu.emit()">
+    &#9776;
+  </span>
+
+</mat-toolbar>

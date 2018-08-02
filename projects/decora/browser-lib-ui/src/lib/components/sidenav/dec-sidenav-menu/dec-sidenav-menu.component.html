@@ -1,0 +1,10 @@
+<mat-list>
+  <ng-container *ngFor="let item of items">
+    <ng-container *ngIf="item.started && item.template ? true : false">
+      <ng-template
+      [ngTemplateOutlet]="item.template"
+      [ngTemplateOutletContext]="{treeLevel: treeLevel + 1}"
+      ></ng-template>
+    </ng-container>
+  </ng-container>
+</mat-list>
