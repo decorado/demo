@@ -7,6 +7,7 @@ import { debounceTime, distinctUntilChanged, tap, switchMap } from 'rxjs/operato
 import { DecApiService } from './../../services/api/decora-api.service';
 import { DecListFetchMethod } from './list.models';
 import { FilterData, DecFilter, FilterGroups, FilterGroup } from './../../services/api/decora-api.model';
+import { DecListFilter } from './list.models';
 
 @Component({
   selector: 'dec-list',
@@ -14,6 +15,21 @@ import { FilterData, DecFilter, FilterGroups, FilterGroup } from './../../servic
   styleUrls: ['./list.component.scss']
 })
 export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
+
+  /*
+  * filterMode
+  *
+  *
+  */
+  filterMode: 'tabs' | 'collapse' = 'tabs';
+
+
+  /*
+  * collapsableFilters
+  *
+  *
+  */
+  collapsableFilters: DecListFilter[] = [];
 
   /*
    * loading
@@ -44,6 +60,13 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
   get filterGroups(): FilterGroups {
     return this.filter ? this.filter.filterGroups : [];
   }
+
+  /*
+   * opennedCollapsable
+   *
+   *
+   */
+  opennedCollapsable;
 
   /*
    * report
@@ -464,6 +487,21 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   /*
+   * searchCollapsable
+   *
+   * search by collapsable filter
+   */
+  searchCollapsable(filter: DecListFilter) {
+
+    if (this.opennedCollapsable !== filter.uid) {
+
+      this.loadByOpennedCollapse(filter.uid);
+
+    }
+
+  }
+
+  /*
    * tableAndGridAreSet
    *
    * Return true if there are both GRID and TABLE definition inside the list
@@ -622,12 +660,28 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
+  private loadByOpennedCollapse(filterUid) {
+
+    const filter = this.collapsableFilters.find(item => item.uid === filterUid);
+
+    const filterGroup: FilterGroup = { filters: filter.filters };
+
+    this.loadReport(true, filterGroup);
+
+    setTimeout(() => {
+
+      this.opennedCollapsable = filter.uid;
+
+    }, 0);
+
+
+  }
+
   /*
    * loadReport
    *
    */
-  private loadReport(clearAndReloadReport?: boolean): Promise<any> {
-
+  private loadReport(clearAndReloadReport?: boolean, collapseFilter?: FilterGroup): Promise<any> {
 
     return new Promise((res, rej) => {
 
@@ -643,17 +697,27 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
 
       if (this.endpoint) {
 
-        const filterGroups = this.filter ? this.filter.filterGroups : undefined;
+        let filterGroups = this.filter ? this.filter.filterGroups : undefined;
+
+        if (collapseFilter) {
+
+          if (filterGroups) {
+
+            filterGroups.forEach(group => {
+              group.filters.push(...collapseFilter.filters);
+            });
+
+          } else {
+
+            filterGroups = [collapseFilter];
+
+          }
+
+        }
 
         const payload: DecFilter = {};
 
         payload.limit = this.limit;
-
-        let selectedTab;
-
-        if (this.filter && this.filter.tabsFilterComponent) {
-          selectedTab = this.filter.tabsFilterComponent.selectedTab();
-        }
 
         if (filterGroups) {
 
@@ -904,7 +968,7 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
 
     return filterGroups.find(filterGroup => {
 
-      const basicSerchFilter = filterGroup.filters.find(filter => filter.property === 'search');
+      const basicSerchFilter = filterGroup.filters ? filterGroup.filters.find(filter => filter.property === 'search') : undefined;
 
       return basicSerchFilter ? true : false;
 
@@ -1028,12 +1092,42 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
   private watchFilter() {
     if (this.filter) {
       this.filterSubscription = this.filter.search.subscribe(event => {
-        this.loadReport(true)
+
+        if (this.filterMode !== event.filterMode) {
+
+          if (event.filterMode === 'tabs') { // if changing from collapse to tabs, clear the results before showing the rows
+            this.setRows([]);
+          }
+
+          this.filterMode = event.filterMode;
+
+        }
+
+        if (this.filterMode === 'tabs') {
+
+          this.opennedCollapsable = undefined;
+
+          this.loadReport(true)
           .then((res) => {
             if (event.recount) {
               this.reloadCountReport();
             }
           });
+
+        } else {
+
+          if (this.opennedCollapsable) {
+
+            this.loadByOpennedCollapse(this.opennedCollapsable);
+
+          } else {
+
+            this.collapsableFilters = event.children ? event.children : [];
+
+          }
+
+        }
+
       });
     }
   }

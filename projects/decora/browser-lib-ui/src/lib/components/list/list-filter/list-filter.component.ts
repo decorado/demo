@@ -1,10 +1,12 @@
 import { Component, ContentChild, EventEmitter, Input, OnInit, OnDestroy, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import { DecListTabsFilterComponent } from './../list-tabs-filter/list-tabs-filter.component';
+import { DecListTabsFilterComponent } from './list-tabs-filter/list-tabs-filter.component';
 import { DecListAdvancedFilterComponent } from './../list-advanced-filter/list-advanced-filter.component';
 import { Subscription } from 'rxjs';
-import { DecListPreSearch } from './../list.models';
+import { DecListPreSearch, DecListFilter } from './../list.models';
 import { FilterGroups } from './../../../services/api/decora-api.model';
+import { PlatformLocation } from '@angular/common';
+
 @Component({
   selector: 'dec-list-filter',
   templateUrl: './list-filter.component.html',
@@ -26,6 +28,8 @@ export class DecListFilterComponent implements OnInit, OnDestroy {
   name: string;
   loading: boolean;
   isItFirstLoad = true;
+  filterMode: 'tabs' | 'collapse';
+  childrenFilters;
 
   /*
    * clickableContainerClass
@@ -42,22 +46,43 @@ export class DecListFilterComponent implements OnInit, OnDestroy {
 
   private watchUrlFilterSubscription: Subscription;
 
+  private _filters: DecListFilter[] = [];
+
   @Input() preSearch: DecListPreSearch;
 
   @Input() showInfoButton;
 
   @Input() hasPersistence = true;
 
-  @Output('search') search: EventEmitter<any> = new EventEmitter<any>();
+  @Input()
+  set filters(v: DecListFilter[]) {
+
+    if (this._filters !== v) {
+
+      this._filters = v.map(filter => new DecListFilter(filter));
+
+    }
+
+  }
+
+  get filters(): DecListFilter[] {
+    return this._filters;
+  }
+
+
+  @Output() search: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild('inputSearch') inputSearch;
 
-  @ContentChild(DecListTabsFilterComponent) tabsFilterComponent: DecListTabsFilterComponent;
+  @ViewChild(DecListTabsFilterComponent) tabsFilterComponent: DecListTabsFilterComponent;
 
   @ContentChild(DecListAdvancedFilterComponent) advancedFilterComponent: DecListAdvancedFilterComponent;
 
-  constructor(private route: ActivatedRoute,
-              private router: Router) { }
+  constructor(
+    private platformLocation: PlatformLocation,
+    private route: ActivatedRoute,
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.watchTabsFilter();
@@ -105,7 +130,7 @@ export class DecListFilterComponent implements OnInit, OnDestroy {
 
         if (this.filterForm[key]) {
 
-          const filter = {property: key, value: this.filterForm[key]};
+          const filter = { property: key, value: this.filterForm[key] };
 
           newDecFilterGroup.filters.push(filter);
 
@@ -241,7 +266,7 @@ export class DecListFilterComponent implements OnInit, OnDestroy {
 
     } else {
 
-      this.filterGroupsWithoutTabs = [{filters: [filter]}];
+      this.filterGroupsWithoutTabs = [{ filters: [filter] }];
 
     }
 
@@ -264,25 +289,25 @@ export class DecListFilterComponent implements OnInit, OnDestroy {
   private reacalculateAndEmitCurrentDecFilterGroups(recount = false) {
 
     this.emitCurrentDecFilterGroups(recount)
-    .then(() => {
-
-      if (!this.hasPersistence) {
-
-        return;
-
-      }
-
-      this.refreshFilterInUrlQuery()
       .then(() => {
 
-        this.closeFilters();
+        if (!this.hasPersistence) {
 
-        this.clearFilterForm();
+          return;
+
+        }
+
+        this.refreshFilterInUrlQuery()
+          .then(() => {
+
+            this.closeFilters();
+
+            this.clearFilterForm();
+
+          });
+
 
       });
-
-
-    });
 
   }
 
@@ -329,9 +354,26 @@ export class DecListFilterComponent implements OnInit, OnDestroy {
   private watchTabsFilter() {
     if (this.tabsFilterComponent) {
       this.tabsFilterSubscription = this.tabsFilterComponent.search.subscribe(filterEvent => {
+
+        if (filterEvent.children) {
+
+          this.filterMode = 'collapse';
+
+          this.childrenFilters = filterEvent.children;
+
+        } else {
+
+          this.filterMode = 'tabs';
+
+        }
+
+
         this.tabsFilter = filterEvent.filters;
+
         this.emitCurrentDecFilterGroups(this.isItFirstLoad || filterEvent.recount);
+
         this.isItFirstLoad = false;
+
       });
     }
   }
@@ -350,7 +392,7 @@ export class DecListFilterComponent implements OnInit, OnDestroy {
 
     if (this.innerDecFilterGroups && this.innerDecFilterGroups.length) {
 
-      this.innerDecFilterGroups.forEach((filterGroup: {filters: any[]}) => {
+      this.innerDecFilterGroups.forEach((filterGroup: { filters: any[] }) => {
 
         const filterGroupCopy = {
           filters: filterGroup.filters.slice()
@@ -372,7 +414,7 @@ export class DecListFilterComponent implements OnInit, OnDestroy {
 
     } else if (this.tabsFilter) {
 
-      currentFilter.push({filters: this.tabsFilter});
+      currentFilter.push({ filters: this.tabsFilter });
 
     }
 
@@ -387,19 +429,23 @@ export class DecListFilterComponent implements OnInit, OnDestroy {
    */
   private emitCurrentDecFilterGroups(recount = false) {
 
+    let filterGroups = this.filterGroups ? JSON.parse(JSON.stringify(this.filterGroups)) : undefined;
+
     return new Promise((res, rej) => {
 
       this.mountCurrentDecFilterGroups();
 
       if (this.preSearch) {
 
-        this.filterGroups = this.preSearch(this.filterGroups);
+        filterGroups = this.preSearch(filterGroups);
 
       }
 
       this.search.emit({
-        filterGroups: this.filterGroups,
-        recount: recount
+        filterGroups: filterGroups,
+        recount: recount,
+        filterMode: this.filterMode,
+        children: this.childrenFilters,
       });
 
       res();
@@ -483,37 +529,37 @@ export class DecListFilterComponent implements OnInit, OnDestroy {
     }
 
     this.watchUrlFilterSubscription = this.route.queryParams
-    .subscribe((params) => {
+      .subscribe((params) => {
 
-      const interval = window.setInterval(() => {
+        const interval = window.setInterval(() => {
 
-        if (this.name) {
+          if (this.name) {
 
-          const base64Filter = params[this.componentFilterName()];
+            const base64Filter = params[this.componentFilterName()];
 
-          if (base64Filter) {
+            if (base64Filter) {
 
-            if (base64Filter !== this.currentBase64Filter) {
+              if (base64Filter !== this.currentBase64Filter) {
 
-              const filter = this.getJsonFromBase64Filter(base64Filter);
+                const filter = this.getJsonFromBase64Filter(base64Filter);
 
-              this.innerDecFilterGroups = filter;
+                this.innerDecFilterGroups = filter;
 
-              this.mountCurrentDecFilterGroups();
+                this.mountCurrentDecFilterGroups();
 
-              this.onSearch();
+                this.onSearch();
+
+              }
 
             }
 
+            window.clearInterval(interval);
+
           }
 
-          window.clearInterval(interval);
+        }, 10);
 
-        }
-
-      }, 10);
-
-    });
+      });
   }
 
   /*

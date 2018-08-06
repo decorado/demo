@@ -5,10 +5,14 @@ import { DecListFilterComponent } from './list-filter/list-filter.component';
 import { DecApiService } from './../../services/api/decora-api.service';
 import { DecListFetchMethod } from './list.models';
 import { FilterGroups } from './../../services/api/decora-api.model';
+import { DecListFilter } from './list.models';
 export declare class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
     private service;
+    filterMode: 'tabs' | 'collapse';
+    collapsableFilters: DecListFilter[];
     loading: boolean;
     readonly filterGroups: FilterGroups;
+    opennedCollapsable: any;
     report: any;
     isLastPage: boolean;
     private filterData;
@@ -51,6 +55,7 @@ export declare class DecListComponent implements OnInit, OnDestroy, AfterViewIni
     removeItem(id: any): void;
     restart(): void;
     showMore(): Promise<any>;
+    searchCollapsable(filter: DecListFilter): void;
     tableAndGridAreSet(): DecListTableComponent;
     toggleListMode(): void;
     private actByScrollPosition;
@@ -62,7 +67,8 @@ export declare class DecListComponent implements OnInit, OnDestroy, AfterViewIni
     private doFirstLoadByTabsFilter();
     private doFirstLoadLocally(refresh);
     private ensureUniqueName();
-    private loadReport(clearAndReloadReport?);
+    private loadByOpennedCollapse(filterUid);
+    private loadReport(clearAndReloadReport?, collapseFilter?);
     private setFiltersComponentsBasePathAndNames();
     private setRows(rows?);
     private watchScrollEventEmitter();

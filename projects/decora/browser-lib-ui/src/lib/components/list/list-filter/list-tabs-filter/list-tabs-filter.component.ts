@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { DecListFetchMethod, DecListTabsFilter } from './../list.models';
+import { DecListFetchMethod, DecListFilter } from './../../list.models';
 
 @Component({
   selector: 'dec-list-tabs-filter',
@@ -21,23 +21,19 @@ export class DecListTabsFilterComponent implements OnDestroy {
   customFetchMethod: DecListFetchMethod;
 
   @Input()
-  set filters(v: DecListTabsFilter[]) {
-
+  set filters(v: DecListFilter[]) {
     if (this._filters !== v) {
-
-      this._filters = v.map(filter => new DecListTabsFilter(filter));
-
+      this._filters = v ? v.map(filter => new DecListFilter(filter)) : [];
     }
-
   }
 
-  get filters(): DecListTabsFilter[] {
+  get filters(): DecListFilter[] {
     return this._filters;
   }
 
   private defaultTab: string;
 
-  private _filters: DecListTabsFilter[] = [];
+  private _filters: DecListFilter[] = [];
 
   private wathUrlSubscription: Subscription;
 
@@ -70,15 +66,17 @@ export class DecListTabsFilterComponent implements OnDestroy {
 
   @Output('tabChange') tabChange: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(private route: ActivatedRoute,
-              private router: Router) { }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router
+  ) { }
 
   ngOnDestroy() {
     this.stopWatchingTabInUrlQuery();
   }
 
   doFirstLoad = () => {
-    setTimeout(() => { // wait for the url to change before doing the first load
+    setTimeout(() => { // avoids ExpressionChangedAfterItHasBeenCheckedError selecting the active tab
       this.watchTabInUrlQuery();
     }, 0);
   }
@@ -100,10 +98,10 @@ export class DecListTabsFilterComponent implements OnDestroy {
     if (this.countEndpoint) {
       const fetchMethod = this.customFetchMethod || this.service.get;
       fetchMethod(this.countEndpoint, payload)
-      .toPromise()
-      .then(res => {
-        this.countReport = res;
-      });
+        .toPromise()
+        .then(res => {
+          this.countReport = res;
+        });
     }
   }
 
@@ -136,25 +134,21 @@ export class DecListTabsFilterComponent implements OnDestroy {
 
   }
 
-  private onSearch = (uid, recount = false) => {
+  private onSearch = (tab, recount = false) => {
 
-    this.selectedTabUid = uid;
+    this.selectedTabUid = tab.uid;
 
-    if (this.filters) {
+    if (this.filters && tab) {
 
-      const filterTab = this.filters.find(filter => filter.uid === uid);
+      const event = {
+        filters: tab.filters,
+        children: tab.children,
+        recount: recount,
+      };
 
-      if (filterTab) {
-
-        this.search.emit({
-          filters: filterTab.filters,
-          recount: recount
-        });
-
-      }
+      this.search.emit(event);
 
     }
-
 
   }
 
@@ -173,19 +167,21 @@ export class DecListTabsFilterComponent implements OnDestroy {
     this.detectDefaultTab();
 
     this.wathUrlSubscription = this.route.queryParams
-    .subscribe((params) => {
+      .subscribe((params) => {
 
-      const tab = params[this.componentTabName()] || this.defaultTab;
+        const tab = params[this.componentTabName()] || this.defaultTab;
 
-      if (tab !== this.selectedTabUid) {
+        if (tab !== this.selectedTabUid) {
 
-        this.onSearch(tab);
+          const selectedTab = this.filters.find(filter => filter.uid === tab);
 
-        this.tabChange.emit(tab);
+          this.onSearch(selectedTab);
 
-      }
+          this.tabChange.emit(tab);
 
-    });
+        }
+
+      });
 
   }
 

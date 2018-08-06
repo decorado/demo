@@ -7,7 +7,7 @@ import { DecListModule, DecApiModule } from '@projects/decora/browser-lib-ui/src
 import { TranslateModule } from '@ngx-translate/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { DemoContainerModule } from '@app/shared/components/demo-container/demo-container.module';
-import { environment } from '@env/environment';
+import { MatExpansionModule } from '@angular/material';
 
 @NgModule({
   imports: [
@@ -17,6 +17,7 @@ import { environment } from '@env/environment';
     DecListModule,
     TranslateModule,
     FlexLayoutModule,
+    MatExpansionModule,
     DecApiModule,
   ],
   declarations: [DecoraListDemoComponent]
