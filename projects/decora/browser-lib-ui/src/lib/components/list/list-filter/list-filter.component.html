@@ -92,5 +92,5 @@
     (remove)="removeDecFilterGroup($event)"
     (edit)="editDecFilterGroup($event)"></dec-list-active-filter-resume>
 
-  <ng-content select="dec-list-tabs-filter"></ng-content>
+  <dec-list-tabs-filter [filters]="filters"></dec-list-tabs-filter>
 </div>

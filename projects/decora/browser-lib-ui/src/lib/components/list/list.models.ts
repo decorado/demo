@@ -1,5 +1,6 @@
 import { Observable } from 'rxjs';
-import { FilterGroup, FilterGroups } from './../../services/api/decora-api.model';
+import { Filters, FilterGroups } from './../../services/api/decora-api.model';
+
 
 /*
   * DecListPreSearch
@@ -36,27 +37,30 @@ export interface DecListFetchMethodResponse {
 }
 
 /*
-  * DecListTabsFilter
+  * DecListFilter
   *
   * Structure of tabs filters
   */
-export class DecListTabsFilter {
+export class DecListFilter {
+  children?: DecListFilter[];
   count?: Function | string;
   default?: boolean;
-  filters: FilterGroup;
+  filters: Filters;
   hide?: boolean;
   label: string;
+  color: string;
   listMode?: DecListType;
   permissions?: string[];
   uid?: string;
 
   constructor(data: any = {}) {
-
+    this.children = data.children ? data.children.map(filter => new DecListFilter(filter)) : undefined;
     this.count = data.count || undefined;
     this.default = data.default || undefined;
     this.filters = data.filters || undefined;
     this.hide = data.hide || undefined;
     this.label = data.label || undefined;
+    this.color = data.color || '#6E757A';
     this.listMode = data.listMode || undefined;
     this.permissions = data.permissions || undefined;
     this.uid = data.uid || data.label;

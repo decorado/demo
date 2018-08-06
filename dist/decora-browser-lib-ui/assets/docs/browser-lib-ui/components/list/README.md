@@ -115,21 +115,15 @@ Javascript
   </dec-list-filter>
 ```
 
-#### Filtering with tabs
-To filter with tabs, you just need to include the `dec-list-tabs-filter` inside `dec-list-filter`. This element receives an array of filters and for eah one it creates one tab over the list so the list can be filtered by changing tabs.
+#### Filtering the results
+To filter the results you just need to include the `filters` input in the `dec-list-filter`. This input receives an array of filters and for eah one it creates one tab over the list so the list can be filtered by changing tabs.
 
-You can set the default tab using `default` in on of the filters.
+For each tab we can add an array of children as a subfilter, so when the tab is selected one colapsable group of tables is presented to the user to select the subfilter wanted.
+
+You can set the default tab using `default` in one of the filters.
 
 ```html
-  <dec-list-filter>
-
-    <dec-list-tabs-filter
-      [countEndpoint]="http://api.com/user/counter"
-      [filters]="[{label: 'ACTIVE', default: true, filters: [{property: 'status', value: 'ACTIVE'}]}]"
-      defaultTab="ACTIVE"
-    ></dec-list-tabs-filter>
-
-  </dec-list-filter>
+  <dec-list-filter [filters]="[{label: 'ACTIVE', default: true, filters: [{property: 'status', value: 'ACTIVE'}]}]"></dec-list-filter>
 ```
 
 ### URL persistence
@@ -163,20 +157,10 @@ Used to enabling list filtering.
 
 |Property  |Type |Default  |Description  |
 |-         |-    |-        |-            |
+|filters  |`DecListFilter`    |[]        |A list of filters used as tabs|
 |preSearch |`DecListPreSearch`    |undefined        |This function is used to manupulate the filter before the fetch. This is used to manipulate the filters from outside the list. It receives and returns an object of type `DecListFilterGroups`|
 |showInfoButton| boolean| false| Used to display an Info icon |
 |hasPersistence| boolean| true| Used to control the filter url persistence|
-
-### Tabs Filter
-Used to enable tabs filtering. With a pre defined filter for each tab.
-
-`<dec-list-tabs-filter>`
-
-|Property  |Type |Default  |Description  |
-|-         |-    |-        |-            |
-|filters |`DecListTabsFilter`    |[]        |A list of filters used as tabs|
-|defaultTab| string | first tab | Used to specify the firs tab to be open |
-|countEndpoint | URL | undefined | Used to load the count data to be used in each tab do show the number of records using that filter |
 
 ### Grid
 Used to enable tabs filtering. With a pre defined filter for each tab.
@@ -274,11 +258,11 @@ export interface DecListFilterGroup {
 }
 
 /*
-  * DecListTabsFilter
+  * DecListFilter
   *
   * Structure of tabs filters
   */
-export interface DecListTabsFilter {
+export interface DecListFilter {
   count?: Function | string;
   default?: boolean;
   filters: FilterGroup;

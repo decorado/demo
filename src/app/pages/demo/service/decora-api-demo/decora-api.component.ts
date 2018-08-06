@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DecApiService } from '@projects/decora/browser-lib-ui/src/public_api';
 import { HttpHeaders, HttpParams } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-decora-api',
@@ -38,7 +39,8 @@ export class DecApiComponent implements OnInit {
   endpoint = '/accounts';
 
   constructor(
-    private decoraApi: DecApiService
+    private decoraApi: DecApiService,
+    private route: ActivatedRoute,
   ) {
     this.decoraApiHost = this.decoraApi.host;
     this.user$ = this.decoraApi.user$;
@@ -54,7 +56,7 @@ export class DecApiComponent implements OnInit {
     })
     .subscribe((user) => {
       if (user) {
-        // 'redirectUrl'
+        this.goToRedirectUrl();
       }
     }, this.handleError);
   }
@@ -128,5 +130,12 @@ export class DecApiComponent implements OnInit {
   private handleError = (err) => {
     this.responseStatus = err.status;
     this.responseMessage = err.message;
+  }
+
+  private goToRedirectUrl() {
+    const redirectUrl = this.route.snapshot.queryParams['redirectUrl'];
+    if (redirectUrl) {
+      window.location.href = redirectUrl;
+    }
   }
 }

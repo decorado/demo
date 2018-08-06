@@ -6,6 +6,8 @@ import { FormsModule } from '@angular/forms';
 import { MatButtonModule, MatCardModule, MatChipsModule, MatIconModule, MatInputModule } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
 import { DecListActiveFilterResumeModule } from './../list-active-filter-resume/list-active-filter-resume.module';
+import { DecPermissionModule } from './../../../directives/permission/dec-permission.module';
+import { DecListTabsFilterComponent } from './list-tabs-filter/list-tabs-filter.component';
 
 @NgModule({
   imports: [
@@ -13,6 +15,7 @@ import { DecListActiveFilterResumeModule } from './../list-active-filter-resume/
     FlexLayoutModule,
     FormsModule,
     DecListActiveFilterResumeModule,
+    DecPermissionModule,
     MatButtonModule,
     MatCardModule,
     MatChipsModule,
@@ -20,7 +23,7 @@ import { DecListActiveFilterResumeModule } from './../list-active-filter-resume/
     MatInputModule,
     TranslateModule,
   ],
-  declarations: [DecListFilterComponent],
+  declarations: [DecListFilterComponent, DecListTabsFilterComponent],
   exports: [DecListFilterComponent],
 })
 export class DecListFilterModule { }

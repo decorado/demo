@@ -44,8 +44,6 @@ export * from './lib/components/list/list-grid/list-grid.component';
 export * from './lib/components/list/list-table/list-table.module';
 export * from './lib/components/list/list-table/list-table.component';
 export * from './lib/components/list/list-table-column/list-table-column.component';
-export * from './lib/components/list/list-tabs-filter/list-tabs-filter.module';
-export * from './lib/components/list/list-tabs-filter/list-tabs-filter.component';
 export * from './lib/components/list/list-actions/list-actions.module';
 export * from './lib/components/list/list-actions/list-actions.component';
 export * from './lib/components/page-forbiden/page-forbiden.component';

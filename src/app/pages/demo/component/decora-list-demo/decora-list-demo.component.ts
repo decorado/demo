@@ -15,9 +15,18 @@ export class DecoraListDemoComponent implements OnInit {
     { id: 3, name: 'teste 3' },
   ];
 
-  tabs = [
+  filters = [
     { label: 'bruno', filters: [{ property: 'name', value: 'bruno' }] },
     { label: 'bruno OR rene', default: true, filters: [{ property: 'name', value: ['bruno', 'rene'] }] },
+  ];
+
+  filtersWithSubfilters = [
+    { label: 'bruno', filters: [{ property: 'name', value: 'bruno' }] },
+    { label: 'bruno OR rene', default: true, filters: [{ property: 'name', value: ['bruno', 'rene'] }] },
+    { label: 'With sub', children: [
+      { label: 'bruno', filters: [{ property: 'name', value: 'bruno' }] },
+      { label: 'bruno OR rene', color: '#1a1aff', filters: [{ property: 'name', value: ['bruno', 'rene'] }] },
+    ]},
   ];
 
   constructor() { }

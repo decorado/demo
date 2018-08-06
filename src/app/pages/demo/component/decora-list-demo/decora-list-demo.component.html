@@ -1,6 +1,31 @@
 <app-demo-container readmeSrc="/assets/docs/browser-lib-ui/components/list/README.md">
 
-  <h3>Passing rows</h3>
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>Passing rows</mat-expansion-panel-header>
+      <ng-container [ngTemplateOutlet]="example1"></ng-container>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>Using customFetchMethod</mat-expansion-panel-header>
+      <ng-container [ngTemplateOutlet]="example2"></ng-container>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>Using DecApi</mat-expansion-panel-header>
+      <ng-container [ngTemplateOutlet]="example3"></ng-container>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>Using sub filter (accordion)</mat-expansion-panel-header>
+      <ng-container [ngTemplateOutlet]="example4"></ng-container>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+</app-demo-container>
+
+<ng-template #example1>
+
   <dec-list name="list-test-using-rows" [rows]="rows">
 
     <dec-list-grid>
@@ -27,7 +52,9 @@
 
   </dec-list>
 
-  <h3>Using customFetchMethod</h3>
+</ng-template>
+
+<ng-template #example2>
   <dec-list name="list-test-custom-fetch-method" [customFetchMethod]="myCustomDecListFetchMethod">
 
     <dec-list-grid>
@@ -53,14 +80,12 @@
     </dec-list-table>
 
   </dec-list>
+</ng-template>
 
-  <h3>Using DecApi - {{ listTabsFilter?.selectedTabUid }}</h3>
-
+<ng-template #example3>
   <dec-list name="list-test-decora-api" endpoint="report/accounts" [searchableProperties]="['name', 'email', '_id']">
 
-    <dec-list-filter>
-
-      <dec-list-tabs-filter [filters]="tabs" #listTabsFilter></dec-list-tabs-filter>
+    <dec-list-filter [filters]="filters">
 
       <dec-list-advanced-filter>
 
@@ -97,4 +122,46 @@
     </dec-list-table>
 
   </dec-list>
-</app-demo-container>
+</ng-template>
+
+<ng-template #example4>
+  <dec-list name="list-test-subfilter" endpoint="report/accounts" [searchableProperties]="['name', '_id', 'email']">
+
+    <dec-list-filter [filters]="filtersWithSubfilters">
+
+      <dec-list-advanced-filter>
+
+        <ng-template let-form="form">
+
+          advanced
+
+        </ng-template>
+
+      </dec-list-advanced-filter>
+
+    </dec-list-filter>
+
+    <dec-list-grid>
+      <ng-template let-row="row">
+        <div class="test-grid-wrapper">
+          <p>teste grid</p>
+          {{ row.id }}
+        </div>
+      </ng-template>
+    </dec-list-grid>
+
+    <dec-list-table>
+      <dec-list-table-column title="Name">
+        <ng-template let-row="row">
+          {{ row.name }}
+        </ng-template>
+      </dec-list-table-column>
+      <dec-list-table-column title="Email">
+        <ng-template let-row="row">
+          {{ row.email }}
+        </ng-template>
+      </dec-list-table-column>
+    </dec-list-table>
+
+  </dec-list>
+</ng-template>
