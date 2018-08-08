@@ -2,6 +2,7 @@ import { OnDestroy } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { UserAuthData, LoginData, FacebookLoginData, ServiceConfig, DecFilter } from './decora-api.model';
+import { DecSnackBarService } from './../snack-bar/dec-snack-bar.service';
 export declare type CallOptions = {
     headers?: HttpHeaders;
     withCredentials?: boolean;
@@ -14,13 +15,14 @@ export declare type CallOptions = {
 export declare type HttpRequestTypes = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 export declare class DecApiService implements OnDestroy {
     private http;
+    private snackbar;
     private config;
     user: UserAuthData;
     user$: BehaviorSubject<UserAuthData>;
     private sessionToken;
     private userSubscripion;
     readonly host: string;
-    constructor(http: HttpClient, config: ServiceConfig);
+    constructor(http: HttpClient, snackbar: DecSnackBarService, config: ServiceConfig);
     ngOnDestroy(): void;
     auth: (loginData: LoginData) => Observable<any>;
     authFacebook: (loginData: FacebookLoginData) => Observable<any>;

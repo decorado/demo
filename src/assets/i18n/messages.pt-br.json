@@ -21,5 +21,8 @@
     "warn": "Aviso",
     "image-link": "Link da imagem",
     "History": "Histórico"
+  },
+  "message": {
+    "status-409": "Estes dados estão desatualizados. Atualize a página e tente novamente."
   }
 }

@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams, HttpRequest } from '@angular/commo
 import { Observable, throwError, BehaviorSubject, Subscription } from 'rxjs';
 import { catchError, share, tap } from 'rxjs/operators';
 import { UserAuthData, LoginData, FacebookLoginData, ServiceConfig, DecFilter, SerializedDecFilter } from './decora-api.model';
+import { DecSnackBarService } from './../snack-bar/dec-snack-bar.service';
 
 export type CallOptions = {
   headers?: HttpHeaders;
@@ -33,6 +34,7 @@ export class DecApiService implements OnDestroy {
 
   constructor(
     private http: HttpClient,
+    private snackbar: DecSnackBarService,
     @Optional() @Inject('DECORA_API_SERVICE_CONFIG') private config: ServiceConfig
   ) {
     this.subscribeToUser();
@@ -308,12 +310,20 @@ export class DecApiService implements OnDestroy {
     const bodyMessage = (error && error.error) ? error.error.message : '';
     const status = error.status;
     const statusText = error.statusText;
-    if ((error.status === 401) && this.config.authHost) {
-      this.goToLoginPage();
-      return throwError({ status, statusText, message, bodyMessage });
-    } else {
-      return throwError({ status, statusText, message, bodyMessage });
+
+    switch (error.status) {
+      case 401:
+        if (this.config.authHost) {
+          this.goToLoginPage();
+        }
+        break;
+
+      case 409:
+        this.snackbar.open('message.status-409', 'success');
+        break;
     }
+
+    return throwError({ status, statusText, message, bodyMessage });
   }
 
   // ******* //
