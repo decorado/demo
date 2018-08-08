@@ -55,4 +55,15 @@ export class DecSidenavMenuItemComponent implements AfterViewInit {
     }
   }
 
+  getBackground(treeLevel) {
+    let style = { backgroundColor: '', pointerEvents: '' };
+    if (this.routerLink === window.location.pathname) {
+      style.backgroundColor += '#EF3F54';
+      style.pointerEvents += 'none';
+    } else {
+      style.backgroundColor += 'rgba(0, 0, 0, ' + treeLevel / 6 + ')'; // hsl(209, 20%, 30%)
+    }
+    return style;
+  }
+
 }

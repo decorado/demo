@@ -12,4 +12,8 @@ export declare class DecSidenavMenuItemComponent implements AfterViewInit {
     readonly subitems: DecSidenavMenuItemComponent[];
     toggleSubmenu(): void;
     openLink(): void;
+    getBackground(treeLevel: any): {
+        backgroundColor: string;
+        pointerEvents: string;
+    };
 }
