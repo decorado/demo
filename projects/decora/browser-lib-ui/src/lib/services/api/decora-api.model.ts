@@ -97,9 +97,14 @@ export interface SerializedDecFilter {
   *
   * Signle filter
   */
-export interface Filter {
+export class Filter {
   property: string;
   value: string | string[];
+
+  constructor(data: any = {}) {
+    this.property = data.property;
+    this.value = Array.isArray(data.property) ? data.property : [data.property];
+  }
 }
 
 /*

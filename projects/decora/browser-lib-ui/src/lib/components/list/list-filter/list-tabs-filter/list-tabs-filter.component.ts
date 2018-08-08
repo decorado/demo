@@ -10,15 +10,15 @@ import { DecListFetchMethod, DecListFilter } from './../../list.models';
 })
 export class DecListTabsFilterComponent implements OnDestroy {
 
-  selectedTabUid: string;
+  customFetchMethod: DecListFetchMethod;
 
   name: string; // list unique name to identify the tab in url
 
-  countReport: any;
+  selectedTabUid: string;
 
   service: any;
 
-  customFetchMethod: DecListFetchMethod;
+  @Input() countReport: any;
 
   @Input()
   set filters(v: DecListFilter[]) {
@@ -36,31 +36,6 @@ export class DecListTabsFilterComponent implements OnDestroy {
   private _filters: DecListFilter[] = [];
 
   private wathUrlSubscription: Subscription;
-
-  private _countEndpoint: string;
-
-
-  /*
-   * countEndpoint
-   *
-   *
-   */
-  @Input()
-  set countEndpoint(v: string) {
-
-    if (this._countEndpoint !== v) {
-
-      this._countEndpoint = (v[0] && v[0] === '/') ? v.replace('/', '') : v;
-
-    }
-
-  }
-
-  get countEndpoint(): string {
-
-    return this._countEndpoint;
-
-  }
 
   @Output('search') search: EventEmitter<any> = new EventEmitter<any>();
 
@@ -81,31 +56,15 @@ export class DecListTabsFilterComponent implements OnDestroy {
     }, 0);
   }
 
-  getCountOf(count: string | Function) {
-    if (typeof count === 'string') {
-      return this.countReport && this.countReport[count] >= 0 ? this.countReport[count] : '?';
-    } else {
-      return this.countReport && count(this.countReport) >= 0 ? count(this.countReport) : '?';
-    }
+  getCountOf(uid: string) {
+    return this.countReport && this.countReport[uid] >= 0 ? this.countReport[uid] : '?';
   }
 
   selectTab(tab) {
     this.setTabInUrlQuery(tab);
   }
 
-  reloadCountReport(payload) {
-
-    if (this.countEndpoint) {
-      const fetchMethod = this.customFetchMethod || this.service.get;
-      fetchMethod(this.countEndpoint, payload)
-        .toPromise()
-        .then(res => {
-          this.countReport = res;
-        });
-    }
-  }
-
-  selectedTab() {
+  get selectedTab() {
 
     return this.filters ? this.filters.find(filter => filter.uid === this.selectedTabUid) : undefined;
 

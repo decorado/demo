@@ -8,7 +8,7 @@
               (click)="selectTab(tabFilter.uid)"
               [class.selected]="selectedTabUid == (tabFilter.uid)">
         <span>{{ 'label.' + tabFilter.label | translate | uppercase }}</span>
-        <span *ngIf="tabFilter.count && countEndpoint && countReport" class="badge badge-pill badge-small">{{ getCountOf(tabFilter.count) }}</span>
+        <span *ngIf="countReport" class="badge badge-pill badge-small">{{ countReport[tabFilter.uid].count }}</span>
       </button>
     </ng-container>
   </div>

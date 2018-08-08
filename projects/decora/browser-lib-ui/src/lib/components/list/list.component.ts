@@ -1,11 +1,11 @@
-import {AfterViewInit, Component, ContentChild, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import {DecListGridComponent} from './list-grid/list-grid.component';
-import {DecListTableComponent} from './list-table/list-table.component';
-import { DecListFilterComponent} from './list-filter/list-filter.component';
+import { AfterViewInit, Component, ContentChild, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { DecListGridComponent } from './list-grid/list-grid.component';
+import { DecListTableComponent } from './list-table/list-table.component';
+import { DecListFilterComponent } from './list-filter/list-filter.component';
 import { Observable, BehaviorSubject, Subscription, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap, switchMap } from 'rxjs/operators';
 import { DecApiService } from './../../services/api/decora-api.service';
-import { DecListFetchMethod } from './list.models';
+import { DecListFetchMethod, CountReport } from './list.models';
 import { FilterData, DecFilter, FilterGroups, FilterGroup } from './../../services/api/decora-api.model';
 import { DecListFilter } from './list.models';
 
@@ -15,6 +15,13 @@ import { DecListFilter } from './list.models';
   styleUrls: ['./list.component.scss']
 })
 export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
+
+  /*
+  * countReport
+  *
+  *
+  */
+  countReport: CountReport;
 
   /*
   * filterMode
@@ -81,6 +88,13 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
    *
    */
   isLastPage: boolean;
+
+  /*
+  * selectedTab
+  *
+  *
+  */
+  selectedTab: any;
 
   /*
    * filterData
@@ -344,11 +358,9 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
 
     if (this.filter && this.filter.tabsFilterComponent) {
 
-      const selectedTab = this.filter.tabsFilterComponent.selectedTab();
+      if (this.selectedTab && this.selectedTab.listMode) {
 
-      if (selectedTab && selectedTab.listMode) {
-
-        listMode = selectedTab.listMode;
+        listMode = this.selectedTab.listMode;
 
       } else {
 
@@ -430,11 +442,50 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   reloadCountReport() {
 
-    if (this.filter) {
+    if (this.filter && this.filter.filters && this.filter.loadCountReport) {
 
-      this.filter.reloadCountReport(this.payload);
+      const endpoint = this.endpoint[this.endpoint.length - 1] === '/' ? `${this.endpoint}count` : `${this.endpoint}/count`;
+
+      const filters = this.filter.filters;
+
+      const payloadWithSearchableProperties = this.getCountableFilters(filters);
+
+      this.service.post(endpoint, payloadWithSearchableProperties)
+      .subscribe(res => {
+
+        this.countReport = this.mountCountReport(res);
+
+        this.filter.countReport = this.countReport;
+
+      });
 
     }
+
+  }
+
+  private mountCountReport(filtersCounters): CountReport {
+
+    const countReport: CountReport = {
+      count: 0
+    };
+
+    filtersCounters.forEach(item => {
+
+      countReport[item.uid] = {
+
+        count: item.count
+
+      };
+
+      if (item.children) {
+
+        countReport[item.uid].children = this.mountCountReport(item.children);
+
+      }
+
+    });
+
+    return countReport;
 
   }
 
@@ -460,7 +511,9 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     if (this.endpoint) {
+
       this.reloadCountReport();
+
     }
 
   }
@@ -532,6 +585,109 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   /*
+   * getCollapsableCount
+   *
+   * get Collapsable Count from countReport
+   */
+  getCollapsableCount(uid) {
+
+    try {
+
+      return this.countReport[this.selectedTab].children[uid].count;
+
+    } catch (error) {
+
+      return '?';
+
+    }
+
+
+  }
+
+  /*
+   * getCountableFilters
+   *
+   * Get the search filter, trnsforme the search params into the searchable properties and inject it in every filter configured in dec-filters
+   *
+   * The result is used to call the count endpoint and return the amount of reccords found in every tab/collapse
+   *
+   */
+  private getCountableFilters(filters) {
+
+    const filterGroupsWithoutTabs = this.filter.filterGroupsWithoutTabs || [{filters: []}];
+
+    const filtersPlusSearch = filters.map(decFilter => {
+
+      const decFilterFiltersPlusSearch = JSON.parse(JSON.stringify(decFilter));
+
+      if (decFilterFiltersPlusSearch.filters) {
+
+        const tabFiltersCopy = JSON.parse(JSON.stringify(decFilterFiltersPlusSearch.filters));
+
+        decFilterFiltersPlusSearch.filters = JSON.parse(JSON.stringify(filterGroupsWithoutTabs));
+
+        decFilterFiltersPlusSearch.filters.forEach(filterGroup => {
+
+          filterGroup.filters.push(...tabFiltersCopy);
+
+        });
+
+      } else if (decFilterFiltersPlusSearch.children) {
+
+        decFilterFiltersPlusSearch.children = this.getCountableFilters(decFilterFiltersPlusSearch.children);
+
+      }
+
+      return {
+        uid: decFilterFiltersPlusSearch.uid,
+        filters: decFilterFiltersPlusSearch.filters,
+        children: decFilterFiltersPlusSearch.children,
+      };
+
+    });
+
+    return this.ensureFilterValuesAsArray(filtersPlusSearch);
+
+  }
+
+  /*
+   * ensureFilterValuesAsArray
+   *
+   * Get an array of filtergroups and set the filter values to array if not
+   *
+   */
+  private ensureFilterValuesAsArray(filterGroups: any = []) {
+
+    return filterGroups.map(decListFilter => {
+
+      if (decListFilter.filters) {
+
+        this.appendFilterGroupsBasedOnSearchableProperties(decListFilter.filters);
+
+        decListFilter.filters = decListFilter.filters.map(filterGroup => {
+
+
+          filterGroup.filters = filterGroup.filters.map(filter => {
+
+            filter.value = Array.isArray(filter.value) ? filter.value : [filter.value];
+
+            return filter;
+
+          });
+
+          return filterGroup;
+
+        });
+
+      }
+
+      return decListFilter;
+
+    });
+
+  }
+
+  /*
    * actByScrollPosition
    *
    * This method detect if there is scrooling action on window to fetch and show more rows when the scrolling down.
@@ -599,7 +755,7 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
   /*
    * emitScrollEvent
    *
-   *
+   * Emits scroll event when not loading
    */
   private emitScrollEvent = ($event) => {
 
@@ -623,6 +779,9 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
   /*
    * doFirstLoad
    *
+   * This method is called after the view and inputs are initialized
+   *
+   * This is the first call to get data
    */
   private doFirstLoad() {
     if (this.isTabsFilterDefined()) {
@@ -635,6 +794,10 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
   /*
    * doFirstLoadByTabsFilter
    *
+   * use the tabs filter to trigger the first load
+   *
+   * This way the default tab and filter are selected by the dectabsFilter component
+   *
    */
   private doFirstLoadByTabsFilter() {
     this.filter.tabsFilterComponent.doFirstLoad();
@@ -643,6 +806,7 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
   /*
    * doFirstLoadLocally
    *
+   * If no filter are defined, just call th eendpoint without filters
    */
   private doFirstLoadLocally(refresh) {
     this.loadReport(refresh);
@@ -650,6 +814,8 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   /*
    * ensureUniqueName
+   *
+   * We must provide an unique name to the list so we can persist its state in the URL without conflicts
    *
    */
   private ensureUniqueName() {
@@ -660,6 +826,12 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
+  /*
+   * loadByOpennedCollapse
+   *
+   * This method is triggered when a collapsable table is open.
+   *
+   */
   private loadByOpennedCollapse(filterUid) {
 
     const filter = this.collapsableFilters.find(item => item.uid === filterUid);
@@ -680,8 +852,13 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
   /*
    * loadReport
    *
+   * This mehtod gather the filter info and endpoint and call the back-end to fetch the data
+   *
+   * If the suctomFetchMethod is used, its call it
+   *
+   * If only the rows are passed, the method just use it as result
    */
-  private loadReport(clearAndReloadReport?: boolean, collapseFilter?: FilterGroup): Promise<any> {
+  private loadReport(clearAndReloadReport?: boolean, collapseFilterGroups?: FilterGroup): Promise<any> {
 
     return new Promise((res, rej) => {
 
@@ -697,51 +874,9 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
 
       if (this.endpoint) {
 
-        let filterGroups = this.filter ? this.filter.filterGroups : undefined;
+        this.payload = this.mountPayload(clearAndReloadReport, collapseFilterGroups);
 
-        if (collapseFilter) {
-
-          if (filterGroups) {
-
-            filterGroups.forEach(group => {
-              group.filters.push(...collapseFilter.filters);
-            });
-
-          } else {
-
-            filterGroups = [collapseFilter];
-
-          }
-
-        }
-
-        const payload: DecFilter = {};
-
-        payload.limit = this.limit;
-
-        if (filterGroups) {
-
-          payload.filterGroups = filterGroups;
-
-        }
-
-        if (this.columnsSortConfig) {
-
-          payload.columns = this.columnsSortConfig;
-
-        }
-
-        if (!clearAndReloadReport && this.report) {
-
-          payload.page = this.report.page + 1;
-
-          payload.limit = this.report.limit;
-
-        }
-
-        this.payload = payload;
-
-        this.filterData.next({ endpoint: this.endpoint, payload: payload, cbk: res, clear: clearAndReloadReport });
+        this.filterData.next({ endpoint: this.endpoint, payload: this.payload, cbk: res, clear: clearAndReloadReport });
 
       } else if (this.customFetchMethod) {
 
@@ -765,6 +900,68 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
 
     });
 
+  }
+
+  private mountPayload(clearAndReloadReport: boolean = false, collapseFilterGroups?) {
+
+    const searchFilterGroups = this.filter ? this.filter.filterGroups : undefined;
+
+    const filterGroups = this.appendFilterGroupsToEachFilterGroup(searchFilterGroups, collapseFilterGroups);
+
+    const payload: DecFilter = {};
+
+    payload.limit = this.limit;
+
+    if (filterGroups) {
+
+      payload.filterGroups = filterGroups;
+
+    }
+
+    if (this.columnsSortConfig) {
+
+      payload.columns = this.columnsSortConfig;
+
+    }
+
+    if (!clearAndReloadReport && this.report) {
+
+      payload.page = this.report.page + 1;
+
+      payload.limit = this.report.limit;
+
+    }
+
+    return payload;
+
+  }
+
+  /*
+   * appendFilterGroupsToEachFilterGroup
+   *
+   * Gets an array of filterGroup and in each filterGroup in this array appends the second filterGroup filters.
+   */
+  private appendFilterGroupsToEachFilterGroup(filterGroups: FilterGroups, filterGroupToAppend: FilterGroup) {
+
+    if (filterGroupToAppend) {
+
+      if (filterGroups && filterGroups.length > 0) {
+
+        filterGroups.forEach(group => {
+
+          group.filters.push(...filterGroupToAppend.filters);
+
+        });
+
+      } else {
+
+        filterGroups = [filterGroupToAppend];
+
+      }
+
+    }
+
+    return filterGroups || [];
 
   }
 
@@ -803,6 +1000,8 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   /*
    * setRows
+   *
+   * Sets the current table rows
    *
    */
   private setRows(rows = []) {
@@ -871,7 +1070,7 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
 
         const endpoint = filterData ? filterData.endpoint : undefined;
 
-        const payloadWithSearchableProperties = this.getPayloadWithSearchTransformedIntoSearchableProperties();
+        const payloadWithSearchableProperties = this.getPayloadWithSearchTransformedIntoSearchableProperties(this.payload);
 
         if (filterData && filterData.clear) {
           this.setRows([]);
@@ -904,23 +1103,16 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.subscribeToReactiveReport();
   }
 
-  private getPayloadWithSearchTransformedIntoSearchableProperties() {
+  private getPayloadWithSearchTransformedIntoSearchableProperties(payload) {
 
-    const payloadCopy = {...this.payload};
+    const payloadCopy = {...payload};
 
     if (payloadCopy.filterGroups && this.searchableProperties) {
 
-      payloadCopy.filterGroups = [...this.payload.filterGroups];
+      payloadCopy.filterGroups = [...payload.filterGroups];
 
-      const filterGroupThatContainsBasicSearch = this.getFilterGroupThatContainsTheBasicSearch(payloadCopy.filterGroups);
+      this.appendFilterGroupsBasedOnSearchableProperties(payloadCopy.filterGroups);
 
-      if (filterGroupThatContainsBasicSearch) {
-
-        this.removeFilterGroup(payloadCopy.filterGroups, filterGroupThatContainsBasicSearch);
-
-        this.appendFilterGroupsBasedOnSearchableProperties(filterGroupThatContainsBasicSearch, payloadCopy);
-
-      }
 
       return payloadCopy;
 
@@ -933,26 +1125,34 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   }
 
-  private appendFilterGroupsBasedOnSearchableProperties(filterGroupsModel, payload) {
+  private appendFilterGroupsBasedOnSearchableProperties(filterGroups) {
 
-    const basicSearch = filterGroupsModel.filters.find(filter => filter.property === 'search');
+    const filterGroupThatContainsBasicSearch = this.getFilterGroupThatContainsTheBasicSearch(filterGroups);
 
-    const basicSearchIndex = filterGroupsModel.filters.indexOf(basicSearch);
+    if (filterGroupThatContainsBasicSearch) {
 
-    this.searchableProperties.forEach(property => {
+      this.removeFilterGroup(filterGroups, filterGroupThatContainsBasicSearch);
 
-      const newFilterGroup: FilterGroup = {
-        filters: [...filterGroupsModel.filters]
-      };
+      const basicSearch = filterGroupThatContainsBasicSearch.filters.find(filter => filter.property === 'search');
 
-      newFilterGroup.filters[basicSearchIndex] = {
-        property: property,
-        value: basicSearch.value
-      };
+      const basicSearchIndex = filterGroupThatContainsBasicSearch.filters.indexOf(basicSearch);
 
-      payload.filterGroups.push(newFilterGroup);
+      this.searchableProperties.forEach(property => {
 
-    });
+        const newFilterGroup: FilterGroup = {
+          filters: [...filterGroupThatContainsBasicSearch.filters]
+        };
+
+        newFilterGroup.filters[basicSearchIndex] = {
+          property: property,
+          value: [basicSearch.value]
+        };
+
+        filterGroups.push(newFilterGroup);
+
+      });
+
+    }
 
   }
 
@@ -1107,14 +1307,23 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
 
           this.opennedCollapsable = undefined;
 
-          this.loadReport(true)
-          .then((res) => {
+          this.loadReport(true).then((res) => {
+
             if (event.recount) {
+
               this.reloadCountReport();
+
             }
+
           });
 
         } else {
+
+          if (!this.countReport || event.recount) {
+
+            this.reloadCountReport();
+
+          }
 
           if (this.opennedCollapsable) {
 
@@ -1172,6 +1381,7 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
   private watchTabsChange() {
     if (this.filter && this.filter.tabsFilterComponent) {
       this.tabsChangeSubscription = this.filter.tabsFilterComponent.tabChange.subscribe(tab => {
+        this.selectedTab = tab;
         this.detectListMode();
       });
     }

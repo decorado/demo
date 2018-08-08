@@ -27,7 +27,7 @@ Html
 The data can be provided manually by `@Input()` or fetched from a REST API endpoint.
 If both are provided, the row will be used. This behavior was choosen to enable local testing when the dev wants to mock some data
 
-### Providing data by REST API
+#### Providing data by REST API
 To provide data by REST API you have to provide the `endpoint` to the `list-component`. The list will fetch the data using `DecoraApiService GET method` or the `@Input() customFetchMethod` and display it as table or grd list.
 
 ```html
@@ -38,7 +38,7 @@ To provide data by REST API you have to provide the `endpoint` to the `list-comp
 
 ```
 
-#### customFetchMethod
+#### Providing data by customFetchMethod
 
 The customFetchMethod is a function of type `DecListFetchMethod` that receives an endpoint and an filter object and returns an Observable of `DecListFetchMethodResponse`;
 
@@ -66,7 +66,7 @@ export interface DecListFetchMethodResponse {
 ```
 
 
-### Providing data manually
+#### Providing data manually
 To insert the data manually you have to provide the `@Input() rows` to the `dec-list-component`:
 
 ```html
@@ -80,12 +80,21 @@ To insert the data manually you have to provide the `@Input() rows` to the `dec-
 ### Reloading data
 To reload the data, you can use the reload method exposed by the `ListComponent` or reset the `@Input() rows`.
 
+
 ### Infinite Scroll
 By default, the `Infinite scrool` is enabled and can be used to load more data as the user scrools down to the end of the list. Every time the scrool get to the end of the list, anothe call is made to the REST API to fetch the next page.
+
 
 ### Filter
 To allow the list filter, you have to include the `dec-list-filter` in your list.
 
+
+#### Counting total of reccords for every filter
+To get the total of available reccords to each filter provided, just enable the `loadCountReport` option in the `dec-list-filter`;
+
+```html
+  <dec-list-filter [filters]="filtersWithSubfilters" loadCountReport></dec-list-filter>
+```
 
 #### Filtering with Advanced Filter
 To use an advanced filter you have to create a component that accepts an `@Input() form` and use it to group the advanced filter fields.
@@ -161,6 +170,7 @@ Used to enabling list filtering.
 |preSearch |`DecListPreSearch`    |undefined        |This function is used to manupulate the filter before the fetch. This is used to manipulate the filters from outside the list. It receives and returns an object of type `DecListFilterGroups`|
 |showInfoButton| boolean| false| Used to display an Info icon |
 |hasPersistence| boolean| true| Used to control the filter url persistence|
+|loadCountReport| boolean| false| get the count of available reccords for each filter|
 
 ### Grid
 Used to enable tabs filtering. With a pre defined filter for each tab.
@@ -263,7 +273,7 @@ export interface DecListFilterGroup {
   * Structure of tabs filters
   */
 export interface DecListFilter {
-  count?: Function | string;
+  count?: string;
   default?: boolean;
   filters: FilterGroup;
   hide?: boolean;

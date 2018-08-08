@@ -67,8 +67,8 @@
       <mat-expansion-panel (opened)="searchCollapsable(filter)">
         <mat-expansion-panel-header>
           <div class="collapse-title" fxLayout="row" fxLayoutGap="32px" fxLayoutAlign="left center">
-            <div fxFlex="96px">
-              <dec-label [colorHex]="filter.color">{{ filter.label.length }}</dec-label>
+            <div fxFlex="96px" *ngIf="countReport">
+              <dec-label [colorHex]="filter.color">{{ getCollapsableCount(filter.uid) }}</dec-label>
             </div>
             {{ 'label.' + filter.label | translate }}
           </div>

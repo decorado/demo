@@ -10,6 +10,7 @@ export declare class DecListFilterComponent implements OnInit, OnDestroy {
     private route;
     private router;
     count: number;
+    countReport: any;
     showSearchInput: boolean;
     showAdvancedFilter: boolean;
     filterForm: any;
@@ -25,14 +26,16 @@ export declare class DecListFilterComponent implements OnInit, OnDestroy {
     childrenFilters: any;
     private clickableContainerClass;
     private innerDecFilterGroups;
-    private currentBase64Filter;
+    private currentUrlEncodedFilter;
     private tabsFilterSubscription;
     private watchUrlFilterSubscription;
     private _filters;
+    private _loadCountReport;
     preSearch: DecListPreSearch;
     showInfoButton: any;
     hasPersistence: boolean;
     filters: DecListFilter[];
+    loadCountReport: boolean;
     search: EventEmitter<any>;
     inputSearch: any;
     tabsFilterComponent: DecListTabsFilterComponent;
@@ -46,7 +49,6 @@ export declare class DecListFilterComponent implements OnInit, OnDestroy {
     onClear(): void;
     removeDecFilterGroup(groupIndex: any): void;
     editDecFilterGroup(groupIndex: any): void;
-    reloadCountReport: (payload: any) => void;
     clearFilterForm: () => void;
     onClickInfo(): void;
     appendToCurrentDecFilterGroups(propertyName: any, propertyValue: any): void;

@@ -2,6 +2,13 @@ import { Observable } from 'rxjs';
 import { Filters, FilterGroups } from './../../services/api/decora-api.model';
 
 
+export interface CountReport {
+
+  count: number;
+  children?: CountReport[];
+
+}
+
 /*
   * DecListPreSearch
   *
@@ -43,7 +50,7 @@ export interface DecListFetchMethodResponse {
   */
 export class DecListFilter {
   children?: DecListFilter[];
-  count?: Function | string;
+  count?: string;
   default?: boolean;
   filters: Filters;
   hide?: boolean;

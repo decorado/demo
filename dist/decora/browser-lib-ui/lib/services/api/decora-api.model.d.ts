@@ -47,9 +47,10 @@ export interface SerializedDecFilter {
     limit?: number;
     textSearch?: string;
 }
-export interface Filter {
+export declare class Filter {
     property: string;
     value: string | string[];
+    constructor(data?: any);
 }
 export interface FilterGroup {
     filters: Filters;

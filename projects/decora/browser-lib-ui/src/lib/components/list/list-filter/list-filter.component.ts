@@ -15,20 +15,35 @@ import { PlatformLocation } from '@angular/common';
 export class DecListFilterComponent implements OnInit, OnDestroy {
 
   count: number;
+
+  countReport;
+
   showSearchInput: boolean;
+
   showAdvancedFilter: boolean;
+
   filterForm: any = {
     search: undefined
   };
+
   filterGroups: FilterGroups;
+
   filterGroupsWithoutTabs: FilterGroups;
+
   currentStatusFiltered: string;
+
   tabsFilter: any;
+
   editionGroupIndex: number;
+
   name: string;
+
   loading: boolean;
+
   isItFirstLoad = true;
+
   filterMode: 'tabs' | 'collapse';
+
   childrenFilters;
 
   /*
@@ -40,13 +55,15 @@ export class DecListFilterComponent implements OnInit, OnDestroy {
 
   private innerDecFilterGroups: any[];
 
-  private currentBase64Filter: string;
+  private currentUrlEncodedFilter: string;
 
   private tabsFilterSubscription: Subscription;
 
   private watchUrlFilterSubscription: Subscription;
 
   private _filters: DecListFilter[] = [];
+
+  private _loadCountReport: boolean;
 
   @Input() preSearch: DecListPreSearch;
 
@@ -65,10 +82,20 @@ export class DecListFilterComponent implements OnInit, OnDestroy {
 
   }
 
+  get loadCountReport(): boolean {
+    return this._loadCountReport;
+  }
+
+  @Input()
+  set loadCountReport(v: boolean) {
+    if (v !== false) {
+      this._loadCountReport = true;
+    }
+  }
+
   get filters(): DecListFilter[] {
     return this._filters;
   }
-
 
   @Output() search: EventEmitter<any> = new EventEmitter<any>();
 
@@ -204,16 +231,6 @@ export class DecListFilterComponent implements OnInit, OnDestroy {
     if (toEditDecFilterGroup && toEditDecFilterGroup.filters.length > 0) {
 
       this.reloadFormWithGivenDecFilterGroupe(toEditDecFilterGroup.filters);
-
-    }
-
-  }
-
-  reloadCountReport = (payload) => {
-
-    if (this.tabsFilterComponent) {
-
-      this.tabsFilterComponent.reloadCountReport(payload);
 
     }
 
@@ -539,7 +556,7 @@ export class DecListFilterComponent implements OnInit, OnDestroy {
 
             if (base64Filter) {
 
-              if (base64Filter !== this.currentBase64Filter) {
+              if (base64Filter !== this.currentUrlEncodedFilter) {
 
                 const filter = this.getJsonFromBase64Filter(base64Filter);
 
@@ -599,7 +616,7 @@ export class DecListFilterComponent implements OnInit, OnDestroy {
    */
   private setFilterInUrlQuery(filter) {
 
-    this.currentBase64Filter = filter;
+    this.currentUrlEncodedFilter = filter;
 
     const queryParams: Params = Object.assign({}, this.route.snapshot.queryParams);
 
