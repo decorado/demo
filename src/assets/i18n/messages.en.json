@@ -23,6 +23,8 @@
     "History": "History"
   },
   "message": {
-    "status-409": "This data is out of date. Refresh the page and try again."
+    "http-status": {
+      "status-409": "This data is out of date. Refresh the page and try again."
+    }
   }
 }
