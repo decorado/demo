@@ -48,24 +48,20 @@ export class ObjectSortComponent implements OnInit {
 
     const sortedObject = {};
 
-    const keys = Object.keys(object);
-
-    keys.sort(function (key1, key2) {
-      key1 = key1.toLowerCase(), key2 = key2.toLowerCase();
-      if (key1 < key2) {
-        return -1;
-      } else if (key1 > key2) {
-        return 1;
-      } else {
-        return 0;
-      }
-    });
+    const keys = Object.keys(object).sort();
 
     keys.forEach((key) => {
-      if (typeof object[key] === 'object' && !(object[key] instanceof Array)) {
-        sortedObject[key] = this.sortObject(object[key]);
+
+      const value = object[key];
+
+      if (typeof value === 'object') {
+
+        sortedObject[key] = this.sortObject(value);
+
       } else {
+
         sortedObject[key] = object[key];
+
       }
     });
 
