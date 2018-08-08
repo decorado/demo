@@ -27,6 +27,9 @@ export * from './lib/components/autocomplete-project/autocomplete-project.module
 // AUTOCOMPLETE QUOTE
 export * from './lib/components/autocomplete-quote/autocomplete-quote.component';
 export * from './lib/components/autocomplete-quote/autocomplete-quote.module';
+// AUTOCOMPLETE TAGS
+export * from './lib/components/autocomplete-tags/autocomplete-tags.component';
+export * from './lib/components/autocomplete-tags/autocomplete-tags.module';
 // BREADCRUMB
 export * from './lib/components/breadcrumb/breadcrumb.component';
 export * from './lib/components/breadcrumb/breadcrumb.module';
@@ -79,6 +82,9 @@ export * from './lib/components/sidenav/dec-sidenav-menu-right/dec-sidenav-menu-
 export * from './lib/components/sidenav/dec-sidenav-menu-title/dec-sidenav-menu-title.component';
 export * from './lib/components/sidenav/dec-sidenav-toolbar/dec-sidenav-toolbar.component';
 export * from './lib/components/sidenav/dec-sidenav-toolbar-title/dec-sidenav-toolbar-title.component';
+// Sketchfab
+export * from './lib/components/sketchfab-view/dec-sketchfab-view.component';
+export * from './lib/components/sketchfab-view/dec-sketchfab-view.module';
 // Spinner
 export * from './lib/components/dec-spinner/dec-spinner.component';
 export * from './lib/components/dec-spinner/dec-spinner.module';
@@ -139,3 +145,6 @@ export * from './lib/components/dec-spinner/dec-spinner.module';
 export * from './lib/services/ws-client/ws-client.service';
 export * from './lib/services/ws-client/ws-client.module';
 export * from './lib/services/ws-client/ws-client.models';
+// Script Loader
+export * from './lib/services/script-loader/dec-script-loader.service';
+export * from './lib/services/script-loader/dec-script-loader.module';

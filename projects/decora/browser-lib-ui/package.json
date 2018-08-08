@@ -1,6 +1,6 @@
 {
   "name": "@decora/browser-lib-ui",
-  "version": "0.0.70",
+  "version": "0.0.73",
   "peerDependencies": {
     "@ngx-translate/core": "^10.0.2",
     "@ngx-translate/http-loader": "^3.0.1",
