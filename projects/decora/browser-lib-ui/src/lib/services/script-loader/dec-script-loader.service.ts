@@ -12,7 +12,6 @@ export class DecScriptLoaderService {
   load(url: string, scriptName: string) {
 
     return new Promise((resolve, reject) => {
-
       const scriptLoaded = window['decoraScriptService'][scriptName];
 
       if (scriptLoaded) {
@@ -94,5 +93,19 @@ export class DecScriptLoaderService {
       return this.load(scriptUrl, scriptNamespace);
     });
 
+  }
+
+  loadLeafletScriptsAndStyle() {
+    return this.loadStyle('https://unpkg.com/leaflet@1.3.3/dist/leaflet.css').then(() => {
+      return this.loadStyle('http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css').then(() => {
+        return this.loadStyle('https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css').then(() => {
+          return this.load('https://unpkg.com/leaflet@1.3.3/dist/leaflet.js', 'Leaflet').then(() => {
+            return this.load('https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js', 'EasyButton').then(() => {
+              
+            });
+          });
+        });
+      });
+    });
   }
 }

@@ -3,4 +3,5 @@ export declare class DecScriptLoaderService {
     load(url: string, scriptName: string): Promise<{}>;
     loadStyle(url: string): Promise<{}>;
     loadStyleAndScript(styleUrl: any, scriptUrl: any, scriptNamespace: any): Promise<{}>;
+    loadLeafletScriptsAndStyle(): Promise<void>;
 }

@@ -14,6 +14,7 @@ const routes: Routes = [
   { path: 'autocomplete-tags', loadChildren: './decora-autocomplete-tags-demo/decora-autocomplete-tags-demo.module#DecoraAutocompleteTagsDemoModule' },
   { path: 'breadcrumb', loadChildren: './decora-breadcrumb-demo/decora-breadcrumb-demo.module#DecoraBreadcrumbDemoModule' },
   { path: 'gallery', loadChildren: './decora-gallery-demo/decora-gallery-demo.module#DecoraGalleryDemoModule' },
+  { path: 'image-zoom', loadChildren: './decora-image-zoom-demo/decora-image-zoom-demo.module#DecoraImageZoomDemoModule' },
   { path: 'label', loadChildren: './decora-label-demo/decora-label-demo.module#DecoraLabelDemoModule' },
   { path: 'list', loadChildren: './decora-list-demo/decora-list-demo.module#DecoraListDemoModule' },
   { path: 'page-forbiden', loadChildren: './decora-page-forbiden-demo/page-forbiden-demo.module#PageForbidenDemoModule' },

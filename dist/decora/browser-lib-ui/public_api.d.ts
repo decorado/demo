@@ -30,6 +30,8 @@ export * from './lib/components/gallery/dec-gallery.component';
 export * from './lib/components/gallery/dec-gallery.module';
 export * from './lib/directives/image/image.module';
 export * from './lib/directives/image/image.directive';
+export * from './lib/components/dec-zoom-image-view/dec-zoom-image-view.module';
+export * from './lib/components/dec-zoom-image-view/dec-zoom-image-view.component';
 export * from './lib/components/dec-label/dec-label.component';
 export * from './lib/components/dec-label/dec-label.module';
 export * from './lib/components/list/list.module';

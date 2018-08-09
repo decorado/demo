@@ -43,6 +43,9 @@ export * from './lib/components/gallery/dec-gallery.module';
 // IMAGE DIRECTIVE
 export * from './lib/directives/image/image.module';
 export * from './lib/directives/image/image.directive';
+// IMAGE ZOOM 
+export * from './lib/components/dec-zoom-image-view/dec-zoom-image-view.module';
+export * from './lib/components/dec-zoom-image-view/dec-zoom-image-view.component';
 // Label
 export * from './lib/components/dec-label/dec-label.component';
 export * from './lib/components/dec-label/dec-label.module';
