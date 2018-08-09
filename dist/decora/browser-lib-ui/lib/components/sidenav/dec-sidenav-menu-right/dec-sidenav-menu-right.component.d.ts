@@ -1,9 +1,9 @@
-import { QueryList, EventEmitter } from '@angular/core';
+import { QueryList, EventEmitter, OnDestroy, AfterViewInit } from '@angular/core';
 import { DecSidenavMenuItemComponent } from './../dec-sidenav-menu-item/dec-sidenav-menu-item.component';
 import { DecSidenavMenuTitleComponent } from './../dec-sidenav-menu-title/dec-sidenav-menu-title.component';
 import { BehaviorSubject } from 'rxjs';
 import { DecSidenavService } from './../sidenav.service';
-export declare class DecSidenavMenuRightComponent {
+export declare class DecSidenavMenuRightComponent implements AfterViewInit, OnDestroy {
     private decSidenavService;
     readonly rightMenuVisible: BehaviorSubject<boolean>;
     readonly rightMenuMode: BehaviorSubject<string>;
@@ -14,6 +14,10 @@ export declare class DecSidenavMenuRightComponent {
     customTitle: DecSidenavMenuTitleComponent;
     openedChange: EventEmitter<boolean>;
     modeChange: EventEmitter<string>;
+    private itemSubscriptions;
     constructor(decSidenavService: DecSidenavService);
     private subscribeAndExposeSidenavEvents();
+    ngAfterViewInit(): void;
+    ngOnDestroy(): void;
+    private closeBrothers(itemSelected);
 }

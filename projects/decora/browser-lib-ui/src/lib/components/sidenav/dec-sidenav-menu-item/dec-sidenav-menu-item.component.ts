@@ -1,4 +1,4 @@
-import { Component, ViewChild, TemplateRef, ContentChildren, QueryList, AfterViewInit, Input } from '@angular/core';
+import { Component, ViewChild, TemplateRef, ContentChildren, QueryList, AfterViewInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,6 +13,8 @@ export class DecSidenavMenuItemComponent implements AfterViewInit {
   @ViewChild(TemplateRef) template: TemplateRef<any>;
 
   @ContentChildren(DecSidenavMenuItemComponent, {descendants: false}) _subitems: QueryList<DecSidenavMenuItemComponent>;
+
+  @Output() toggle = new EventEmitter();
 
   started;
 
@@ -36,6 +38,11 @@ export class DecSidenavMenuItemComponent implements AfterViewInit {
 
   toggleSubmenu() {
     this.showSubmenu = !this.showSubmenu;
+    this.toggle.emit(this.showSubmenu);
+  }
+
+  closeSubmenu() {
+    this.showSubmenu = false;
   }
 
   openLink() {
@@ -56,7 +63,7 @@ export class DecSidenavMenuItemComponent implements AfterViewInit {
   }
 
   getBackground(treeLevel) {
-    let style = { backgroundColor: '', pointerEvents: '' };
+    const style = { backgroundColor: '', pointerEvents: '' };
     if (this.routerLink === window.location.pathname) {
       style.backgroundColor += '#EF3F54';
       style.pointerEvents += 'none';

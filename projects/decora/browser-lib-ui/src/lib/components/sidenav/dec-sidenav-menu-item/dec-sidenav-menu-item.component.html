@@ -10,12 +10,12 @@
         <ng-content></ng-content>
       </div>
 
-      <a *ngIf="subitems.length" class="text-right">
+      <div *ngIf="subitems.length" class="text-right">
         <ng-container [ngSwitch]="showSubmenu">
-          <span *ngSwitchCase="false"><i class="arrow down"></i></span>
-          <span *ngSwitchCase="true"><i class="arrow up"></i></span>
+          <span *ngSwitchCase="true"><i class="arrow down"></i></span>
+          <span *ngSwitchCase="false"><i class="arrow right"></i></span>
         </ng-container>
-      </a>
+      </div>
     </div>
 
   </mat-list-item>

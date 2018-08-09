@@ -1,7 +1,7 @@
-import { Component, ContentChildren, QueryList, Input, ContentChild, Output, EventEmitter } from '@angular/core';
+import { Component, ContentChildren, QueryList, Input, ContentChild, Output, EventEmitter, AfterViewInit, OnDestroy } from '@angular/core';
 import { DecSidenavMenuItemComponent } from './../dec-sidenav-menu-item/dec-sidenav-menu-item.component';
 import { DecSidenavMenuTitleComponent } from './../dec-sidenav-menu-title/dec-sidenav-menu-title.component';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { DecSidenavService } from './../sidenav.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { DecSidenavService } from './../sidenav.service';
   templateUrl: './dec-sidenav-menu-left.component.html',
   styleUrls: ['./dec-sidenav-menu-left.component.scss']
 })
-export class DecSidenavMenuLeftComponent {
+export class DecSidenavMenuLeftComponent implements AfterViewInit, OnDestroy {
 
   readonly leftMenuVisible = new BehaviorSubject<boolean>(true);
 
@@ -51,6 +51,8 @@ export class DecSidenavMenuLeftComponent {
 
   @Output() modeChange = new EventEmitter<string>();
 
+  private itemSubscriptions: Subscription[] = [];
+
   constructor(
     private decSidenavService: DecSidenavService
   ) {
@@ -68,5 +70,48 @@ export class DecSidenavMenuLeftComponent {
     });
 
   }
+
+  ngAfterViewInit() {
+
+    const items = this.items.toArray();
+
+    items.forEach((item: DecSidenavMenuItemComponent) => {
+
+      item.toggle.subscribe(state => {
+
+        if (state) {
+
+          this.closeBrothers(item);
+
+        }
+
+      });
+
+    });
+
+  }
+
+  ngOnDestroy() {
+    this.itemSubscriptions.forEach((subscription: Subscription) => {
+      subscription.unsubscribe();
+    });
+  }
+
+  private closeBrothers(itemSelected) {
+
+    const items = this.items.toArray();
+
+    items.forEach((item: DecSidenavMenuItemComponent) => {
+
+      if (itemSelected !== item) {
+
+        item.closeSubmenu();
+
+      }
+
+    });
+
+  }
+
 
 }
