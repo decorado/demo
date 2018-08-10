@@ -15,7 +15,7 @@ import { TranslateModule } from '@ngx-translate/core';
     MatIconModule,
     TranslateModule,
     DecPageForbidenModule,
-    DecPermissionModule
+    DecPermissionModule,
   ],
   declarations: [PagesComponent]
 })

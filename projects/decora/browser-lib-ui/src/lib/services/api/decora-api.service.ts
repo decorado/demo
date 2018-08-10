@@ -1,9 +1,10 @@
-import { Injectable, Inject, Optional, OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpRequest } from '@angular/common/http';
 import { Observable, throwError, BehaviorSubject, Subscription } from 'rxjs';
 import { catchError, share, tap } from 'rxjs/operators';
-import { UserAuthData, LoginData, FacebookLoginData, ServiceConfig, DecFilter, SerializedDecFilter } from './decora-api.model';
+import { UserAuthData, LoginData, FacebookLoginData, DecFilter, SerializedDecFilter } from './decora-api.model';
 import { DecSnackBarService } from './../snack-bar/dec-snack-bar.service';
+import { DecConfigurationService } from './../configuration/configuration.service';
 
 export type CallOptions = {
   headers?: HttpHeaders;
@@ -28,14 +29,10 @@ export class DecApiService implements OnDestroy {
 
   private userSubscripion: Subscription;
 
-  get host() {
-    return this.config.host;
-  }
-
   constructor(
     private http: HttpClient,
     private snackbar: DecSnackBarService,
-    @Optional() @Inject('DECORA_API_SERVICE_CONFIG') private config: ServiceConfig
+    private decConfig: DecConfigurationService,
   ) {
     this.subscribeToUser();
     this.tryToLoadSignedInUser();
@@ -43,6 +40,10 @@ export class DecApiService implements OnDestroy {
 
   ngOnDestroy() {
     this.unsubscribeToUser();
+  }
+
+  get host() {
+    return this.decConfig.config.api;
   }
 
   // ******************* //
@@ -313,7 +314,7 @@ export class DecApiService implements OnDestroy {
 
     switch (error.status) {
       case 401:
-        if (this.config.authHost) {
+        if (this.decConfig.config.authHost) {
           this.goToLoginPage();
         }
         break;
@@ -345,30 +346,30 @@ export class DecApiService implements OnDestroy {
       .replace('http://', '')
       .replace(window.location.search, '');
 
-    const nakedAuthDomain = this.config.authHost.split('?')[0]
+    const nakedAuthDomain = this.decConfig.config.authHost.split('?')[0]
       .replace('https://', '')
       .replace('http://', '')
       .replace('//', '');
 
     if (nakedAppDomain !== nakedAuthDomain) {
-      const authUrlWithRedirect = `${this.config.authHost}${this.getParamsDivider()}redirectUrl=${window.location.href}`;
+      const authUrlWithRedirect = `${this.decConfig.config.authHost}${this.getParamsDivider()}redirectUrl=${window.location.href}`;
       console.log(`DecApiService:: Not authenticated. Redirecting to login page at: ${authUrlWithRedirect}`);
       window.location.href = authUrlWithRedirect;
     }
   }
 
   private getParamsDivider() {
-    return this.config.authHost.split('?').length > 1 ? '&' : '?';
+    return this.decConfig.config.authHost.split('?').length > 1 ? '&' : '?';
   }
 
   private tryToLoadSignedInUser() {
     this.fetchCurrentLoggedUser()
       .toPromise()
       .then(res => {
-        console.log('DecoraApiService:: Started as logged');
+        console.log('DecoraApiService:: Initialized as logged');
       }, err => {
         if (err.status === 401) {
-          console.log('DecoraApiService:: Started as not logged');
+          console.log('DecoraApiService:: Initialized as not logged');
         } else {
           console.error('DecoraApiService:: Initialization Error. Could retrieve user account', err);
         }
@@ -394,7 +395,7 @@ export class DecApiService implements OnDestroy {
 
   private getResourceUrl(path) {
 
-    const basePath = this.config.useMockApi ? this.config.mockApiHost : this.config.host;
+    const basePath = this.decConfig.config.useMockApi ? this.decConfig.config.mockApiHost : this.decConfig.config.api;
 
     path = path.replace(/^\/|\/$/g, '');
 

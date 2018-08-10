@@ -1,24 +1,17 @@
-import { LOCALE_ID, NgModule } from '@angular/core';
+import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { MissingTranslationHandler, TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-// import { DecoraMissingTranslationHandler } from './missing-translation-handler/dec-missing-translation-handler';
 import { environment } from '@env/environment';
+
+const TRANSLATION_PATH = `${environment.basePath}/assets/i18n/messages.`;
 
 // ************************ //
 // translate http file load //
 // ************************ //
 
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, environment.active.host + '/assets/i18n/messages.', '.json');
-}
-
-// **** //
-// i18n //
-// **** //
-
-export function getLanguage() {
-  return environment.active.defaultLang;
+  return new TranslateHttpLoader(http, TRANSLATION_PATH, '.json');
 }
 
 @NgModule({
@@ -30,15 +23,14 @@ export function getLanguage() {
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       },
-      // missingTranslationHandler: {provide: MissingTranslationHandler, useClass: DecoraMissingTranslationHandler}
     })
-  ],
-  providers: [
-    { provide: LOCALE_ID, useFactory: getLanguage}
   ],
   exports: [ TranslateModule ]
 })
 export class DecoraTranslateModule {
-  constructor() {
+  constructor(@Optional() @SkipSelf() parentModule: DecoraTranslateModule) {
+    if (parentModule) {
+      throw new Error('DecoraTranslateModule is already loaded. Import it in the AppModule only');
+    }
   }
 }

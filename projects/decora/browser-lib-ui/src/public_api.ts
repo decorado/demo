@@ -43,7 +43,7 @@ export * from './lib/components/gallery/dec-gallery.module';
 // IMAGE DIRECTIVE
 export * from './lib/directives/image/image.module';
 export * from './lib/directives/image/image.directive';
-// IMAGE ZOOM 
+// IMAGE ZOOM
 export * from './lib/components/dec-zoom-image-view/dec-zoom-image-view.module';
 export * from './lib/components/dec-zoom-image-view/dec-zoom-image-view.component';
 // Label
@@ -135,6 +135,10 @@ export * from './lib/guard/auth-guard.service';
 export * from './lib/services/api/decora-api.service';
 export * from './lib/services/api/decora-api.module';
 export * from './lib/services/api/decora-api.model';
+// DECORA CONFIGURATION
+export * from './lib/services/configuration/configuration.service';
+export * from './lib/services/configuration/configuration-service.module';
+export * from './lib/services/configuration/configuration-initializer.provider';
 // SNACKBAR
 export * from './lib/services/snack-bar/dec-snack-bar.service';
 export * from './lib/services/snack-bar/dec-snack-bar.module';

@@ -1,0 +1,12 @@
+<app-demo-container readmeSrc="/assets/docs/browser-lib-ui/services/configuration/README.md">
+
+  <p>
+    <strong>Profile:</strong> {{ decConfig.profile }}
+  </p>
+
+  <div>
+    <strong>Configuration:</strong>
+    <pre [innerHtml]="decConfig.config | prettyjson:2" #prettyObjectElement></pre>
+  </div>
+
+</app-demo-container>

@@ -2,7 +2,7 @@
 
   <dec-sidenav #mainSidenav [loading]="progressBarVisible">
 
-    <dec-sidenav-toolbar color="default" [environment]="environment.profile">
+    <dec-sidenav-toolbar color="default" [environment]="profile">
 
       <dec-sidenav-toolbar-title routerLink="/" class="click">Decora Browser Lib UI</dec-sidenav-toolbar-title>
 
@@ -94,6 +94,7 @@
         <mat-icon>play_circle_outline</mat-icon>
         Services
         <dec-sidenav-menu-item routerLink="/demo/service/api">Api</dec-sidenav-menu-item>
+        <dec-sidenav-menu-item routerLink="/demo/service/config">Configuration</dec-sidenav-menu-item>
         <dec-sidenav-menu-item routerLink="/demo/service/permission-guard">Permission Guard</dec-sidenav-menu-item>
         <dec-sidenav-menu-item routerLink="/demo/service/snack-bar">Snackbar</dec-sidenav-menu-item>
         <dec-sidenav-menu-item routerLink="/demo/service/websocket">Websocket</dec-sidenav-menu-item>

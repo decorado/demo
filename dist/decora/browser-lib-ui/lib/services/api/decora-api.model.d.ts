@@ -17,12 +17,6 @@ export interface FacebookLoginData {
     keepLogged: boolean;
     facebookToken: string;
 }
-export interface ServiceConfig {
-    host: string;
-    authHost?: string;
-    useMockApi?: boolean;
-    mockApiHost?: string;
-}
 export declare type FilterGroups = FilterGroup[];
 export declare type Filters = Filter[];
 export interface FilterData {

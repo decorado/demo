@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from '@env/environment';
 import { Permissions } from '@app/shared/permissions.constants';
+import { DecConfigurationService } from '@projects/decora/browser-lib-ui/src/public_api';
 
 @Component({
   selector: 'app-pages',
@@ -16,10 +16,10 @@ export class PagesComponent implements OnInit {
   rightMenuVisible = false;
   leftMenuMode = 'side';
   rightMenuMode = 'push';
+  profile;
 
-  environment = environment;
-
-  constructor() {
+  constructor(private configService: DecConfigurationService) {
+    this.profile = this.configService.profile;
   }
 
   ngOnInit() {

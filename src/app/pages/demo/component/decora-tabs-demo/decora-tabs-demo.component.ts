@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from '@env/environment';
+import { DecConfigurationService } from '@projects/decora/browser-lib-ui/src/public_api';
 
 @Component({
   selector: 'app-decora-tabs-demo',
@@ -8,11 +8,13 @@ import { environment } from '@env/environment';
 })
 export class DecoraTabsDemoComponent implements OnInit {
 
-  baseHref = environment.active.host;
+  baseHref;
 
   activeTab;
 
-  constructor() { }
+  constructor(private decConfig: DecConfigurationService) {
+    this.baseHref = this.decConfig.config.host;
+  }
 
   ngOnInit() {
   }

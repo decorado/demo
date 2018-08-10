@@ -9,7 +9,7 @@ import { noop } from 'rxjs';
 })
 export class AutocompleteTagsComponent implements ControlValueAccessor {
 
-  
+
   endpoint = 'tags/options';
 
   valueAttr = 'key';

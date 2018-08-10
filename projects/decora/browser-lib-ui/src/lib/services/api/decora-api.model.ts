@@ -29,15 +29,6 @@ export interface FacebookLoginData {
   facebookToken: string;
 }
 
-export interface ServiceConfig {
-  host: string;
-  authHost?: string;
-  useMockApi?: boolean;
-  mockApiHost?: string;
-}
-
-
-
 /*
   * FilterGroups
   *

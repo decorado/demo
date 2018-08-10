@@ -1,31 +1,27 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { DecApiModule, DecGuardModule, DecSnackBarModule } from './../../projects/decora/browser-lib-ui/src/public_api';
-import { environment } from '@env/environment';
+import { DecApiModule, DecGuardModule, DecSnackBarModule, DecConfigurationModule, DecConfigurationInitializer, DecConfigurationService } from '@projects/decora/browser-lib-ui/src/public_api';
 import { DecoraTranslateModule } from '@app/shared/services/decora-translate/decora-translate.module';
+import { environment } from '@env/environment';
 
 @NgModule({
   declarations: [
     AppComponent,
   ],
+  providers: [{ provide: APP_INITIALIZER, useFactory: DecConfigurationInitializer, deps: [DecConfigurationService], multi: true }],
   imports: [
+    DecConfigurationModule.forRoot({ basePath: environment.basePath }),
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
+    DecApiModule,
     DecoraTranslateModule,
     DecSnackBarModule,
-    DecApiModule.forRoot({
-      host: environment.active.api,
-      authHost: environment.active.authHost,
-      useMockApi: environment.active.useMockApi,
-      mockApiHost: environment.active.mockApiHost
-    }),
     DecGuardModule,
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
