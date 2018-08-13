@@ -9,7 +9,9 @@
     [required]="required"
     [placeholder]="placeholder"
     (keyup.enter)="onEnterButton($event)"
-    (blur)="onBlur($event)">
+    (blur)="onBlur($event)"
+    autocomplete="off"
+    readonly onfocus="this.removeAttribute('readonly');">
 
     <button mat-icon-button matSuffix (click)="clear(true)" *ngIf="!disabled && !required && autocompleteInput.value">
       <mat-icon>close</mat-icon>
