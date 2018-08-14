@@ -8,6 +8,10 @@
     color: inherit;
   }
 
+  .mat-drawer {
+    overflow-x: hidden;
+  }
+
   .mat-sidenav, .mat-drawer.mat-drawer-push {
     background-color: $dec-color-primary;
     color: $dec-color-primary-contrast;
@@ -31,6 +35,18 @@
           }
 
         }
+
+        &.mat-list-item-active {
+          background-color: $dec-color-accent !important;
+          color: $dec-color-accent-contrast !important;
+        }
+
+        &.mat-list-item-0 { background-color: rgba(0, 0, 0, calc(0 / 6)); }
+        &.mat-list-item-1 { background-color: rgba(0, 0, 0, calc(1 / 6)); }
+        &.mat-list-item-2 { background-color: rgba(0, 0, 0, calc(2 / 6)); }
+        &.mat-list-item-3 { background-color: rgba(0, 0, 0, calc(3 / 6)); }
+        &.mat-list-item-4 { background-color: rgba(0, 0, 0, calc(4 / 6)); }
+        &.mat-list-item-5 { background-color: rgba(0, 0, 0, calc(5 / 6)); }
       }
     }
   }

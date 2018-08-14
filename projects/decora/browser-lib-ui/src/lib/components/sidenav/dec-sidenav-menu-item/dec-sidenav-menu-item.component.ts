@@ -63,14 +63,32 @@ export class DecSidenavMenuItemComponent implements AfterViewInit {
   }
 
   getBackground(treeLevel) {
-    const style = { backgroundColor: '', pointerEvents: '' };
-    if (this.routerLink === window.location.pathname) {
-      style.backgroundColor += '#EF3F54';
-      style.pointerEvents += 'none';
+    return this.checkIfActive() ? 'mat-list-item-active' : 'mat-list-item-' + treeLevel;
+  }
+
+  checkIfActive() {
+    if (this.isActive) {
+      return true;
+    } else if (this.showSubmenu) {
+      return false;
     } else {
-      style.backgroundColor += 'rgba(0, 0, 0, ' + treeLevel / 6 + ')'; // hsl(209, 20%, 30%)
+      const hasActiveChild = this.hasActiveChild;
+      return hasActiveChild;
     }
-    return style;
+  }
+
+  protected get hasActiveChild() {
+    if (!this.subitems) {
+      return false;
+    } else {
+      return this.subitems.reduce((lastValue, item) => {
+        return lastValue || item.isActive || item.hasActiveChild;
+      }, false);
+    }
+  }
+
+  protected get isActive() {
+    return this.routerLink === window.location.pathname;
   }
 
 }
