@@ -1,6 +1,6 @@
 # Decora Gallery
 
-`import { DecGallery } from '@decora/browser-lib-ui'`
+`import { DecGalleryModule } from '@decora/browser-lib-ui'`
 
 
 ## Examples
