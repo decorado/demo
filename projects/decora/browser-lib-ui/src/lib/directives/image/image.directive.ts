@@ -1,5 +1,5 @@
 import { Directive, Input, ViewContainerRef } from '@angular/core';
-import { ImageSize, SystemFileKey } from './image.directive.models';
+import { DecImageSize, SystemFileKey } from './image.directive.models';
 import { TransparentImage, ThumborServerHost, ErrorImage, S3Host } from './image.directive.constants';
 
 @Directive({
@@ -19,7 +19,7 @@ export class DecImageDirective {
     }
   }
 
-  @Input() decImageSize: ImageSize;
+  @Input() decImageSize: DecImageSize;
 
   // Defines if white margins should be cropped
   @Input() trim: boolean;
@@ -106,7 +106,7 @@ export class DecImageDirective {
     return `${ThumborServerHost}/${size}${aspect}${trim}/${this.imagePath}`;
   }
 
-  private getImageSize(decImageSize: ImageSize = {}): string {
+  private getImageSize(decImageSize: DecImageSize = {}): string {
     return `${decImageSize.width || 0}x${decImageSize.height || 0}`;
   }
 

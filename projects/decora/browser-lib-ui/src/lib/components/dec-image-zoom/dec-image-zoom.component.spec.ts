@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DecZoomImageViewComponent } from './dec-zoom-image-view.component';
+import { DecImageZoomComponent } from './dec-image-zoom.component';
 
-describe('DecZoomImageViewComponent', () => {
-  let component: DecZoomImageViewComponent;
-  let fixture: ComponentFixture<DecZoomImageViewComponent>;
+describe('DecImageZoomComponent', () => {
+  let component: DecImageZoomComponent;
+  let fixture: ComponentFixture<DecImageZoomComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DecZoomImageViewComponent ]
+      declarations: [ DecImageZoomComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DecZoomImageViewComponent);
+    fixture = TestBed.createComponent(DecImageZoomComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

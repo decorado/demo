@@ -1,11 +1,11 @@
 import { ViewContainerRef } from '@angular/core';
-import { ImageSize, SystemFileKey } from './image.directive.models';
+import { DecImageSize, SystemFileKey } from './image.directive.models';
 export declare class DecImageDirective {
     viewContainerRef: ViewContainerRef;
     containerElement: HTMLElement;
     errorOnLoad: boolean;
     decImage: SystemFileKey | string;
-    decImageSize: ImageSize;
+    decImageSize: DecImageSize;
     trim: boolean;
     fitIn: boolean;
     thumborize: boolean;

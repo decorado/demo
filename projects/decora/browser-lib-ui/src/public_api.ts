@@ -40,12 +40,9 @@ export * from './lib/components/dec-dialog/dec-dialog.service';
 // GALLERY
 export * from './lib/components/gallery/dec-gallery.component';
 export * from './lib/components/gallery/dec-gallery.module';
-// IMAGE DIRECTIVE
-export * from './lib/directives/image/image.module';
-export * from './lib/directives/image/image.directive';
 // IMAGE ZOOM
-export * from './lib/components/dec-zoom-image-view/dec-zoom-image-view.module';
-export * from './lib/components/dec-zoom-image-view/dec-zoom-image-view.component';
+export * from './lib/components/dec-image-zoom/dec-image-zoom.module';
+export * from './lib/components/dec-image-zoom/dec-image-zoom.component';
 // Label
 export * from './lib/components/dec-label/dec-label.component';
 export * from './lib/components/dec-label/dec-label.module';
@@ -106,17 +103,23 @@ export * from './lib/components/tabs/tab/tab.component';
 export * from './lib/components/upload/upload.module';
 export * from './lib/components/upload/upload.component';
 
+
 /*********************************************************
 *
 * DIRECTIVES
 *
 **********************************************************/
-// PERMISSIONS
-export * from './lib/directives/permission/dec-permission.directive';
-export * from './lib/directives/permission/dec-permission.module';
 // COLOR
 export * from './lib/directives/color/contrast-font-with-bg/dec-contrast-font-with-bg.directive';
 export * from './lib/directives/color/contrast-font-with-bg/dec-contrast-font-with-bg.module';
+// IMAGE DIRECTIVE
+export * from './lib/directives/image/image.module';
+export * from './lib/directives/image/image.directive';
+// PERMISSIONS
+export * from './lib/directives/permission/dec-permission.directive';
+export * from './lib/directives/permission/dec-permission.module';
+
+
 /*********************************************************
 *
 * GUARDS
