@@ -52,7 +52,7 @@ export class DecZoomImageViewComponent implements OnInit {
   loadImage() {
     if (this.innerImage && this.thumbSize) {
       this.imagePath = this.extractImageUrlFromSysfile();
-      this.finalImageUrl = this.innerImage.fileBaseUrl + '.' + this.innerImage.extension;
+      this.finalImageUrl = this.innerImage.fileUrl;
       this.thumbImage = this.getThumborUrl();
     }
   }

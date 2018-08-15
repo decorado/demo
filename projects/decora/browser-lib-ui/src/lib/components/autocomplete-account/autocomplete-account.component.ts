@@ -2,10 +2,13 @@ import { Component, Input, forwardRef, Output, EventEmitter } from '@angular/cor
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { DecApiService } from './../../services/api/decora-api.service';
 import { Observable } from 'rxjs';
+import { HttpUrlEncodingCodec } from '@angular/common/http';
 
 //  Return an empty function to be used as default trigger functions
 const noop = () => {
 };
+
+const ENDPOINT_TESTE = 'report/accounts/options';
 
 //  Used to extend ngForms functions
 const AUTOCOMPLETE_ROLES_CONTROL_VALUE_ACCESSOR: any = {
@@ -22,14 +25,25 @@ const AUTOCOMPLETE_ROLES_CONTROL_VALUE_ACCESSOR: any = {
 })
 export class DecAutocompleteAccountComponent implements ControlValueAccessor {
 
-  endpoint = 'accounts/options';
+  endpoint: string;
 
   labelAttr = 'value';
 
   valueAttr = 'key';
 
-  @Input() types: string[];
+  @Input()
+  set types(v: string[]) {
+    if (v !== this._types) {
+      this._types = v;
+      this.setRolesParams();
+    }
+  }
 
+  get types(): string[] {
+    return this._types;
+  }
+
+  _types: string[];
   @Input() disabled: boolean;
 
   @Input() required: boolean;
@@ -55,7 +69,7 @@ export class DecAutocompleteAccountComponent implements ControlValueAccessor {
 
   constructor(
     private decoraApi: DecApiService
-  ) {}
+  ) { }
 
   /*
   ** ngModel API
@@ -101,24 +115,23 @@ export class DecAutocompleteAccountComponent implements ControlValueAccessor {
     this.blur.emit(this.value);
   }
 
-  customFetchFunction = (textSearch): Observable<any> => {
+  labelFn(account) {
+    return `${account.value} #${account.key}`;
+  }
 
-    const filterGroups = [
-      {
-        filters: [
-          { property: 'name', value: textSearch }
-        ]
-      }
-    ];
+  setRolesParams() {
+    const params = [];
+    let endpoint = `${ENDPOINT_TESTE}`;
 
     if (this.types) {
-
-      filterGroups[0].filters.push({ property: 'role.$id', value: this.types });
-
+      params.push(`roles=${encodeURI(JSON.stringify(this.types))}`);
     }
 
+    if (params.length) {
+      endpoint += `?${params.join('&')}`;
+    }
 
-    return this.decoraApi.get(this.endpoint, { filterGroups });
+    this.endpoint = endpoint;
   }
 
 }

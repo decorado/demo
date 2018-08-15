@@ -1,13 +1,13 @@
 import { EventEmitter } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 import { DecApiService } from './../../services/api/decora-api.service';
-import { Observable } from 'rxjs';
 export declare class DecAutocompleteAccountComponent implements ControlValueAccessor {
     private decoraApi;
     endpoint: string;
     labelAttr: string;
     valueAttr: string;
     types: string[];
+    _types: string[];
     disabled: boolean;
     required: boolean;
     name: string;
@@ -24,5 +24,6 @@ export declare class DecAutocompleteAccountComponent implements ControlValueAcce
     onValueChanged(event: any): void;
     writeValue(value: any): void;
     onAutocompleteBlur($event: any): void;
-    customFetchFunction: (textSearch: any) => Observable<any>;
+    labelFn(account: any): string;
+    setRolesParams(): void;
 }
