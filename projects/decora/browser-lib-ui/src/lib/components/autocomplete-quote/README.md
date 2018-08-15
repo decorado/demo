@@ -8,23 +8,39 @@
 
 ```html
   <dec-autocomplete-quote
-  [(ngModel)]="quote"
-  [projectId]="projectId" // here
-  (selected)="optionSelected($event)">
-  </dec-autocomplete-quote>
+    [(ngModel)]="quote"
+    [projectId]="projectId"
+    decoraProduct="RENDERING"
+    decoraProductVariant="RENDERING_MODEL"
+    (selected)="optionSelected($event)"
+  ></dec-autocomplete-quote>
 ```
 
 ### In group with AutocompleteProject
 
 ```html
   <dec-autocomplete-project
-  [(ngModel)]="projectId"
-  (selected)="optionSelected($event)">
-  </dec-autocomplete-project>
+    [(ngModel)]="projectId"
+    (selected)="optionSelected($event)"
+  ></dec-autocomplete-project>
 
   <dec-autocomplete-quote
-  [(ngModel)]="quote"
-  [projectId]="projectId" // here
-  (selected)="optionSelected($event)">
-  </dec-autocomplete-quote>
+    [(ngModel)]="quote"
+    [projectId]="projectId"
+    (selected)="optionSelected($event)"
+  ></dec-autocomplete-quote>
 ```
+
+## API
+
+### @Input() projectId: string;
+
+Sets the project scope
+
+### @Input() decoraProduct: string;
+
+Sets the decora internal product type
+
+### @Input() decoraProductVariant: string;
+
+Sets the decora internal product variant

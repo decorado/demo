@@ -8,6 +8,8 @@ import { map } from 'rxjs/operators';
 const noop = () => {
 };
 
+const QUOTE_ENDPOINT = '/projects/${projectId}/quotes/options';
+
 //  Used to extend ngForms functions
 export const AUTOCOMPLETE_QUOTE_CONTROL_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -23,24 +25,11 @@ export const AUTOCOMPLETE_QUOTE_CONTROL_VALUE_ACCESSOR: any = {
 })
 export class DecAutocompleteQuoteComponent implements ControlValueAccessor {
 
-  BASE_ENDPOINT = '/legacy/project/${projectId}/quote';
-
   endpoint: string;
 
   labelAttr = 'value';
 
   valueAttr = 'key';
-
-  @Input()
-  set projectId(v: string) {
-    this._projectId = v;
-    this.value = undefined;
-    this.setEndpointBasedOnProjectId();
-  }
-
-  get projectId() {
-    return this._projectId;
-  }
 
   @Input() disabled: boolean;
 
@@ -54,7 +43,41 @@ export class DecAutocompleteQuoteComponent implements ControlValueAccessor {
 
   @Output() optionSelected: EventEmitter<any> = new EventEmitter<any>();
 
+  @Input()
+  set projectId(v: string) {
+    this._projectId = v;
+    this.setEndpointBasedOnInputs();
+  }
+
+  get projectId() {
+    return this._projectId;
+  }
+
+  @Input()
+  set decoraProduct(v: string) {
+    this._decoraProduct = v;
+    this.setEndpointBasedOnInputs();
+  }
+
+  get decoraProduct() {
+    return this._decoraProduct;
+  }
+
+  @Input()
+  set decoraProductVariant(v: string) {
+    this._decoraProductVariant = v;
+    this.setEndpointBasedOnInputs();
+  }
+
+  get decoraProductVariant() {
+    return this._decoraProductVariant;
+  }
+
   private _projectId: string;
+
+  private _decoraProduct: string;
+
+  private _decoraProductVariant: string;
 
   /*
   ** ngModel propertie
@@ -113,26 +136,46 @@ export class DecAutocompleteQuoteComponent implements ControlValueAccessor {
     this.blur.emit(this.value);
   }
 
-  setEndpointBasedOnProjectId() {
-    this.endpoint = !this.projectId ? undefined : this.BASE_ENDPOINT.replace('${projectId}', this.projectId);
-  }
+  private setEndpointBasedOnInputs() {
 
-  customFetchFunction = (textSearch): Observable<any> => {
-    const params: any = {};
-    params.textSearch = textSearch;
-    this.setEndpointBasedOnProjectId();
-    return this.decoraApi.get(this.endpoint, params)
-    .pipe(
-      map(response => {
-        response = response.map(quotes => {
-          return {
-            key: quotes.id,
-            value: quotes.productVariantId
-          };
-            });
-        return response;
-      })
-    );
+    let endpoint;
+
+    this.value = undefined;
+
+    if (this.projectId) {
+
+      endpoint = QUOTE_ENDPOINT.replace('${projectId}', this.projectId);
+
+      const params = [];
+
+      if (this.decoraProduct) {
+        params.push(`productId=${this.decoraProduct}`);
+      }
+
+      if (this.decoraProductVariant) {
+        params.push(`productVariantId=${this.decoraProductVariant}`);
+      }
+
+      if (params.length) {
+
+        endpoint += `?${params.join('&')}`;
+
+      }
+
+    }
+
+    if (this.endpoint !== endpoint) {
+
+      this.endpoint = undefined;
+
+      setTimeout(() => {
+
+        this.endpoint = endpoint;
+
+      }, 0);
+
+    }
+
   }
 
 }

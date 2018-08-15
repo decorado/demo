@@ -1,12 +1,15 @@
 <app-demo-container readmeSrc="/assets/docs/browser-lib-ui/components/autocomplete-quote/README.md">
 
+    <dec-autocomplete-project
+      [(ngModel)]="projectId"
+      [companyId]="companyId"
+    ></dec-autocomplete-project>
 
-    <dec-autocomplete-project [(ngModel)]="projectId" [companyId]="companyId">
-
-    </dec-autocomplete-project>
-
-    <dec-autocomplete-quote [(ngModel)]="quote" [projectId]="projectId">
-
-    </dec-autocomplete-quote>
+    <dec-autocomplete-quote
+      [(ngModel)]="quote"
+      [projectId]="projectId"
+      decoraProduct="RENDERING"
+      decoraProductVariant="RENDERING_MODEL"
+    ></dec-autocomplete-quote>
 
 </app-demo-container>

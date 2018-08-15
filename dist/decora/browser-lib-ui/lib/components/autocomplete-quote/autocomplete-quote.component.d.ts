@@ -1,22 +1,24 @@
 import { EventEmitter } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
-import { Observable } from 'rxjs';
 import { DecApiService } from './../../services/api/decora-api.service';
 export declare const AUTOCOMPLETE_QUOTE_CONTROL_VALUE_ACCESSOR: any;
 export declare class DecAutocompleteQuoteComponent implements ControlValueAccessor {
     private decoraApi;
-    BASE_ENDPOINT: string;
     endpoint: string;
     labelAttr: string;
     valueAttr: string;
-    projectId: string;
     disabled: boolean;
     required: boolean;
     name: string;
     placeholder: string;
     blur: EventEmitter<any>;
     optionSelected: EventEmitter<any>;
+    projectId: string;
+    decoraProduct: string;
+    decoraProductVariant: string;
     private _projectId;
+    private _decoraProduct;
+    private _decoraProductVariant;
     private innerValue;
     private onTouchedCallback;
     private onChangeCallback;
@@ -27,6 +29,5 @@ export declare class DecAutocompleteQuoteComponent implements ControlValueAccess
     onValueChanged(event: any): void;
     writeValue(value: any): void;
     onAutocompleteBlur($event: any): void;
-    setEndpointBasedOnProjectId(): void;
-    customFetchFunction: (textSearch: any) => Observable<any>;
+    private setEndpointBasedOnInputs();
 }
