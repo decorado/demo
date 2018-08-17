@@ -10,13 +10,17 @@ export declare class DecListComponent implements OnInit, OnDestroy, AfterViewIni
     private service;
     countReport: CountReport;
     filterMode: 'tabs' | 'collapse';
-    collapsableFilters: DecListFilter[];
+    collapsableFilters: {
+        tab: string;
+        children: DecListFilter[];
+    };
     loading: boolean;
     readonly filterGroups: FilterGroups;
     opennedCollapsable: any;
     report: any;
     isLastPage: boolean;
     selectedTab: any;
+    previousSelectedTab: any;
     private filterData;
     private _loading;
     private clearAndReloadReport;

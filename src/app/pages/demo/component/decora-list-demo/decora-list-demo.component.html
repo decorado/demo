@@ -193,16 +193,8 @@
     </dec-list-grid>
 
     <dec-list-table>
-      <dec-list-table-column title="Name">
-        <ng-template let-row="row">
-          {{ row.name }}
-        </ng-template>
-      </dec-list-table-column>
-      <dec-list-table-column title="Email">
-        <ng-template let-row="row">
-          {{ row.email }}
-        </ng-template>
-      </dec-list-table-column>
+      <dec-list-table-column title="Name" prop="name"></dec-list-table-column>
+      <dec-list-table-column title="Email" prop="email"></dec-list-table-column>
     </dec-list-table>
 
   </dec-list>

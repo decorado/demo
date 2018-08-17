@@ -38,7 +38,7 @@ export class DecListTableComponent {
 
     const sortConfig = [{
       property: event.sorts[0].prop,
-      order: {type: event.sorts[0].dir}
+      order: event.sorts[0].dir.toUpperCase()
     }];
 
     if (sortConfig !== this.columnsSortConfig) {

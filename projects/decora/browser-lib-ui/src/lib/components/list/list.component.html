@@ -63,7 +63,7 @@
 <!-- COLLAPSE TEMPLATE -->
 <ng-template #collapseTemplate>
   <mat-accordion>
-    <ng-container *ngFor="let filter of collapsableFilters">
+    <ng-container *ngFor="let filter of collapsableFilters.children">
       <mat-expansion-panel (opened)="searchCollapsable(filter)">
         <mat-expansion-panel-header>
           <div class="collapse-title" fxLayout="row" fxLayoutGap="32px" fxLayoutAlign="left center">
