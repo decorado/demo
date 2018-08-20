@@ -1330,6 +1330,8 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
 
           this.opennedCollapsable = undefined;
 
+          this.collapsableFilters = undefined;
+
           this.loadReport(true).then((res) => {
 
             if (event.recount) {
@@ -1436,7 +1438,15 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
 
           this.columnsSortConfig = columnsSortConfig;
 
-          this.loadReport(true);
+          if (this.collapsableFilters) {
+
+            this.loadByOpennedCollapse(this.opennedCollapsable);
+
+          } else {
+
+            this.loadReport(true);
+
+          }
 
         }
 
