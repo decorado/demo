@@ -28,7 +28,7 @@ export interface FilterData {
 export interface DecFilter {
     filterGroups?: FilterGroups;
     projectView?: any;
-    columns?: any;
+    sort?: any;
     page?: number;
     limit?: number;
     textSearch?: string;
@@ -36,7 +36,7 @@ export interface DecFilter {
 export interface SerializedDecFilter {
     filter?: string;
     projectView?: string;
-    columns?: string;
+    sort?: string;
     page?: number;
     limit?: number;
     textSearch?: string;

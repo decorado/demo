@@ -189,8 +189,8 @@ export class DecApiService implements OnDestroy {
         serializedFilter.projectView = this.filterObjectToQueryString(filter.projectView);
       }
 
-      if (filter.columns) {
-        serializedFilter.columns = filter.columns;
+      if (filter.sort) {
+        serializedFilter.sort = this.filterObjectToQueryString(filter.sort);
       }
 
       if (filter.textSearch) {

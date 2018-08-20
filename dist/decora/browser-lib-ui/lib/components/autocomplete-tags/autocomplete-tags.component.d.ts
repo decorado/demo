@@ -4,6 +4,7 @@ export declare class AutocompleteTagsComponent implements ControlValueAccessor {
     endpoint: string;
     valueAttr: string;
     labelAttr: string;
+    _endpoint: string;
     disabled: boolean;
     required: boolean;
     name: string;
@@ -16,7 +17,7 @@ export declare class AutocompleteTagsComponent implements ControlValueAccessor {
     private onChangeCallback;
     constructor();
     value: any;
-    labelFn(company: any): string;
+    labelFn(tags: any): string;
     registerOnChange(fn: any): void;
     registerOnTouched(fn: any): void;
     onValueChanged(event: any): void;

@@ -27,6 +27,10 @@ export class DecoraListDemoComponent implements OnInit {
       { label: 'bruno', filters: [{ property: 'name', value: 'bruno' }] },
       { label: 'bruno OR rene', color: '#1a1aff', filters: [{ property: 'name', value: ['bruno', 'rene'] }] },
     ]},
+    { label: 'With sub 2', children: [
+      { label: 'rafael', filters: [{ property: 'name', value: 'rafael' }] },
+      { label: 'rafael OR eduardo', color: '#1a1aff', filters: [{ property: 'name', value: ['rafael', 'eduardo'] }] },
+    ]},
   ];
 
   constructor() { }

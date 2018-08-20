@@ -36,7 +36,7 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
   *
   *
   */
-  collapsableFilters: DecListFilter[] = [];
+  collapsableFilters: { tab: string, children: DecListFilter[] };
 
   /*
    * loading
@@ -95,6 +95,13 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
   *
   */
   selectedTab: any;
+
+  /*
+  * previousSelectedTab
+  *
+  *
+  */
+  previousSelectedTab: any;
 
   /*
    * filterData
@@ -834,7 +841,7 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   private loadByOpennedCollapse(filterUid) {
 
-    const filter = this.collapsableFilters.find(item => item.uid === filterUid);
+    const filter = this.collapsableFilters.children.find(item => item.uid === filterUid);
 
     const filterGroup: FilterGroup = { filters: filter.filters };
 
@@ -874,9 +881,15 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
 
       if (this.endpoint) {
 
-        this.payload = this.mountPayload(clearAndReloadReport, collapseFilterGroups);
+        this.mountPayload(clearAndReloadReport, collapseFilterGroups)
+        .then(payload => {
 
-        this.filterData.next({ endpoint: this.endpoint, payload: this.payload, cbk: res, clear: clearAndReloadReport });
+          this.payload = payload;
+
+          this.filterData.next({ endpoint: this.endpoint, payload: this.payload, cbk: res, clear: clearAndReloadReport });
+
+        });
+
 
       } else if (this.customFetchMethod) {
 
@@ -904,35 +917,39 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private mountPayload(clearAndReloadReport: boolean = false, collapseFilterGroups?) {
 
-    const searchFilterGroups = this.filter ? this.filter.filterGroups : undefined;
+    return new Promise((resolve, reject) => {
 
-    const filterGroups = this.appendFilterGroupsToEachFilterGroup(searchFilterGroups, collapseFilterGroups);
+      const searchFilterGroups = this.filter ? this.filter.filterGroups : undefined;
 
-    const payload: DecFilter = {};
+      const filterGroups = this.appendFilterGroupsToEachFilterGroup(searchFilterGroups, collapseFilterGroups);
 
-    payload.limit = this.limit;
+      const payload: DecFilter = {};
 
-    if (filterGroups) {
+      payload.limit = this.limit;
 
-      payload.filterGroups = filterGroups;
+      if (filterGroups) {
 
-    }
+        payload.filterGroups = filterGroups;
 
-    if (this.columnsSortConfig) {
+      }
 
-      payload.columns = this.columnsSortConfig;
+      if (this.columnsSortConfig) {
 
-    }
+        payload.sort = this.columnsSortConfig;
 
-    if (!clearAndReloadReport && this.report) {
+      }
 
-      payload.page = this.report.page + 1;
+      if (!clearAndReloadReport && this.report) {
 
-      payload.limit = this.report.limit;
+        payload.page = this.report.page + 1;
 
-    }
+        payload.limit = this.report.limit;
 
-    return payload;
+      }
+
+      resolve(payload);
+
+    });
 
   }
 
@@ -1113,9 +1130,7 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
 
       this.appendFilterGroupsBasedOnSearchableProperties(payloadCopy.filterGroups);
 
-
       return payloadCopy;
-
 
     } else {
 
@@ -1293,11 +1308,19 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.filter) {
       this.filterSubscription = this.filter.search.subscribe(event => {
 
-        if (this.filterMode !== event.filterMode) {
+        const tabChanged = this.previousSelectedTab !== this.selectedTab;
 
-          if (event.filterMode === 'tabs') { // if changing from collapse to tabs, clear the results before showing the rows
-            this.setRows([]);
-          }
+        const filterModeChanged = this.filterMode !== event.filterMode;
+
+        if (tabChanged) {
+
+          this.previousSelectedTab = this.selectedTab;
+
+          this.setRows([]); // if changing tabs, clear the results before showing the rows because it is done only after fetching the data
+
+        }
+
+        if (filterModeChanged) {
 
           this.filterMode = event.filterMode;
 
@@ -1306,6 +1329,8 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
         if (this.filterMode === 'tabs') {
 
           this.opennedCollapsable = undefined;
+
+          this.collapsableFilters = undefined;
 
           this.loadReport(true).then((res) => {
 
@@ -1325,13 +1350,16 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
 
           }
 
-          if (this.opennedCollapsable) {
+          if (this.opennedCollapsable && !tabChanged) {
 
             this.loadByOpennedCollapse(this.opennedCollapsable);
 
           } else {
 
-            this.collapsableFilters = event.children ? event.children : [];
+            this.collapsableFilters = {
+              tab: this.selectedTab,
+              children: event.children ? event.children : []
+            };
 
           }
 
@@ -1403,11 +1431,25 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   private watchTableSort() {
     if (this.table) {
+
       this.tableSortSubscription = this.table.sort.subscribe(columnsSortConfig => {
+
         if (this.columnsSortConfig !== columnsSortConfig) {
+
           this.columnsSortConfig = columnsSortConfig;
-          this.loadReport(true);
+
+          if (this.collapsableFilters) {
+
+            this.loadByOpennedCollapse(this.opennedCollapsable);
+
+          } else {
+
+            this.loadReport(true);
+
+          }
+
         }
+
       });
     }
   }

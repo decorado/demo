@@ -382,6 +382,8 @@ export class DecListFilterComponent implements OnInit, OnDestroy {
 
           this.filterMode = 'tabs';
 
+          this.childrenFilters = undefined;
+
         }
 
 

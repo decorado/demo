@@ -9,12 +9,22 @@ import { noop } from 'rxjs';
 })
 export class AutocompleteTagsComponent implements ControlValueAccessor {
 
+  @Input()
+  set endpoint(v) {
+    if (v) {
+      this._endpoint = v;
+    }
+  }
 
-  endpoint = 'tags/options';
+  get endpoint() {
+    return this._endpoint;
+  }
 
   valueAttr = 'key';
 
   labelAttr = 'value';
+
+  _endpoint: string;
 
   @Input() disabled: boolean;
 
@@ -60,8 +70,8 @@ export class AutocompleteTagsComponent implements ControlValueAccessor {
     }
   }
 
-  labelFn(company) {
-    return `${company.value} #${company.key}`;
+  labelFn(tags) {
+    return `${tags.value} #${tags.key}`;
   }
 
   // From ControlValueAccessor interface
