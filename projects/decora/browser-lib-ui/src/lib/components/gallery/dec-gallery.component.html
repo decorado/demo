@@ -1,10 +1,10 @@
 <div class="dec-gallery-wrapper">
 
   <div class="image-highlighted">
-      <dec-zoom-image-view 
-        [thumbImageSize]="{width: 620, height: 620}"
-        [decImage]="imageHighlight">
-      </dec-zoom-image-view>
+      <dec-image-zoom
+        [size]="{width: 620, height: 620}"
+        [systemFile]="imageHighlight">
+      </dec-image-zoom>
   </div>
 
   <div class="text-right" *ngIf="imgExternalLink">

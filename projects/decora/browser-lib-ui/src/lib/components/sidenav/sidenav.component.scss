@@ -1,16 +1,30 @@
+@import './../../../../bootstrap/constants/positioning';
+
 .dec-sidenav-wraper {
 
+  .dec-sidenav-toolbar-wrapper {
+    min-width: $min-body-width;
+
+    &.full-screen {
+      min-width: $min-body-width-without-sidenav;
+    }
+  }
+
   .mat-sidenav-container {
+    min-width: $min-body-width;
     height: 100vh;
 
+
+    &.full-screen {
+      min-width: $min-body-width-without-sidenav;
+    }
+
     &.with-toolbar {
-
       height: calc(100vh - 64px);
-
     }
 
     .mat-sidenav {
-      width: 256px;
+      width: $sidenav-menu-width;
     }
 
   }
@@ -22,4 +36,16 @@
     width: 100%;
   }
 
+}
+
+@media screen and (max-width: 1199px) {
+  .dec-sidenav-wraper {
+    .mat-sidenav-container {
+      height: calc(100vh - 16px);
+
+      &.with-toolbar {
+        height: calc(100vh - 80px);
+      }
+    }
+  }
 }

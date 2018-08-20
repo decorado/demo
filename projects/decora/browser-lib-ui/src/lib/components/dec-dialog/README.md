@@ -1,30 +1,32 @@
 # Decora Dialog
 
+`import { DecDialogModule } from '@decora/browser-lib-ui'`
+
 This Service  was built to allow the presentation of pqages inside a dialog. This is used to improve matdialog options and to insert a wrapper in our dialogs.
 
 ## Example
 
 ```javascript
 import { PersonDetailComponent } from '@app/shared/components/person/person-detail.component';
-...
 
-  const person = {name: 'my name', birth: '2001/15/05'};
 
-  const dialogRef = this.decDialog.open(PersonDetailComponent, {
-    title: `My person dialog title`,
-    actions: [
-      { i18nLabel: 'label.delete', callback: (data: any) => console.log('DELETED', data)}
-    ],
-    context: {
-      person: person,
-    }
+const person = {name: 'my name', birth: '2001/15/05'};
+
+const dialogRef = this.decDialog.open(PersonDetailComponent, {
+  title: `My person dialog title`,
+  actions: [
+    { i18nLabel: 'label.delete', callback: (data: any) => console.log('DELETED', data)}
+  ],
+  context: {
+    person: person,
+  }
+});
+
+dialogRef.componentInstance.child.subscribe((childComponentInstance: PersonDetailComponent) => {
+  childComponentInstance.close.subscribe(() => {
+    dialogRef.close();
   });
-
-  dialogRef.componentInstance.child.subscribe((childComponentInstance: PersonDetailComponent) => {
-    childComponentInstance.close.subscribe(() => {
-      dialogRef.close();
-    });
-  });
+});
 
 ```
 

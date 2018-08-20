@@ -1,8 +1,8 @@
 <div class="dec-sidenav-wraper">
   <!-- TOOLBAR -->
-  <ng-container *ngIf="toolbar">
+  <div *ngIf="toolbar" class="dec-sidenav-toolbar-wrapper" [ngClass]="{'full-screen': !(leftMenu.leftMenuVisible | async)}">
     <ng-content select="dec-sidenav-toolbar"></ng-content>
-  </ng-container>
+  </div>
   <!-- / TOOLBAR -->
 
   <!-- PROGRESS BAR -->
@@ -11,7 +11,7 @@
   </div>
   <!-- / PROGRESS BAR -->
 
-  <mat-sidenav-container [ngClass]="{'with-toolbar': toolbar}">
+  <mat-sidenav-container [ngClass]="{'with-toolbar': toolbar, 'full-screen': !(leftMenu.leftMenuVisible | async)}">
 
     <!-- LEFT MENU -->
     <mat-sidenav *ngIf="leftMenu"

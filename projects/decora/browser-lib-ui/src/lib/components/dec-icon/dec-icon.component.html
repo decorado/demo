@@ -1,0 +1,12 @@
+<ng-container [ngSwitch]="font">
+  <ng-container *ngSwitchCase="'mat'">
+    <i class="material-icons">{{icon}}</i>
+  </ng-container>
+  <ng-container *ngSwitchCase="'fas'">
+    <i class="fa {{'fa-'+icon}}" aria-hidden="true"></i>
+  </ng-container>
+</ng-container>
+
+<span #text [hidden]="true">
+  <ng-content></ng-content>
+</span>

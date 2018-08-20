@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgxImageZoomModule } from 'ngx-image-zoom';
-import { DecZoomImageViewComponent } from './dec-zoom-image-view.component';
+import { DecImageZoomComponent } from './dec-image-zoom.component';
 
 @NgModule({
   imports: [
@@ -9,10 +9,10 @@ import { DecZoomImageViewComponent } from './dec-zoom-image-view.component';
     NgxImageZoomModule.forRoot()
   ],
   declarations: [
-    DecZoomImageViewComponent
+    DecImageZoomComponent
   ],
   exports: [
-    DecZoomImageViewComponent
+    DecImageZoomComponent
   ]
 })
-export class DecZoomImageViewModule { }
+export class DecImageZoomModule { }

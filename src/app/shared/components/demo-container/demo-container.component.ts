@@ -22,7 +22,6 @@ export class DemoContainerComponent implements OnInit {
   @Input() activeTab;
 
   constructor(private decConfig: DecConfigurationService) {
-    console.log('this.decConfig', this.decConfig);
     this.baseHref = this.decConfig.config.host;
   }
 

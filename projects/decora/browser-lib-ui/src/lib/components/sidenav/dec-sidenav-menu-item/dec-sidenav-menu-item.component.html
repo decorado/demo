@@ -2,7 +2,7 @@
 
   <mat-list-item class="click dec-sidenav-menu-item"
   (click)="subitems.length ? toggleSubmenu() : openLink()"
-  [ngStyle]="getBackground(treeLevel)">
+  [ngClass]="getBackground(treeLevel)">
 
     <div class="item-wrapper">
 

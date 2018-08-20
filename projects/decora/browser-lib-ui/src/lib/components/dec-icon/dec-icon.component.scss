@@ -1,0 +1,15 @@
+.material-icons {
+  /* Inherit line and text styles */
+  color: inherit;
+  font-size: inherit;
+  /* Aligns to the text */
+  display: inline-block;
+  transform: translateY(16%);
+  /* Avoid selection to look likes Font Awesome */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
