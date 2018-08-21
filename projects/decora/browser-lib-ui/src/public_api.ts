@@ -40,6 +40,9 @@ export * from './lib/components/dec-dialog/dec-dialog.service';
 // GALLERY
 export * from './lib/components/gallery/dec-gallery.component';
 export * from './lib/components/gallery/dec-gallery.module';
+// ICON
+export * from './lib/components/dec-icon/dec-icon.module';
+export * from './lib/components/dec-icon/dec-icon.component';
 // IMAGE ZOOM
 export * from './lib/components/dec-image-zoom/dec-image-zoom.module';
 export * from './lib/components/dec-image-zoom/dec-image-zoom.component';

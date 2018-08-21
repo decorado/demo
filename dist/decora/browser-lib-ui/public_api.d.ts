@@ -28,6 +28,8 @@ export * from './lib/components/dec-dialog/dec-dialog.module';
 export * from './lib/components/dec-dialog/dec-dialog.service';
 export * from './lib/components/gallery/dec-gallery.component';
 export * from './lib/components/gallery/dec-gallery.module';
+export * from './lib/components/dec-icon/dec-icon.module';
+export * from './lib/components/dec-icon/dec-icon.component';
 export * from './lib/components/dec-image-zoom/dec-image-zoom.module';
 export * from './lib/components/dec-image-zoom/dec-image-zoom.component';
 export * from './lib/components/dec-label/dec-label.component';

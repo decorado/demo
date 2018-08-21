@@ -1356,6 +1356,8 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
 
           } else {
 
+            this.opennedCollapsable = undefined;
+
             this.collapsableFilters = {
               tab: this.selectedTab,
               children: event.children ? event.children : []
