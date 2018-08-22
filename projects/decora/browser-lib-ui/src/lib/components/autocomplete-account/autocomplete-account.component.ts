@@ -1,4 +1,4 @@
-import { Component, Input, forwardRef, Output, EventEmitter } from '@angular/core';
+import { Component, Input, forwardRef, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { DecApiService } from './../../services/api/decora-api.service';
 import { Observable } from 'rxjs';
@@ -8,7 +8,7 @@ import { HttpUrlEncodingCodec } from '@angular/common/http';
 const noop = () => {
 };
 
-const ENDPOINT_TESTE = 'report/accounts/options';
+const ACCOUNTS_ENDPOINT = 'accounts/options';
 
 //  Used to extend ngForms functions
 const AUTOCOMPLETE_ROLES_CONTROL_VALUE_ACCESSOR: any = {
@@ -23,7 +23,7 @@ const AUTOCOMPLETE_ROLES_CONTROL_VALUE_ACCESSOR: any = {
   styles: [],
   providers: [AUTOCOMPLETE_ROLES_CONTROL_VALUE_ACCESSOR]
 })
-export class DecAutocompleteAccountComponent implements ControlValueAccessor {
+export class DecAutocompleteAccountComponent implements ControlValueAccessor, AfterViewInit {
 
   endpoint: string;
 
@@ -33,7 +33,10 @@ export class DecAutocompleteAccountComponent implements ControlValueAccessor {
   set types(v: string[]) {
     if (v !== this._types) {
       this._types = v;
-      this.setRolesParams();
+
+      if (this.initialized) {
+        this.setRolesParams();
+      }
     }
   }
 
@@ -65,9 +68,18 @@ export class DecAutocompleteAccountComponent implements ControlValueAccessor {
   //  Placeholders for the callbacks which are later provided by the Control Value Accessor
   private onChangeCallback: (_: any) => void = noop;
 
+  private initialized: boolean;
+
   constructor(
     private decoraApi: DecApiService
   ) { }
+
+  ngAfterViewInit() {
+    this.initialized = true;
+    setTimeout(() => {
+      this.setRolesParams();
+    }, 0);
+  }
 
   /*
   ** ngModel API
@@ -117,9 +129,9 @@ export class DecAutocompleteAccountComponent implements ControlValueAccessor {
 
   setRolesParams() {
     const params = [];
-    let endpoint = `${ENDPOINT_TESTE}`;
+    let endpoint = `${ACCOUNTS_ENDPOINT}`;
 
-    if (this.types) {
+    if (this.types && this.types.length) {
       params.push(`roles=${encodeURI(JSON.stringify(this.types))}`);
     }
 

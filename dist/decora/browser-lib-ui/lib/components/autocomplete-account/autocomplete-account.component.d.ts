@@ -1,7 +1,7 @@
-import { EventEmitter } from '@angular/core';
+import { EventEmitter, AfterViewInit } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 import { DecApiService } from './../../services/api/decora-api.service';
-export declare class DecAutocompleteAccountComponent implements ControlValueAccessor {
+export declare class DecAutocompleteAccountComponent implements ControlValueAccessor, AfterViewInit {
     private decoraApi;
     endpoint: string;
     valueAttr: string;
@@ -16,7 +16,9 @@ export declare class DecAutocompleteAccountComponent implements ControlValueAcce
     private innerValue;
     private onTouchedCallback;
     private onChangeCallback;
+    private initialized;
     constructor(decoraApi: DecApiService);
+    ngAfterViewInit(): void;
     value: any;
     registerOnChange(fn: any): void;
     registerOnTouched(fn: any): void;
