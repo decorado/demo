@@ -73,7 +73,7 @@
             {{ 'label.' + filter.label | translate }}
           </div>
         </mat-expansion-panel-header>
-        <div *ngIf="opennedCollapsable === filter.uid">
+        <div *ngIf="selectedCollapsable === filter.uid">
           <ng-container [ngTemplateOutlet]="tabsTemplate"></ng-container>
         </div>
       </mat-expansion-panel>

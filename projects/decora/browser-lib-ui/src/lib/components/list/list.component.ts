@@ -69,11 +69,11 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   /*
-   * opennedCollapsable
+   * selectedCollapsable
    *
    *
    */
-  opennedCollapsable;
+  selectedCollapsable;
 
   /*
    * report
@@ -195,6 +195,20 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
   private _endpoint: string;
 
   /*
+   * _filter
+   *
+   *
+   */
+  private _filter: DecListFilterComponent;
+
+  /*
+   * _name
+   *
+   *
+   */
+  private _name: string;
+
+  /*
    * customFetchMethod
    *
    * method used to fetch data from back-end
@@ -223,19 +237,13 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   @Input()
   set endpoint(v: string) {
-
     if (this._endpoint !== v) {
-
       this._endpoint = (v[0] && v[0] === '/') ? v.replace('/', '') : v;
-
     }
-
   }
 
   get endpoint(): string {
-
     return this._endpoint;
-
   }
 
   /*
@@ -243,8 +251,6 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
    *
    *
    */
-  private _name: string;
-
   @Input()
   set name(v: string) {
     if (this._name !== v) {
@@ -278,6 +284,13 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
    *
    */
   @Input() limit = 10;
+
+  /*
+   * listMode
+   *
+   *
+   */
+  @Input() listMode;
 
   /*
    * scrollableContainerClass
@@ -333,8 +346,6 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
    *
    *
    */
-  private _filter: DecListFilterComponent;
-
   @ContentChild(DecListFilterComponent)
   set filter(v: DecListFilterComponent) {
     if (this._filter !== v) {
@@ -345,40 +356,6 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   get filter() {
     return this._filter;
-  }
-
-  /*
-   * listMode
-   *
-   *
-   */
-  @Input() listMode;
-
-  /*
-   * getListMode
-   *
-   *
-   */
-  @Input() getListMode = () => {
-
-    let listMode = this.listMode;
-
-    if (this.filter && this.filter.tabsFilterComponent) {
-
-      if (this.selectedTab && this.selectedTab.listMode) {
-
-        listMode = this.selectedTab.listMode;
-
-      } else {
-
-        listMode = this.table ? 'table' : 'grid';
-
-      }
-
-    }
-
-    return listMode;
-
   }
 
   /*
@@ -470,32 +447,6 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   }
 
-  private mountCountReport(filtersCounters): CountReport {
-
-    const countReport: CountReport = {
-      count: 0
-    };
-
-    filtersCounters.forEach(item => {
-
-      countReport[item.uid] = {
-
-        count: item.count
-
-      };
-
-      if (item.children) {
-
-        countReport[item.uid].children = this.mountCountReport(item.children);
-
-      }
-
-    });
-
-    return countReport;
-
-  }
-
   /*
    * removeItem
    *
@@ -553,7 +504,7 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   searchCollapsable(filter: DecListFilter) {
 
-    if (this.opennedCollapsable !== filter.uid) {
+    if (this.selectedCollapsable !== filter.uid) {
 
       this.loadByOpennedCollapse(filter.uid);
 
@@ -608,6 +559,64 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
 
     }
 
+
+  }
+
+  /*
+   getListMode
+   *
+   *
+   */
+  private getListMode = () => {
+
+    let listMode = this.listMode;
+
+    if (this.filter && this.filter.tabsFilterComponent) {
+
+      if (this.selectedTab && this.selectedTab.listMode) {
+
+        listMode = this.selectedTab.listMode;
+
+      } else {
+
+        listMode = this.table ? 'table' : 'grid';
+
+      }
+
+    }
+
+    return listMode;
+
+  }
+
+  /*
+   mountCountReport
+   *
+   *
+   */
+  private mountCountReport(filtersCounters): CountReport {
+
+    const countReport: CountReport = {
+      count: 0
+    };
+
+    filtersCounters.forEach(item => {
+
+      countReport[item.uid] = {
+
+        count: item.count
+
+      };
+
+      if (item.children) {
+
+        countReport[item.uid].children = this.mountCountReport(item.children);
+
+      }
+
+    });
+
+    return countReport;
 
   }
 
@@ -739,11 +748,11 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
   /*
    * detectListMode
    *
-   * Set the list mode based on filterTabs configuration or custom function overridden by getListMode input
+   getListMode input
    */
   private detectListMode() {
 
-    this.listMode = this.getListMode();
+    this.getListMode();
 
   }
 
@@ -849,7 +858,7 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
 
     setTimeout(() => {
 
-      this.opennedCollapsable = filter.uid;
+      this.selectedCollapsable = filter.uid;
 
     }, 0);
 
@@ -1328,7 +1337,7 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
 
         if (this.filterMode === 'tabs') {
 
-          this.opennedCollapsable = undefined;
+          this.selectedCollapsable = undefined;
 
           this.collapsableFilters = undefined;
 
@@ -1350,13 +1359,13 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
 
           }
 
-          if (this.opennedCollapsable && !tabChanged) {
+          if (this.selectedCollapsable && !tabChanged) {
 
-            this.loadByOpennedCollapse(this.opennedCollapsable);
+            this.loadByOpennedCollapse(this.selectedCollapsable);
 
           } else {
 
-            this.opennedCollapsable = undefined;
+            this.selectedCollapsable = undefined;
 
             this.collapsableFilters = {
               tab: this.selectedTab,
@@ -1410,6 +1419,7 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   private watchTabsChange() {
     if (this.filter && this.filter.tabsFilterComponent) {
+      this.selectedTab = this.filter.tabsFilterComponent.selectedTab;
       this.tabsChangeSubscription = this.filter.tabsFilterComponent.tabChange.subscribe(tab => {
         this.selectedTab = tab;
         this.detectListMode();
@@ -1442,7 +1452,7 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
 
           if (this.collapsableFilters) {
 
-            this.loadByOpennedCollapse(this.opennedCollapsable);
+            this.loadByOpennedCollapse(this.selectedCollapsable);
 
           } else {
 

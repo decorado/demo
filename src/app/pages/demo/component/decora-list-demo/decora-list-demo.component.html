@@ -125,7 +125,12 @@
 </ng-template>
 
 <ng-template #example4>
-  <dec-list name="list-test-subfilter" endpoint="report/accounts" [searchableProperties]="['name', '_id', 'email']">
+
+  <div>selectedCollapsable: {{ list4.selectedCollapsable }}</div>
+
+  <div>selectedTab: {{ list4.selectedTab }}</div>
+
+  <dec-list #list4 name="list-test-subfilter" endpoint="report/accounts" [searchableProperties]="['name', '_id', 'email']">
 
     <dec-list-filter [filters]="filtersWithSubfilters" loadCountReport>
 

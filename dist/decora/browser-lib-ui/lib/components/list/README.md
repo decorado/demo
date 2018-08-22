@@ -138,6 +138,20 @@ You can set the default tab using `default` in one of the filters.
 ### URL persistence
 All filters an active tab are persisted in the URL so the user can share a view with other to get in the same state.
 
+### Getting the selected tab and collpsable
+
+```html
+  <dec-list #list4 name="list-test-subfilter" endpoint="report/accounts" [searchableProperties]="['name', '_id', 'email']">
+    ...
+  </dec-list>
+
+  // HERE YOU CAN SEE THE SELECTED TAB AND COLLAPSABLE
+
+  selectedCollapsable: {{ list4.selectedCollapsable }}
+
+  selectedTab: {{ list4.selectedTab }}
+```
+
 ## API
 
 ### List
@@ -158,6 +172,9 @@ Used to enabling list filtering.
 |getListMode| Function| internal method | You can provide a custom function to define when a list should be displayed as `table` or `grid` |
 |rowClick   |event  | -       | Emits an event when one row or card is clicked |
 |searchableProperties| string[] | undefined | Used to define which properties the basic search should look for |
+|selectedCollapsable | FilterGroup | undefined | accessor for selected Collapsable |
+|selectedTab | FilterGroup | undefined | accessor for selected Tab |
+
 
 ### Filter
 Used to enabling list filtering.
