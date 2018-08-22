@@ -1,2 +1,2 @@
-export declare class AutocompleteTagsModule {
+export declare class DecAutocompleteTagsModule {
 }

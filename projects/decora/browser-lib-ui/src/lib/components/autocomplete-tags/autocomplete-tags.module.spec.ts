@@ -1,10 +1,10 @@
-import { AutocompleteTagsModule } from './autocomplete-tags.module';
+import { DecAutocompleteTagsModule } from './autocomplete-tags.module';
 
-describe('AutocompleteTagsModule', () => {
-  let autocompleteTagsModule: AutocompleteTagsModule;
+describe('DecAutocompleteTagsModule', () => {
+  let autocompleteTagsModule: DecAutocompleteTagsModule;
 
   beforeEach(() => {
-    autocompleteTagsModule = new AutocompleteTagsModule();
+    autocompleteTagsModule = new DecAutocompleteTagsModule();
   });
 
   it('should create an instance', () => {

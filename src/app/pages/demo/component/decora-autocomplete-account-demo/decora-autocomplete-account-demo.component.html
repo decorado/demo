@@ -1,13 +1,15 @@
 <app-demo-container readmeSrc="/assets/docs/browser-lib-ui/components/autocomplete-account/README.md">
 
-  Types: {{ types | json }}
-  <br>
-  Account Selected: {{ account }}
+  <p>Types: {{ types | json }}</p>
 
-  <hr>
+  <p>Account Selected: {{ user.id }}</p>
 
-  <dec-autocomplete-account [(ngModel)]="account"
+  <dec-autocomplete-account [(ngModel)]="user.id"
   [types]="types"
   (selected)="optionSelected($event)"></dec-autocomplete-account>
 
+  <button type="button" mat-stroked-button (click)="user.id = undefined">Clear</button>
+
 </app-demo-container>
+
+

@@ -5,11 +5,15 @@
       [companyId]="companyId"
     ></dec-autocomplete-project>
 
+    <button type="button" mat-stroked-button (click)="projectId = undefined">Clear project</button>
+
     <dec-autocomplete-quote
       [(ngModel)]="quote"
       [projectId]="projectId"
       decoraProduct="RENDERING"
       decoraProductVariant="RENDERING_MODEL"
     ></dec-autocomplete-quote>
+
+    <button type="button" mat-stroked-button (click)="quote = undefined">Clear quote</button>
 
 </app-demo-container>

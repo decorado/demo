@@ -1,13 +1,24 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ControlValueAccessor } from '@angular/forms';
-import { noop } from 'rxjs';
+import { Component, OnInit, Input, Output, EventEmitter, forwardRef } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+
+//  Return an empty function to be used as default trigger functions
+const noop = () => {
+};
+
+//  Used to extend ngForms functions
+const AUTOCOMPLETE_TAGS_CONTROL_VALUE_ACCESSOR: any = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => DecAutocompleteTagsComponent),
+  multi: true
+};
 
 @Component({
   selector: 'dec-autocomplete-tags',
   templateUrl: './autocomplete-tags.component.html',
-  styleUrls: ['./autocomplete-tags.component.css']
+  styleUrls: ['./autocomplete-tags.component.css'],
+  providers: [AUTOCOMPLETE_TAGS_CONTROL_VALUE_ACCESSOR]
 })
-export class AutocompleteTagsComponent implements ControlValueAccessor {
+export class DecAutocompleteTagsComponent implements ControlValueAccessor {
 
   @Input()
   set endpoint(v) {

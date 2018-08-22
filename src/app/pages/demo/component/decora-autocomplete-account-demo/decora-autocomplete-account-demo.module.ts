@@ -5,10 +5,12 @@ import { DemoContainerModule } from '@app/shared/components/demo-container/demo-
 import { FormsModule } from '@angular/forms';
 import { DecoraAutocompleteAccountDemoRoutingModule } from './decora-autocomplete-account-demo-routing.module';
 import { DecoraAutocompleteAccountDemoComponent } from './decora-autocomplete-account-demo.component';
+import { MatButtonModule } from '@angular/material';
 
 @NgModule({
   imports: [
     CommonModule,
+    MatButtonModule,
     DecoraAutocompleteAccountDemoRoutingModule,
     DecAutocompleteAccountModule,
     DemoContainerModule,

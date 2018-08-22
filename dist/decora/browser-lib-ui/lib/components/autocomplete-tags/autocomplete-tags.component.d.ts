@@ -1,6 +1,6 @@
 import { EventEmitter } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
-export declare class AutocompleteTagsComponent implements ControlValueAccessor {
+export declare class DecAutocompleteTagsComponent implements ControlValueAccessor {
     endpoint: string;
     valueAttr: string;
     labelAttr: string;

@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DecoraAutocompleteTagsDemoComponent implements OnInit {
 
+  tag;
+
   constructor() { }
 
   ngOnInit() {

@@ -1,6 +1,10 @@
 <app-demo-container readmeSrc="/assets/docs/browser-lib-ui/components/autocomplete-tags/README.md">
 
-  <dec-autocomplete-tags [endpoint]="'rendersupport/tags'" (enterButton)="enterButton($event)" (selected)="optionSelected($event)">
+  <p>Tag Selected: {{ tag }}</p>
+
+  <dec-autocomplete-tags [(ngModel)]="tag" [endpoint]="'rendersupport/tags'" (enterButton)="enterButton($event)" (selected)="optionSelected($event)">
   </dec-autocomplete-tags>
+
+  <button type="button" mat-stroked-button (click)="tag = undefined">Clear</button>
 
 </app-demo-container>

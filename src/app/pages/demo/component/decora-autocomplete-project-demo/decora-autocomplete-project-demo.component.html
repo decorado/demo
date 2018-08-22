@@ -2,6 +2,10 @@
 
   <dec-autocomplete-company [(ngModel)]="companyId"></dec-autocomplete-company>
 
+  <button type="button" mat-stroked-button (click)="companyId = undefined">Clear company</button>
+
   <dec-autocomplete-project [(ngModel)]="projectId" [companyId]="companyId"></dec-autocomplete-project>
+
+  <button type="button" mat-stroked-button (click)="projectId = undefined">Clear project</button>
 
 </app-demo-container>

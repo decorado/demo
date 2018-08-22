@@ -5,11 +5,13 @@ import { FormsModule } from '@angular/forms';
 import { DecoraAutocompleteDepartmentDemoRoutingModule } from './decora-autocomplete-department-demo-routing.module';
 import { DecoraAutocompleteDepartmentDemoComponent } from './decora-autocomplete-department-demo.component';
 import { DecAutocompleteDepartmentModule, DecAutocompleteCompanyModule } from '@projects/decora/browser-lib-ui/src/public_api';
+import { MatButtonModule } from '@angular/material';
 
 @NgModule({
   imports: [
     DecAutocompleteDepartmentModule,
     DecAutocompleteCompanyModule,
+    MatButtonModule,
     CommonModule,
     DecoraAutocompleteDepartmentDemoRoutingModule,
     DemoContainerModule,

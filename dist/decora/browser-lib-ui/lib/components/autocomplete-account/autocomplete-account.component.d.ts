@@ -4,7 +4,6 @@ import { DecApiService } from './../../services/api/decora-api.service';
 export declare class DecAutocompleteAccountComponent implements ControlValueAccessor {
     private decoraApi;
     endpoint: string;
-    labelAttr: string;
     valueAttr: string;
     types: string[];
     _types: string[];

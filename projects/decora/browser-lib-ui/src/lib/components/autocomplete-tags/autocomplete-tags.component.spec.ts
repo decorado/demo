@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AutocompleteTagsComponent } from './autocomplete-tags.component';
+import { DecAutocompleteTagsComponent } from './autocomplete-tags.component';
 
-describe('AutocompleteTagsComponent', () => {
-  let component: AutocompleteTagsComponent;
-  let fixture: ComponentFixture<AutocompleteTagsComponent>;
+describe('DecAutocompleteTagsComponent', () => {
+  let component: DecAutocompleteTagsComponent;
+  let fixture: ComponentFixture<DecAutocompleteTagsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AutocompleteTagsComponent ]
+      declarations: [ DecAutocompleteTagsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AutocompleteTagsComponent);
+    fixture = TestBed.createComponent(DecAutocompleteTagsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

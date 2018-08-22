@@ -27,8 +27,6 @@ export class DecAutocompleteAccountComponent implements ControlValueAccessor {
 
   endpoint: string;
 
-  labelAttr = 'value';
-
   valueAttr = 'key';
 
   @Input()
@@ -104,9 +102,7 @@ export class DecAutocompleteAccountComponent implements ControlValueAccessor {
 
   writeValue(value: any) {
     if (`${value}` !== `${this.value}`) { // convert to string to avoid problems comparing values
-      if (value && value !== undefined && value !== null) {
-        this.value = value;
-      }
+      this.value = value;
     }
   }
 

@@ -6,10 +6,12 @@ import { FormsModule } from '@angular/forms';
 import { DecoraAutocompleteRoleDemoRoutingModule } from './decora-autocomplete-role-demo-routing.module';
 import { DecoraAutocompleteRoleDemoComponent } from './decora-autocomplete-role-demo.component';
 import { DecAutocompleteProjectModule } from 'projects/decora/browser-lib-ui/src/public_api';
+import { MatButtonModule } from '@angular/material';
 
 @NgModule({
   imports: [
     CommonModule,
+    MatButtonModule,
     DecoraAutocompleteRoleDemoRoutingModule,
     DecAutocompleteRoleModule,
     DemoContainerModule,

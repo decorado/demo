@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AutocompleteTagsComponent } from './autocomplete-tags.component';
+import { DecAutocompleteTagsComponent } from './autocomplete-tags.component';
 import { DecAutocompleteModule } from './../autocomplete/autocomplete.module';
 import { FormsModule } from '@angular/forms';
 
@@ -11,10 +11,10 @@ import { FormsModule } from '@angular/forms';
     DecAutocompleteModule
   ],
   declarations: [
-    AutocompleteTagsComponent
+    DecAutocompleteTagsComponent
   ],
   exports: [
-    AutocompleteTagsComponent
+    DecAutocompleteTagsComponent
   ]
 })
-export class AutocompleteTagsModule { }
+export class DecAutocompleteTagsModule { }

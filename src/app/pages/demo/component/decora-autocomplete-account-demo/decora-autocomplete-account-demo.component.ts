@@ -7,7 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DecoraAutocompleteAccountDemoComponent implements OnInit {
 
-  account = 'Udson Vieira Teste';
+  user = {
+    id: 12049
+  };
 
   types = ['it.developer'];
 
