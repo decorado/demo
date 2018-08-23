@@ -64,7 +64,7 @@ export class DecAutocompleteProjectComponent implements ControlValueAccessor {
   ** Used to two way data bind using [(ngModel)]
   */
   //  The internal data model
-  private innerValue: any = '';
+  private innerValue: any;
   //  Placeholders for the callbacks which are later provided by the Control Value Accessor
   private onTouchedCallback: () => void = noop;
   //  Placeholders for the callbacks which are later provided by the Control Value Accessor

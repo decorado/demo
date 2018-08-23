@@ -10,5 +10,4 @@ export interface SelectionEvent {
   value: any;
   option: any;
   options: any[];
-  filteredOptions: any[];
 }

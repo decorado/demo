@@ -1,11 +1,11 @@
-import { AfterViewInit, EventEmitter, OnDestroy } from '@angular/core';
+import { AfterViewInit, EventEmitter } from '@angular/core';
 import { FormBuilder, FormControl, ControlValueAccessor } from '@angular/forms';
 import { DecApiService } from './../../services/api/decora-api.service';
 import { Observable } from 'rxjs';
 import { LabelFunction, ValueFunction, SelectionEvent, CustomFetchFunction } from './autocomplete.models';
 import { MatAutocompleteTrigger } from '@angular/material';
 export declare const AUTOCOMPLETE_CONTROL_VALUE_ACCESSOR: any;
-export declare class DecAutocompleteComponent implements ControlValueAccessor, AfterViewInit, OnDestroy {
+export declare class DecAutocompleteComponent implements ControlValueAccessor, AfterViewInit {
     private formBuilder;
     private service;
     autocompleteTrigger: MatAutocompleteTrigger;
@@ -27,22 +27,19 @@ export declare class DecAutocompleteComponent implements ControlValueAccessor, A
     optionSelected: EventEmitter<SelectionEvent>;
     enterButton: EventEmitter<SelectionEvent>;
     termInput: any;
-    private options$Subscription;
     private _disabled;
     private _options;
-    innerOptions: any[];
-    private filteredOptions;
+    private innerOptions;
     private innerValue;
     private onTouchedCallback;
     private onChangeCallback;
     constructor(formBuilder: FormBuilder, service: DecApiService);
     ngAfterViewInit(): void;
-    ngOnDestroy(): void;
     value: any;
     registerOnChange(fn: any): void;
     registerOnTouched(fn: any): void;
     onValueChanged(event: any): void;
-    writeValue(v: any): void;
+    writeValue(value: any): void;
     onOptionSelected($event: any): void;
     onEnterButton($event: any): void;
     setFocus(): void;
@@ -58,14 +55,12 @@ export declare class DecAutocompleteComponent implements ControlValueAccessor, A
     private extractValue;
     private compareAsString(v1, v2);
     private ensureString(v);
-    private subscribeToOptions();
     private setInnerValue(v);
     private setInputValueBasedOnInnerValue(v);
     private getOptionBasedOnValue(v);
     private createInput();
     private subscribeToSearchAndSetOptionsObservable();
     private searchBasedFetchingType(textSearch);
-    private unsubscribeToOptions();
     private searchInLocalOptions(term);
     private raiseError(error);
 }
