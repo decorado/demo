@@ -23,7 +23,7 @@ export class DecImageZoomComponent implements OnInit {
 
   @Input() scrollStepSize = 0.1;
 
-  @Input() enableLens = true;
+  @Input() enableLens = false;
 
   @Input() lensWidth = 100;
 
@@ -71,7 +71,7 @@ export class DecImageZoomComponent implements OnInit {
   }
 
   private setFinalImageUrl() {
-    this.fullImageUrl = this.systemFile.fileBaseUrl + '.' + this.systemFile.extension;
+    this.fullImageUrl = this.systemFile.fileUrl;
     console.log('setFinalImageUrl', this.fullImageUrl);
   }
 
