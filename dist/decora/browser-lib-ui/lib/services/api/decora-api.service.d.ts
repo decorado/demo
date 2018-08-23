@@ -36,6 +36,7 @@ export declare class DecApiService implements OnDestroy {
     put: <T>(endpoint: any, payload?: any, options?: CallOptions) => Observable<any>;
     upsert: <T>(endpoint: any, payload?: any, options?: CallOptions) => Observable<any>;
     upload(endpoint: string, files: File[], options?: CallOptions): Observable<any>;
+    handShake(): Promise<any>;
     private transformDecFilterInParams(filter);
     private filterObjectToQueryString(obj);
     private getFilterWithValuesAsArray(filterGroups);

@@ -102,12 +102,12 @@ export * from './lib/guard/auth-guard.service';
 * SERVICES
 *
 **********************************************************/
+export * from './lib/services/initializer/dec-app-initializer';
 export * from './lib/services/api/decora-api.service';
 export * from './lib/services/api/decora-api.module';
 export * from './lib/services/api/decora-api.model';
 export * from './lib/services/configuration/configuration.service';
 export * from './lib/services/configuration/configuration-service.module';
-export * from './lib/services/configuration/configuration-initializer.provider';
 export * from './lib/services/snack-bar/dec-snack-bar.service';
 export * from './lib/services/snack-bar/dec-snack-bar.module';
 export * from './lib/services/permission-guard/dec-permission-guard.service';

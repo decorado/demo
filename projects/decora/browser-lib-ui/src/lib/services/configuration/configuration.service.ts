@@ -30,14 +30,18 @@ export class DecConfigurationService {
   loadConfig() {
     const basePath = this.serviceConfiguration.basePath;
     const path = `${basePath}/${CONFIG_PATH}`;
-    return this.http.get(path)
-    .pipe(
-      tap((res: any) => {
-        this.profile = this.isValidProfile(res.profile, res) ? res.profile : this.profile;
-        this.config = res[this.profile];
-        console.log(`DecConfigurationService:: Loaded "${this.profile}" profile`);
-      })
-    ).toPromise();
+
+    const call = this.http.get(path).toPromise();
+
+    call.then((res: any) => {
+      console.log(`DecConfigurationService:: Initialized in ${this.profile} mode`);
+      this.profile = this.isValidProfile(res.profile, res) ? res.profile : this.profile;
+      this.config = res[this.profile];
+    }, err => {
+      console.error('DecConfigurationService:: Initialization Error. Could retrieve app configuration', err);
+    });
+
+    return call;
   }
 
   private isValidProfile(profile, availableProfiles) {

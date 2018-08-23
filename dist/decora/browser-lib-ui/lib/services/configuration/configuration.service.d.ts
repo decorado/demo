@@ -7,6 +7,6 @@ export declare class DecConfigurationService {
     profile: string;
     private _config;
     constructor(http: HttpClient, serviceConfiguration: DecConfigurationForRootConfig);
-    loadConfig(): Promise<any>;
+    loadConfig(): Promise<Object>;
     private isValidProfile(profile, availableProfiles);
 }
