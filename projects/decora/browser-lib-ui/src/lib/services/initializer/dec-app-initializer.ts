@@ -9,11 +9,9 @@ export const DecAppInitializer = (decConfig: DecConfigurationService, decApi: De
 
       decConfig.loadConfig().then((configuration) => {
 
-        console.log('CONFIGURATION LOADED');
-
         decApi.handShake().then((account) => {
 
-          console.log('API HANDSHAKE');
+          console.log('DecAppInitializer handShake');
 
           resolve({
             configuration,

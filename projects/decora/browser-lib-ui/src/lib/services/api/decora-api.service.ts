@@ -103,19 +103,6 @@ export class DecApiService implements OnDestroy {
         }));
   }
 
-  fetchCurrentLoggedUser = () => {
-    const endpoint = this.getResourceUrl('auth/account');
-    const options = { headers: this.newHeaderWithSessionToken() };
-    return this.getMethod<UserAuthData>(endpoint, {}, options)
-      .pipe(
-        tap((res) => {
-          this.extratSessionToken(res),
-            this.user$.next(res);
-          return res;
-        })
-      );
-  }
-
   // ******************* //
   // PUBLIC HTTP METHODS //
   // ******************* //
@@ -169,6 +156,20 @@ export class DecApiService implements OnDestroy {
   // ************ //
   // Private Helper Methods //
   // ************ //
+
+  private fetchCurrentLoggedUser = () => {
+    const endpoint = this.getResourceUrl('auth/account');
+    const options = { headers: this.newHeaderWithSessionToken() };
+    return this.getMethod<UserAuthData>(endpoint, {}, options)
+      .pipe(
+        tap((res) => {
+          this.extratSessionToken(res),
+            this.user$.next(res);
+          return res;
+        })
+      );
+  }
+
   private transformDecFilterInParams(filter: DecFilter): SerializedDecFilter {
 
     const serializedFilter: SerializedDecFilter = {};

@@ -28,7 +28,6 @@ export declare class DecApiService implements OnDestroy {
     auth: (loginData: LoginData) => Observable<any>;
     authFacebook: (loginData: FacebookLoginData) => Observable<any>;
     logout: (redirectToLoginPage?: boolean) => Observable<any>;
-    fetchCurrentLoggedUser: () => Observable<any>;
     get: <T>(endpoint: any, search?: DecFilter, options?: CallOptions) => Observable<any>;
     delete: <T>(endpoint: any, options?: CallOptions) => Observable<any>;
     patch: <T>(endpoint: any, payload?: any, options?: CallOptions) => Observable<any>;
@@ -37,6 +36,7 @@ export declare class DecApiService implements OnDestroy {
     upsert: <T>(endpoint: any, payload?: any, options?: CallOptions) => Observable<any>;
     upload(endpoint: string, files: File[], options?: CallOptions): Observable<any>;
     handShake(): Promise<any>;
+    private fetchCurrentLoggedUser;
     private transformDecFilterInParams(filter);
     private filterObjectToQueryString(obj);
     private getFilterWithValuesAsArray(filterGroups);
