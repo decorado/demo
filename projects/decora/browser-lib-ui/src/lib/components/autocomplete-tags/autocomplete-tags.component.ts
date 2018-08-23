@@ -100,7 +100,7 @@ export class DecAutocompleteTagsComponent implements ControlValueAccessor {
   }
 
   writeValue(value: any) {
-    if (`${value}` !== `${this.value}`) { // convert to string to avoid problems comparing values
+    if (value !== null && `${value}` !== `${this.value}`) { // convert to string to avoid problems comparing values
       if (value && value !== undefined && value !== null) {
         this.value = value;
       }

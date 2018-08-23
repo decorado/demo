@@ -80,7 +80,7 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
   @Output() blur: EventEmitter<any> = new EventEmitter<any>();
 
   @Output() optionSelected: EventEmitter<SelectionEvent> = new EventEmitter<SelectionEvent>();
-  
+
   @Output() enterButton: EventEmitter<SelectionEvent> = new EventEmitter<SelectionEvent>();
 
   // View elements
@@ -152,14 +152,11 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
     this.value = event.toString();
   }
 
-  writeValue(v: any) {
-    this.writtenValue = v;
-    v = v ? v : undefined; // avoid null values
-    const hasDifference = !this.compareAsString(v, this.value);
-    if (hasDifference) {
-      this.loadRemoteObjectByWrittenValue(v)
+  writeValue(value: any) {
+    if (value !== null && `${value}` !== `${this.value}`) { // convert to string to avoid problems comparing values
+      this.loadRemoteObjectByWrittenValue(value)
       .then((options) => {
-        this.setInnerValue(v);
+        this.setInnerValue(value);
       });
     }
   }
@@ -180,7 +177,7 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
 
   onEnterButton($event) {
     this.enterButton.emit($event);
-  } 
+  }
 
   setFocus() {
     this.termInput.nativeElement.focus();

@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DecoraAutocompleteCompanyDemoComponent implements OnInit {
 
-  company = 1;
+  company = 235;
 
   constructor() { }
 

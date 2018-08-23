@@ -84,7 +84,7 @@ export class DecAutocompleteCountryComponent implements ControlValueAccessor {
   }
 
   writeValue(value: any) {
-    if (`${value}` !== `${this.value}`) { // convert to string to avoid problems comparing values
+    if (value !== null && `${value}` !== `${this.value}`) { // convert to string to avoid problems comparing values
       this.value = value;
     }
   }
