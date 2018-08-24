@@ -1,5 +1,5 @@
 import { Component, AfterViewInit, Input, forwardRef, ViewChild, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormControl, NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { FormControl, NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { DecApiService } from './../../services/api/decora-api.service';
 import { Observable, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap, startWith, tap } from 'rxjs/operators';
@@ -106,7 +106,6 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
   private onChangeCallback: (_: any) => void = noop;
 
   constructor(
-    private formBuilder: FormBuilder,
     private service: DecApiService
   ) {
     this.createInput();
@@ -300,7 +299,7 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
   }
 
   private createInput() {
-    this.autocompleteInput = this.formBuilder.control('');
+    this.autocompleteInput = new FormControl('');
 
     if (this.disabled) {
       this.autocompleteInput.disable();

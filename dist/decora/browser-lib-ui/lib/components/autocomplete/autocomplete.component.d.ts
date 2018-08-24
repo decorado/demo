@@ -1,12 +1,11 @@
 import { AfterViewInit, EventEmitter } from '@angular/core';
-import { FormBuilder, FormControl, ControlValueAccessor } from '@angular/forms';
+import { FormControl, ControlValueAccessor } from '@angular/forms';
 import { DecApiService } from './../../services/api/decora-api.service';
 import { Observable } from 'rxjs';
 import { LabelFunction, ValueFunction, SelectionEvent, CustomFetchFunction } from './autocomplete.models';
 import { MatAutocompleteTrigger } from '@angular/material';
 export declare const AUTOCOMPLETE_CONTROL_VALUE_ACCESSOR: any;
 export declare class DecAutocompleteComponent implements ControlValueAccessor, AfterViewInit {
-    private formBuilder;
     private service;
     autocompleteTrigger: MatAutocompleteTrigger;
     autocompleteInput: FormControl;
@@ -33,7 +32,7 @@ export declare class DecAutocompleteComponent implements ControlValueAccessor, A
     private innerValue;
     private onTouchedCallback;
     private onChangeCallback;
-    constructor(formBuilder: FormBuilder, service: DecApiService);
+    constructor(service: DecApiService);
     ngAfterViewInit(): void;
     value: any;
     registerOnChange(fn: any): void;
