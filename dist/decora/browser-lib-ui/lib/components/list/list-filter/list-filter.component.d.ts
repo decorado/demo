@@ -31,6 +31,7 @@ export declare class DecListFilterComponent implements OnInit, OnDestroy {
     private watchUrlFilterSubscription;
     private _filters;
     private _loadCountReport;
+    private _showAdvancedFilter;
     preSearch: DecListPreSearch;
     showInfoButton: any;
     hasPersistence: boolean;
@@ -57,6 +58,7 @@ export declare class DecListFilterComponent implements OnInit, OnDestroy {
     private reloadFormWithGivenDecFilterGroupe(filters);
     private openFilters();
     private configureAdvancedFilter();
+    private setAdvancedFilterState(state);
     private watchTabsFilter();
     private stopWatchingTabsFilter();
     private mountCurrentDecFilterGroups();

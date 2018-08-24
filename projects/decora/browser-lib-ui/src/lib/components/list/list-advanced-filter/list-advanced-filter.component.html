@@ -2,7 +2,7 @@
 
   <div fxFlex>
 
-    <ng-container
+    <ng-container *ngIf="opened"
       [ngTemplateOutlet]="templateRef"
       [ngTemplateOutletContext]="{form: form}"
     ></ng-container>

@@ -20,7 +20,16 @@ export class DecListFilterComponent implements OnInit, OnDestroy {
 
   showSearchInput: boolean;
 
-  showAdvancedFilter: boolean;
+  set showAdvancedFilter(v: boolean) {
+    if (this._showAdvancedFilter !== v) {
+      this._showAdvancedFilter = !!v;
+      this.setAdvancedFilterState(v);
+    }
+  }
+
+  get showAdvancedFilter() {
+    return this._showAdvancedFilter;
+  }
 
   filterForm: any = {
     search: undefined
@@ -64,6 +73,8 @@ export class DecListFilterComponent implements OnInit, OnDestroy {
   private _filters: DecListFilter[] = [];
 
   private _loadCountReport: boolean;
+
+  private _showAdvancedFilter: boolean;
 
   @Input() preSearch: DecListPreSearch;
 
@@ -363,6 +374,16 @@ export class DecListFilterComponent implements OnInit, OnDestroy {
       this.advancedFilterComponent.onSearch = this.onSearch;
 
       this.advancedFilterComponent.onClear = this.clearFilterForm;
+
+    }
+
+  }
+
+  private setAdvancedFilterState(state) {
+
+    if (this.advancedFilterComponent) {
+
+      this.advancedFilterComponent.opened = state;
 
     }
 

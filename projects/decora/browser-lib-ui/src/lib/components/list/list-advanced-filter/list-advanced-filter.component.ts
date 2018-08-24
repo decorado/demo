@@ -9,6 +9,16 @@ export class DecListAdvancedFilterComponent implements OnInit {
 
   form: any = {};
 
+  set opened(v) {
+    this._opened = this._opened || v;
+  }
+
+  get opened() {
+    return this._opened;
+  }
+
+  private _opened: boolean;
+
   @ContentChild(TemplateRef) templateRef: TemplateRef<any>;
 
   onSearch = () => {};
