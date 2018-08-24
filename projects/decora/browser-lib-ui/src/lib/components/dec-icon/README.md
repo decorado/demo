@@ -32,7 +32,7 @@ Include the [Material Icons][mat-docs] and [Font Awesome][fa-docs] in your `angu
 [Material Icons list][mat-docs]
 
 ```html
-<dec-icon font="mat" size="24px">home</dec-icon> Home icon
+<dec-icon font="mat">home</dec-icon> Home icon
 ```
 
 ### Font Awesome icons
@@ -40,8 +40,12 @@ Include the [Material Icons][mat-docs] and [Font Awesome][fa-docs] in your `angu
 [Font Awesome Icons list][fa-docs]
 
 ```html
-<dec-icon font="fas" size="24px">home</dec-icon> Home icon
+<dec-icon font="fas">home</dec-icon> Home icon
 ```
+
+## Icon Size
+
+The icon size is based ont the font size. If you need to have a different size, you just need to define the font-size for the dec-icon or create a class and use it in the dec-icon.
 
 [mat-docs]: https://material.io/tools/icons
 [fa-docs]: https://fontawesome.com/icons?d=gallery&m=free
