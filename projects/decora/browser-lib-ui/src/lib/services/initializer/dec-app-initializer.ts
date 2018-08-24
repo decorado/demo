@@ -11,8 +11,6 @@ export const DecAppInitializer = (decConfig: DecConfigurationService, decApi: De
 
         decApi.handShake().then((account) => {
 
-          console.log('DecAppInitializer handShake');
-
           resolve({
             configuration,
             account,

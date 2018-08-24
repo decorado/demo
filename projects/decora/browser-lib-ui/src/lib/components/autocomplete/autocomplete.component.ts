@@ -300,7 +300,11 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
   }
 
   private createInput() {
-    this.autocompleteInput = this.formBuilder.control({value: undefined, disabled: this.disabled, required: this.required});
+    this.autocompleteInput = this.formBuilder.control('');
+
+    if (this.disabled) {
+      this.autocompleteInput.disable();
+    }
   }
 
   private subscribeToSearchAndSetOptionsObservable() {
