@@ -1,7 +1,7 @@
-import { Component, AfterViewInit, Input, forwardRef, ViewChild, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { FormBuilder, FormControl, NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { Component, AfterViewInit, Input, forwardRef, ViewChild, Output, EventEmitter } from '@angular/core';
+import { FormControl, NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { DecApiService } from './../../services/api/decora-api.service';
-import { Observable, of, Subscription } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap, startWith, tap } from 'rxjs/operators';
 import { LabelFunction, ValueFunction, SelectionEvent, CustomFetchFunction } from './autocomplete.models';
 import { MatAutocompleteTrigger } from '@angular/material';
@@ -23,7 +23,7 @@ export const AUTOCOMPLETE_CONTROL_VALUE_ACCESSOR: any = {
   styles: [],
   providers: [AUTOCOMPLETE_CONTROL_VALUE_ACCESSOR]
 })
-export class DecAutocompleteComponent implements ControlValueAccessor, AfterViewInit, OnDestroy {
+export class DecAutocompleteComponent implements ControlValueAccessor, AfterViewInit {
 
   @ViewChild(MatAutocompleteTrigger)  autocompleteTrigger: MatAutocompleteTrigger;
 
@@ -80,36 +80,32 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
   @Output() blur: EventEmitter<any> = new EventEmitter<any>();
 
   @Output() optionSelected: EventEmitter<SelectionEvent> = new EventEmitter<SelectionEvent>();
-  
+
   @Output() enterButton: EventEmitter<SelectionEvent> = new EventEmitter<SelectionEvent>();
 
   // View elements
   @ViewChild('termInput') termInput;
 
   // private data;
-  private options$Subscription: Subscription;
-
   private _disabled: boolean;
 
   private _options: any[];
 
-  innerOptions: any[] = [];
+  private innerOptions: any[] = [];
 
-  private filteredOptions: any[] = [];
 
   /*
   ** ngModel propertie
   ** Used to two way data bind using [(ngModel)]
   */
   //  The internal data model
-  private innerValue: any = '';
+  private innerValue: any;
   //  Placeholders for the callbacks which are later provided by the Control Value Accessor
   private onTouchedCallback: () => void = noop;
   //  Placeholders for the callbacks which are later provided by the Control Value Accessor
   private onChangeCallback: (_: any) => void = noop;
 
   constructor(
-    private formBuilder: FormBuilder,
     private service: DecApiService
   ) {
     this.createInput();
@@ -119,12 +115,7 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
     this.detectRequiredData()
     .then(res => {
       this.subscribeToSearchAndSetOptionsObservable();
-      this.subscribeToOptions();
     });
-  }
-
-  ngOnDestroy() {
-    this.unsubscribeToOptions();
   }
 
   /*
@@ -152,14 +143,11 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
     this.value = event.toString();
   }
 
-  writeValue(v: any) {
-    this.writtenValue = v;
-    v = v ? v : undefined; // avoid null values
-    const hasDifference = !this.compareAsString(v, this.value);
-    if (hasDifference) {
-      this.loadRemoteObjectByWrittenValue(v)
+  writeValue(value: any) {
+    if (value !== null && `${value}` !== `${this.value}`) { // convert to string to avoid problems comparing values
+      this.loadRemoteObjectByWrittenValue(value)
       .then((options) => {
-        this.setInnerValue(v);
+        this.setInnerValue(value);
       });
     }
   }
@@ -173,14 +161,13 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
         value: this.value,
         option: selectedOption,
         options: this.innerOptions,
-        filteredOptions: this.filteredOptions,
       });
     }
   }
 
   onEnterButton($event) {
     this.enterButton.emit($event);
-  } 
+  }
 
   setFocus() {
     this.termInput.nativeElement.focus();
@@ -294,12 +281,6 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
     return v;
   }
 
-  private subscribeToOptions() {
-    this.options$Subscription = this.options$.subscribe(options => {
-      this.filteredOptions = options;
-    });
-  }
-
   private setInnerValue(v: any) {
     this.innerValue = v;
     this.setInputValueBasedOnInnerValue(v);
@@ -307,7 +288,6 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
 
   private setInputValueBasedOnInnerValue(v: any) {
     const option = this.getOptionBasedOnValue(v);
-    const label = this.extractLabel(option);
     this.autocompleteInput.setValue(option);
   }
 
@@ -319,7 +299,11 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
   }
 
   private createInput() {
-    this.autocompleteInput = this.formBuilder.control({value: undefined, disabled: this.disabled, required: this.required});
+    this.autocompleteInput = new FormControl('');
+
+    if (this.disabled) {
+      this.autocompleteInput.disable();
+    }
   }
 
   private subscribeToSearchAndSetOptionsObservable() {
@@ -358,10 +342,6 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
           })
         );
     }
-  }
-
-  private unsubscribeToOptions() {
-    this.options$Subscription.unsubscribe();
   }
 
   private searchInLocalOptions(term: string) {

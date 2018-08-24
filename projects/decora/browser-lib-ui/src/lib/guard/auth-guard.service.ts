@@ -25,7 +25,7 @@ export class DecAuthGuard implements CanLoad, CanActivate, CanActivateChild {
   }
 
   private isAuthenticated(): Observable<boolean> {
-    return this.decoraApi.fetchCurrentLoggedUser()
+    return this.decoraApi.user$
     .pipe(
       map((user: any) => {
         return (user && user.id) ? true : false;

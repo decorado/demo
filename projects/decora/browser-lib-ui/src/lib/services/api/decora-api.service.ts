@@ -35,7 +35,6 @@ export class DecApiService implements OnDestroy {
     private decConfig: DecConfigurationService,
   ) {
     this.subscribeToUser();
-    this.tryToLoadSignedInUser();
   }
 
   ngOnDestroy() {
@@ -104,19 +103,6 @@ export class DecApiService implements OnDestroy {
         }));
   }
 
-  fetchCurrentLoggedUser = () => {
-    const endpoint = this.getResourceUrl('auth/account');
-    const options = { headers: this.newHeaderWithSessionToken() };
-    return this.getMethod<UserAuthData>(endpoint, {}, options)
-      .pipe(
-        tap((res) => {
-          this.extratSessionToken(res),
-            this.user$.next(res);
-          return res;
-        })
-      );
-  }
-
   // ******************* //
   // PUBLIC HTTP METHODS //
   // ******************* //
@@ -163,9 +149,27 @@ export class DecApiService implements OnDestroy {
   }
 
 
+
+  handShake() {
+    return this.tryToLoadSignedInUser();
+  }
   // ************ //
-  // Public Helper Methods //
+  // Private Helper Methods //
   // ************ //
+
+  private fetchCurrentLoggedUser = () => {
+    const endpoint = this.getResourceUrl('auth/account');
+    const options = { headers: this.newHeaderWithSessionToken() };
+    return this.getMethod<UserAuthData>(endpoint, {}, options)
+      .pipe(
+        tap((res) => {
+          this.extratSessionToken(res),
+            this.user$.next(res);
+          return res;
+        })
+      );
+  }
+
   private transformDecFilterInParams(filter: DecFilter): SerializedDecFilter {
 
     const serializedFilter: SerializedDecFilter = {};
@@ -363,17 +367,17 @@ export class DecApiService implements OnDestroy {
   }
 
   private tryToLoadSignedInUser() {
-    this.fetchCurrentLoggedUser()
-      .toPromise()
-      .then(res => {
-        console.log('DecoraApiService:: Initialized as logged');
-      }, err => {
-        if (err.status === 401) {
-          console.log('DecoraApiService:: Initialized as not logged');
-        } else {
-          console.error('DecoraApiService:: Initialization Error. Could retrieve user account', err);
-        }
-      });
+    const call = this.fetchCurrentLoggedUser().toPromise();
+    call.then(account => {
+      console.log(`DecoraApiService:: Initialized as ${account.name}`);
+    }, err => {
+      if (err.status === 401) {
+        console.log('DecoraApiService:: Initialized as not logged');
+      } else {
+        console.error('DecoraApiService:: Initialization Error. Could retrieve user account', err);
+      }
+    });
+    return call;
   }
 
   private newHeaderWithSessionToken(type?: string, headers?: HttpHeaders) {

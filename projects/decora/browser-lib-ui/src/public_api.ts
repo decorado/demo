@@ -137,6 +137,8 @@ export * from './lib/guard/auth-guard.service';
 * SERVICES
 *
 **********************************************************/
+// DECORA INITIALIZE
+export * from './lib/services/initializer/dec-app-initializer';
 // DECORA API
 export * from './lib/services/api/decora-api.service';
 export * from './lib/services/api/decora-api.module';
@@ -144,7 +146,6 @@ export * from './lib/services/api/decora-api.model';
 // DECORA CONFIGURATION
 export * from './lib/services/configuration/configuration.service';
 export * from './lib/services/configuration/configuration-service.module';
-export * from './lib/services/configuration/configuration-initializer.provider';
 // SNACKBAR
 export * from './lib/services/snack-bar/dec-snack-bar.service';
 export * from './lib/services/snack-bar/dec-snack-bar.module';

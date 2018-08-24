@@ -4,7 +4,7 @@
 
 This module is responsible for loading and handling the environment configuration.
 
-Using this approach you do not need to use environment enymore. Just use the `DecConfigurationService` to get your env configuration.
+Using this approach you do not need to use environment nymore. Just use the `DecConfigurationService` to get your env configuration.
 
 ## Configuration
 
@@ -22,14 +22,7 @@ import { DecConfigurationModule, DecConfigurationInitializer, DecConfigurationSe
     ...
     DecConfigurationModule.forRoot({ basePath: environment.basePath })
     ...
-  ],
-  providers: [
-    {
-      provide: APP_INITIALIZER,
-      useFactory: DecConfigurationInitializer,
-      deps: [DecConfigurationService], multi: true
-    }
-  ],
+  ]
   ...
 })
 export class AppModule { }

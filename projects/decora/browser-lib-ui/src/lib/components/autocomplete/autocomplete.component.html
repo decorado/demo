@@ -11,7 +11,8 @@
     (keyup.enter)="onEnterButton($event)"
     (blur)="onBlur($event)"
     autocomplete="off"
-    readonly onfocus="this.removeAttribute('readonly');">
+    readonly
+    onfocus="this.removeAttribute('readonly');">
 
     <button mat-icon-button matSuffix (click)="clear(true)" *ngIf="!disabled && !required && autocompleteInput.value">
       <mat-icon>close</mat-icon>
@@ -27,6 +28,8 @@
   [displayWith]="extractLabel"
   (optionSelected)="onOptionSelected($event)"
   name="autocompleteValue">
+    <mat-option *ngIf="!required" [value]=""></mat-option>
+
     <mat-option *ngFor="let item of (options$ | async)" [value]="item">
       {{ extractLabel(item) }}
     </mat-option>

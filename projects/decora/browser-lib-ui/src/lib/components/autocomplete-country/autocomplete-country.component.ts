@@ -42,7 +42,7 @@ export class DecAutocompleteCountryComponent implements ControlValueAccessor {
   ** Used to two way data bind using [(ngModel)]
   */
   //  The internal data model
-  private innerValue: any = '';
+  private innerValue: any;
   //  Placeholders for the callbacks which are later provided by the Control Value Accessor
   private onTouchedCallback: () => void = noop;
   //  Placeholders for the callbacks which are later provided by the Control Value Accessor
@@ -84,7 +84,7 @@ export class DecAutocompleteCountryComponent implements ControlValueAccessor {
   }
 
   writeValue(value: any) {
-    if (`${value}` !== `${this.value}`) { // convert to string to avoid problems comparing values
+    if (value !== null && `${value}` !== `${this.value}`) { // convert to string to avoid problems comparing values
       this.value = value;
     }
   }
