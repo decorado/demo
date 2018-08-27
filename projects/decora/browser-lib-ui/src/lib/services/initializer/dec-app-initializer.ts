@@ -16,6 +16,13 @@ export const DecAppInitializer = (decConfig: DecConfigurationService, decApi: De
             account,
           });
 
+        }, (err) => {
+
+          resolve({
+            configuration,
+            account: undefined,
+          });
+
         });
 
       });
