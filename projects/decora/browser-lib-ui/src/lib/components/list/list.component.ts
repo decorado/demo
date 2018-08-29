@@ -1317,7 +1317,7 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.filter) {
       this.filterSubscription = this.filter.search.subscribe(event => {
 
-        const tabChanged = this.previousSelectedTab !== this.selectedTab;
+        const tabChanged = this.previousSelectedTab && this.previousSelectedTab !== this.selectedTab;
 
         const filterModeChanged = this.filterMode !== event.filterMode;
 
