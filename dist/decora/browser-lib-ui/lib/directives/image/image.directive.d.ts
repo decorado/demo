@@ -1,7 +1,7 @@
-import { ViewContainerRef } from '@angular/core';
+import { ViewContainerRef, AfterViewInit, OnInit } from '@angular/core';
 import { DecImageSize, SystemFileKey } from './image.directive.models';
-export declare class DecImageDirective {
-    viewContainerRef: ViewContainerRef;
+export declare class DecImageDirective implements OnInit, AfterViewInit {
+    private viewContainerRef;
     containerElement: HTMLElement;
     errorOnLoad: boolean;
     decImage: SystemFileKey | string;
@@ -13,7 +13,10 @@ export declare class DecImageDirective {
     private innerImage;
     private imagePath;
     private finalImageUrl;
+    private viewInitialized;
     constructor(viewContainerRef: ViewContainerRef);
+    ngOnInit(): void;
+    ngAfterViewInit(): void;
     private detectContainerElement();
     private loadImage();
     private extractImageUrlFromSysfile();
@@ -27,4 +30,5 @@ export declare class DecImageDirective {
     private createImage();
     private appendImageToBg();
     private setImageelementSrc();
+    private setElementWidth();
 }

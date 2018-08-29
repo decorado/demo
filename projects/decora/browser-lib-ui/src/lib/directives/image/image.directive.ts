@@ -1,11 +1,11 @@
-import { Directive, Input, ViewContainerRef } from '@angular/core';
+import { Directive, Input, ViewContainerRef, AfterViewInit, OnInit } from '@angular/core';
 import { DecImageSize, SystemFileKey } from './image.directive.models';
 import { TransparentImage, ThumborServerHost, ErrorImage, S3Host } from './image.directive.constants';
 
 @Directive({
   selector: '[decImage]'
 })
-export class DecImageDirective {
+export class DecImageDirective implements OnInit, AfterViewInit {
 
   containerElement: HTMLElement;
 
@@ -15,7 +15,10 @@ export class DecImageDirective {
   set decImage(v: SystemFileKey | string) {
     if (v !== this.innerImage) {
       this.innerImage = v;
-      this.loadImage();
+
+      if (this.viewInitialized) {
+        this.loadImage();
+      }
     }
   }
 
@@ -38,8 +41,20 @@ export class DecImageDirective {
 
   private finalImageUrl: string;
 
-  constructor(public viewContainerRef: ViewContainerRef) {
+  private viewInitialized: boolean;
+
+  constructor(private viewContainerRef: ViewContainerRef) { }
+
+  ngOnInit() {
     this.detectContainerElement();
+    this.setElementWidth();
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.viewInitialized = true;
+      this.loadImage();
+    });
   }
 
   private detectContainerElement() {
@@ -107,11 +122,33 @@ export class DecImageDirective {
   }
 
   private getImageSize(decImageSize: DecImageSize = {}): string {
-    return `${decImageSize.width || 0}x${decImageSize.height || 0}`;
+
+    const containerWidth = this.containerElement.offsetWidth;
+
+    if (decImageSize.width && decImageSize.height) {
+      return `${decImageSize.width || 0}x${decImageSize.height || 0}`;
+    }
+
+    switch (true) {
+      case containerWidth < 300:
+        return `300x300`;
+      case containerWidth < 600:
+        return `600x600`;
+      case containerWidth < 900:
+        return `900x900`;
+      case containerWidth < 1200:
+        return `1200x1200`;
+      case containerWidth < 1500:
+        return `1500x1500`;
+      case containerWidth < 1800:
+        return `1800x1800`;
+      default:
+        return `2000x2000`;
+    }
   }
 
   private getAspect() {
-    return this.fitIn ? '/fit-in'  : '';
+    return this.fitIn ? '/fit-in' : '';
   }
 
   private getTrim() {
@@ -142,14 +179,22 @@ export class DecImageDirective {
 
   private appendImageToBg() {
     this.containerElement.style.backgroundImage = 'url(' + this.finalImageUrl + ')';
-    this.containerElement.style.backgroundPosition = 'center';
-    this.containerElement.style.backgroundRepeat = 'no-repeat';
-    this.containerElement.style.backgroundSize = '100%';
     this.containerElement.classList.remove('dec-image-bg-loading');
   }
 
   private setImageelementSrc() {
     this.containerElement.setAttribute('src', this.finalImageUrl);
+  }
+
+  private setElementWidth() {
+    if (this.containerElementType === 'IMG') {
+      this.containerElement.setAttribute('width', '100%');
+      this.containerElement.setAttribute('max-width', '100%');
+    } else {
+      this.containerElement.style.backgroundSize = '100%';
+      this.containerElement.style.backgroundPosition = 'center';
+      this.containerElement.style.backgroundRepeat = 'no-repeat';
+    }
   }
 
 }
