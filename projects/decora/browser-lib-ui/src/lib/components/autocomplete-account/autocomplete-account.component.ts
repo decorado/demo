@@ -53,6 +53,10 @@ export class DecAutocompleteAccountComponent implements ControlValueAccessor, Af
 
   @Input() placeholder = 'Account autocomplete';
 
+  @Input() multi: boolean;
+
+  @Input() repeat: boolean;
+
   @Output() blur: EventEmitter<any> = new EventEmitter<any>();
 
   @Output() optionSelected: EventEmitter<any> = new EventEmitter<any>();

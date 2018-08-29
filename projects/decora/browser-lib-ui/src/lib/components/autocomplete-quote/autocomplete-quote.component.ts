@@ -1,4 +1,4 @@
-import { Component, Input, forwardRef, Output, EventEmitter } from '@angular/core';
+import { Component, Input, forwardRef, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { DecApiService } from './../../services/api/decora-api.service';
@@ -23,7 +23,7 @@ export const AUTOCOMPLETE_QUOTE_CONTROL_VALUE_ACCESSOR: any = {
   styles: [],
   providers: [AUTOCOMPLETE_QUOTE_CONTROL_VALUE_ACCESSOR]
 })
-export class DecAutocompleteQuoteComponent implements ControlValueAccessor {
+export class DecAutocompleteQuoteComponent implements ControlValueAccessor, AfterViewInit {
 
   endpoint: string;
 
@@ -39,6 +39,10 @@ export class DecAutocompleteQuoteComponent implements ControlValueAccessor {
 
   @Input() placeholder = 'Quote autocomplete';
 
+  @Input() multi: boolean;
+
+  @Input() repeat: boolean;
+
   @Output() blur: EventEmitter<any> = new EventEmitter<any>();
 
   @Output() optionSelected: EventEmitter<any> = new EventEmitter<any>();
@@ -46,7 +50,9 @@ export class DecAutocompleteQuoteComponent implements ControlValueAccessor {
   @Input()
   set projectId(v: string) {
     this._projectId = v;
-    this.setEndpointBasedOnInputs();
+    if (this.viewInitialized) {
+      this.setEndpointBasedOnInputs();
+    }
   }
 
   get projectId() {
@@ -56,7 +62,9 @@ export class DecAutocompleteQuoteComponent implements ControlValueAccessor {
   @Input()
   set decoraProduct(v: string) {
     this._decoraProduct = v;
-    this.setEndpointBasedOnInputs();
+    if (this.viewInitialized) {
+      this.setEndpointBasedOnInputs();
+    }
   }
 
   get decoraProduct() {
@@ -66,7 +74,9 @@ export class DecAutocompleteQuoteComponent implements ControlValueAccessor {
   @Input()
   set decoraProductVariant(v: string) {
     this._decoraProductVariant = v;
-    this.setEndpointBasedOnInputs();
+    if (this.viewInitialized) {
+      this.setEndpointBasedOnInputs();
+    }
   }
 
   get decoraProductVariant() {
@@ -78,6 +88,8 @@ export class DecAutocompleteQuoteComponent implements ControlValueAccessor {
   private _decoraProduct: string;
 
   private _decoraProductVariant: string;
+
+  private viewInitialized: boolean;
 
   /*
   ** ngModel propertie
@@ -91,6 +103,11 @@ export class DecAutocompleteQuoteComponent implements ControlValueAccessor {
   private onChangeCallback: (_: any) => void = noop;
 
   constructor(private decoraApi: DecApiService) { }
+
+  ngAfterViewInit() {
+    this.viewInitialized = true;
+    this.setEndpointBasedOnInputs();
+  }
 
   /*
   ** ngModel API
@@ -125,9 +142,7 @@ export class DecAutocompleteQuoteComponent implements ControlValueAccessor {
 
   writeValue(value: any) {
     if (value !== null && `${value}` !== `${this.value}`) { // convert to string to avoid problems comparing values
-      if (value && value !== undefined && value !== null) {
-        this.value = value;
-      }
+      this.value = value;
     }
   }
 
@@ -166,12 +181,9 @@ export class DecAutocompleteQuoteComponent implements ControlValueAccessor {
 
     if (this.endpoint !== endpoint) {
 
-      this.endpoint = undefined;
 
       setTimeout(() => {
-
         this.endpoint = endpoint;
-
       }, 0);
 
     }

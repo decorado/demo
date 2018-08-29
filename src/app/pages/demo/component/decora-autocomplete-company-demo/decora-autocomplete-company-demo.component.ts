@@ -9,6 +9,8 @@ export class DecoraAutocompleteCompanyDemoComponent implements OnInit {
 
   company = 235;
 
+  companies = [];
+
   constructor() { }
 
   ngOnInit() {

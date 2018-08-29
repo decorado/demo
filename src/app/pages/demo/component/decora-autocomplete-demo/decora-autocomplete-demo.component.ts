@@ -21,6 +21,7 @@ export class DecoraAutocompleteDemoComponent implements OnInit {
     fromEndpointWithInitialValue: 2,
     fromCustomFetchWithInitialValue: 'AI',
     fromArrayOfObjectsWithInitialValue: 'AI',
+    multipleSelection: ["242", "117"]
   };
 
   fakeCountryOptions = FAKE_COUNTRY_DATA;

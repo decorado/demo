@@ -46,6 +46,9 @@ Defines an object property to be used as option label;
 #### `labelFn: string`
 Defines a function to extract a label from an option;
 
+#### `multi: boolean`
+Enable multiple options selection;
+
 #### `name: string`
 The input element name;
 
@@ -54,6 +57,9 @@ An array of options to be used as autocomplete options;
 
 #### `placeholder: string`
 Defines a text to be shown when there is no value set;
+
+#### `repeat: boolean`
+Defines if the input is repeat;
 
 #### `required: boolean`
 Defines if the input is required;

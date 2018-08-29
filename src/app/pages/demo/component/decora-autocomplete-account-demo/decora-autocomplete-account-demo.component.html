@@ -2,6 +2,8 @@
 
   <p>Types: {{ types | json }}</p>
 
+  <h2>Single</h2>
+
   <p>Account Selected: {{ user.id }}</p>
 
   <dec-autocomplete-account [(ngModel)]="user.id"
@@ -9,6 +11,17 @@
   (selected)="optionSelected($event)"></dec-autocomplete-account>
 
   <button type="button" mat-stroked-button (click)="user.id = undefined">Clear</button>
+
+  <h2>Multi</h2>
+
+  <p>Account Selected: {{ user.ids | json }}</p>
+
+  <dec-autocomplete-account [(ngModel)]="user.ids"
+  [types]="types"
+  [multi]="true"
+  (selected)="optionSelected($event)"></dec-autocomplete-account>
+
+  <button type="button" mat-stroked-button (click)="user.ids = undefined">Clear</button>
 
 </app-demo-container>
 

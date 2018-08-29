@@ -1,5 +1,7 @@
 <app-demo-container readmeSrc="/assets/docs/browser-lib-ui/components/autocomplete-company/README.md">
 
+  <h2>Single</h2>
+
   Company Selected: {{ company }}
 
   <hr>
@@ -10,6 +12,20 @@
   </dec-autocomplete-company>
 
   <button type="button" mat-stroked-button (click)="company = undefined">Clear</button>
+
+  <h2>Multi</h2>
+
+  Company Selected: {{ companies | json }}
+
+  <hr>
+
+  <dec-autocomplete-company
+  [(ngModel)]="companies"
+  [multi]="true"
+  (selected)="optionSelected($event)">
+  </dec-autocomplete-company>
+
+  <button type="button" mat-stroked-button (click)="companies = undefined">Clear</button>
 
 </app-demo-container>
 

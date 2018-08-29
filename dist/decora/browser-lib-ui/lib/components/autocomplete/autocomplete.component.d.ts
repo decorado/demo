@@ -1,18 +1,22 @@
-import { AfterViewInit, EventEmitter } from '@angular/core';
+import { AfterViewInit, EventEmitter, OnDestroy } from '@angular/core';
 import { FormControl, ControlValueAccessor } from '@angular/forms';
 import { DecApiService } from './../../services/api/decora-api.service';
 import { Observable } from 'rxjs';
 import { LabelFunction, ValueFunction, SelectionEvent, CustomFetchFunction } from './autocomplete.models';
 import { MatAutocompleteTrigger } from '@angular/material';
 export declare const AUTOCOMPLETE_CONTROL_VALUE_ACCESSOR: any;
-export declare class DecAutocompleteComponent implements ControlValueAccessor, AfterViewInit {
+export declare class DecAutocompleteComponent implements ControlValueAccessor, AfterViewInit, OnDestroy {
     private service;
     autocompleteTrigger: MatAutocompleteTrigger;
     autocompleteInput: FormControl;
     options$: Observable<any[]>;
+    optionsSelected: any[];
     writtenValue: any;
+    separatorKeysCodes: number[];
     customFetchFunction: CustomFetchFunction;
     endpoint: any;
+    multi: boolean;
+    repeat: boolean;
     disabled: boolean;
     labelFn: LabelFunction;
     labelAttr: string;
@@ -26,14 +30,19 @@ export declare class DecAutocompleteComponent implements ControlValueAccessor, A
     optionSelected: EventEmitter<SelectionEvent>;
     enterButton: EventEmitter<SelectionEvent>;
     termInput: any;
+    chipList: any;
     private _disabled;
     private _options;
     private innerOptions;
+    private responses;
+    private search$;
+    private searchInputSubscription;
     private innerValue;
     private onTouchedCallback;
     private onChangeCallback;
     constructor(service: DecApiService);
     ngAfterViewInit(): void;
+    ngOnDestroy(): void;
     value: any;
     registerOnChange(fn: any): void;
     registerOnTouched(fn: any): void;
@@ -48,6 +57,12 @@ export declare class DecAutocompleteComponent implements ControlValueAccessor, A
     clear(reopen?: boolean): void;
     reset(): void;
     extractLabel: LabelFunction;
+    remove(option: string): void;
+    private setInputValue(v);
+    private blurInput();
+    private addOptionToOptionsSelected(option);
+    private populateAutocompleteWithInitialValues(value, reloadOptions?);
+    private updateValueWithOptionsSelected();
     private loadRemoteObjectByWrittenValue(writtenValue);
     private detectRequiredData();
     private resetInputControl();
@@ -58,8 +73,11 @@ export declare class DecAutocompleteComponent implements ControlValueAccessor, A
     private setInputValueBasedOnInnerValue(v);
     private getOptionBasedOnValue(v);
     private createInput();
+    private subscribeToInputValueChanges();
+    private unsubscribeToInputValueChanges();
     private subscribeToSearchAndSetOptionsObservable();
-    private searchBasedFetchingType(textSearch);
+    getSelectableOptions: (options: any) => any;
+    private searchBasedFetchingType(textSearch, rememberResponse?);
     private searchInLocalOptions(term);
     private raiseError(error);
 }

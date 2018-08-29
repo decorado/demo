@@ -5,7 +5,7 @@ import { DecoraAutocompleteDemoRoutingModule } from './decora-autocomplete-demo-
 import { DecoraAutocompleteDemoComponent } from './decora-autocomplete-demo.component';
 import { DemoContainerModule } from '@app/shared/components/demo-container/demo-container.module';
 import { FormsModule } from '@angular/forms';
-import { DecAutocompleteModule } from '@projects/decora/browser-lib-ui/src/public_api';
+import { DecAutocompleteModule, DecTabsModule } from '@projects/decora/browser-lib-ui/src/public_api';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
@@ -16,6 +16,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     DecAutocompleteModule,
     DecoraAutocompleteDemoRoutingModule,
     FlexLayoutModule,
+    DecTabsModule,
   ],
   declarations: [DecoraAutocompleteDemoComponent]
 })

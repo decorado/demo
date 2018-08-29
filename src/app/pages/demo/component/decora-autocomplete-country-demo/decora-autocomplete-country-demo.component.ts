@@ -9,6 +9,8 @@ export class DecoraAutocompleteCountryDemoComponent implements OnInit {
 
   country = 'AE';
 
+  countries = [];
+
   constructor() { }
 
   ngOnInit() {

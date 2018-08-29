@@ -1,8 +1,10 @@
 <app-demo-container readmeSrc="/assets/docs/browser-lib-ui/components/autocomplete-role/README.md">
 
   <p>Types: {{ types | json }}</p>
-  <p>Role Selected: {{ role }}</p>
 
+  <h2>Single</h2>
+
+  <p>Role Selected: {{ role }}</p>
 
   <dec-autocomplete-role [(ngModel)]="role"
   [types]="types"
@@ -10,5 +12,18 @@
   </dec-autocomplete-role>
 
   <button type="button" mat-stroked-button (click)="role = undefined">Clear</button>
+
+
+  <h2>Multi</h2>
+
+  <p>Role Selected: {{ roles | json }}</p>
+
+  <dec-autocomplete-role [(ngModel)]="roles"
+  [multi]="true"
+  [types]="types"
+  (selected)="optionSelected($event)">
+  </dec-autocomplete-role>
+
+  <button type="button" mat-stroked-button (click)="roles = undefined">Clear</button>
 
 </app-demo-container>

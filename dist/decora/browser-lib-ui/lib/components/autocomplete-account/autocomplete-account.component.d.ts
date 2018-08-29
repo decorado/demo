@@ -11,6 +11,8 @@ export declare class DecAutocompleteAccountComponent implements ControlValueAcce
     required: boolean;
     name: string;
     placeholder: string;
+    multi: boolean;
+    repeat: boolean;
     blur: EventEmitter<any>;
     optionSelected: EventEmitter<any>;
     private innerValue;

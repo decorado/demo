@@ -11,6 +11,8 @@ export class DecoraAutocompleteDepartmentDemoComponent implements OnInit {
 
   department = 140;
 
+  departments = [];
+
   constructor() { }
 
   ngOnInit() {

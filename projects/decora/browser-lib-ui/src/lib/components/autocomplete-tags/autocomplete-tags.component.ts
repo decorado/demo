@@ -45,6 +45,10 @@ export class DecAutocompleteTagsComponent implements ControlValueAccessor {
 
   @Input() placeholder = 'Tags autocomplete';
 
+  @Input() multi: boolean;
+
+  @Input() repeat: boolean;
+
   @Output() blur: EventEmitter<any> = new EventEmitter<any>();
 
   @Output() optionSelected: EventEmitter<any> = new EventEmitter<any>();
@@ -101,9 +105,7 @@ export class DecAutocompleteTagsComponent implements ControlValueAccessor {
 
   writeValue(value: any) {
     if (value !== null && `${value}` !== `${this.value}`) { // convert to string to avoid problems comparing values
-      if (value && value !== undefined && value !== null) {
-        this.value = value;
-      }
+      this.value = value;
     }
   }
 

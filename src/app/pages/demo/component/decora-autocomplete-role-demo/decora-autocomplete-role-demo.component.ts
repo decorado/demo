@@ -11,6 +11,8 @@ export class DecoraAutocompleteRoleDemoComponent implements OnInit {
 
   types = ['adm', 'it', 'production'];
 
+  roles = [];
+
   constructor() { }
 
   ngOnInit() {

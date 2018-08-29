@@ -1,55 +1,84 @@
 <app-demo-container readmeSrc="/assets/docs/browser-lib-ui/components/autocomplete/README.md">
 
+  <dec-tabs name="autocomplete-esample">
+
+    <dec-tab name="Disabled" label="Modes">
+      <ng-template>
+        <p>Modes</p>
+        <ng-container *ngTemplateOutlet="modesExamples"></ng-container>
+      </ng-template>
+    </dec-tab>
+
+    <dec-tab name="from-array" label="Static">
+      <ng-template>
+        <p>Getting options from array</p>
+        <ng-container *ngTemplateOutlet="arrayExamples"></ng-container>
+      </ng-template>
+    </dec-tab>
+
+    <dec-tab name="from-endpoint" label="REST">
+      <ng-template>
+        <p>Getting options using endpoint</p>
+        <ng-container *ngTemplateOutlet="apiExamples"></ng-container>
+      </ng-template>
+    </dec-tab>
+
+    <dec-tab name="from-custom" label="Custom">
+      <ng-template>
+        <p>Getting options using customFetchMethod</p>
+        <ng-container *ngTemplateOutlet="customFetchExamples"></ng-container>
+      </ng-template>
+    </dec-tab>
+
+  </dec-tabs>
+
+</app-demo-container>
+
+<ng-template #modesExamples>
+
   <div fxLayout="row" fxLayoutGap="16px">
     <div fxFlex>
       <h3>Disabled mode</h3>
 
-      Option Selected: <span class="highlight-text">{{ models.disabled }}</span>
+      Option Selected:
+      <span class="highlight-text">{{ models.disabled }}</span>
 
-      <dec-autocomplete name="models.disabled"
-      [(ngModel)]="models.disabled"
-      (optionSelected)="optionSelected($event)"
-      [options]="fakeStringOptions"
-      [disabled]="true"></dec-autocomplete>
+      <dec-autocomplete name="models.disabled" placeholder="models.disabled" [(ngModel)]="models.disabled" (optionSelected)="optionSelected($event)" [options]="fakeStringOptions"
+        [disabled]="true"></dec-autocomplete>
     </div>
+
     <div fxFlex>
       <h3>Required mode</h3>
 
-      Option Selected: <span class="highlight-text">{{ models.required }}</span>
+      Option Selected:
+      <span class="highlight-text">{{ models.required }}</span>
 
-      <dec-autocomplete name="models.required"
-      [(ngModel)]="models.required"
-      (optionSelected)="optionSelected($event)"
-      [options]="fakeStringOptions"
-      [required]="true"></dec-autocomplete>
+      <dec-autocomplete name="models.required" placeholder="models.required" [(ngModel)]="models.required" (optionSelected)="optionSelected($event)" [options]="fakeStringOptions"
+        [required]="true"></dec-autocomplete>
     </div>
+
     <div fxFlex>
       <h3>Passing only an array of strings</h3>
 
-      Option Selected: <span class="highlight-text">{{ models.fromArrayOfStringOnly }}</span>
+      Option Selected:
+      <span class="highlight-text">{{ models.fromArrayOfStringOnly }}</span>
 
-      <dec-autocomplete name="models.fromArrayOfStringOnly"
-      [(ngModel)]="models.fromArrayOfStringOnly"
-      (optionSelected)="optionSelected($event)"
-      [options]="fakeStringOptions"></dec-autocomplete>
+      <dec-autocomplete name="models.fromArrayOfStringOnly" placeholder="models.fromArrayOfStringOnly" [(ngModel)]="models.fromArrayOfStringOnly" (optionSelected)="optionSelected($event)"
+        [options]="fakeStringOptions"></dec-autocomplete>
     </div>
+
   </div>
 
-  <div fxLayout="row" fxLayoutGap="16px">
-    <div fxFlex>
-      <h2>Getting options from array</h2>
-      <ng-container *ngTemplateOutlet="arrayExamples"></ng-container>
-    </div>
-    <div fxFlex>
-      <h2>Getting options using endpoint</h2>
-      <ng-container *ngTemplateOutlet="apiExamples"></ng-container>
-    </div>
-    <div fxFlex>
-      <h2>Getting options using customFetchMethod</h2>
-      <ng-container *ngTemplateOutlet="customFetchExamples"></ng-container>
-    </div>
+  <div>
+    <h3>Multiselect</h3>
+
+    Options Selected:
+    <span class="highlight-text">{{ models.multipleSelection | json }}</span>
+
+    <dec-autocomplete name="models.multipleSelection" placeholder="models.multipleSelection" [(ngModel)]="models.multipleSelection" (optionSelected)="optionSelected($event)"
+       [endpoint]="endpoint" [multi]="true"  [labelAttr]="labelAttr" [valueAttr]="valueAttr"></dec-autocomplete>
   </div>
-</app-demo-container>
+</ng-template>
 
 <ng-template #arrayExamples>
 
@@ -57,7 +86,7 @@
 
   Option Selected: <span class="highlight-text">{{ models.fromArrayOfObjectsOnly | json }}</span>
 
-  <dec-autocomplete name="models.fromArrayOfObjectsOnly"
+  <dec-autocomplete name="models.fromArrayOfObjectsOnly" placeholder="models.fromArrayOfObjectsOnly"
   [(ngModel)]="models.fromArrayOfObjectsOnly"
   (optionSelected)="optionSelected($event)"
   [options]="fakeCountryOptions"></dec-autocomplete>
@@ -66,7 +95,7 @@
 
   Option Selected: <span class="highlight-text">{{ models.fromArrayOfObjectWithLabelAttr | json }}</span>
 
-  <dec-autocomplete name="models.fromArrayOfObjectWithLabelAttr"
+  <dec-autocomplete name="models.fromArrayOfObjectWithLabelAttr" placeholder="models.fromArrayOfObjectWithLabelAttr"
   [(ngModel)]="models.fromArrayOfObjectWithLabelAttr"
   (optionSelected)="optionSelected($event)"
   [options]="fakeCountryOptions"
@@ -76,7 +105,7 @@
 
   Option Selected: <span class="highlight-text">{{ models.fromArrayOfObjectWithValueAttr }}</span>
 
-  <dec-autocomplete name="models.fromArrayOfObjectWithValueAttr"
+  <dec-autocomplete name="models.fromArrayOfObjectWithValueAttr" placeholder="models.fromArrayOfObjectWithValueAttr"
   [(ngModel)]="models.fromArrayOfObjectWithValueAttr"
   (optionSelected)="optionSelected($event)"
   [options]="fakeCountryOptions"
@@ -86,7 +115,7 @@
 
   Option Selected: <span class="highlight-text">{{ models.fromArrayOfObjectWithValueAndLabelAttr }}</span>
 
-  <dec-autocomplete name="models.fromArrayOfObjectWithValueAndLabelAttr"
+  <dec-autocomplete name="models.fromArrayOfObjectWithValueAndLabelAttr" placeholder="models.fromArrayOfObjectWithValueAndLabelAttr"
   [(ngModel)]="models.fromArrayOfObjectWithValueAndLabelAttr"
   (optionSelected)="optionSelected($event)"
   [options]="fakeCountryOptions"
@@ -97,7 +126,7 @@
 
   Option Selected: <span class="highlight-text">{{ models.fromArrayOfObjectWithLabelFn | json }}</span>
 
-  <dec-autocomplete name="models.fromArrayOfObjectWithLabelFn"
+  <dec-autocomplete name="models.fromArrayOfObjectWithLabelFn" placeholder="models.fromArrayOfObjectWithLabelFn"
   [(ngModel)]="models.fromArrayOfObjectWithLabelFn"
   (optionSelected)="optionSelected($event)"
   [options]="fakeCountryOptions"
@@ -107,7 +136,7 @@
 
   Option Selected: <span class="highlight-text">{{ models.fromArrayOfObjectWithValueFn }}</span>
 
-  <dec-autocomplete name="models.fromArrayOfObjectWithValueFn"
+  <dec-autocomplete name="models.fromArrayOfObjectWithValueFn" placeholder="models.fromArrayOfObjectWithValueFn"
   [(ngModel)]="models.fromArrayOfObjectWithValueFn"
   (optionSelected)="optionSelected($event)"
   [options]="fakeCountryOptions"
@@ -117,7 +146,7 @@
 
   Option Selected: <span class="highlight-text">{{ models.fromArrayOfObjectWithValueAndLabelFn }}</span>
 
-  <dec-autocomplete name="models.fromArrayOfObjectWithValueAndLabelFn"
+  <dec-autocomplete name="models.fromArrayOfObjectWithValueAndLabelFn" placeholder="models.fromArrayOfObjectWithValueAndLabelFn"
   [(ngModel)]="models.fromArrayOfObjectWithValueAndLabelFn"
   (optionSelected)="optionSelected($event)"
   [options]="fakeCountryOptions"
@@ -128,7 +157,7 @@
 
   Option Selected: <span class="highlight-text">{{ models.fromArrayOfObjectsWithInitialValue }}</span>
 
-  <dec-autocomplete name="models.fromArrayOfObjectsWithInitialValue"
+  <dec-autocomplete name="models.fromArrayOfObjectsWithInitialValue" placeholder="models.fromArrayOfObjectsWithInitialValue"
   [(ngModel)]="models.fromArrayOfObjectsWithInitialValue"
   (optionSelected)="optionSelected($event)"
   [options]="fakeCountryOptions"
@@ -142,7 +171,7 @@
 
   Option Selected: <span class="highlight-text">{{ models.fromEndpointOnly | json }}</span>
 
-  <dec-autocomplete name="models.fromEndpointOnly"
+  <dec-autocomplete name="models.fromEndpointOnly" placeholder="models.fromEndpointOnly"
   [(ngModel)]="models.fromEndpointOnly"
   (optionSelected)="optionSelected($event)"
   [endpoint]="endpoint"
@@ -152,7 +181,7 @@
 
   Option Selected: <span class="highlight-text">{{ models.fromEndpointLabelAttr | json }}</span>
 
-  <dec-autocomplete name="models.fromEndpointLabelAttr"
+  <dec-autocomplete name="models.fromEndpointLabelAttr" placeholder="models.fromEndpointLabelAttr"
   [(ngModel)]="models.fromEndpointLabelAttr"
   (optionSelected)="optionSelected($event)"
   [endpoint]="endpoint"
@@ -162,7 +191,7 @@
 
   Option Selected: <span class="highlight-text">{{ models.fromEndpointValueAttr }}</span>
 
-  <dec-autocomplete name="models.fromEndpointValueAttr"
+  <dec-autocomplete name="models.fromEndpointValueAttr" placeholder="models.fromEndpointValueAttr"
   [(ngModel)]="models.fromEndpointValueAttr"
   (optionSelected)="optionSelected($event)"
   [endpoint]="endpoint"
@@ -172,7 +201,7 @@
 
   Option Selected: <span class="highlight-text">{{ models.fromEndpointLabelAndValueAttr }}</span>
 
-  <dec-autocomplete name="models.fromEndpointLabelAndValueAttr"
+  <dec-autocomplete name="models.fromEndpointLabelAndValueAttr" placeholder="models.fromEndpointLabelAndValueAttr"
   [(ngModel)]="models.fromEndpointLabelAndValueAttr"
   (optionSelected)="optionSelected($event)"
   [endpoint]="endpoint"
@@ -183,7 +212,7 @@
 
   Option Selected: <span class="highlight-text">{{ models.fromEndpointLabelFn | json }}</span>
 
-  <dec-autocomplete name="models.fromEndpointLabelFn"
+  <dec-autocomplete name="models.fromEndpointLabelFn" placeholder="models.fromEndpointLabelFn"
   [(ngModel)]="models.fromEndpointLabelFn"
   (optionSelected)="optionSelected($event)"
   [endpoint]="endpoint"
@@ -193,7 +222,7 @@
 
   Option Selected: <span class="highlight-text">{{ models.fromEndpointValueFn }}</span>
 
-  <dec-autocomplete name="models.fromEndpointValueFn"
+  <dec-autocomplete name="models.fromEndpointValueFn" placeholder="models.fromEndpointValueFn"
   [(ngModel)]="models.fromEndpointValueFn"
   (optionSelected)="optionSelected($event)"
   [endpoint]="endpoint"
@@ -203,7 +232,7 @@
 
   Option Selected: <span class="highlight-text">{{ models.fromEndpointLabelAndValueFn }}</span>
 
-  <dec-autocomplete name="models.fromEndpointLabelAndValueFn"
+  <dec-autocomplete name="models.fromEndpointLabelAndValueFn" placeholder="models.fromEndpointLabelAndValueFn"
   [(ngModel)]="models.fromEndpointLabelAndValueFn"
   (optionSelected)="optionSelected($event)"
   [endpoint]="endpoint"
@@ -214,7 +243,7 @@
 
   Option Selected: <span class="highlight-text">{{ models.fromEndpointWithInitialValue }}</span>
 
-  <dec-autocomplete name="models.fromEndpointWithInitialValue"
+  <dec-autocomplete name="models.fromEndpointWithInitialValue" placeholder="models.fromEndpointWithInitialValue"
   [(ngModel)]="models.fromEndpointWithInitialValue"
   (optionSelected)="optionSelected($event)"
   [endpoint]="endpoint"
@@ -227,7 +256,7 @@
 
   Option Selected: <span class="highlight-text">{{ models.fromCustomFetchOnly | json }}</span>
 
-  <dec-autocomplete name="models.fromCustomFetchOnly"
+  <dec-autocomplete name="models.fromCustomFetchOnly" placeholder="models.fromCustomFetchOnly"
   [(ngModel)]="models.fromCustomFetchOnly"
   (optionSelected)="optionSelected($event)"
   [customFetchFunction]="customFetchFunction"
@@ -237,7 +266,7 @@
 
   Option Selected: <span class="highlight-text">{{ models.fromCustomFetchLabelAttr | json }}</span>
 
-  <dec-autocomplete name="models.fromCustomFetchLabelAttr"
+  <dec-autocomplete name="models.fromCustomFetchLabelAttr" placeholder="models.fromCustomFetchLabelAttr"
   [(ngModel)]="models.fromCustomFetchLabelAttr"
   (optionSelected)="optionSelected($event)"
   [customFetchFunction]="customFetchFunction"
@@ -247,7 +276,7 @@
 
   Option Selected: <span class="highlight-text">{{ models.fromCustomFetchValueAttr }}</span>
 
-  <dec-autocomplete name="models.fromCustomFetchValueAttr"
+  <dec-autocomplete name="models.fromCustomFetchValueAttr" placeholder="models.fromCustomFetchValueAttr"
   [(ngModel)]="models.fromCustomFetchValueAttr"
   (optionSelected)="optionSelected($event)"
   [customFetchFunction]="customFetchFunction"
@@ -257,7 +286,7 @@
 
   Option Selected: <span class="highlight-text">{{ models.fromCustomFetchLabelAndValueAttr }}</span>
 
-  <dec-autocomplete name="models.fromCustomFetchLabelAndValueAttr"
+  <dec-autocomplete name="models.fromCustomFetchLabelAndValueAttr" placeholder="models.fromCustomFetchLabelAndValueAttr"
   [(ngModel)]="models.fromCustomFetchLabelAndValueAttr"
   (optionSelected)="optionSelected($event)"
   [customFetchFunction]="customFetchFunction"
@@ -268,7 +297,7 @@
 
   Option Selected: <span class="highlight-text">{{ models.fromCustomFetchLabelFn | json }}</span>
 
-  <dec-autocomplete name="models.fromCustomFetchLabelFn"
+  <dec-autocomplete name="models.fromCustomFetchLabelFn" placeholder="models.fromCustomFetchLabelFn"
   [(ngModel)]="models.fromCustomFetchLabelFn"
   (optionSelected)="optionSelected($event)"
   [customFetchFunction]="customFetchFunction"
@@ -278,7 +307,7 @@
 
   Option Selected: <span class="highlight-text">{{ models.fromCustomFetchValueFn }}</span>
 
-  <dec-autocomplete name="models.fromCustomFetchValueFn"
+  <dec-autocomplete name="models.fromCustomFetchValueFn" placeholder="models.fromCustomFetchValueFn"
   [(ngModel)]="models.fromCustomFetchValueFn"
   (optionSelected)="optionSelected($event)"
   [customFetchFunction]="customFetchFunction"
@@ -288,7 +317,7 @@
 
   Option Selected: <span class="highlight-text">{{ models.fromCustomFetchLabelAndValueFn }}</span>
 
-  <dec-autocomplete name="models.fromCustomFetchLabelAndValueFn"
+  <dec-autocomplete name="models.fromCustomFetchLabelAndValueFn" placeholder="models.fromCustomFetchLabelAndValueFn"
   [(ngModel)]="models.fromCustomFetchLabelAndValueFn"
   (optionSelected)="optionSelected($event)"
   [customFetchFunction]="customFetchFunction"
@@ -299,7 +328,7 @@
 
   Option Selected: <span class="highlight-text">{{ models.fromCustomFetchWithInitialValue }}</span>
 
-  <dec-autocomplete name="models.fromCustomFetchWithInitialValue"
+  <dec-autocomplete name="models.fromCustomFetchWithInitialValue" placeholder="models.fromCustomFetchWithInitialValue"
   [(ngModel)]="models.fromCustomFetchWithInitialValue"
   (optionSelected)="optionSelected($event)"
   [customFetchFunction]="customFetchFunction"

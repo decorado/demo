@@ -47,6 +47,10 @@ export class DecAutocompleteDepartmentComponent implements ControlValueAccessor 
 
   @Input() placeholder = 'Department autocomplete';
 
+  @Input() multi: boolean;
+
+  @Input() repeat: boolean;
+
   @Output() blur: EventEmitter<any> = new EventEmitter<any>();
 
   @Output() optionSelected: EventEmitter<any> = new EventEmitter<any>();
@@ -99,9 +103,7 @@ export class DecAutocompleteDepartmentComponent implements ControlValueAccessor 
 
   writeValue(value: any) {
     if (value !== null && `${value}` !== `${this.value}`) { // convert to string to avoid problems comparing values
-      if (value && value !== undefined && value !== null) {
-        this.value = value;
-      }
+      this.value = value;
     }
   }
 

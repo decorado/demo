@@ -9,6 +9,8 @@ export class DecoraAutocompleteTagsDemoComponent implements OnInit {
 
   tag;
 
+  tags;
+
   constructor() { }
 
   ngOnInit() {

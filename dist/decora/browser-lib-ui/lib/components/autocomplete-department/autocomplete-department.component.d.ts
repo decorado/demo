@@ -11,6 +11,8 @@ export declare class DecAutocompleteDepartmentComponent implements ControlValueA
     required: boolean;
     name: string;
     placeholder: string;
+    multi: boolean;
+    repeat: boolean;
     blur: EventEmitter<any>;
     optionSelected: EventEmitter<any>;
     private _companyId;

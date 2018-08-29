@@ -1,19 +1,41 @@
 <app-demo-container readmeSrc="/assets/docs/browser-lib-ui/components/autocomplete-quote/README.md">
 
-    <dec-autocomplete-project
-      [(ngModel)]="projectId"
-      [companyId]="companyId"
-    ></dec-autocomplete-project>
+  Project Selected: {{ projectId }}
 
-    <button type="button" mat-stroked-button (click)="projectId = undefined">Clear project</button>
+  <dec-autocomplete-project
+    [(ngModel)]="projectId"
+    [companyId]="companyId"
+  ></dec-autocomplete-project>
 
-    <dec-autocomplete-quote
-      [(ngModel)]="quote"
-      [projectId]="projectId"
-      decoraProduct="RENDERING"
-      decoraProductVariant="RENDERING_MODEL"
-    ></dec-autocomplete-quote>
+  <button type="button" mat-stroked-button (click)="projectId = undefined">Clear project</button>
 
-    <button type="button" mat-stroked-button (click)="quote = undefined">Clear quote</button>
+  <h2>Single</h2>
+
+  Quote Selected: {{ quote }}
+
+  <dec-autocomplete-quote
+    [(ngModel)]="quote"
+    [projectId]="projectId"
+    name="single-quote"
+    decoraProduct="RENDERING"
+    decoraProductVariant="RENDERING_MODEL"
+  ></dec-autocomplete-quote>
+
+  <button type="button" mat-stroked-button (click)="quote = undefined">Clear quote</button>
+
+  <h2>Multi</h2>
+
+  Quote Selected: {{ quotes | json }}
+
+  <dec-autocomplete-quote
+    [(ngModel)]="quotes"
+    [projectId]="projectId"
+    [multi]="true"
+    name="multi-quote"
+    decoraProduct="RENDERING"
+    decoraProductVariant="RENDERING_MODEL"
+  ></dec-autocomplete-quote>
+
+  <button type="button" mat-stroked-button (click)="quotes = undefined">Clear quote</button>
 
 </app-demo-container>

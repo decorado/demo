@@ -1,5 +1,7 @@
 <app-demo-container readmeSrc="/assets/docs/browser-lib-ui/components/autocomplete-country/README.md">
 
+  <h2>Single</h2>
+
   Country Selected: {{ country }}
 
   <hr>
@@ -10,6 +12,20 @@
   </dec-autocomplete-country>
 
   <button type="button" mat-stroked-button (click)="country = undefined">Clear</button>
+
+  <h2>Multi</h2>
+
+  Country Selected: {{ countries | json }}
+
+  <hr>
+
+  <dec-autocomplete-country
+  [multi]="true"
+  [(ngModel)]="countries"
+  (selected)="optionSelected($event)">
+  </dec-autocomplete-country>
+
+  <button type="button" mat-stroked-button (click)="countries = undefined">Clear</button>
 
 </app-demo-container>
 

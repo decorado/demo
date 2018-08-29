@@ -1,11 +1,37 @@
 <app-demo-container readmeSrc="/assets/docs/browser-lib-ui/components/autocomplete-project/README.md">
 
-  <dec-autocomplete-company [(ngModel)]="companyId"></dec-autocomplete-company>
+  Company Selected: {{ companyId }}<br>
+
+  <dec-autocomplete-company
+  [(ngModel)]="companyId"
+  (selected)="optionSelected($event)">
+  </dec-autocomplete-company>
 
   <button type="button" mat-stroked-button (click)="companyId = undefined">Clear company</button>
 
-  <dec-autocomplete-project [(ngModel)]="projectId" [companyId]="companyId"></dec-autocomplete-project>
+  <h2>Single</h2>
 
-  <button type="button" mat-stroked-button (click)="projectId = undefined">Clear project</button>
+  Department Selected: {{ project }}
+
+  <dec-autocomplete-project
+  [(ngModel)]="project"
+  [companyId]="companyId"
+  (selected)="optionSelected($event)">
+  </dec-autocomplete-project>
+
+  <button type="button" mat-stroked-button (click)="project = undefined">Clear project</button>
+
+  <h2>Multi</h2>
+
+  Department Selected: {{ projects | json }}
+
+  <dec-autocomplete-project
+  [(ngModel)]="projects"
+  [companyId]="companyId"
+  [multi]="true"
+  (selected)="optionSelected($event)">
+  </dec-autocomplete-project>
+
+  <button type="button" mat-stroked-button (click)="projects = undefined">Clear project</button>
 
 </app-demo-container>

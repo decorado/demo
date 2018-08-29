@@ -15,6 +15,8 @@ export class DemoContainerComponent implements OnInit {
 
   baseHref;
 
+  @Input() destroyOnBlur = false;
+
   @Input() readmeSrc = '';
 
   @Input() name = 'DemoContainer';

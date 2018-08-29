@@ -7,13 +7,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DecoraAutocompleteProjectDemoComponent implements OnInit {
 
-  companyId: number;
+  companyId = 1;
 
-  projectId: number;
+  project: number;
+
+  projects = [];
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  optionSelected($event) {
+
+    console.log('optionSelected($event)', $event);
+
   }
 
 }

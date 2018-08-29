@@ -83,7 +83,7 @@ export class DecTabsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.stopWatchingTabInUrlQuery();
   }
 
-  shoulTabBeDisplayed(tab) {
+  shouldTabBeDisplayed(tab) {
     const isSelected = this._activeTabObject === tab;
     const isActivated = this.activatedTabs[tab.name];
     return isSelected || (!this.destroyOnBlur && isActivated);

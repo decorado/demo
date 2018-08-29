@@ -1,10 +1,31 @@
 <app-demo-container readmeSrc="/assets/docs/browser-lib-ui/components/autocomplete-tags/README.md">
 
+  <h2>Single</h2>
+
   <p>Tag Selected: {{ tag }}</p>
 
-  <dec-autocomplete-tags [(ngModel)]="tag" [endpoint]="'rendersupport/tags'" (enterButton)="enterButton($event)" (selected)="optionSelected($event)">
+  <dec-autocomplete-tags
+  [(ngModel)]="tag"
+  [endpoint]="'rendersupport/tags'"
+  (enterButton)="enterButton($event)"
+  (selected)="optionSelected($event)">
   </dec-autocomplete-tags>
 
   <button type="button" mat-stroked-button (click)="tag = undefined">Clear</button>
+
+
+  <h2>Multi</h2>
+
+  <p>Tag Selected: {{ tags | json }}</p>
+
+  <dec-autocomplete-tags
+  [(ngModel)]="tags"
+  [multi]="true"
+  [endpoint]="'rendersupport/tags'"
+  (enterButton)="enterButton($event)"
+  (selected)="optionSelected($event)">
+  </dec-autocomplete-tags>
+
+  <button type="button" mat-stroked-button (click)="tags = undefined">Clear</button>
 
 </app-demo-container>

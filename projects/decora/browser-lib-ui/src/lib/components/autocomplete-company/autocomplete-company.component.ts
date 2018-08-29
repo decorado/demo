@@ -32,6 +32,10 @@ export class DecAutocompleteCompanyComponent implements ControlValueAccessor {
 
   @Input() placeholder = 'Company autocomplete';
 
+  @Input() multi: boolean;
+
+  @Input() repeat: boolean;
+
   @Output() blur: EventEmitter<any> = new EventEmitter<any>();
 
   @Output() optionSelected: EventEmitter<any> = new EventEmitter<any>();

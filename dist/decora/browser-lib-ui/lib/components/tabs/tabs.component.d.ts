@@ -26,7 +26,7 @@ export declare class DecTabsComponent implements OnInit, AfterViewInit, OnDestro
     ngOnInit(): void;
     ngAfterViewInit(): void;
     ngOnDestroy(): void;
-    shoulTabBeDisplayed(tab: any): any;
+    shouldTabBeDisplayed(tab: any): any;
     onChangeTab($event: any): void;
     parseTotal(total: any): any;
     reset(): void;
