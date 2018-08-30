@@ -321,16 +321,6 @@ export class DecSketchfabComponent implements OnInit {
           this.material.channels.MetalnessPBR.texture = this.getTexture(this.materialConfig.materialName + '_METALLIC.jpg');
         }
         break;
-      case 'base-color':
-        if (this.material.channels.AlbedoPBR.texture) {
-          delete this.material.channels.AlbedoPBR.texture;
-          this.material.channels.AlbedoPBR.color = [1, 1, 1];
-        } else {
-          delete this.material.channels.AlbedoPBR.color;
-          this.material.channels.AlbedoPBR.factor = 1;
-          this.material.channels.AlbedoPBR.texture = this.getTexture(this.materialConfig.materialName + '_DIFFUSE.jpg');
-        }
-        break;
       case 'roug':
         if (this.material.channels.RoughnessPBR.texture) {
           delete this.material.channels.RoughnessPBR.texture;

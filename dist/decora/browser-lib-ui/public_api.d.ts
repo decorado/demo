@@ -65,6 +65,8 @@ export * from './lib/components/sidenav/dec-sidenav-menu-right/dec-sidenav-menu-
 export * from './lib/components/sidenav/dec-sidenav-menu-title/dec-sidenav-menu-title.component';
 export * from './lib/components/sidenav/dec-sidenav-toolbar/dec-sidenav-toolbar.component';
 export * from './lib/components/sidenav/dec-sidenav-toolbar-title/dec-sidenav-toolbar-title.component';
+export * from './lib/components/dec-sketchfab/dec-sketchfab.component';
+export * from './lib/components/dec-sketchfab/dec-sketchfab.module';
 export * from './lib/components/sketchfab-view/dec-sketchfab-view.component';
 export * from './lib/components/sketchfab-view/dec-sketchfab-view.module';
 export * from './lib/components/dec-spinner/dec-spinner.component';
