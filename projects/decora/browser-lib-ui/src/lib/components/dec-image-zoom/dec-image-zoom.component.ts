@@ -72,17 +72,14 @@ export class DecImageZoomComponent implements OnInit {
 
   private setFinalImageUrl() {
     this.fullImageUrl = this.systemFile.fileUrl;
-    console.log('setFinalImageUrl', this.fullImageUrl);
   }
 
   private setOriginalImagePath() {
     this.fullImagePath = this.extractImageUrlFromSysfile();
-    console.log('setOriginalImagePath', this.fullImagePath);
   }
 
   private setThumborlUrl() {
     this.resizedImageUrl = this.getThumborUrl();
-    console.log('setThumborlUrl', this.resizedImageUrl);
   }
 
   private extractImageUrlFromSysfile() {
