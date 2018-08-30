@@ -37,6 +37,7 @@
   },
   "message": {
     "http-status": {
+      "404": "Nosso servidor não conseguiu responder a sua solicitação. Por favor, tente novamente em alguns instantes.",
       "409": "Estes dados estão desatualizados. Atualize a página e tente novamente."
     }
   }

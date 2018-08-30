@@ -37,7 +37,8 @@
   },
   "message": {
     "http-status": {
-      "status-409": "This data is out of date. Refresh the page and try again."
+      "404": "The server could not respond to your request. Please, try again in a few minutes.",
+      "409": "This data is out of date. Refresh the page and try again."
     }
   }
 }

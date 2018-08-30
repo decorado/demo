@@ -324,8 +324,16 @@ export class DecApiService implements OnDestroy {
         }
         break;
 
+      case 404:
+        this.snackbar.open('message.http-status.404', 'error');
+        break;
+
       case 409:
         this.snackbar.open('message.http-status.409', 'error');
+        break;
+
+      case 412:
+        this.snackbar.open(bodyMessage, 'error');
         break;
     }
 
