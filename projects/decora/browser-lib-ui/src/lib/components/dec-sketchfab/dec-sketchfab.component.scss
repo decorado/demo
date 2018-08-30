@@ -1,0 +1,60 @@
+.container {
+    max-width: 620px !important;
+}
+
+.setting-name {
+    width: 100px;
+    display: inline-block;
+}
+
+.md-span-icon {
+    position: relative;
+    top: -5px;
+    left: -5px;
+}
+
+.slider-position {
+    position: relative;
+    left: -8px;
+    top: -8px;
+}
+
+.row-size {
+    width: 100%;
+}
+
+.polygon-select {
+    position: relative;
+    top: -5px;
+}
+
+.metalness-position {
+    position: relative;
+    top: 16px;
+}
+
+.polygon-count {
+    // width: 240px;
+    font-size: 12px;
+    position: relative;
+    top: 27px;
+}
+
+.opacity-position {
+    position: relative;
+    top: 40px;
+}
+
+.opacity-position-text {
+    position: relative;
+    top: 8px;
+}
+
+.check-box-normal-map {
+    position: relative;
+    top: 18px;
+}
+
+.save-button-div {
+    width: 100%;
+}

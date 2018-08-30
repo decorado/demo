@@ -20,7 +20,15 @@
     "success": "Sucesso",
     "warn": "Aviso",
     "image-link": "Link da imagem",
-    "History": "Histórico"
+    "History": "Histórico",
+    "polygon-reduction": "Redução de polígonos",
+    "OFF": "OFF",
+    "LOW": "LOW",
+    "MEDIUM": "MEDIUM",
+    "HIGH": "HIGH",
+    "polygon": "Polígonos",
+    "current-polygon": "Polígonos atuais",
+    "save": "Salvar"
   },
   "message": {
     "http-status": {

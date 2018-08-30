@@ -1,0 +1,107 @@
+<div fxLayout="column" class="container" fxLayoutGap="32px" fxLayoutAlign="space-between center">
+    <dec-sketchfab-view [materialName]="materialName" 
+        [sketchfabId]="sketchfabId" 
+        [editMode]="editMode"
+        [material]="material" 
+        [update]="update"
+        [getAllMaterials]="getMaterialsSketchfab"
+        (sendMaterials)="getAllMaterials($event)"
+        (materialSelected)="materialSelected($event)">
+    </dec-sketchfab-view>
+    <div fxLayout="row" style="width: 100%" fxLayoutAlign="space-between start" fxLayoutGap="32px">
+        <mat-form-field fxFlex="40">
+            <mat-select [(ngModel)]="materialName" name="config" placeholder="Material ID">
+                <mat-option *ngFor="let config of assetMax?.renderMaterialConfigs" [value]="config.materialName">
+                    {{ config.materialName }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <div fxFlex="60" class="polygon-count dec-color-gray text-right">
+            {{ 'label.polygon' | translate }}: {{ assetMax?.fbxFiles?.fbxAllGroupsFile?.fbxOriginalPolyCount }} - {{ 'label.current-polygon'
+            | translate }} {{ assetMax?.fbxFiles?.fbxAllGroupsFile?.fbxPolyCount }}
+        </div>
+
+    </div>
+
+    <div *ngIf="materialConfig" fxLayout="row" class="row-size" fxLayoutAlign="space-between start" fxLayoutGap="16px">
+        <div fxFlex="30" fxLayout="column" fxLayoutGap="8px">
+            <div fxLayout="column">
+                <div fxLayout="row" fxLayoutAlign="start start" class="row-span-icon" fxLayoutGap="8px">
+                    <span class="setting-name">Base Color {{ materialConfig?.config?.diffuse }}</span>
+                    <mat-icon class="md-span-icon click" (click)="ableTo('base-color')">
+                        {{ materialConfig?.config?.diffuseEnabled ? 'lock_open' : 'lock_outline' }}
+                    </mat-icon>
+                </div>
+                <mat-slider class="slider-position" [max]="100" [min]="0" [step]="1" [disabled]="!materialConfig?.config?.diffuseEnabled"
+                    [(ngModel)]="materialConfig.config.diffuse" (input)="updateMaterial('base-color', $event)">
+                </mat-slider>
+
+            </div>
+
+            <div fxLayout="column">
+                <div fxLayout="row" fxLayoutAlign="start start" class="row-span-icon" fxLayoutGap="8px">
+                    <span class="setting-name">Roughness {{ materialConfig?.config?.roughness }}</span>
+                    <mat-icon class="md-span-icon click" (click)="ableTo('roug')">
+                        {{ materialConfig?.config?.roughnessEnabled ? 'lock_open' : 'lock_outline' }}
+                    </mat-icon>
+                </div>
+                <mat-slider class="slider-position" [max]="100" [min]="0" [step]="1" [disabled]="!materialConfig?.config?.roughnessEnabled"
+                    [(ngModel)]="materialConfig.config.roughness" (input)="updateMaterial('roug', $event)">
+                </mat-slider>
+            </div>
+        </div>
+
+        <div fxFlex="30" fxLayout="column" fxLayoutGap="8px">
+
+            <mat-form-field>
+                <mat-select class="polygon-select" fxFill [(ngModel)]="materialConfig.adjustOptimize" name="config" placeholder="{{ 'label.polygon-reduction' | translate }}">
+                    <mat-option *ngFor="let config of configSelect" [value]="config">
+                        {{ 'label.'+config | translate }}
+                        <span class="position-polygon-number gray" *ngIf="config === 'OFF'">
+                            {{ materialConfig?.fbxPolyCountOrigin}}
+                        </span>
+                        <span class="position-polygon-number gray" *ngIf="materialConfig?.adjustOptimize === config">
+                            {{ materialConfig?.fbxPolyCount}}
+                        </span>
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <div fxLayout="column" class="metalness-position">
+                <div fxLayout="row" fxLayoutAlign="start start" class="row-span-icon" fxLayoutGap="8px">
+                    <span class="setting-name">Metalness {{ materialConfig?.config?.metalness }}</span>
+                    <mat-icon class="md-span-icon click" (click)="ableTo('metal')">
+                        {{ materialConfig?.config?.metalnessEnabled ? 'lock_open' : 'lock_outline' }}
+                    </mat-icon>
+                </div>
+                <mat-slider class="slider-position" [max]="100" [min]="0" [step]="1" [disabled]="!materialConfig?.config?.metalnessEnabled"
+                    [(ngModel)]="materialConfig.config.metalness" (input)="updateMaterial('metal', $event)">
+                </mat-slider>
+            </div>
+
+        </div>
+
+        <div fxFlex="30" fxLayout="column" fxLayoutGap="8px">
+            <div>
+              <mat-checkbox class="check-box-normal-map" (input)="updateMaterial('normal', $event)" [(ngModel)]="checked" [labelPosition]="align">
+                Normal Map
+              </mat-checkbox>
+            </div>
+            <div fxLayout="column" class="opacity-position" fxLayoutGap="8px">
+              <div fxLayout="row" fxLayoutAlign="start start" class="opacity-position-text" fxLayoutGap="8px">
+                <span class="setting-name">Opacity {{ materialConfig?.config?.opacity }}</span>
+                <mat-icon class="md-span-icon click" (click)="ableTo('opacity')">
+                  {{ materialConfig?.config?.opacityEnabled ? 'lock_open' : 'lock_outline' }}
+                </mat-icon>
+              </div>
+              <mat-slider class="slider-position" [max]="100" [min]="0" [step]="1" [disabled]="!materialConfig?.config?.opacityEnabled"
+                [(ngModel)]="materialConfig.config.opacity" (input)="updateMaterial('opacity', $event)">
+              </mat-slider>
+            </div>
+          </div>
+    </div>
+    <div class="text-right save-button-div">
+        <button mat-raised-button type="button" color="primary" (click)="onSave()">{{ 'label.save' | translate }}</button>
+    </div>
+</div>
