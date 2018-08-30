@@ -1,11 +1,33 @@
-import { OnInit, ElementRef } from '@angular/core';
+import { OnInit, ElementRef, EventEmitter } from '@angular/core';
 import { DecScriptLoaderService } from './../../services/script-loader/dec-script-loader.service';
 export declare class DecSketchfabViewComponent implements OnInit {
     private decScriptLoaderService;
     sketchfabId: string;
-    _sketchfabId: string;
+    configs: any;
+    materialName: string;
+    material: any;
+    editMode: boolean;
+    getAllMaterials: boolean;
+    update: any;
+    textures: any;
+    materialSelected: EventEmitter<{}>;
+    sendMaterials: EventEmitter<{}>;
+    private _sketchfabId;
+    private _configs;
+    private _materialName;
+    private _editMode;
+    private _getAllMaterials;
+    private channels;
+    private api;
+    private materials;
     apiFrame: ElementRef;
     constructor(decScriptLoaderService: DecScriptLoaderService);
     ngOnInit(): void;
     startSketchfab(id: any): void;
+    updateMaterials(material: any): void;
+    getMaterials(): void;
+    selectMaterialByName(name: any, emit: any): any;
+    addClickEvent(): void;
+    selectEffect(material: any): void;
+    sendAllMaterials(): void;
 }
