@@ -1,0 +1,47 @@
+<div fxLayout="column" fxLayoutGap="16px" class="dec-gallery-wrapper">
+
+  <div class="image-highlighted">
+    <dec-image-marker [render]="imageHighlight" [qaModeActive]="qaModeActive"></dec-image-marker>
+  </div>
+
+  <div class="text-right" *ngIf="imgExternalLink">
+
+    <a href="{{ imgExternalLink }}" target="_blank">{{ 'label.image-link' | translate }}</a>
+
+  </div>
+
+  <ngu-carousel class="carousel-wrapper" [inputs]="carouselConfig" (initData)="onInitDataFn($event)" (onMove)="onMoveFn($event)">
+
+    <ngu-item NguCarouselItem *ngFor="let image of images" [class.active]="image == imageHighlight">
+
+      <img [decImage]="image.file" [decImageSize]="{width:300, height:300}" (click)="onSelectImage($event,image)">
+      <div class="has-marks" *ngIf="image?.comments?.length > 0">!</div>
+
+    </ngu-item>
+
+    <mat-icon NguCarouselPrev class="left-previous" [ngClass]="{'disabled': isFirst}">chevron_left</mat-icon>
+
+    <mat-icon NguCarouselNext class="right-next" [ngClass]="{'disabled': isLast}">chevron_right</mat-icon>
+
+  </ngu-carousel>
+
+  <div fxLayout="column" fxLayoutGap="8px">
+    <div fxLayout="row" fxLayoutGap="8px">
+      <dec-icon class="dec-icon-size" font="mat">bookmarks</dec-icon>
+      <span class="dec-icon-text-size">Tags</span>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-between center" *ngFor="let c of images; let r = index;">
+      <div *ngIf="c?.comments?.length > 0" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="space-between start">
+        <h4 class="title-render">{{ 'label.Render' | translate}} {{ r+1 }}</h4>
+        <div fxLayoutAlign="space-between center" fxLayoutGap="16px" class="markdown-item" *ngFor="let comments of c?.comments; let i = index">
+          <span fxFlex="24px" class="{{getClass(comments.coordinates)}}">{{i + 1}}</span>
+          <span *ngIf="comments.comment" class="text-markdown">
+            {{comments.comment}}
+          </span>
+          <mat-icon class="delete-button" (click)="deleteMark(imgMarker.decMarks.marksWrapper.nativeElement.querySelectorAll('.point-tag'), i, r)">delete</mat-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

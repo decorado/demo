@@ -11,7 +11,7 @@ import { DecListTableColumnComponent } from './../list-table-column/list-table-c
     CommonModule,
     FlexLayoutModule,
     NgxDatatableModule,
-    TranslateModule,
+    TranslateModule
   ],
   declarations: [
     DecListTableComponent,

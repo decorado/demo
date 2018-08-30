@@ -1,4 +1,5 @@
 export declare class DecLabelComponent {
-    colorHex: string;
-    decClass: string;
+    colorHex?: string;
+    colorClass?: string;
+    stretched?: boolean;
 }

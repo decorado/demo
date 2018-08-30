@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-decora-label-demo',
   templateUrl: './decora-label-demo.component.html',
   styleUrls: ['./decora-label-demo.component.scss']
 })
-export class DecoraLabelDemoComponent implements OnInit {
+export class DecoraLabelDemoComponent {
 
-  constructor() { }
+  stretched: boolean;
 
-  ngOnInit() {
+  constructor() {
+    this.stretched = true;
   }
 
 }

@@ -1,9 +1,0 @@
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-export const /** @type {?} */ DecConfigurationInitializer = (decConfig) => {
-    return () => decConfig.loadConfig();
-};
-
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY29uZmlndXJhdGlvbi1pbml0aWFsaXplci5wcm92aWRlci5qcyIsInNvdXJjZVJvb3QiOiJuZzovL0BkZWNvcmEvYnJvd3Nlci1saWItdWkvIiwic291cmNlcyI6WyJsaWIvc2VydmljZXMvY29uZmlndXJhdGlvbi9jb25maWd1cmF0aW9uLWluaXRpYWxpemVyLnByb3ZpZGVyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7QUFFQSxNQUFNLENBQUMsdUJBQU0sMkJBQTJCLEdBQUcsQ0FBQyxTQUFrQyxFQUFFLEVBQUU7SUFDaEYsTUFBTSxDQUFDLEdBQUcsRUFBRSxDQUFDLFNBQVMsQ0FBQyxVQUFVLEVBQUUsQ0FBQztDQUNyQyxDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgRGVjQ29uZmlndXJhdGlvblNlcnZpY2UgfSBmcm9tICcuL2NvbmZpZ3VyYXRpb24uc2VydmljZSc7XG5cbmV4cG9ydCBjb25zdCBEZWNDb25maWd1cmF0aW9uSW5pdGlhbGl6ZXIgPSAoZGVjQ29uZmlnOiBEZWNDb25maWd1cmF0aW9uU2VydmljZSkgPT4ge1xuICByZXR1cm4gKCkgPT4gZGVjQ29uZmlnLmxvYWRDb25maWcoKTtcbn07XG4iXX0=

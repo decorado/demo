@@ -1,7 +1,23 @@
 <app-demo-container readmeSrc="/assets/docs/browser-lib-ui/components/dec-label/README.md">
 
-    <dec-label [colorHex]="'#123123'">colorHex</dec-label>
+  <div fxFlex fxLayout="row" fxLayoutGap="16px">
 
-    <dec-label [decClass]="'dec-color-blue-bg'">decClass</dec-label>
+    <div fxFlex>
 
-  </app-demo-container>
+      <dec-label-status status="DELETED" [stretched]="stretched">Deleted</dec-label-status>
+
+      <dec-label-status status="ACTIVE">Active</dec-label-status>
+
+    </div>
+
+    <div fxFlex>
+
+      <dec-label colorHex="#123123">colorHex</dec-label>
+
+      <dec-label colorClass="dec-color-blue-bg">colorClass</dec-label>
+
+    </div>
+
+  </div>
+
+</app-demo-container>

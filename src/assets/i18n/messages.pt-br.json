@@ -20,7 +20,12 @@
     "success": "Sucesso",
     "warn": "Aviso",
     "image-link": "Link da imagem",
-    "History": "Histórico"
+    "History": "Histórico",
+    "markdowns": "Marcações",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "delete": "Deletar",
+    "choices": "Escolhas"
   },
   "message": {
     "http-status": {

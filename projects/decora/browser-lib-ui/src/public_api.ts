@@ -12,6 +12,9 @@ export * from './lib/components/autocomplete-account/autocomplete-account.module
 // AUTOCOMPLETE COMPANY
 export * from './lib/components/autocomplete-company/autocomplete-company.component';
 export * from './lib/components/autocomplete-company/autocomplete-company.module';
+// AUTOCOMPLETE COMPLEXITY
+export * from './lib/components/autocomplete-complexity/autocomplete-complexity.component';
+export * from './lib/components/autocomplete-complexity/autocomplete-complexity.module';
 // AUTOCOMPLETE COUNTRY
 export * from './lib/components/autocomplete-country/autocomplete-country.component';
 export * from './lib/components/autocomplete-country/autocomplete-country.module';
@@ -21,6 +24,9 @@ export * from './lib/components/autocomplete-department/autocomplete-department.
 // AUTOCOMPLETE ROLE
 export * from './lib/components/autocomplete-role/autocomplete-role.component';
 export * from './lib/components/autocomplete-role/autocomplete-role.module';
+// AUTOCOMPLETE SQUADS
+export * from './lib/components/autocomplete-squads/autocomplete-squads.component';
+export * from './lib/components/autocomplete-squads/autocomplete-squads.module';
 // AUTOCOMPLETE PROJECT
 export * from './lib/components/autocomplete-project/autocomplete-project.component';
 export * from './lib/components/autocomplete-project/autocomplete-project.module';
@@ -46,9 +52,15 @@ export * from './lib/components/dec-icon/dec-icon.component';
 // IMAGE ZOOM
 export * from './lib/components/dec-image-zoom/dec-image-zoom.module';
 export * from './lib/components/dec-image-zoom/dec-image-zoom.component';
-// Label
+// ICON
+export * from './lib/components/dec-icon/dec-icon.module';
+export * from './lib/components/dec-icon/dec-icon.component';
+// LABEL
 export * from './lib/components/dec-label/dec-label.component';
 export * from './lib/components/dec-label/dec-label.module';
+// LABEL STATUS
+export * from './lib/components/dec-label-status/dec-label-status.component';
+export * from './lib/components/dec-label-status/dec-label-status.module';
 // LIST
 export * from './lib/components/list/list.module';
 export * from './lib/components/list/list.models';
@@ -105,6 +117,15 @@ export * from './lib/components/tabs/tab/tab.component';
 // UPLOAD
 export * from './lib/components/upload/upload.module';
 export * from './lib/components/upload/upload.component';
+// IMAGE MARKS
+export * from './lib/components/dec-image-marks/dec-image-marks.module';
+export * from './lib/components/dec-image-marks/dec-image-marks.component';
+// IMAGE MARKER
+export * from './lib/components/dec-image-marker/dec-image-marker.component';
+export * from './lib/components/dec-image-marker/dec-image-marker.module';
+// GALLERY MARKER
+export * from './lib/components/dec-gallery-marks/dec-gallery-marks.component';
+export * from './lib/components/dec-gallery-marks/dec-gallery-marks.module';
 
 
 /*********************************************************
@@ -162,3 +183,6 @@ export * from './lib/services/ws-client/ws-client.models';
 // Script Loader
 export * from './lib/services/script-loader/dec-script-loader.service';
 export * from './lib/services/script-loader/dec-script-loader.module';
+// Status Color
+export * from './lib/services/status-color/dec-status-color.service';
+export * from './lib/services/status-color/dec-status-color.module';

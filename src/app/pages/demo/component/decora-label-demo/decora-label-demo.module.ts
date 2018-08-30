@@ -5,6 +5,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { DecoraLabelDemoComponent } from './decora-label-demo.component';
 import { DecoraLabelDemoRoutingModule } from './decora-label-demo-routing.module';
 import { DecLabelModule } from '@decora/browser-lib-ui';
+import { DecLabelStatusModule } from '@projects/decora/browser-lib-ui/src/lib/components/dec-label-status/dec-label-status.module';
 
 @NgModule({
   imports: [
@@ -12,7 +13,8 @@ import { DecLabelModule } from '@decora/browser-lib-ui';
     DemoContainerModule,
     DecoraLabelDemoRoutingModule,
     FlexLayoutModule,
-    DecLabelModule
+    DecLabelModule,
+    DecLabelStatusModule
   ],
   declarations: [DecoraLabelDemoComponent]
 })

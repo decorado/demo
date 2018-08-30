@@ -5,8 +5,20 @@
   [externalSorting]="true"
   [messages]="{emptyMessage:''}"
   [rows]="rows"
+  [selected]="selected"
+  [selectionType]="'checkbox'"
+  [selectAllRowsOnPage]="false"
+  (select)="onSelect($event)"
   (sort)="onSort($event)"
   (activate)="onItemClick($event)">
+
+  <ngx-datatable-column
+    *ngIf="selectable"
+    [width]="40"
+    [canAutoResize]="false"
+    [headerCheckboxable]="true"
+    [checkboxable]="true">
+  </ngx-datatable-column>
 
   <ngx-datatable-column *ngFor="let column of columns;"
                          name="{{column.title | translate}}"

@@ -20,6 +20,10 @@ export class DecListTableComponent {
     return this._rows;
   }
 
+  @Input() selectable: boolean;
+
+  selected = [];
+
   @ViewChild(DatatableComponent) tableComponent: DatatableComponent;
 
   columnsSortConfig: any;
@@ -51,6 +55,11 @@ export class DecListTableComponent {
 
   }
 
+  onSelect({ selected }) {
+    this.selected.splice(0, this.selected.length);
+    this.selected.push(...selected);
+  }
+
   onItemClick($event) {
 
     const event = $event;
@@ -61,7 +70,7 @@ export class DecListTableComponent {
 
     const index = $event.row.$$index;
 
-    this.rowClick.emit({event, item, list, index});
+    this.rowClick.emit({ event, item, list, index });
 
   }
 }

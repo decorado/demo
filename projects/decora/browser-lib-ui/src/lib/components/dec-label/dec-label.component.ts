@@ -6,6 +6,7 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./dec-label.component.scss']
 })
 export class DecLabelComponent {
-  @Input() colorHex: string;
-  @Input() decClass: string;
+  @Input() colorHex?: string;
+  @Input() colorClass?: string;
+  @Input() stretched?: boolean;
 }

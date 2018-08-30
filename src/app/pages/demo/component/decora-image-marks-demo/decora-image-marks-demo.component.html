@@ -1,0 +1,40 @@
+<app-demo-container readmeSrc="/assets/docs/browser-lib-ui/components/dec-image-marks/README.md">
+
+  <div fxFlex fxLayout="row" fxLayoutGap="32px">
+
+    <div fxFlex fxLayout="column" fxLayoutAlign="start space-between" fxLayoutGap="8px">
+
+      <div fxLayout="row" fxLayoutAlign="space-between">
+
+        <h2>Marker Component</h2>
+
+        <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+
+          <strong>{{qaModeActive}}</strong>
+
+          <button mat-button (click)="toggleQaModeActive()">Toggle qaMode</button>
+
+        </div>
+
+      </div>
+
+      <dec-image-marker [render]="renderObj" [qaModeActive]="qaModeActive"></dec-image-marker>
+
+    </div>
+
+    <div fxFlex fxLayout="column" fxLayoutAlign="start space-between" fxLayoutGap="8px">
+
+      <div fxLayout="row" fxLayoutAlign="space-between">
+
+        <h2>Marks Component</h2>
+
+      </div>
+
+      <!-- <dec-image-marks [render]="renderObj"></dec-image-marks> -->
+      <dec-gallery-marks [images]="renderArray" [qaModeActive]="true"></dec-gallery-marks>
+
+    </div>
+
+  </div>
+
+</app-demo-container>

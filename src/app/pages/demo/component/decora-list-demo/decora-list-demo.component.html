@@ -37,7 +37,7 @@
       </ng-template>
     </dec-list-grid>
 
-    <dec-list-table>
+    <dec-list-table [selectable]="true">
       <dec-list-table-column title="#ID">
         <ng-template let-row="row">
           {{ row.id }}

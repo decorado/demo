@@ -1,0 +1,30 @@
+<app-demo-container readmeSrc="/assets/docs/browser-lib-ui/components/autocomplete-complexity/README.md">
+
+  <h2>Single</h2>
+
+  Company Selected: {{ complexity }}
+
+  <hr>
+
+  <dec-autocomplete-complexity
+  [(ngModel)]="complexity"
+  (selected)="optionSelected($event)">
+  </dec-autocomplete-complexity>
+
+  <button type="button" mat-stroked-button (click)="complexity = undefined">Clear</button>
+
+  <h2>Multi</h2>
+
+  Company Selected: {{ complexities | json }}
+
+  <hr>
+
+  <dec-autocomplete-complexity
+  [(ngModel)]="complexities"
+  [multi]="true"
+  (selected)="optionSelected($event)">
+  </dec-autocomplete-complexity>
+
+  <button type="button" mat-stroked-button (click)="complexities = undefined">Clear</button>
+
+</app-demo-container>

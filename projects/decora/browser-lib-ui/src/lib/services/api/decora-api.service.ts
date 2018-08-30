@@ -313,6 +313,7 @@ export class DecApiService implements OnDestroy {
   private handleError = (error: any) => {
     const message = error.message;
     const bodyMessage = (error && error.error) ? error.error.message : '';
+    const bodyError = error.error;
     const status = error.status;
     const statusText = error.statusText;
 
@@ -328,7 +329,7 @@ export class DecApiService implements OnDestroy {
         break;
     }
 
-    return throwError({ status, statusText, message, bodyMessage });
+    return throwError({ status, statusText, message, bodyMessage, bodyError });
   }
 
   // ******* //

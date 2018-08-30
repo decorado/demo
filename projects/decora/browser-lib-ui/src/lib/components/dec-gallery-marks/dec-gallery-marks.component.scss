@@ -1,0 +1,155 @@
+@import './../../../../bootstrap/constants/_colors';
+// $width-with-border: 624px;
+// $width-without-border: 620px;
+$width-of-border: 2px;
+
+.dec-gallery-wrapper {
+  // max-width: $width-with-border;
+  overflow: hidden;
+
+  .image-highlighted {
+    // border: $width-of-border solid #F5F5F5;
+    border: $width-of-border solid #9e9e9e;
+    box-sizing: border-box;
+    // width: $width-without-border;
+    // height: $width-without-border;
+  }
+
+  a {
+    font-size: 10px;
+    text-decoration: none;
+    color: #929292;
+    cursor: pointer;
+  }
+
+  .carousel-wrapper {
+    margin-top: 8px;
+    padding: 0 24px;
+    height: 128px;
+
+    ngu-item {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      img {
+        border: $width-of-border solid #9e9e9e;
+        box-sizing: border-box;
+      }
+
+      &.active {
+        img {
+          border: $width-of-border solid #232e38;
+        }
+      }
+
+      &:hover {
+        img {
+          border: $width-of-border solid #232e38;
+        }
+      }
+
+      img {
+        max-width: 124px;
+        cursor: pointer;
+      }
+    }
+
+    .left-previous,
+    .right-next {
+      display: block !important;
+      position: absolute;
+      top: calc(50% - 12px);
+      cursor: pointer;
+      text-shadow: none;
+      user-select: none;
+
+      &:hover {
+        text-shadow: 0px 0px 6px rgba(0, 0, 0, 0.2);
+      }
+
+      &.disabled {
+        opacity: 0.4;
+
+        &:hover {
+          text-shadow: none;
+        }
+      }
+    }
+
+    .left-previous {
+      left: 0;
+    }
+
+    .right-next {
+      right: 0;
+    }
+  }
+}
+
+.dec-icon-size {
+  font-size: 28px;
+}
+
+.dec-icon-text-size {
+  font-size: 18px;
+  position: relative;
+  top: 6px;
+  left: -30px;
+}
+
+.tags-item {
+  background-color: #f44336;
+  text-align: center;
+  color: white;
+  font-weight: 500;
+  border: 2px solid transparent;
+  padding: 5px
+}
+
+.type-square {
+  background-color: transparent;
+  border-color: #f44336;
+  color: #f44336;
+  border-top: 2px solid;
+  border-left: 2px solid;
+  border-bottom: 2px dotted;
+  border-right: 2px dotted;
+}
+
+.type-point {
+  border-radius: 100%;
+}
+
+.markdown-item:last-child {
+  margin-bottom: 32px;
+}
+
+.text-markdown {
+  font-size: 13px;
+  line-height: 16px;
+  color: #656d74;
+  min-width: 540px;
+}
+
+.delete-button {
+  cursor: pointer;
+}
+
+ngu-item {
+  position: relative;
+
+  .has-marks {
+    background-color: $dec-color-red;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    border-radius: 50%;
+    color: $dec-color-white;
+  }
+}

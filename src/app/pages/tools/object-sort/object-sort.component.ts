@@ -85,6 +85,7 @@ export class ObjectSortComponent implements OnInit {
 
     this.snack.open('Text copied', 'success');
 
+    document.body.removeChild(textArea);
   }
 
 

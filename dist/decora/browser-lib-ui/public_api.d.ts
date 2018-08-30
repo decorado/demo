@@ -9,12 +9,16 @@ export * from './lib/components/autocomplete-account/autocomplete-account.compon
 export * from './lib/components/autocomplete-account/autocomplete-account.module';
 export * from './lib/components/autocomplete-company/autocomplete-company.component';
 export * from './lib/components/autocomplete-company/autocomplete-company.module';
+export * from './lib/components/autocomplete-complexity/autocomplete-complexity.component';
+export * from './lib/components/autocomplete-complexity/autocomplete-complexity.module';
 export * from './lib/components/autocomplete-country/autocomplete-country.component';
 export * from './lib/components/autocomplete-country/autocomplete-country.module';
 export * from './lib/components/autocomplete-department/autocomplete-department.component';
 export * from './lib/components/autocomplete-department/autocomplete-department.module';
 export * from './lib/components/autocomplete-role/autocomplete-role.component';
 export * from './lib/components/autocomplete-role/autocomplete-role.module';
+export * from './lib/components/autocomplete-squads/autocomplete-squads.component';
+export * from './lib/components/autocomplete-squads/autocomplete-squads.module';
 export * from './lib/components/autocomplete-project/autocomplete-project.component';
 export * from './lib/components/autocomplete-project/autocomplete-project.module';
 export * from './lib/components/autocomplete-quote/autocomplete-quote.component';
@@ -32,8 +36,12 @@ export * from './lib/components/dec-icon/dec-icon.module';
 export * from './lib/components/dec-icon/dec-icon.component';
 export * from './lib/components/dec-image-zoom/dec-image-zoom.module';
 export * from './lib/components/dec-image-zoom/dec-image-zoom.component';
+export * from './lib/components/dec-icon/dec-icon.module';
+export * from './lib/components/dec-icon/dec-icon.component';
 export * from './lib/components/dec-label/dec-label.component';
 export * from './lib/components/dec-label/dec-label.module';
+export * from './lib/components/dec-label-status/dec-label-status.component';
+export * from './lib/components/dec-label-status/dec-label-status.module';
 export * from './lib/components/list/list.module';
 export * from './lib/components/list/list.models';
 export * from './lib/components/list/list.component';
@@ -79,6 +87,12 @@ export * from './lib/components/tabs/tab/tab.module';
 export * from './lib/components/tabs/tab/tab.component';
 export * from './lib/components/upload/upload.module';
 export * from './lib/components/upload/upload.component';
+export * from './lib/components/dec-image-marks/dec-image-marks.module';
+export * from './lib/components/dec-image-marks/dec-image-marks.component';
+export * from './lib/components/dec-image-marker/dec-image-marker.component';
+export * from './lib/components/dec-image-marker/dec-image-marker.module';
+export * from './lib/components/dec-gallery-marks/dec-gallery-marks.component';
+export * from './lib/components/dec-gallery-marks/dec-gallery-marks.module';
 /*********************************************************
 *
 * DIRECTIVES
@@ -119,3 +133,5 @@ export * from './lib/services/ws-client/ws-client.module';
 export * from './lib/services/ws-client/ws-client.models';
 export * from './lib/services/script-loader/dec-script-loader.service';
 export * from './lib/services/script-loader/dec-script-loader.module';
+export * from './lib/services/status-color/dec-status-color.service';
+export * from './lib/services/status-color/dec-status-color.module';
