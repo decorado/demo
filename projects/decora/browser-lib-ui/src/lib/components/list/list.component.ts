@@ -902,7 +902,14 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
 
       } else if (this.customFetchMethod) {
 
-        this.filterData.next();
+        this.mountPayload(clearAndReloadReport, collapseFilterGroups)
+        .then(payload => {
+
+          this.payload = payload;
+
+          this.filterData.next();
+
+        });
 
       } else if (!this.rows) {
 

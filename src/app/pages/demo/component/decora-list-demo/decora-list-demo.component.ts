@@ -39,6 +39,7 @@ export class DecoraListDemoComponent implements OnInit {
   }
 
   myCustomDecListFetchMethod: DecListFetchMethod = (endpoint: string, filter: any): Observable<DecListFetchMethodResponse> => {
+
     const response: DecListFetchMethodResponse = {
       result: {
         rows: this.rows,

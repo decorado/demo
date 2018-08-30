@@ -57,6 +57,8 @@
 <ng-template #example2>
   <dec-list name="list-test-custom-fetch-method" [customFetchMethod]="myCustomDecListFetchMethod">
 
+    <dec-list-filter [filters]='filters'></dec-list-filter>
+
     <dec-list-grid>
       <ng-template let-row="row">
         <div class="test-grid-wrapper">
