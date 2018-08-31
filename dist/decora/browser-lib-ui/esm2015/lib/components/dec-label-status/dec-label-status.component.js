@@ -1,6 +1,6 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 import { Component, Input } from '@angular/core';
 import { DecStatusColorService } from './../../services/status-color/dec-status-color.service';
@@ -45,7 +45,7 @@ DecLabelStatusComponent.propDecorators = {
     status: [{ type: Input }],
     stretched: [{ type: Input }]
 };
-function DecLabelStatusComponent_tsickle_Closure_declarations() {
+if (false) {
     /** @type {?} */
     DecLabelStatusComponent.prototype.stretched;
     /** @type {?} */

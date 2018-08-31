@@ -1,6 +1,6 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
@@ -131,7 +131,7 @@ var DecBreadcrumbComponent = /** @class */ (function () {
     return DecBreadcrumbComponent;
 }());
 export { DecBreadcrumbComponent };
-function DecBreadcrumbComponent_tsickle_Closure_declarations() {
+if (false) {
     /** @type {?} */
     DecBreadcrumbComponent.prototype.backButtonPath;
     /** @type {?} */

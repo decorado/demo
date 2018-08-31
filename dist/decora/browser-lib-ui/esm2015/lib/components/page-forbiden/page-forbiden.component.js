@@ -1,6 +1,6 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 import { Component } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
@@ -35,7 +35,7 @@ DecPageForbidenComponent.decorators = [
 DecPageForbidenComponent.ctorParameters = () => [
     { type: Router }
 ];
-function DecPageForbidenComponent_tsickle_Closure_declarations() {
+if (false) {
     /** @type {?} */
     DecPageForbidenComponent.prototype.previousUrl;
     /** @type {?} */
