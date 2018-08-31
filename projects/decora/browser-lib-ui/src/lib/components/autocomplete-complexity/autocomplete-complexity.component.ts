@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, forwardRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, forwardRef, AfterViewInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 //  Return an empty function to be used as default trigger functions
@@ -12,6 +12,8 @@ const AUTOCOMPLETE_ROLES_CONTROL_VALUE_ACCESSOR: any = {
   multi: true
 };
 
+const BASIC_ENDPOINT = 'jobs/complexities/options';
+
 @Component({
   selector: 'dec-autocomplete-complexity',
   templateUrl: './autocomplete-complexity.component.html',
@@ -19,11 +21,26 @@ const AUTOCOMPLETE_ROLES_CONTROL_VALUE_ACCESSOR: any = {
   providers: [AUTOCOMPLETE_ROLES_CONTROL_VALUE_ACCESSOR]
 })
 export class AutocompleteComplexityComponent implements ControlValueAccessor {
+
   endpoint = 'jobs/complexities/options';
 
   valueAttr = 'key';
 
   labelAttr = 'value';
+
+  @Input()
+  set type(v) {
+    if (v !== this._type) {
+      this._type = v;
+      this.setTypeParams();
+    }
+  }
+
+  get type() {
+    return this._type;
+  }
+
+  private _type: string;
 
   @Input() disabled: boolean;
 
@@ -102,4 +119,14 @@ export class AutocompleteComplexityComponent implements ControlValueAccessor {
     this.blur.emit(this.value);
   }
 
+  setTypeParams() {
+    const params = [];
+    let endpoint = `${BASIC_ENDPOINT}`;
+
+    params.push(`type=${this.type}`);
+
+    endpoint += `?${params.join('&')}`;
+
+    this.endpoint = endpoint;
+  }
 }

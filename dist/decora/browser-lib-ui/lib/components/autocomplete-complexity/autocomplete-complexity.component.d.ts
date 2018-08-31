@@ -4,6 +4,8 @@ export declare class AutocompleteComplexityComponent implements ControlValueAcce
     endpoint: string;
     valueAttr: string;
     labelAttr: string;
+    type: string;
+    private _type;
     disabled: boolean;
     required: boolean;
     name: string;
@@ -24,4 +26,5 @@ export declare class AutocompleteComplexityComponent implements ControlValueAcce
     onValueChanged(event: any): void;
     writeValue(value: any): void;
     onAutocompleteBlur($event: any): void;
+    setTypeParams(): void;
 }
