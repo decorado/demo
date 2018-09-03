@@ -1,13 +1,15 @@
-<div class="imagehighlight-container" >
-  <ngx-image-zoom
-    [thumbImage]="resizedImageUrl"
-    [fullImage]="fullImageUrl"
-    [zoomMode]="zoomMode"
-    [enableScrollZoom]="enableScrollZoom"
-    [scrollStepSize]="scrollStepSize"
-    [enableLens]="enableLens"
-    [lensWidth]="lensWidth"
-    [lensHeight]="lensHeight"
-  ></ngx-image-zoom>
+<div class="imagehighlight-container" fxLayout="column" fxLayoutAlign="space-between start" fxLayoutGap="gappx">
+  <div #imageContainer class="imagehighlight-container">
+  </div>
+  <div class="container-img-link">
+    <span [ngClass]="{'zoom-in-active': finalZoom, 'zoom-in': !finalZoom}" (click)="zoomIn()">
+      <mat-icon class="icons-zoom">add_circle_outline</mat-icon>
+    </span>
+    <span [ngClass]="{'zoom-out-active': !isZoom, 'zoom-out': isZoom}" (click)="zoomOut()">
+      <mat-icon class="icons-zoom">remove_circle_outline</mat-icon>
+    </span>
+    <span *ngIf="imgExternalLink" class="img-link">
+      <a href="{{ imgExternalLink }}" target="_blank">{{ 'label.image-link' | translate }}</a>
+    </span>
+  </div>
 </div>
-

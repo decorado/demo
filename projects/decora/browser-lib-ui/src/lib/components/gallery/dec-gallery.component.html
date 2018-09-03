@@ -1,16 +1,7 @@
 <div class="dec-gallery-wrapper">
 
   <div class="image-highlighted">
-      <dec-image-zoom
-        [size]="{width: 620, height: 620}"
-        [systemFile]="imageHighlight">
-      </dec-image-zoom>
-  </div>
-
-  <div class="text-right" *ngIf="imgExternalLink">
-
-    <a href="{{ imgExternalLink }}" target="_blank">{{ 'label.image-link' | translate }}</a>
-
+      <dec-image-zoom [image]="imageHighlight"></dec-image-zoom>
   </div>
 
   <ngu-carousel class="carousel-wrapper" [inputs]="carouselConfig" (initData)="onInitDataFn($event)" (onMove)="onMoveFn($event)">

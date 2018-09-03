@@ -1,12 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgxImageZoomModule } from 'ngx-image-zoom';
 import { DecImageZoomComponent } from './dec-image-zoom.component';
+import { DecImageModule } from './../../directives/image/image.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatIconModule } from '@angular/material';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
     CommonModule,
-    NgxImageZoomModule.forRoot()
+    DecImageModule,
+    FlexLayoutModule,
+    MatIconModule,
+    TranslateModule
   ],
   declarations: [
     DecImageZoomComponent
