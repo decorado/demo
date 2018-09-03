@@ -2,7 +2,7 @@ import { Injectable, OnDestroy, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpRequest } from '@angular/common/http';
 import { Observable, throwError, BehaviorSubject, Subscription } from 'rxjs';
 import { catchError, share, tap } from 'rxjs/operators';
-import { UserAuthData, LoginData, FacebookLoginData, DecFilter, SerializedDecFilter } from './decora-api.model';
+import { UserAuthData, LoginData, FacebookLoginData, DecFilter, SerializedDecFilter, QueryParams } from './decora-api.model';
 import { DecSnackBarService } from './../snack-bar/dec-snack-bar.service';
 import { DecConfigurationService } from './../configuration/configuration.service';
 
@@ -106,9 +106,17 @@ export class DecApiService implements OnDestroy {
   // ******************* //
   // PUBLIC HTTP METHODS //
   // ******************* //
-  get = <T>(endpoint, search?: DecFilter, options?: CallOptions) => {
+  get = <T>(endpoint, search?: DecFilter | QueryParams, options?: CallOptions) => {
     const endopintUrl = this.getResourceUrl(endpoint);
-    const params = this.transformDecFilterInParams(search);
+
+    let params = search;
+
+    if (search && search['filterGroups']) {
+
+      params = this.transformDecFilterInParams(search);
+
+    }
+
     return this.getMethod<T>(endopintUrl, params, options);
   }
 
@@ -152,6 +160,16 @@ export class DecApiService implements OnDestroy {
 
   handShake() {
     return this.tryToLoadSignedInUser();
+  }
+
+  getResourceUrl(path) {
+
+    const basePath = this.decConfig.config.useMockApi ? this.decConfig.config.mockApiHost : this.decConfig.config.api;
+
+    path = path.replace(/^\/|\/$/g, '');
+
+    return `${basePath}/${path}`;
+
   }
   // ************ //
   // Private Helper Methods //
@@ -248,7 +266,7 @@ export class DecApiService implements OnDestroy {
   // ************ //
   // Http Methods //
   // ************ //
-  private getMethod<T>(url: string, search = {}, options: CallOptions = {}): Observable<any> {
+  private getMethod<T>(url: string, search: any = {}, options: CallOptions = {}): Observable<any> {
     options.params = search;
     options.withCredentials = true;
     options.headers = this.newHeaderWithSessionToken('application/json', options.headers);
@@ -325,11 +343,11 @@ export class DecApiService implements OnDestroy {
         break;
 
       case 404:
-        this.snackbar.open('message.http-status.404', 'error');
+        this.snackbar.open(bodyMessage || 'message.http-status.404', 'error', undefined, !!!bodyMessage);
         break;
 
       case 409:
-        this.snackbar.open('message.http-status.409', 'error');
+        this.snackbar.open(bodyMessage || 'message.http-status.409', 'error', undefined, !!!bodyMessage);
         break;
 
       case 412:
@@ -404,16 +422,6 @@ export class DecApiService implements OnDestroy {
   private extratSessionToken(res) {
     this.sessionToken = res && res.session ? res.session.id : undefined;
     return res;
-  }
-
-  private getResourceUrl(path) {
-
-    const basePath = this.decConfig.config.useMockApi ? this.decConfig.config.mockApiHost : this.decConfig.config.api;
-
-    path = path.replace(/^\/|\/$/g, '');
-
-    return `${basePath}/${path}`;
-
   }
 
   private subscribeToUser() {

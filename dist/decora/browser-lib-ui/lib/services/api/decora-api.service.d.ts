@@ -1,7 +1,7 @@
 import { OnDestroy } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { UserAuthData, LoginData, FacebookLoginData, DecFilter } from './decora-api.model';
+import { UserAuthData, LoginData, FacebookLoginData, DecFilter, QueryParams } from './decora-api.model';
 import { DecSnackBarService } from './../snack-bar/dec-snack-bar.service';
 import { DecConfigurationService } from './../configuration/configuration.service';
 export declare type CallOptions = {
@@ -28,7 +28,7 @@ export declare class DecApiService implements OnDestroy {
     auth: (loginData: LoginData) => Observable<any>;
     authFacebook: (loginData: FacebookLoginData) => Observable<any>;
     logout: (redirectToLoginPage?: boolean) => Observable<any>;
-    get: <T>(endpoint: any, search?: DecFilter, options?: CallOptions) => Observable<any>;
+    get: <T>(endpoint: any, search?: DecFilter | QueryParams, options?: CallOptions) => Observable<any>;
     delete: <T>(endpoint: any, options?: CallOptions) => Observable<any>;
     patch: <T>(endpoint: any, payload?: any, options?: CallOptions) => Observable<any>;
     post: <T>(endpoint: any, payload?: any, options?: CallOptions) => Observable<any>;
@@ -36,6 +36,7 @@ export declare class DecApiService implements OnDestroy {
     upsert: <T>(endpoint: any, payload?: any, options?: CallOptions) => Observable<any>;
     upload(endpoint: string, files: File[], options?: CallOptions): Observable<any>;
     handShake(): Promise<any>;
+    getResourceUrl(path: any): string;
     private fetchCurrentLoggedUser;
     private transformDecFilterInParams(filter);
     private filterObjectToQueryString(obj);
@@ -53,7 +54,6 @@ export declare class DecApiService implements OnDestroy {
     private tryToLoadSignedInUser();
     private newHeaderWithSessionToken(type?, headers?);
     private extratSessionToken(res);
-    private getResourceUrl(path);
     private subscribeToUser();
     private unsubscribeToUser();
     private shareObservable(call);

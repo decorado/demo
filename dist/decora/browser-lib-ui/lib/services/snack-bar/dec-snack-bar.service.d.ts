@@ -5,6 +5,6 @@ export declare class DecSnackBarService {
     snackBarService: MatSnackBar;
     private translate;
     constructor(snackBarService: MatSnackBar, translate: TranslateService);
-    open(message: string, type: MessageType, duration?: number): MatSnackBarRef<SimpleSnackBar>;
+    open(message: string, type: MessageType, duration?: number, translate?: boolean): MatSnackBarRef<SimpleSnackBar>;
     getClass(type: MessageType): "snack-success" | "snack-primary" | "snack-info" | "snack-warn" | "snack-error";
 }

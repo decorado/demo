@@ -1,6 +1,6 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 import { Component, ContentChild, TemplateRef } from '@angular/core';
 export class DecListActionsComponent {
@@ -24,7 +24,7 @@ DecListActionsComponent.ctorParameters = () => [];
 DecListActionsComponent.propDecorators = {
     template: [{ type: ContentChild, args: [TemplateRef,] }]
 };
-function DecListActionsComponent_tsickle_Closure_declarations() {
+if (false) {
     /** @type {?} */
     DecListActionsComponent.prototype.template;
 }

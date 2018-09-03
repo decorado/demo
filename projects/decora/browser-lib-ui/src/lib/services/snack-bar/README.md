@@ -9,7 +9,7 @@ This component was designed to help presenting alert messages.
 ```javascript
 constructor(private snackBarService: DecSnackBarService) { }
 
-const s = this.snackBarService.open(message, type, duration);
+const s = this.snackBarService.open(message, type, duration, translateMessage);
 ```
 
 ## Parameters

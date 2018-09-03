@@ -120,3 +120,12 @@ export interface ColumnsSortConfig {
     type: 'asc' | 'desc'
   };
 }
+
+/*
+  * QueryParams
+  *
+  * QueryParams to be used in GET requests
+  */
+export interface QueryParams {
+  [key: string]: string | string[];
+}
