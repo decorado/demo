@@ -9,4 +9,6 @@ export { DecListTabsFilterComponent as ɵb } from './lib/components/list/list-fi
 export { DecSidenavMenuComponent as ɵd } from './lib/components/sidenav/dec-sidenav-menu/dec-sidenav-menu.component';
 export { DecSidenavService as ɵc } from './lib/components/sidenav/sidenav.service';
 export { DecTabMenuComponent as ɵf } from './lib/components/tabs/tab-menu/tab-menu.component';
+export { CategoryPipeService as ɵj } from './lib/pipes/category/category-pipe.service';
+export { CategoryPipe as ɵi } from './lib/pipes/category/category.pipe';
 export { DecConfigurationForRootConfig as ɵa } from './lib/services/configuration/configuration-service.models';

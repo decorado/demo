@@ -5,6 +5,7 @@ export declare class UserAuthData {
     country: string;
     company: string;
     role: number;
+    i18n: string;
     permissions: Array<string>;
     constructor(user?: any);
 }

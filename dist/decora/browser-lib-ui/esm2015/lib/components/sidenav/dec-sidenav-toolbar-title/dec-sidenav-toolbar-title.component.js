@@ -1,6 +1,6 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+ * @suppress {checkTypes} checked by tsc
  */
 import { Component, Input } from '@angular/core';
 export class DecSidenavToolbarTitleComponent {
@@ -26,7 +26,7 @@ DecSidenavToolbarTitleComponent.ctorParameters = () => [];
 DecSidenavToolbarTitleComponent.propDecorators = {
     routerLink: [{ type: Input }]
 };
-if (false) {
+function DecSidenavToolbarTitleComponent_tsickle_Closure_declarations() {
     /** @type {?} */
     DecSidenavToolbarTitleComponent.prototype.routerLink;
 }

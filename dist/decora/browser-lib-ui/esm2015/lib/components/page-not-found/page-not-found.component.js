@@ -1,6 +1,6 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+ * @suppress {checkTypes} checked by tsc
  */
 import { Component } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
@@ -35,7 +35,7 @@ DecPageNotFoundComponent.decorators = [
 DecPageNotFoundComponent.ctorParameters = () => [
     { type: Router }
 ];
-if (false) {
+function DecPageNotFoundComponent_tsickle_Closure_declarations() {
     /** @type {?} */
     DecPageNotFoundComponent.prototype.previousUrl;
     /** @type {?} */

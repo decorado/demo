@@ -5,6 +5,7 @@ export class UserAuthData {
   public country: string;
   public company: string;
   public role: number;
+  public i18n: string;
   public permissions: Array<string>;
 
   constructor(user: any = {}) {
@@ -14,6 +15,7 @@ export class UserAuthData {
     this.country = user.country || undefined;
     this.company = user.company || undefined;
     this.role = user.role || undefined;
+    this.i18n = user.i18n || undefined;
     this.permissions = user.permissions || undefined;
   }
 }

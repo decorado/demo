@@ -1,6 +1,6 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+ * @suppress {checkTypes} checked by tsc
  */
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
@@ -135,7 +135,7 @@ DecBreadcrumbComponent.propDecorators = {
     backLabel: [{ type: Input }],
     forwardLabel: [{ type: Input }]
 };
-if (false) {
+function DecBreadcrumbComponent_tsickle_Closure_declarations() {
     /** @type {?} */
     DecBreadcrumbComponent.prototype.backButtonPath;
     /** @type {?} */
