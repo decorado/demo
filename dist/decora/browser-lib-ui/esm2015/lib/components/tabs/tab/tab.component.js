@@ -1,6 +1,6 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+ * @suppress {checkTypes} checked by tsc
  */
 import { Component, ContentChild, Input, TemplateRef } from '@angular/core';
 export class DecTabComponent {
@@ -34,7 +34,7 @@ DecTabComponent.propDecorators = {
     content: [{ type: ContentChild, args: [TemplateRef,] }],
     disabled: [{ type: Input }]
 };
-if (false) {
+function DecTabComponent_tsickle_Closure_declarations() {
     /** @type {?} */
     DecTabComponent.prototype.label;
     /** @type {?} */

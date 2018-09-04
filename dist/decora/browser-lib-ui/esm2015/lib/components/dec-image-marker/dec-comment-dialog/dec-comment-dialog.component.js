@@ -1,6 +1,6 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+ * @suppress {checkTypes} checked by tsc
  */
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
@@ -65,7 +65,7 @@ DecCommentDialogComponent.ctorParameters = () => [
     { type: undefined, decorators: [{ type: Inject, args: [MAT_DIALOG_DATA,] }] },
     { type: TranslateService }
 ];
-if (false) {
+function DecCommentDialogComponent_tsickle_Closure_declarations() {
     /** @type {?} */
     DecCommentDialogComponent.prototype.title;
     /** @type {?} */

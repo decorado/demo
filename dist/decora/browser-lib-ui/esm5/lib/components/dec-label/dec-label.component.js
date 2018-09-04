@@ -1,6 +1,6 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+ * @suppress {checkTypes} checked by tsc
  */
 import { Component, Input } from '@angular/core';
 var DecLabelComponent = /** @class */ (function () {
@@ -21,7 +21,7 @@ var DecLabelComponent = /** @class */ (function () {
     return DecLabelComponent;
 }());
 export { DecLabelComponent };
-if (false) {
+function DecLabelComponent_tsickle_Closure_declarations() {
     /** @type {?} */
     DecLabelComponent.prototype.colorHex;
     /** @type {?} */

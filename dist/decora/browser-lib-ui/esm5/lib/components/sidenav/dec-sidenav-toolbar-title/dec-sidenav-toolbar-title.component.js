@@ -1,6 +1,6 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+ * @suppress {checkTypes} checked by tsc
  */
 import { Component, Input } from '@angular/core';
 var DecSidenavToolbarTitleComponent = /** @class */ (function () {
@@ -29,7 +29,7 @@ var DecSidenavToolbarTitleComponent = /** @class */ (function () {
     return DecSidenavToolbarTitleComponent;
 }());
 export { DecSidenavToolbarTitleComponent };
-if (false) {
+function DecSidenavToolbarTitleComponent_tsickle_Closure_declarations() {
     /** @type {?} */
     DecSidenavToolbarTitleComponent.prototype.routerLink;
 }
