@@ -2,6 +2,7 @@ export enum StatusColors {
   ACTIVE = '#097509',
   DELETED = '#C10F0F',
   FIX_OPEN = '#259844',
+  FIX_REOPEN = '#259844',
   JOB_CREATED = '#259844',
   JOB_AVAIABLE = '#fadb4d',
   JOB_IN_DEVELOPMENT = '#63c2de',
