@@ -1,6 +1,6 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
@@ -62,7 +62,7 @@ var DecCommentDialogComponent = /** @class */ (function () {
     return DecCommentDialogComponent;
 }());
 export { DecCommentDialogComponent };
-function DecCommentDialogComponent_tsickle_Closure_declarations() {
+if (false) {
     /** @type {?} */
     DecCommentDialogComponent.prototype.title;
     /** @type {?} */

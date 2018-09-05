@@ -850,6 +850,8 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   private loadByOpennedCollapse(filterUid) {
 
+    console.log('loadByOpennedCollapse', filterUid);
+
     const filter = this.collapsableFilters.children.find(item => item.uid === filterUid);
 
     const filterGroup: FilterGroup = { filters: filter.filters };
@@ -1324,11 +1326,13 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.filter) {
       this.filterSubscription = this.filter.search.subscribe(event => {
 
-        const tabChanged = this.previousSelectedTab && this.previousSelectedTab !== this.selectedTab;
+        console.log('EVENT', event);
+
+        const tabChanged = !this.previousSelectedTab || (this.previousSelectedTab !== this.selectedTab);
 
         const filterModeChanged = this.filterMode !== event.filterMode;
 
-        if (tabChanged) {
+        if (!this.previousSelectedTab || tabChanged) {
 
           this.previousSelectedTab = this.selectedTab;
 
@@ -1372,12 +1376,12 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
 
           } else {
 
-            this.selectedCollapsable = undefined;
-
             this.collapsableFilters = {
               tab: this.selectedTab,
               children: event.children ? event.children : []
             };
+
+            this.selectedCollapsable = undefined;
 
           }
 

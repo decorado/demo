@@ -1,6 +1,6 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 import { Component, ContentChild, TemplateRef, Output, EventEmitter, Input } from '@angular/core';
 export class DecListGridComponent {
@@ -66,7 +66,7 @@ DecListGridComponent.propDecorators = {
     itemGap: [{ type: Input }],
     rowClick: [{ type: Output }]
 };
-function DecListGridComponent_tsickle_Closure_declarations() {
+if (false) {
     /** @type {?} */
     DecListGridComponent.prototype.templateRef;
     /** @type {?} */
