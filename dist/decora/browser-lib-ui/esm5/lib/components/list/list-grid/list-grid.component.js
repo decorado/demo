@@ -1,6 +1,6 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+ * @suppress {checkTypes} checked by tsc
  */
 import { Component, ContentChild, TemplateRef, Output, EventEmitter, Input } from '@angular/core';
 var DecListGridComponent = /** @class */ (function () {
@@ -72,7 +72,7 @@ var DecListGridComponent = /** @class */ (function () {
     return DecListGridComponent;
 }());
 export { DecListGridComponent };
-if (false) {
+function DecListGridComponent_tsickle_Closure_declarations() {
     /** @type {?} */
     DecListGridComponent.prototype.templateRef;
     /** @type {?} */

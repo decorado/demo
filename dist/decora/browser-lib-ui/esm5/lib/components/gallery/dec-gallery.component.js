@@ -1,6 +1,6 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+ * @suppress {checkTypes} checked by tsc
  */
 import { Component, Input } from '@angular/core';
 import { CarouselConfig } from './carousel-config';
@@ -100,7 +100,7 @@ var DecGalleryComponent = /** @class */ (function () {
     return DecGalleryComponent;
 }());
 export { DecGalleryComponent };
-if (false) {
+function DecGalleryComponent_tsickle_Closure_declarations() {
     /** @type {?} */
     DecGalleryComponent.prototype.imageHighlight;
     /** @type {?} */

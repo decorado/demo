@@ -1,6 +1,6 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+ * @suppress {checkTypes} checked by tsc
  */
 import { Component, Input, ContentChild, TemplateRef } from '@angular/core';
 export class DecTabMenuComponent {
@@ -27,7 +27,7 @@ DecTabMenuComponent.propDecorators = {
     activeTab: [{ type: Input }],
     content: [{ type: ContentChild, args: [TemplateRef,] }]
 };
-if (false) {
+function DecTabMenuComponent_tsickle_Closure_declarations() {
     /** @type {?} */
     DecTabMenuComponent.prototype.activeTab;
     /** @type {?} */

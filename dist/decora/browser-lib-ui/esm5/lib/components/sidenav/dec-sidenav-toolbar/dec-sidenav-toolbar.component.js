@@ -1,6 +1,6 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+ * @suppress {checkTypes} checked by tsc
  */
 import { Component, Input, Output, EventEmitter, ContentChild } from '@angular/core';
 import { DecSidenavToolbarTitleComponent } from './../dec-sidenav-toolbar-title/dec-sidenav-toolbar-title.component';
@@ -75,7 +75,7 @@ var DecSidenavToolbarComponent = /** @class */ (function () {
     return DecSidenavToolbarComponent;
 }());
 export { DecSidenavToolbarComponent };
-if (false) {
+function DecSidenavToolbarComponent_tsickle_Closure_declarations() {
     /** @type {?} */
     DecSidenavToolbarComponent.prototype.initialized;
     /** @type {?} */
