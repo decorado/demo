@@ -18,7 +18,9 @@ export class PagesComponent implements OnInit {
   rightMenuMode = 'push';
   profile;
 
-  constructor(private configService: DecConfigurationService) {
+  constructor(
+    private configService: DecConfigurationService
+  ) {
     this.profile = this.configService.profile;
   }
 

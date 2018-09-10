@@ -1,13 +1,11 @@
 import { AfterViewInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 import { DecSidenavToolbarComponent } from './dec-sidenav-toolbar/dec-sidenav-toolbar.component';
 import { DecSidenavMenuLeftComponent } from './dec-sidenav-menu-left/dec-sidenav-menu-left.component';
 import { DecSidenavMenuRightComponent } from './dec-sidenav-menu-right/dec-sidenav-menu-right.component';
 import { MatSidenav } from '@angular/material';
 import { DecSidenavService } from './sidenav.service';
 export declare class DecSidenavComponent implements AfterViewInit {
-    private decSidenavService;
-    readonly progressBarVisible: BehaviorSubject<boolean>;
+    decSidenavService: DecSidenavService;
     toolbar: DecSidenavToolbarComponent;
     leftMenu: DecSidenavMenuLeftComponent;
     rightMenu: DecSidenavMenuRightComponent;

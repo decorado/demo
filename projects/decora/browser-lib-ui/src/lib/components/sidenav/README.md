@@ -167,3 +167,23 @@ It can nest another items so we can have a multilevel menu.
 ```
 
 Used to display an standardized title inside the menus
+
+
+## Dec sidenav Service
+
+this service is used to interact with the sidenav from outside the component that uses it. We need to ensure that that this is a singleton so the sidenav and anione else would listen the same instance.
+
+### setSidenavVisibility
+Set the sidenav visibility and persist is in memory
+
+### getSidenavVisibility
+Set the sidenav visibility from memory
+
+### showProgressBar
+Show the progres bar with ou without a message
+
+### hideProgressbar
+Hide the progress bar
+
+### toggleProgressBar
+Toggle the progress bar

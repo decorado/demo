@@ -1,8 +1,7 @@
-import { OnDestroy } from '@angular/core';
+import { OnDestroy, EventEmitter } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { UserAuthData, LoginData, FacebookLoginData, DecFilter, QueryParams } from './decora-api.model';
-import { DecSnackBarService } from './../snack-bar/dec-snack-bar.service';
 import { DecConfigurationService } from './../configuration/configuration.service';
 export declare type CallOptions = {
     headers?: HttpHeaders;
@@ -10,19 +9,21 @@ export declare type CallOptions = {
     params?: {
         [prop: string]: any;
     };
+    loadingMessage?: string;
 } & {
     [prop: string]: any;
 };
 export declare type HttpRequestTypes = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 export declare class DecApiService implements OnDestroy {
     private http;
-    private snackbar;
     private decConfig;
     user: UserAuthData;
     user$: BehaviorSubject<UserAuthData>;
+    loading$: EventEmitter<boolean>;
     private sessionToken;
     private userSubscripion;
-    constructor(http: HttpClient, snackbar: DecSnackBarService, decConfig: DecConfigurationService);
+    private loadingMap;
+    constructor(http: HttpClient, decConfig: DecConfigurationService);
     ngOnDestroy(): void;
     readonly host: any;
     auth: (loginData: LoginData) => Observable<any>;
@@ -37,10 +38,6 @@ export declare class DecApiService implements OnDestroy {
     upload(endpoint: string, files: File[], options?: CallOptions): Observable<any>;
     handShake(): Promise<any>;
     getResourceUrl(path: any): string;
-    private fetchCurrentLoggedUser;
-    private transformDecFilterInParams(filter);
-    private filterObjectToQueryString(obj);
-    private getFilterWithValuesAsArray(filterGroups);
     private getMethod<T>(url, search?, options?);
     private patchMethod<T>(url, body?, options?);
     private postMethod<T>(url, body?, options?);
@@ -48,6 +45,13 @@ export declare class DecApiService implements OnDestroy {
     private deleteMethod<T>(url, options?);
     private requestMethod<T>(type, url, body?, options?);
     private handleError;
+    private startLoading;
+    private stopLoading;
+    private emitLoading;
+    private fetchCurrentLoggedUser;
+    private transformDecFilterInParams(filter);
+    private filterObjectToQueryString(obj);
+    private getFilterWithValuesAsArray(filterGroups);
     private createFilesFormData(files);
     private goToLoginPage();
     private getParamsDivider();

@@ -1,7 +1,7 @@
-import { Injectable, OnDestroy, OnInit } from '@angular/core';
+import { Injectable, OnDestroy, OnInit, EventEmitter } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpRequest } from '@angular/common/http';
 import { Observable, throwError, BehaviorSubject, Subscription } from 'rxjs';
-import { catchError, share, tap } from 'rxjs/operators';
+import { catchError, share, tap, finalize } from 'rxjs/operators';
 import { UserAuthData, LoginData, FacebookLoginData, DecFilter, SerializedDecFilter, QueryParams } from './decora-api.model';
 import { DecSnackBarService } from './../snack-bar/dec-snack-bar.service';
 import { DecConfigurationService } from './../configuration/configuration.service';
@@ -12,6 +12,7 @@ export type CallOptions = {
   params?: {
     [prop: string]: any;
   };
+  loadingMessage?: string;
 } & {
   [prop: string]: any;
 };
@@ -25,13 +26,16 @@ export class DecApiService implements OnDestroy {
 
   user$: BehaviorSubject<UserAuthData> = new BehaviorSubject<UserAuthData>(undefined);
 
+  loading$: EventEmitter<boolean> = new EventEmitter<boolean>(undefined);
+
   private sessionToken: string;
 
   private userSubscripion: Subscription;
 
+  private loadingMap = {};
+
   constructor(
     private http: HttpClient,
-    private snackbar: DecSnackBarService,
     private decConfig: DecConfigurationService,
   ) {
     this.subscribeToUser();
@@ -171,9 +175,149 @@ export class DecApiService implements OnDestroy {
     return `${basePath}/${path}`;
 
   }
+
   // ************ //
-  // Private Helper Methods //
+  // Http Methods //
   // ************ //
+  private getMethod<T>(url: string, search: any = {}, options: CallOptions = {}): Observable<any> {
+    const uuid = this.startLoading(options.loadingMessage);
+    options.params = search;
+    options.withCredentials = true;
+    options.headers = this.newHeaderWithSessionToken('application/json', options.headers);
+    const callObservable = this.http.get<T>(url, options)
+      .pipe(
+        finalize(() => this.stopLoading(uuid)),
+        catchError(this.handleError)
+      );
+    return this.shareObservable(callObservable);
+  }
+
+  private patchMethod<T>(url, body = {}, options: CallOptions = {}): Observable<any> {
+    const uuid = this.startLoading(options.loadingMessage);
+    options.withCredentials = true;
+    options.headers = this.newHeaderWithSessionToken('application/json', options.headers);
+    const callObservable = this.http.patch<T>(url, body, options)
+      .pipe(
+        finalize(() => this.stopLoading(uuid)),
+        catchError(this.handleError)
+      );
+    return this.shareObservable(callObservable);
+  }
+
+  private postMethod<T>(url, body?, options: CallOptions = {}): Observable<any> {
+    const uuid = this.startLoading(options.loadingMessage);
+    options.withCredentials = true;
+    options.headers = this.newHeaderWithSessionToken('application/json', options.headers);
+    const callObservable = this.http.post<T>(url, body, options)
+      .pipe(
+        finalize(() => this.stopLoading(uuid)),
+        catchError(this.handleError)
+      );
+    return this.shareObservable(callObservable);
+  }
+
+  private putMethod<T>(url, body = {}, options: CallOptions = {}): Observable<any> {
+    const uuid = this.startLoading(options.loadingMessage);
+    options.withCredentials = true;
+    options.headers = this.newHeaderWithSessionToken('application/json', options.headers);
+    const callObservable = this.http.put<T>(url, body, options)
+      .pipe(
+        finalize(() => this.stopLoading(uuid)),
+        catchError(this.handleError)
+      );
+    return this.shareObservable(callObservable);
+  }
+
+  private deleteMethod<T>(url: string, options: CallOptions = {}): Observable<any> {
+    const uuid = this.startLoading(options.loadingMessage);
+    options.withCredentials = true;
+    options.headers = this.newHeaderWithSessionToken('application/json', options.headers);
+    const callObservable = this.http.delete<T>(url, options)
+      .pipe(
+        finalize(() => this.stopLoading(uuid)),
+        catchError(this.handleError)
+      );
+    return this.shareObservable(callObservable);
+  }
+
+  private requestMethod<T>(type: HttpRequestTypes, url: string, body: any = {}, options: CallOptions = {}): Observable<any> {
+    const uuid = this.startLoading(options.loadingMessage);
+    options.withCredentials = true;
+    options.headers = this.newHeaderWithSessionToken(undefined, options.headers);
+    const req = new HttpRequest(type, url, body, options);
+    const callObservable = this.http.request<T>(req)
+      .pipe(
+        finalize(() => this.stopLoading(uuid)),
+        catchError(this.handleError)
+      );
+    return this.shareObservable(callObservable);
+  }
+
+  private handleError = (error: any) => {
+    const message = error.message;
+    const bodyMessage = (error && error.error) ? error.error.message : '';
+    const bodyError = error.error;
+    const status = error.status;
+    const statusText = error.statusText;
+
+    switch (error.status) {
+      case 401:
+        if (this.decConfig.config.authHost) {
+          this.goToLoginPage();
+        }
+        break;
+        /* REMOVED handlers because the error must be handled by the caller not the api. Excepts the 401 that should redirect to login page
+              case 404:
+                this.snackbar.open(bodyMessage || 'message.http-status.404', 'error', undefined, !!!bodyMessage);
+                break;
+
+              case 409:
+                this.snackbar.open(bodyMessage || 'message.http-status.409', 'error', undefined, !!!bodyMessage);
+                break;
+
+              case 412:
+                this.snackbar.open(bodyMessage, 'error');
+                break;
+        */
+    }
+
+    return throwError({ status, statusText, message, bodyMessage, bodyError });
+  }
+
+  // ******* //
+  // Helpers //
+  // ******* //
+
+  private startLoading = (msg: string | boolean = true) => {
+
+    const uuid = Math.random().toString(26).slice(2) + Date.now();
+
+    this.loadingMap[uuid] = msg || true;
+
+    this.emitLoading();
+
+    return uuid;
+
+  }
+
+  private stopLoading = (uuid) => {
+
+    if (this.loadingMap[uuid]) {
+
+      delete this.loadingMap[uuid];
+
+    }
+
+    this.emitLoading();
+
+  }
+
+  private emitLoading = () => {
+    const keys = Object.keys(this.loadingMap);
+    const hasLoading = keys.length > 0;
+    const loadingMessage = this.loadingMap[keys[0]];
+    this.loading$.emit(hasLoading ? loadingMessage : false);
+  }
 
   private fetchCurrentLoggedUser = () => {
     const endpoint = this.getResourceUrl('auth/account');
@@ -261,106 +405,6 @@ export class DecApiService implements OnDestroy {
 
     }
   }
-
-
-  // ************ //
-  // Http Methods //
-  // ************ //
-  private getMethod<T>(url: string, search: any = {}, options: CallOptions = {}): Observable<any> {
-    options.params = search;
-    options.withCredentials = true;
-    options.headers = this.newHeaderWithSessionToken('application/json', options.headers);
-    const callObservable = this.http.get<T>(url, options)
-      .pipe(
-        catchError(this.handleError)
-      );
-    return this.shareObservable(callObservable);
-  }
-
-  private patchMethod<T>(url, body = {}, options: CallOptions = {}): Observable<any> {
-    options.withCredentials = true;
-    options.headers = this.newHeaderWithSessionToken('application/json', options.headers);
-    const callObservable = this.http.patch<T>(url, body, options)
-      .pipe(
-        catchError(this.handleError)
-      );
-    return this.shareObservable(callObservable);
-  }
-
-  private postMethod<T>(url, body?, options: CallOptions = {}): Observable<any> {
-    options.withCredentials = true;
-    options.headers = this.newHeaderWithSessionToken('application/json', options.headers);
-    const callObservable = this.http.post<T>(url, body, options)
-      .pipe(
-        catchError(this.handleError)
-      );
-    return this.shareObservable(callObservable);
-  }
-
-  private putMethod<T>(url, body = {}, options: CallOptions = {}): Observable<any> {
-    options.withCredentials = true;
-    options.headers = this.newHeaderWithSessionToken('application/json', options.headers);
-    const callObservable = this.http.put<T>(url, body, options)
-      .pipe(
-        catchError(this.handleError)
-      );
-    return this.shareObservable(callObservable);
-  }
-
-  private deleteMethod<T>(url: string, options: CallOptions = {}): Observable<any> {
-    options.withCredentials = true;
-    options.headers = this.newHeaderWithSessionToken('application/json', options.headers);
-    const callObservable = this.http.delete<T>(url, options)
-      .pipe(
-        catchError(this.handleError)
-      );
-    return this.shareObservable(callObservable);
-  }
-
-  private requestMethod<T>(type: HttpRequestTypes, url: string, body: any = {}, options: CallOptions = {}): Observable<any> {
-    options.withCredentials = true;
-    options.headers = this.newHeaderWithSessionToken(undefined, options.headers);
-    const req = new HttpRequest(type, url, body, options);
-    const callObservable = this.http.request<T>(req)
-      .pipe(
-        catchError(this.handleError)
-      );
-    return this.shareObservable(callObservable);
-  }
-
-  private handleError = (error: any) => {
-    const message = error.message;
-    const bodyMessage = (error && error.error) ? error.error.message : '';
-    const bodyError = error.error;
-    const status = error.status;
-    const statusText = error.statusText;
-
-    switch (error.status) {
-      case 401:
-        if (this.decConfig.config.authHost) {
-          this.goToLoginPage();
-        }
-        break;
-
-      case 404:
-        this.snackbar.open(bodyMessage || 'message.http-status.404', 'error', undefined, !!!bodyMessage);
-        break;
-
-      case 409:
-        this.snackbar.open(bodyMessage || 'message.http-status.409', 'error', undefined, !!!bodyMessage);
-        break;
-
-      case 412:
-        this.snackbar.open(bodyMessage, 'error');
-        break;
-    }
-
-    return throwError({ status, statusText, message, bodyMessage, bodyError });
-  }
-
-  // ******* //
-  // Helpers //
-  // ******* //
 
   private createFilesFormData(files: File[]) {
     const formData: FormData = new FormData();

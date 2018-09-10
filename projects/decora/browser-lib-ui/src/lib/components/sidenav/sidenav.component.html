@@ -6,7 +6,10 @@
   <!-- / TOOLBAR -->
 
   <!-- PROGRESS BAR -->
-  <div class="progress-bar-wrapper" *ngIf="progressBarVisible | async">
+  <div class="progress-bar-wrapper" *ngIf="(decSidenavService.progressBarVisible | async) as progressMessage">
+    <div class="progress-bar-message">
+      <small *ngIf="progressMessage !== true">{{ progressMessage }}</small>
+    </div>
     <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
   </div>
   <!-- / PROGRESS BAR -->

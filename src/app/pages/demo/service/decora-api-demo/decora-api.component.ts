@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DecApiService } from '@projects/decora/browser-lib-ui/src/public_api';
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
+import { DecSidenavService } from '@projects/decora/browser-lib-ui/src/lib/components/sidenav/sidenav.service';
 
 @Component({
   selector: 'app-decora-api',
@@ -19,6 +20,8 @@ export class DecApiComponent implements OnInit {
   response;
 
   resource = '/accounts';
+
+  loadingMessage;
 
   decoraApiHost;
 
@@ -39,11 +42,17 @@ export class DecApiComponent implements OnInit {
   endpoint = '/accounts';
 
   constructor(
-    private decoraApi: DecApiService,
+    public decoraApi: DecApiService,
     private route: ActivatedRoute,
+    private decSidenavService: DecSidenavService,
   ) {
     this.decoraApiHost = this.decoraApi.host;
     this.user$ = this.decoraApi.user$;
+
+    this.decoraApi.loading$.subscribe(state => {
+      this.decSidenavService.progressBarVisible.next(state);
+    });
+
   }
 
   ngOnInit() {}
@@ -84,7 +93,7 @@ export class DecApiComponent implements OnInit {
 
     }
 
-    const options: any = {headers: new HttpHeaders({ 'content-type': this.callContentType })};
+    const options: any = { headers: new HttpHeaders({ 'content-type': this.callContentType }), loadingMessage: this.loadingMessage};
 
     this.decoraApi[this.callType](this.resource, body, options)
     .subscribe(this.handleSuccess, this.handleError);

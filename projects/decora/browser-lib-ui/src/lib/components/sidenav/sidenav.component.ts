@@ -1,5 +1,4 @@
 import { Component, Input, ContentChild, AfterViewInit, ViewChild } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 import { DecSidenavToolbarComponent } from './dec-sidenav-toolbar/dec-sidenav-toolbar.component';
 import { DecSidenavMenuLeftComponent } from './dec-sidenav-menu-left/dec-sidenav-menu-left.component';
 import { DecSidenavMenuRightComponent } from './dec-sidenav-menu-right/dec-sidenav-menu-right.component';
@@ -12,8 +11,6 @@ import { DecSidenavService } from './sidenav.service';
   styleUrls: ['./sidenav.component.scss']
 })
 export class DecSidenavComponent implements AfterViewInit {
-
-  readonly progressBarVisible = new BehaviorSubject<boolean>(false);
 
   @ContentChild(DecSidenavToolbarComponent) toolbar: DecSidenavToolbarComponent;
 
@@ -49,27 +46,23 @@ export class DecSidenavComponent implements AfterViewInit {
 
   @Input()
   set loading(v: any) {
-    const currentValue = this.progressBarVisible.value;
-
+    const currentValue = this.decSidenavService.progressBarVisible.value;
     if (v !== currentValue) {
-      this.progressBarVisible.next(v);
+      this.decSidenavService.progressBarVisible.next(v);
     }
   }
 
   get loading() {
-    return this.progressBarVisible.value;
+    return this.decSidenavService.progressBarVisible.value;
   }
 
   constructor(
-    private decSidenavService: DecSidenavService
+    public decSidenavService: DecSidenavService
   ) {}
 
   ngAfterViewInit() {
-
     this.detectAndShowChildComponents();
-
     this.subscribeToToolbarEvents();
-
   }
 
   // API //
@@ -126,15 +119,15 @@ export class DecSidenavComponent implements AfterViewInit {
   }
 
   toggleProgressBar() {
-    this.loading = !this.progressBarVisible.value;
+    this.decSidenavService.toggleProgressBar();
   }
 
   showProgressBar() {
-    this.progressBarVisible.next(true);
+    this.decSidenavService.progressBarVisible.next(true);
   }
 
   hideProgressBar() {
-    this.progressBarVisible.next(false);
+    this.decSidenavService.progressBarVisible.next(false);
   }
 
   leftSidenavOpenedChange(openedStatus) {

@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 export const STORAGE_DOMAIN = 'decSidenavConfig';
 
 @Injectable()
 export class DecSidenavService {
+
+  progressBarVisible = new BehaviorSubject<string | boolean>(false);
 
   constructor() {}
 
@@ -22,6 +25,26 @@ export class DecSidenavService {
     const config = this.getSidenavConfig();
 
     return config[name];
+
+  }
+
+  showProgressBar(msg?: string) {
+
+    this.progressBarVisible.next(msg || true);
+
+  }
+
+  hideProgressbar() {
+
+    this.progressBarVisible.next(false);
+
+  }
+
+  toggleProgressBar() {
+
+    const nextValue = !!!this.progressBarVisible.value;
+
+    this.progressBarVisible.next(nextValue);
 
   }
 

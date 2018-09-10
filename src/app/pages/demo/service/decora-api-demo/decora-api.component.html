@@ -29,21 +29,26 @@
     <button mat-menu-item (click)="callType = 'delete'">DELETE</button>
   </mat-menu>
 
-  <mat-form-field>
-    <input type="text" matInput [(ngModel)]="callContentType" placeholder="Content type" />
-  </mat-form-field>
 
-  <ng-container *ngIf="callType === 'get'">
+  <div *ngIf="callType === 'get'" fxLayout="row" fxLayoutGap="8px">
 
-    <mat-form-field>
+    <mat-form-field fxFlex>
+      <input type="text" matInput [(ngModel)]="callContentType" placeholder="Content type" />
+    </mat-form-field>
+
+    <mat-form-field fxFlex>
       <input type="number" matInput [(ngModel)]="pageSize" placeholder="Page size" />
     </mat-form-field>
 
-    <mat-form-field>
+    <mat-form-field fxFlex>
       <input type="number" matInput [(ngModel)]="page" placeholder="Page" />
     </mat-form-field>
 
-  </ng-container>
+  </div>
+
+    <mat-form-field fxFlex>
+      <input type="text" matInput [(ngModel)]="loadingMessage" placeholder="Loading message" />
+    </mat-form-field>
 
   <mat-form-field>
     <textarea matInput matTextareaAutosize [(ngModel)]="callBody" placeholder="Object data or params"></textarea>
@@ -56,6 +61,8 @@
     <input type="text" matInput [(ngModel)]="resource" placeholder="Resource" />
     <button mat-raised-button color="primary" matSuffix (click)="test()">Test</button>
   </mat-form-field>
+
+  <div>Loading: {{ decoraApi.loading$ | async }}</div>
 
   <div>
 

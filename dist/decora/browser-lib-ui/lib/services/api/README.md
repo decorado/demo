@@ -88,8 +88,24 @@ This method checks the payload and calls `PUT` if the payload contains an ID pro
 ### Arguments
 > **endpoint:** String defining the path to the resource. The host is set by the API, tou have to provide only the path. **Example** `/user`
 
-> **options:** Object containing HttpClient Option data. **Example** `{responseType: 'json'}`
+> **options:** Object containing HttpClient Option data. **Example** `{responseType: 'json', loadingMessage: 'Loading user data'}`
 
 > **payload:** Any data to pass as the request body. **Example** `{id: 27, name: 'Bruno'}`
 
 > **search:** An one level Object containing a filters to be sent as URL params. **Example** `{type: 'all'}`
+
+
+### Models
+
+```javascript
+  export type CallOptions = {
+    headers?: HttpHeaders;
+    withCredentials?: boolean;
+    params?: {
+      [prop: string]: any;
+    };
+    loadingMessage?: string; // loading message that explains wht the call is responsible for
+  } & {
+    [prop: string]: any;
+  };
+```

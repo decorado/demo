@@ -1,14 +1,12 @@
 import { NgModule, SkipSelf, Optional } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { DecSnackBarModule } from './../snack-bar/dec-snack-bar.module';
 import { DecApiService } from './decora-api.service';
 
 @NgModule({
   imports: [
     CommonModule,
     HttpClientModule,
-    DecSnackBarModule,
   ],
   providers: [
     DecApiService,
