@@ -38,7 +38,7 @@
           <span *ngIf="comments.comment" class="text-markdown">
             {{comments.comment}}
           </span>
-          <mat-icon class="delete-button" (click)="deleteMark(imgMarker.decMarks.marksWrapper.nativeElement.querySelectorAll('.point-tag'), i, r)">delete</mat-icon>
+          <mat-icon class="delete-button" *ngIf="qaModeActive" (click)="deleteMark(imgMarker.decMarks.marksWrapper.nativeElement.querySelectorAll('.point-tag'), i, r)">delete</mat-icon>
         </div>
       </div>
     </div>

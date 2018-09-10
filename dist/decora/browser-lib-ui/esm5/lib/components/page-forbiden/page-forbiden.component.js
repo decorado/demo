@@ -1,6 +1,6 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 import { Component } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
@@ -29,7 +29,7 @@ var DecPageForbidenComponent = /** @class */ (function () {
     return DecPageForbidenComponent;
 }());
 export { DecPageForbidenComponent };
-function DecPageForbidenComponent_tsickle_Closure_declarations() {
+if (false) {
     /** @type {?} */
     DecPageForbidenComponent.prototype.previousUrl;
     /** @type {?} */

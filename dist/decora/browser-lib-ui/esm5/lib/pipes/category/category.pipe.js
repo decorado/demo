@@ -1,6 +1,6 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 import { Pipe } from '@angular/core';
 import { CategoryPipeService } from './category-pipe.service';
@@ -31,7 +31,7 @@ var CategoryPipe = /** @class */ (function () {
     return CategoryPipe;
 }());
 export { CategoryPipe };
-function CategoryPipe_tsickle_Closure_declarations() {
+if (false) {
     /** @type {?} */
     CategoryPipe.prototype.categoryPipeService;
 }

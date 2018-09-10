@@ -1,6 +1,6 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 import { Component, Input, Output, EventEmitter, ContentChild } from '@angular/core';
 import { DecSidenavToolbarTitleComponent } from './../dec-sidenav-toolbar-title/dec-sidenav-toolbar-title.component';
@@ -91,7 +91,7 @@ DecSidenavToolbarComponent.propDecorators = {
     toggleRightMenu: [{ type: Output }],
     customTitle: [{ type: ContentChild, args: [DecSidenavToolbarTitleComponent,] }]
 };
-function DecSidenavToolbarComponent_tsickle_Closure_declarations() {
+if (false) {
     /** @type {?} */
     DecSidenavToolbarComponent.prototype.initialized;
     /** @type {?} */

@@ -1,6 +1,6 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 import { Component, ContentChild, Input, TemplateRef } from '@angular/core';
 var DecTabComponent = /** @class */ (function () {
@@ -40,7 +40,7 @@ var DecTabComponent = /** @class */ (function () {
     return DecTabComponent;
 }());
 export { DecTabComponent };
-function DecTabComponent_tsickle_Closure_declarations() {
+if (false) {
     /** @type {?} */
     DecTabComponent.prototype.label;
     /** @type {?} */
