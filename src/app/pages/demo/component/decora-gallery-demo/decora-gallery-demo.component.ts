@@ -15,6 +15,7 @@ export class DecoraGalleryDemoComponent implements OnInit {
     id: '5b0cf3d418ab527a27ef718b',
     originalName: '7I5RdLBE03Q.jpg',
     size: 325983,
+    order: 1
   };
 
 

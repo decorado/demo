@@ -1,6 +1,6 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+ * @suppress {checkTypes} checked by tsc
  */
 import { Component, ContentChild, TemplateRef } from '@angular/core';
 var DecListActionsComponent = /** @class */ (function () {
@@ -29,7 +29,7 @@ var DecListActionsComponent = /** @class */ (function () {
     return DecListActionsComponent;
 }());
 export { DecListActionsComponent };
-if (false) {
+function DecListActionsComponent_tsickle_Closure_declarations() {
     /** @type {?} */
     DecListActionsComponent.prototype.template;
 }

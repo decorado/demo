@@ -1,6 +1,6 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+ * @suppress {checkTypes} checked by tsc
  */
 import { Component, Input } from '@angular/core';
 var DecSidenavMenuComponent = /** @class */ (function () {
@@ -24,7 +24,7 @@ var DecSidenavMenuComponent = /** @class */ (function () {
     return DecSidenavMenuComponent;
 }());
 export { DecSidenavMenuComponent };
-if (false) {
+function DecSidenavMenuComponent_tsickle_Closure_declarations() {
     /** @type {?} */
     DecSidenavMenuComponent.prototype.items;
     /** @type {?} */

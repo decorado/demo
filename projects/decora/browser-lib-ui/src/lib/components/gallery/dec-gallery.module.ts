@@ -7,6 +7,7 @@ import { NguCarouselModule } from '@ngu/carousel';
 import { MatIconModule } from '@angular/material';
 import 'hammerjs';
 import { DecImageZoomModule } from './../dec-image-zoom/dec-image-zoom.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { DecImageZoomModule } from './../dec-image-zoom/dec-image-zoom.module';
     TranslateModule,
     MatIconModule,
     NguCarouselModule,
-    DecImageZoomModule
+    DecImageZoomModule,
+    FlexLayoutModule
   ],
   declarations: [
     DecGalleryComponent

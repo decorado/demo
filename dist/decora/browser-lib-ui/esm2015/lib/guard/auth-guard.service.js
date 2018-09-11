@@ -1,6 +1,6 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+ * @suppress {checkTypes} checked by tsc
  */
 import { Injectable } from '@angular/core';
 import { DecApiService } from './../services/api/decora-api.service';
@@ -52,7 +52,7 @@ DecAuthGuard.decorators = [
 DecAuthGuard.ctorParameters = () => [
     { type: DecApiService }
 ];
-if (false) {
+function DecAuthGuard_tsickle_Closure_declarations() {
     /** @type {?} */
     DecAuthGuard.prototype.decoraApi;
 }

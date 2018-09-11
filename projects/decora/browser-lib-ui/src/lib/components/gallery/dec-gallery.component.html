@@ -6,10 +6,15 @@
 
   <ngu-carousel class="carousel-wrapper" [inputs]="carouselConfig" (initData)="onInitDataFn($event)" (onMove)="onMoveFn($event)">
 
-    <ngu-item NguCarouselItem *ngFor="let image of images" [class.active]="image == imageHighlight">
+    <ngu-item fxLayout="column"
+      fxLayoutGap="4px"
+      fxLayoutAlign="space-between start"
+      NguCarouselItem 
+      *ngFor="let image of images" 
+      [class.active]="image == imageHighlight">
 
       <img [decImage]="image" [decImageSize]="{width:300, height:300}" (click)="onSelectImage($event,image)">
-
+      <span *ngIf="image.order">{{ 'label.shot-order' | translate }}: {{ image.order }}</span>
     </ngu-item>
 
     <mat-icon NguCarouselPrev class="left-previous" [ngClass]="{'disabled': isFirst}">chevron_left</mat-icon>
