@@ -1,6 +1,6 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -28,7 +28,7 @@ var DecIconModule = /** @class */ (function () {
     return DecIconModule;
 }());
 export { DecIconModule };
-function DecIconModule_tsickle_Closure_declarations() {
+if (false) {
     /** @type {?} */
     DecIconModule.prototype.matIconRegistry;
 }

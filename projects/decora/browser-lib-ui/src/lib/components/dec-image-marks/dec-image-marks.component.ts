@@ -27,11 +27,13 @@ export class DecImageMarksComponent {
       squareElements[0].parentNode.removeChild(squareElements[0]);
     }
 
-    this.render.comments.forEach((item, index) => {
-      item.coordinates.length > 2
-        ? this.createSquareTag(item.coordinates[0], item.coordinates[1], item.coordinates[2], item.coordinates[3], index + 1)
-        : this.createPointTag(item.coordinates[0], item.coordinates[1], index + 1);
-    });
+    if (this.render && typeof this.render.comments === 'object') {
+      this.render.comments.forEach((item, index) => {
+        item.coordinates.length > 2
+          ? this.createSquareTag(item.coordinates[0], item.coordinates[1], item.coordinates[2], item.coordinates[3], index + 1)
+          : this.createPointTag(item.coordinates[0], item.coordinates[1], index + 1);
+      });
+    }
   }
 
   createPointTag(x: number, y: number, index: number): HTMLDivElement {

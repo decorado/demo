@@ -1,6 +1,6 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 import { Component, ContentChild, TemplateRef } from '@angular/core';
 var DecListAdvancedFilterComponent = /** @class */ (function () {
@@ -67,7 +67,7 @@ var DecListAdvancedFilterComponent = /** @class */ (function () {
     return DecListAdvancedFilterComponent;
 }());
 export { DecListAdvancedFilterComponent };
-function DecListAdvancedFilterComponent_tsickle_Closure_declarations() {
+if (false) {
     /** @type {?} */
     DecListAdvancedFilterComponent.prototype.form;
     /** @type {?} */
