@@ -89,7 +89,7 @@ export declare class DecListComponent implements OnInit, OnDestroy, AfterViewIni
     private getPayloadWithSearchTransformedIntoSearchableProperties(payload);
     private appendFilterGroupsBasedOnSearchableProperties(filterGroups);
     private removeFilterGroup(filterGroups, filterGroupThatContainsBasicSearch);
-    private getFilterGroupThatContainsTheBasicSearch(filterGroups);
+    private getFilterGroupsThatContainsTheBasicSearch(filterGroups);
     private subscribeToReactiveReport();
     private detectLastPage(rows, count);
     private unsubscribeToReactiveReport();

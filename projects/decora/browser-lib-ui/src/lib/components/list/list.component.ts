@@ -391,15 +391,15 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
   * - Start watching Filter
   * - Do the first load
   */
- ngAfterViewInit() {
-   this.watchFilter();
-   this.doFirstLoad();
-   this.detectListMode();
-   this.watchTabsChange();
-   this.watchTableSort();
-   this.registerChildWatchers();
-   this.watchScroll();
-   this.watchScrollEventEmitter();
+  ngAfterViewInit() {
+    this.watchFilter();
+    this.doFirstLoad();
+    this.detectListMode();
+    this.watchTabsChange();
+    this.watchTableSort();
+    this.registerChildWatchers();
+    this.watchScroll();
+    this.watchScrollEventEmitter();
   }
 
   /*
@@ -435,13 +435,13 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
       const payloadWithSearchableProperties = this.getCountableFilters(filters);
 
       this.service.post(endpoint, payloadWithSearchableProperties)
-      .subscribe(res => {
+        .subscribe(res => {
 
-        this.countReport = this.mountCountReport(res);
+          this.countReport = this.mountCountReport(res);
 
-        this.filter.countReport = this.countReport;
+          this.filter.countReport = this.countReport;
 
-      });
+        });
 
     }
 
@@ -630,7 +630,7 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   private getCountableFilters(filters) {
 
-    const filterGroupsWithoutTabs = this.filter.filterGroupsWithoutTabs || [{filters: []}];
+    const filterGroupsWithoutTabs = this.filter.filterGroupsWithoutTabs || [{ filters: [] }];
 
     const filtersPlusSearch = filters.map(decFilter => {
 
@@ -837,7 +837,7 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
   private ensureUniqueName() {
     if (!this.name) {
       const error = 'ListComponentError: The list component must have an unique name to be used in url filter.'
-      + ' Please, ensure that you have passed an unique namme to the component.';
+        + ' Please, ensure that you have passed an unique namme to the component.';
       throw new Error(error);
     }
   }
@@ -893,25 +893,25 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.endpoint) {
 
         this.mountPayload(clearAndReloadReport, collapseFilterGroups)
-        .then(payload => {
+          .then(payload => {
 
-          this.payload = payload;
+            this.payload = payload;
 
-          this.filterData.next({ endpoint: this.endpoint, payload: this.payload, cbk: res, clear: clearAndReloadReport });
+            this.filterData.next({ endpoint: this.endpoint, payload: this.payload, cbk: res, clear: clearAndReloadReport });
 
-        });
+          });
 
 
       } else if (this.customFetchMethod) {
 
         this.mountPayload(clearAndReloadReport, collapseFilterGroups)
-        .then(payload => {
+          .then(payload => {
 
-          this.payload = payload;
+            this.payload = payload;
 
-          this.filterData.next();
+            this.filterData.next();
 
-        });
+          });
 
       } else if (!this.rows) {
 
@@ -1067,10 +1067,10 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
   private watchScrollEventEmitter() {
 
     this.scrollEventEmiterSubscription = this.scrollEventEmiter
-    .pipe(
-      debounceTime(150),
-      distinctUntilChanged()
-    ).subscribe(this.actByScrollPosition);
+      .pipe(
+        debounceTime(150),
+        distinctUntilChanged()
+      ).subscribe(this.actByScrollPosition);
 
   }
 
@@ -1095,52 +1095,52 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   private watchFilterData() {
     this.reactiveReport = this.filterData
-    .pipe(
-      debounceTime(150), // avoid muiltiple request when the filter or tab change too fast
-      switchMap((filterData: FilterData) => {
+      .pipe(
+        debounceTime(150), // avoid muiltiple request when the filter or tab change too fast
+        switchMap((filterData: FilterData) => {
 
-        const observable = new BehaviorSubject<any>(undefined);
+          const observable = new BehaviorSubject<any>(undefined);
 
-        const fetchMethod: DecListFetchMethod = this.customFetchMethod || this.service.get;
+          const fetchMethod: DecListFetchMethod = this.customFetchMethod || this.service.get;
 
-        const endpoint = filterData ? filterData.endpoint : undefined;
+          const endpoint = filterData ? filterData.endpoint : undefined;
 
-        const payloadWithSearchableProperties = this.getPayloadWithSearchTransformedIntoSearchableProperties(this.payload);
+          const payloadWithSearchableProperties = this.getPayloadWithSearchTransformedIntoSearchableProperties(this.payload);
 
-        if (filterData && filterData.clear) {
-          this.setRows([]);
-        }
-
-        fetchMethod(endpoint, payloadWithSearchableProperties)
-        .subscribe(res => {
-
-          observable.next(res);
-
-          if (filterData && filterData.cbk) {
-
-            setTimeout(() => { // wait for subscribers to refresh their rows
-
-              filterData.cbk(new Promise((resolve, rej) => {
-
-                resolve(res);
-
-              }));
-
-            }, 1);
+          if (filterData && filterData.clear) {
+            this.setRows([]);
           }
-          return res;
-        });
 
-        return observable;
-      })
+          fetchMethod(endpoint, payloadWithSearchableProperties)
+            .subscribe(res => {
 
-    );
+              observable.next(res);
+
+              if (filterData && filterData.cbk) {
+
+                setTimeout(() => { // wait for subscribers to refresh their rows
+
+                  filterData.cbk(new Promise((resolve, rej) => {
+
+                    resolve(res);
+
+                  }));
+
+                }, 1);
+              }
+              return res;
+            });
+
+          return observable;
+        })
+
+      );
     this.subscribeToReactiveReport();
   }
 
   private getPayloadWithSearchTransformedIntoSearchableProperties(payload) {
 
-    const payloadCopy = {...payload};
+    const payloadCopy = { ...payload };
 
     if (payloadCopy.filterGroups && this.searchableProperties) {
 
@@ -1160,28 +1160,32 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private appendFilterGroupsBasedOnSearchableProperties(filterGroups) {
 
-    const filterGroupThatContainsBasicSearch = this.getFilterGroupThatContainsTheBasicSearch(filterGroups);
+    const filterGroupsThatContainsBasicSearch = this.getFilterGroupsThatContainsTheBasicSearch(filterGroups);
 
-    if (filterGroupThatContainsBasicSearch) {
+    if (filterGroupsThatContainsBasicSearch && filterGroupsThatContainsBasicSearch.length > 0) {
 
-      this.removeFilterGroup(filterGroups, filterGroupThatContainsBasicSearch);
+      filterGroupsThatContainsBasicSearch.forEach(filterGroupThatContainsBasicSearch => {
 
-      const basicSearch = filterGroupThatContainsBasicSearch.filters.find(filter => filter.property === 'search');
+        this.removeFilterGroup(filterGroups, filterGroupThatContainsBasicSearch);
 
-      const basicSearchIndex = filterGroupThatContainsBasicSearch.filters.indexOf(basicSearch);
+        const basicSearch = filterGroupThatContainsBasicSearch.filters.find(filter => filter.property === 'search');
 
-      this.searchableProperties.forEach(property => {
+        const basicSearchIndex = filterGroupThatContainsBasicSearch.filters.indexOf(basicSearch);
 
-        const newFilterGroup: FilterGroup = {
-          filters: [...filterGroupThatContainsBasicSearch.filters]
-        };
+        this.searchableProperties.forEach(property => {
 
-        newFilterGroup.filters[basicSearchIndex] = {
-          property: property,
-          value: [basicSearch.value]
-        };
+          const newFilterGroup: FilterGroup = {
+            filters: [...filterGroupThatContainsBasicSearch.filters]
+          };
 
-        filterGroups.push(newFilterGroup);
+          newFilterGroup.filters[basicSearchIndex] = {
+            property: property,
+            value: [basicSearch.value]
+          };
+
+          filterGroups.push(newFilterGroup);
+
+        });
 
       });
 
@@ -1197,9 +1201,9 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   }
 
-  private getFilterGroupThatContainsTheBasicSearch(filterGroups) {
+  private getFilterGroupsThatContainsTheBasicSearch(filterGroups) {
 
-    return filterGroups.find(filterGroup => {
+    return filterGroups.filter(filterGroup => {
 
       const basicSerchFilter = filterGroup.filters ? filterGroup.filters.find(filter => filter.property === 'search') : undefined;
 
@@ -1215,27 +1219,27 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   private subscribeToReactiveReport() {
     this.reactiveReportSubscription = this.reactiveReport
-    .pipe(
-      tap(res => {
-        if (res) {
-          this.loading = false;
-        }
-      })
-    )
-    .subscribe(data => {
-      if (data && data.result && data.result.rows) {
+      .pipe(
+        tap(res => {
+          if (res) {
+            this.loading = false;
+          }
+        })
+      )
+      .subscribe(data => {
+        if (data && data.result && data.result.rows) {
 
-        if (!this.clearAndReloadReport) {
-          data.result.rows = this.report.result.rows.concat(data.result.rows);
-        }
+          if (!this.clearAndReloadReport) {
+            data.result.rows = this.report.result.rows.concat(data.result.rows);
+          }
 
-        this.report = data;
+          this.report = data;
 
-        this.postSearch.emit(data);
+          this.postSearch.emit(data);
 
-        this.updateContentChildren();
+          this.updateContentChildren();
 
-        this.detectLastPage(data.result.rows, data.result.count);
+          this.detectLastPage(data.result.rows, data.result.count);
 
         }
       });
