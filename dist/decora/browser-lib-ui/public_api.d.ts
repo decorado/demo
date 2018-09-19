@@ -134,6 +134,8 @@ export * from './lib/services/snack-bar/dec-snack-bar.service';
 export * from './lib/services/snack-bar/dec-snack-bar.module';
 export * from './lib/services/permission-guard/dec-permission-guard.service';
 export * from './lib/services/permission-guard/dec-permission-guard.module';
+export * from './lib/services/loader/dec-loader.service';
+export * from './lib/services/loader/dec-loader.module';
 export * from './lib/components/dec-spinner/dec-spinner.component';
 export * from './lib/components/dec-spinner/dec-spinner.module';
 export * from './lib/services/ws-client/ws-client.service';

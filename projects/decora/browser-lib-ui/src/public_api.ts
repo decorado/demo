@@ -183,6 +183,9 @@ export * from './lib/services/snack-bar/dec-snack-bar.module';
 // Permission guard
 export * from './lib/services/permission-guard/dec-permission-guard.service';
 export * from './lib/services/permission-guard/dec-permission-guard.module';
+// Permission guard
+export * from './lib/services/loader/dec-loader.service';
+export * from './lib/services/loader/dec-loader.module';
 // Spinner
 export * from './lib/components/dec-spinner/dec-spinner.component';
 export * from './lib/components/dec-spinner/dec-spinner.module';
