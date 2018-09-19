@@ -484,7 +484,7 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
   restart() {
 
     this.loadReport(true);
-
+    this.resetSelected();
   }
 
   /*
@@ -882,6 +882,7 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
 
       if (clearAndReloadReport && this.rows) {
 
+        this.resetSelected();
         this.setRows(this.rows);
 
       }
@@ -1491,4 +1492,12 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
+
+  /*
+  * Reset Selected Rows in Table
+  * 
+  */
+ private resetSelected() {
+  this.table.selected = [];
+ }
 }

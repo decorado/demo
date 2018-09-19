@@ -105,4 +105,5 @@ export declare class DecListComponent implements OnInit, OnDestroy, AfterViewIni
     private stopWatchingTabsChange();
     private watchTableSort();
     private stopWatchingTableSort();
+    private resetSelected();
 }
