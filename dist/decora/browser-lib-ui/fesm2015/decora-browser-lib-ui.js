@@ -6404,23 +6404,25 @@ class DecListComponent {
      */
     appendFilterGroupsBasedOnSearchableProperties(filterGroups) {
         /** @type {?} */
-        const filterGroupThatContainsBasicSearch = this.getFilterGroupThatContainsTheBasicSearch(filterGroups);
-        if (filterGroupThatContainsBasicSearch) {
-            this.removeFilterGroup(filterGroups, filterGroupThatContainsBasicSearch);
-            /** @type {?} */
-            const basicSearch = filterGroupThatContainsBasicSearch.filters.find(filter$$1 => filter$$1.property === 'search');
-            /** @type {?} */
-            const basicSearchIndex = filterGroupThatContainsBasicSearch.filters.indexOf(basicSearch);
-            this.searchableProperties.forEach(property => {
+        const filterGroupsThatContainsBasicSearch = this.getFilterGroupsThatContainsTheBasicSearch(filterGroups);
+        if (filterGroupsThatContainsBasicSearch && filterGroupsThatContainsBasicSearch.length > 0) {
+            filterGroupsThatContainsBasicSearch.forEach(filterGroupThatContainsBasicSearch => {
+                this.removeFilterGroup(filterGroups, filterGroupThatContainsBasicSearch);
                 /** @type {?} */
-                const newFilterGroup = {
-                    filters: [...filterGroupThatContainsBasicSearch.filters]
-                };
-                newFilterGroup.filters[basicSearchIndex] = {
-                    property: property,
-                    value: [basicSearch.value]
-                };
-                filterGroups.push(newFilterGroup);
+                const basicSearch = filterGroupThatContainsBasicSearch.filters.find(filter$$1 => filter$$1.property === 'search');
+                /** @type {?} */
+                const basicSearchIndex = filterGroupThatContainsBasicSearch.filters.indexOf(basicSearch);
+                this.searchableProperties.forEach(property => {
+                    /** @type {?} */
+                    const newFilterGroup = {
+                        filters: [...filterGroupThatContainsBasicSearch.filters]
+                    };
+                    newFilterGroup.filters[basicSearchIndex] = {
+                        property: property,
+                        value: [basicSearch.value]
+                    };
+                    filterGroups.push(newFilterGroup);
+                });
             });
         }
     }
@@ -6438,8 +6440,8 @@ class DecListComponent {
      * @param {?} filterGroups
      * @return {?}
      */
-    getFilterGroupThatContainsTheBasicSearch(filterGroups) {
-        return filterGroups.find(filterGroup => {
+    getFilterGroupsThatContainsTheBasicSearch(filterGroups) {
+        return filterGroups.filter(filterGroup => {
             /** @type {?} */
             const basicSerchFilter = filterGroup.filters ? filterGroup.filters.find(filter$$1 => filter$$1.property === 'search') : undefined;
             return basicSerchFilter ? true : false;

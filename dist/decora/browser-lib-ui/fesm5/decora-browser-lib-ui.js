@@ -7202,24 +7202,27 @@ var DecListComponent = /** @class */ (function () {
      * @return {?}
      */
     function (filterGroups) {
+        var _this = this;
         /** @type {?} */
-        var filterGroupThatContainsBasicSearch = this.getFilterGroupThatContainsTheBasicSearch(filterGroups);
-        if (filterGroupThatContainsBasicSearch) {
-            this.removeFilterGroup(filterGroups, filterGroupThatContainsBasicSearch);
-            /** @type {?} */
-            var basicSearch_1 = filterGroupThatContainsBasicSearch.filters.find(function (filter$$1) { return filter$$1.property === 'search'; });
-            /** @type {?} */
-            var basicSearchIndex_1 = filterGroupThatContainsBasicSearch.filters.indexOf(basicSearch_1);
-            this.searchableProperties.forEach(function (property) {
+        var filterGroupsThatContainsBasicSearch = this.getFilterGroupsThatContainsTheBasicSearch(filterGroups);
+        if (filterGroupsThatContainsBasicSearch && filterGroupsThatContainsBasicSearch.length > 0) {
+            filterGroupsThatContainsBasicSearch.forEach(function (filterGroupThatContainsBasicSearch) {
+                _this.removeFilterGroup(filterGroups, filterGroupThatContainsBasicSearch);
                 /** @type {?} */
-                var newFilterGroup = {
-                    filters: __spread(filterGroupThatContainsBasicSearch.filters)
-                };
-                newFilterGroup.filters[basicSearchIndex_1] = {
-                    property: property,
-                    value: [basicSearch_1.value]
-                };
-                filterGroups.push(newFilterGroup);
+                var basicSearch = filterGroupThatContainsBasicSearch.filters.find(function (filter$$1) { return filter$$1.property === 'search'; });
+                /** @type {?} */
+                var basicSearchIndex = filterGroupThatContainsBasicSearch.filters.indexOf(basicSearch);
+                _this.searchableProperties.forEach(function (property) {
+                    /** @type {?} */
+                    var newFilterGroup = {
+                        filters: __spread(filterGroupThatContainsBasicSearch.filters)
+                    };
+                    newFilterGroup.filters[basicSearchIndex] = {
+                        property: property,
+                        value: [basicSearch.value]
+                    };
+                    filterGroups.push(newFilterGroup);
+                });
             });
         }
     };
@@ -7242,12 +7245,12 @@ var DecListComponent = /** @class */ (function () {
      * @param {?} filterGroups
      * @return {?}
      */
-    DecListComponent.prototype.getFilterGroupThatContainsTheBasicSearch = /**
+    DecListComponent.prototype.getFilterGroupsThatContainsTheBasicSearch = /**
      * @param {?} filterGroups
      * @return {?}
      */
     function (filterGroups) {
-        return filterGroups.find(function (filterGroup) {
+        return filterGroups.filter(function (filterGroup) {
             /** @type {?} */
             var basicSerchFilter = filterGroup.filters ? filterGroup.filters.find(function (filter$$1) { return filter$$1.property === 'search'; }) : undefined;
             return basicSerchFilter ? true : false;
