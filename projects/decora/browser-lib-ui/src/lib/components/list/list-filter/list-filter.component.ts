@@ -155,7 +155,7 @@ export class DecListFilterComponent implements OnInit, OnDestroy {
   }
 
   onSearch = (appendCurrentForm = true) => {
-
+    
     if (this.filterForm && appendCurrentForm) {
 
       const newDecFilterGroup = {
@@ -166,7 +166,7 @@ export class DecListFilterComponent implements OnInit, OnDestroy {
 
       Object.keys(this.filterForm).forEach(key => {
 
-        if (this.filterForm[key]) {
+        if (typeof this.filterForm[key] !== 'undefined') {
 
           const filter = { property: key, value: this.filterForm[key] };
 
