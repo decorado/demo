@@ -1,5 +1,6 @@
 export declare enum StatusColors {
     ACTIVE = "#097509",
+    APPROVED = "#259844",
     DELETED = "#C10F0F",
     FIX_OPEN = "#259844",
     FIX_REOPEN = "#259844",
