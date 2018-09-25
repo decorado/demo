@@ -3,8 +3,10 @@ import { CommonModule } from '@angular/common';
 import { DecImageZoomComponent } from './dec-image-zoom.component';
 import { DecImageModule } from './../../directives/image/image.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { MatIconModule } from '@angular/material';
+import { MatIconModule, MatButtonModule } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
+import { DecUploadModule } from './../upload/upload.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -12,7 +14,10 @@ import { TranslateModule } from '@ngx-translate/core';
     DecImageModule,
     FlexLayoutModule,
     MatIconModule,
-    TranslateModule
+    TranslateModule,
+    DecUploadModule,
+    MatButtonModule,
+    FormsModule
   ],
   declarations: [
     DecImageZoomComponent

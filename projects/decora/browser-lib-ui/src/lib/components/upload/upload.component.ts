@@ -30,6 +30,8 @@ export class DecUploadComponent implements ControlValueAccessor {
 
   @Input() disabled: boolean;
 
+  @Input() endpoint: string;
+
   @Input() multiple: boolean;
 
   @Output() error = new EventEmitter();
@@ -128,7 +130,7 @@ export class DecUploadComponent implements ControlValueAccessor {
         value: 0,
       };
       this.progresses.push(progress);
-      this.service.upload(UPLOAD_ENDPOINT, [file])
+      this.service.upload(this.endpoint, [file])
       .pipe(
         catchError(error => {
         console.log('catchError', error);

@@ -1,6 +1,6 @@
 <app-demo-container readmeSrc="/assets/docs/browser-lib-ui/components/gallery/README.md">
 
-  <dec-gallery [images]="images"></dec-gallery>
+  <dec-gallery (uploaded)="uploaded($event)" [permitUpload]="false" [images]="images"></dec-gallery>
 
 </app-demo-container>
 

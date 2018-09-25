@@ -1,3 +1,4 @@
+import { EventEmitter } from '@angular/core';
 import { NguCarouselStore } from '@ngu/carousel/src/ngu-carousel/ngu-carousel.interface';
 export declare class DecGalleryComponent {
     imageHighlight: any;
@@ -21,12 +22,16 @@ export declare class DecGalleryComponent {
         };
         custom: string;
     };
+    index: number;
     images: any[];
+    permitUpload: boolean;
+    uploaded: EventEmitter<{}>;
     private _images;
     constructor();
-    onSelectImage: ($event: any, sysFile: any) => void;
+    onSelectImage: ($event: any, sysFile: any, i: any) => void;
     setExternalLink: () => void;
     onInitDataFn(event: NguCarouselStore): void;
     onMoveFn(event: NguCarouselStore): void;
     setPrevNextCheckers(first: boolean, last: boolean): void;
+    uploadedFunction(event: any): void;
 }

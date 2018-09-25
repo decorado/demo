@@ -7,6 +7,7 @@ export declare class DecUploadComponent implements ControlValueAccessor {
     private service;
     progresses: UploadProgress[];
     disabled: boolean;
+    endpoint: string;
     multiple: boolean;
     error: EventEmitter<{}>;
     uploaded: EventEmitter<{}>;

@@ -2,6 +2,14 @@
   <div #imageContainer class="imagehighlight-container">
   </div>
   <div class="container-img-link">
+    <div *ngIf="permitUpload" class="upload-button">
+      <dec-upload [endpoint]="'/files/upload'" (uploaded)="uploadedFunction($event)">
+        <mat-icon class="upload-icon-size">
+            add_a_photo
+        </mat-icon>
+      </dec-upload>
+    </div>
+
     <span [ngClass]="{'zoom-in-active': finalZoom, 'zoom-in': !finalZoom}" (click)="zoomIn()">
       <mat-icon class="icons-zoom">add_circle_outline</mat-icon>
     </span>

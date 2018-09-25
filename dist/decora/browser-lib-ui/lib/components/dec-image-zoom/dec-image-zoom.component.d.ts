@@ -1,9 +1,11 @@
-import { ElementRef, AfterViewInit } from '@angular/core';
+import { ElementRef, AfterViewInit, EventEmitter } from '@angular/core';
 export declare type ZoomMode = 'hover' | 'click' | 'toggle' | 'hover-freeze';
 export declare class DecImageZoomComponent implements AfterViewInit {
     image: any;
     size: any;
+    permitUpload: boolean;
     divImage: ElementRef;
+    uploaded: EventEmitter<{}>;
     private _image;
     private _size;
     imgExternalLink: string;
@@ -28,4 +30,5 @@ export declare class DecImageZoomComponent implements AfterViewInit {
     getNativeElement(divImage: any): any;
     loadHighLightImage(): void;
     private getImageUrl();
+    uploadedFunction(event: any): void;
 }

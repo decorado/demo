@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CarouselConfig } from './carousel-config';
 import { NguCarouselStore } from '@ngu/carousel/src/ngu-carousel/ngu-carousel.interface';
 
@@ -20,6 +20,8 @@ export class DecGalleryComponent {
   isLast: boolean;
 
   carouselConfig = CarouselConfig;
+
+  index = 0;
 
   @Input()
   set images(value: any[]) {
@@ -44,11 +46,16 @@ export class DecGalleryComponent {
 
   }
 
+  // ***UPLOAD*** //
+  @Input() permitUpload = false;
+  @Output() uploaded = new EventEmitter();
+  
+  // ***FIM UPLOAD*** //
   private _images: any[] = [];
 
   constructor() { }
 
-  onSelectImage = ($event, sysFile) => {
+  onSelectImage = ($event, sysFile, i) => {
 
     if (this.activeImage && this.activeImage !== $event.target) {
 
@@ -61,6 +68,8 @@ export class DecGalleryComponent {
     this.activeImage = $event.target;
 
     this.imageHighlight = sysFile;
+
+    this.index = i;
 
     this.setExternalLink();
 
@@ -100,4 +109,11 @@ export class DecGalleryComponent {
 
   }
 
+  uploadedFunction(event) {
+    this.images[this.index] = event;
+    this.uploaded.emit({
+      sysFile: event,
+      index: this.index
+    });
+  }
 }

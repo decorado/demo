@@ -71,4 +71,8 @@ export class DecoraGalleryDemoComponent implements OnInit {
   ngOnInit() {
   }
 
+
+  uploaded(event) {
+    console.log(event);
+  }
 }
