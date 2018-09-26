@@ -25,6 +25,7 @@ export declare class DecGalleryComponent {
     index: number;
     images: any[];
     permitUpload: boolean;
+    resolutions: string[];
     uploaded: EventEmitter<{}>;
     private _images;
     constructor();

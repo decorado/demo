@@ -48,6 +48,9 @@ export class DecGalleryComponent {
 
   // ***UPLOAD*** //
   @Input() permitUpload = false;
+
+  @Input() resolutions: string[] = [];
+
   @Output() uploaded = new EventEmitter();
 
   // ***FIM UPLOAD*** //
