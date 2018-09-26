@@ -49,7 +49,7 @@ export class DecGalleryComponent {
   // ***UPLOAD*** //
   @Input() permitUpload = false;
   @Output() uploaded = new EventEmitter();
-  
+
   // ***FIM UPLOAD*** //
   private _images: any[] = [];
 

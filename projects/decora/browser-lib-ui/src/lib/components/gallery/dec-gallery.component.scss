@@ -22,12 +22,12 @@ $width-of-border: 2px;
   .carousel-wrapper {
     margin-top: 8px;
     padding: 0 24px;
-    height: 152px;
+    // height: 152px;
 
     ngu-item {
       display: flex;
-      justify-content: center;
       align-items: center;
+      flex-flow: column;
 
       &.active {
         img {
@@ -43,6 +43,7 @@ $width-of-border: 2px;
 
       img {
         max-width: 124px;
+        border: $width-of-border solid transparent;
         cursor: pointer;
       }
     }
@@ -51,7 +52,7 @@ $width-of-border: 2px;
     .right-next {
       display: block !important;
       position: absolute;
-      top: calc(50% - 12px);
+      top: calc(50% - 24px);
       cursor: pointer;
       text-shadow: none;
       user-select: none;
