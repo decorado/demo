@@ -105,12 +105,20 @@ export class DecGalleryMarksComponent {
 
   }
 
-  getClass(coord) {
-    if (coord.length === 2) {
-      return 'tags-item type-point';
+  getClass(comment) {
+    let cssClass = 'tags-item';
+
+    if (comment.coordinates.length === 2) {
+      cssClass += ' type-point';
     } else {
-      return 'tags-item type-square';
+      cssClass += ' type-square';
     }
+
+    if (comment.requestByClient) {
+      cssClass += ' client';
+    }
+
+    return cssClass;
   }
 
   deleteMark(target, commentIndex, renderIndex) {

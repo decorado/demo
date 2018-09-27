@@ -32,6 +32,6 @@ export declare class DecGalleryMarksComponent {
     onInitDataFn(event: NguCarouselStore): void;
     onMoveFn(event: NguCarouselStore): void;
     setPrevNextCheckers(first: boolean, last: boolean): void;
-    getClass(coord: any): "tags-item type-point" | "tags-item type-square";
+    getClass(comment: any): string;
     deleteMark(target: any, commentIndex: any, renderIndex: any): void;
 }

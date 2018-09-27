@@ -34,14 +34,13 @@
       <div *ngIf="c?.comments?.length > 0" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="space-between start">
         <h4 class="title-render">{{ 'label.Render' | translate}} {{ r+1 }}</h4>
         <div fxLayoutAlign="space-between center" fxLayoutGap="16px" class="markdown-item" *ngFor="let comments of c?.comments; let i = index">
-          <span fxFlex="24px" class="{{getClass(comments.coordinates)}}">{{i + 1}}</span>
+          <span fxFlex="24px" class="{{getClass(comments)}}">{{i + 1}}</span>
           <span *ngIf="comments.comment" class="text-markdown">
             {{comments.comment}}
           </span>
-          <mat-icon class="delete-button" *ngIf="qaModeActive" (click)="deleteMark(imgMarker.decMarks.marksWrapper.nativeElement.querySelectorAll('.point-tag'), i, r)">delete</mat-icon>
+          <mat-icon class="delete-button" *ngIf="qaModeActive && !comments.requestByClient" (click)="deleteMark(imgMarker.decMarks.marksWrapper.nativeElement.querySelectorAll('.point-tag'), i, r)">delete</mat-icon>
         </div>
       </div>
     </div>
   </div>
-
 </div>
