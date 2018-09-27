@@ -16,4 +16,5 @@ export declare class DecCommentDialogComponent {
     confirm(): void;
     delete(): void;
     cancel(): void;
+    pressEnter(event: any): void;
 }

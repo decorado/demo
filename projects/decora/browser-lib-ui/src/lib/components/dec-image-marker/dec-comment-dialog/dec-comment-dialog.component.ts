@@ -42,4 +42,13 @@ export class DecCommentDialogComponent {
     this.dialogRef.close();
   }
 
+  pressEnter(event) {
+    if(event.keyCode == 13) {
+      event.stopImmediatePropagation();
+      event.preventDefault();
+      if (this.comment) {
+        this.confirm();
+      }
+    }
+  }
 }
