@@ -32,6 +32,8 @@ export class DecImageMarkerComponent implements OnInit {
 
   private existsEvents = false;
 
+  private requestByClient = false;
+
   // Events controls
   private mousedown = false;
 
@@ -64,7 +66,7 @@ export class DecImageMarkerComponent implements OnInit {
 
   private removeTag(target) {
 
-    if (target.parentElement && target.parentElement.className === 'square-tag') {
+    if (target.parentElement && target.parentElement.classList.contains('square-tag')) {
 
       target.parentElement.remove();
 
@@ -114,25 +116,21 @@ export class DecImageMarkerComponent implements OnInit {
 
       const mouseWasDown = !this.mouseup;
 
-      const inAPointTag = ((<Element>event.target).className === 'point-tag');
-
+      const inAPointTag = ((<Element>event.target).classList.contains('point-tag'));
       const notInAPointTag = !inAPointTag;
 
+      const requestByClient = ((<Element>event.target).classList.contains('client'));
+
       if (inQaMode && mouseWasDown && notInAPointTag) {
-
         this.createNewTag(imageElement);
-
       }
 
-      if (inQaMode && inAPointTag) {
-
+      if (inQaMode && inAPointTag && !requestByClient) {
         this.editComment(event);
-
       }
 
       this.mousemove = false;
       this.mouseup = true;
-
     });
 
   }
@@ -203,7 +201,7 @@ export class DecImageMarkerComponent implements OnInit {
 
     ref.afterClosed().subscribe(resp => {
       if (resp) {
-        this.decMarks.createPointTag(x, y, index);
+        this.decMarks.createPointTag([x, y], index, this.requestByClient);
         this.render.comments.push({ comment: resp, coordinates: [x, y] });
       }
     });
@@ -225,7 +223,7 @@ export class DecImageMarkerComponent implements OnInit {
 
     ref.afterClosed().subscribe(resp => {
       if (resp) {
-        this.decMarks.createSquareTag(x, y, x2, y2, index);
+        this.decMarks.createSquareTag([x, y, x2, y2], index, this.requestByClient);
         this.render.comments.push({ comment: resp, coordinates: [x, y, x2, y2] });
       }
     });
@@ -234,7 +232,7 @@ export class DecImageMarkerComponent implements OnInit {
 
   private onMouseDown(wrapperElement) {
     wrapperElement.addEventListener('mousedown', (event) => {
-      if (this.qaModeActive && !((<Element>event.target).className === 'point-tag')) {
+      if (this.qaModeActive && !((<Element>event.target.classList.contains('point-tag')))) {
         this.mousedown = true;
         this.mouseup = false;
         this.startX = event.offsetX;
@@ -253,7 +251,7 @@ export class DecImageMarkerComponent implements OnInit {
 
     wrapperElement.addEventListener('mousemove', (event) => {
 
-      const notClickingInAnyTag = !((<Element>event.target).className === 'point-tag');
+      const notClickingInAnyTag = !((<Element>event.target.classList.contains('point-tag')));
 
       const inQaMode = this.qaModeActive;
 
