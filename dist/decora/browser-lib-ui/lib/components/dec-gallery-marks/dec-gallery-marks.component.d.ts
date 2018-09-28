@@ -24,8 +24,10 @@ export declare class DecGalleryMarksComponent {
     };
     imgMarker: DecImageMarkerComponent;
     qaModeActive?: boolean;
+    measures: any;
     images: any[];
     private _images;
+    private _measures;
     constructor();
     onSelectImage: ($event: any, sysFile: any) => void;
     setExternalLink: () => void;

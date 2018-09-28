@@ -44,7 +44,7 @@ export class DecImageZoomComponent implements AfterViewInit {
   private _size: any;
 
   imgExternalLink: string;
-  
+
   // zoom
   isZoom = false;
   imageSizeRaw: any;

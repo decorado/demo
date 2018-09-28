@@ -35,7 +35,11 @@
     "shot-order": "Ordem do shot",
     "show-more": "Mostrar mais",
     "success": "Sucesso",
-    "warn": "Aviso"
+    "warn": "Aviso",
+    "measures": "Medidas",
+    "width": "Largura",
+    "depth": "Profundidade",
+    "height": "Altura"
   },
   "message": {
     "http-status": {

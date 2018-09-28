@@ -35,7 +35,11 @@
     "shot-order": "Shot order",
     "show-more": "Show more",
     "success": "Success",
-    "warn": "Warn"
+    "warn": "Warn",
+    "measures": "Measures",
+    "width": "Width",
+    "depth": "Depth",
+    "height": "Height"
   },
   "message": {
     "http-status": {
