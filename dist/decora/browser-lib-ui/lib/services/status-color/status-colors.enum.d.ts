@@ -11,4 +11,5 @@ export declare enum StatusColors {
     JOB_DENIED = "#f44336",
     COMMITED = "#259844",
     WAITING_SKU_FIX = "#656d74",
+    TIME_EXPIRED = "#f44336",
 }
