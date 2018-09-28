@@ -1,6 +1,6 @@
 <h2>{{title}}</h2>
 <mat-form-field>
-  <textarea matInput [(ngModel)]="comment" [placeholder]="placeholderLabel"></textarea>
+  <textarea matInput (keydown)="pressEnter($event)" [(ngModel)]="comment" [placeholder]="placeholderLabel"></textarea>
 </mat-form-field>
 <div fxLayoutAlign="end" fxLayoutGap="16px">
   <button mat-button (click)="cancel()">{{cancelLabel | uppercase}}</button>

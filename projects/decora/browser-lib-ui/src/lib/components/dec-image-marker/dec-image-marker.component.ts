@@ -17,7 +17,7 @@ export class DecImageMarkerComponent implements OnInit {
   set qaModeActive(v: boolean) {
     if (this._qaModeActive !== v) {
       this._qaModeActive = v;
-      //TODO: fix me
+      // TODO: fix me
       if (!this.existsEvents) {
         this.addListeners(this.decMarks.marksWrapper.nativeElement, this.decMarks.imgRef.nativeElement);
       }
@@ -30,7 +30,23 @@ export class DecImageMarkerComponent implements OnInit {
 
   private _qaModeActive: boolean;
 
-  private existsEvents: boolean = false;
+  private existsEvents = false;
+
+  private requestByClient = false;
+
+  // Events controls
+  private mousedown = false;
+
+  private mouseup = true;
+
+  private mousemove = false;
+
+  private startX;
+
+  private startY;
+
+  private squareMark: HTMLDivElement;
+
 
   @ViewChild(DecImageMarksComponent) decMarks: DecImageMarksComponent;
 
@@ -39,161 +55,284 @@ export class DecImageMarkerComponent implements OnInit {
   ngOnInit() { }
 
   deleteMark(target, commentIndex) {
-    if (target.parentElement && target.parentElement.className === 'square-tag') {
+
+    this.removeTag(target);
+
+    this.removeComment(commentIndex);
+
+    this.refreshTagsNumber();
+
+  }
+
+  private removeTag(target) {
+
+    if (target.parentElement && target.parentElement.classList.contains('square-tag')) {
+
       target.parentElement.remove();
+
     } else {
+
       target.remove();
+
     }
+
+  }
+
+  private removeComment(commentIndex) {
+
     const index = commentIndex;
+
     this.render.comments.splice(index, 1);
+
+  }
+
+  private refreshTagsNumber() {
+
     Array.from(this.decMarks.marksWrapper.nativeElement.querySelectorAll('.point-tag')).forEach((point: Element, idx) => {
       point.innerHTML = (idx + 1).toString();
     });
+
   }
 
-  addListeners(wrapperElement: HTMLDivElement, imageElement: HTMLImageElement): any {
+  private addListeners(wrapperElement: HTMLDivElement, imageElement: HTMLImageElement): any {
 
-    let mousedown = false;
-    let mouseup = true;
-    let mousemove = false;
+    this.onMouseDown(wrapperElement);
 
-    let startX, startY;
+    this.onDragStart(wrapperElement);
 
-    let squareMark: HTMLDivElement;
+    this.onMouseMove(wrapperElement);
 
-    wrapperElement.addEventListener('mousedown', (event) => {
-      if (this.qaModeActive && !((<Element>event.target).className === 'point-tag')) {
-        mousedown = true;
-        mouseup = false;
-        startX = event.offsetX;
-        startY = event.offsetY;
-      }
-    });
+    this.onMouseUp(wrapperElement, imageElement);
 
-    wrapperElement.addEventListener('dragstart', (event) => {
-      event.preventDefault();
-    });
+    this.existsEvents = true;
 
-    wrapperElement.addEventListener('mousemove', (event) => {
-      if (this.qaModeActive && mousedown && !mouseup && !((<Element>event.target).className === 'point-tag')) {
-        mousemove = true;
-        if (document.getElementById('squareMark')) {
-          document.getElementById('squareMark').remove();
-        }
-        squareMark = document.createElement('div');
-        squareMark.id = 'squareMark';
-        squareMark.style.position = 'absolute';
-        squareMark.style.pointerEvents = 'none';
-        squareMark.style.borderStyle = 'solid';
-        squareMark.style.borderColor = '#f33d3c';
-        squareMark.style.borderWidth = '2px';
-        squareMark.style.width = `${(event.offsetX - startX)}px`;
-        squareMark.style.height = `${(event.offsetY - startY)}px`;
+  }
 
-        squareMark.style.top = startY > event.offsetY ? `${event.offsetY}px` : `${startY}px`;
-        squareMark.style.left = startX > event.offsetX ? `${event.offsetX}px` : `${startX}px`;
-
-        squareMark.style.width = `${Math.abs(startX - event.offsetX)}px`;
-        squareMark.style.height = `${Math.abs(startY - event.offsetY)}px`;
-
-        wrapperElement.appendChild(squareMark);
-      }
-      wrapperElement.onmouseleave = () => {
-        if (this.qaModeActive && squareMark) {
-          mousedown = false;
-          mouseup = true;
-          squareMark.remove();
-        }
-      };
-      wrapperElement.onmouseout = () => {
-        if (this.qaModeActive && squareMark) {
-          mousedown = false;
-          mouseup = true;
-          squareMark.remove();
-        }
-      };
-      event.preventDefault();
-    });
+  private onMouseUp(wrapperElement, imageElement) {
 
     wrapperElement.addEventListener('mouseup', (event) => {
 
-      if (this.qaModeActive && !mouseup && !((<Element>event.target).className === 'point-tag')) {
+      const inQaMode = this.qaModeActive;
 
-        mousedown = false;
+      const mouseWasDown = !this.mouseup;
 
-        const x = Math.round(((startX / imageElement.height) * 100) * 100) / 100;
-        const y = Math.round(((startY / imageElement.width) * 100) * 100) / 100;
+      const inAPointTag = ((<Element>event.target).classList.contains('point-tag'));
+      const notInAPointTag = !inAPointTag;
 
-        const index = this.render.comments.length + 1;
+      const requestByClient = ((<Element>event.target).classList.contains('client'));
 
-        if (mousemove) {
-          const x2 = Math.round(((event.offsetX / imageElement.width) * 100) * 100) / 100;
-          const y2 = Math.round(((event.offsetY / imageElement.height) * 100) * 100) / 100;
-
-          const ref = this.dialog.open(DecCommentDialogComponent,
-            {
-              data: {
-                title: this.translateService.instant('label.markdowns'),
-                comment: {}
-              },
-              width: '615px'
-            });
-          ref.afterClosed().subscribe(resp => {
-            if (resp) {
-              this.decMarks.createSquareTag(x, y, x2, y2, index);
-              this.render.comments.push({ comment: resp, coordinates: [x, y, x2, y2] });
-            }
-          });
-        } else {
-          const ref = this.dialog.open(DecCommentDialogComponent,
-            {
-              data: {
-                title: this.translateService.instant('label.markdowns'),
-                comment: {}
-              },
-              width: '615px'
-            });
-          ref.afterClosed().subscribe(resp => {
-            if (resp) {
-              this.decMarks.createPointTag(x, y, index);
-              this.render.comments.push({ comment: resp, coordinates: [x, y] });
-            }
-          });
-        }
-
-        if (squareMark) {
-          squareMark.remove();
-        }
-
+      if (inQaMode && mouseWasDown && notInAPointTag) {
+        this.createNewTag(imageElement);
       }
 
-      if (this.qaModeActive && ((<Element>event.target).className === 'point-tag')) {
-
-        const target = <Element>event.target;
-        const commentIndex = parseInt(target.innerHTML, 10) - 1;
-
-        const ref = this.dialog.open(DecCommentDialogComponent,
-          {
-            data: {
-              title: this.translateService.instant('label.markdowns'),
-              comment: this.render.comments[commentIndex], editing: true
-            },
-            width: '615px'
-          });
-        ref.afterClosed().subscribe(resp => {
-          if (resp === 'delete') {
-            this.deleteMark(target, commentIndex);
-          } else if (resp) {
-            this.render.comments[commentIndex].comment = resp;
-          }
-        });
-
+      if (inQaMode && inAPointTag && !requestByClient) {
+        this.editComment(event);
       }
 
-      mousemove = false;
-      mouseup = true;
+      this.mousemove = false;
+      this.mouseup = true;
+    });
+
+  }
+
+  private createNewTag(imageElement) {
+
+    this.mousedown = false;
+
+    const x = Math.round(((this.startX / imageElement.height) * 100) * 100) / 100;
+
+    const y = Math.round(((this.startY / imageElement.width) * 100) * 100) / 100;
+
+    const index = this.render.comments.length + 1;
+
+    if (this.mousemove) {
+
+      this.drawSquareTag(event, imageElement, index, x, y);
+
+    } else {
+
+      this.drawPointTag(index, x, y);
+
+    }
+
+    this.removeSquareMark();
+
+  }
+
+  private editComment(event) {
+
+    const target = <Element>event.target;
+
+    const commentIndex = parseInt(target.innerHTML, 10) - 1;
+
+    const ref = this.dialog.open(DecCommentDialogComponent, {
+      data: {
+        title: this.translateService.instant('label.markdowns'),
+        comment: this.render.comments[commentIndex], editing: true
+      },
+      width: '615px'
+    });
+
+    ref.afterClosed().subscribe(resp => {
+
+      if (resp === 'delete') {
+
+        this.deleteMark(target, commentIndex);
+
+      } else if (resp) {
+
+        this.render.comments[commentIndex].comment = resp;
+
+      }
 
     });
-    this.existsEvents = true;
+
+  }
+
+  private drawPointTag(index, x, y) {
+
+    const ref = this.dialog.open(DecCommentDialogComponent, {
+      data: {
+        title: this.translateService.instant('label.markdowns'),
+        comment: {}
+      },
+      width: '615px'
+    });
+
+    ref.afterClosed().subscribe(resp => {
+      if (resp) {
+        this.decMarks.createPointTag([x, y], index, this.requestByClient);
+        this.render.comments.push({ comment: resp, coordinates: [x, y] });
+      }
+    });
+
+  }
+
+  private drawSquareTag(event, imageElement, index, x, y) {
+
+    const x2 = Math.round(((event.offsetX / imageElement.width) * 100) * 100) / 100;
+    const y2 = Math.round(((event.offsetY / imageElement.height) * 100) * 100) / 100;
+
+    const ref = this.dialog.open(DecCommentDialogComponent, {
+      data: {
+        title: this.translateService.instant('label.markdowns'),
+        comment: {}
+      },
+      width: '615px'
+    });
+
+    ref.afterClosed().subscribe(resp => {
+      if (resp) {
+        this.decMarks.createSquareTag([x, y, x2, y2], index, this.requestByClient);
+        this.render.comments.push({ comment: resp, coordinates: [x, y, x2, y2] });
+      }
+    });
+
+  }
+
+  private onMouseDown(wrapperElement) {
+    wrapperElement.addEventListener('mousedown', (event) => {
+      if (this.qaModeActive && !((<Element>event.target.classList.contains('point-tag')))) {
+        this.mousedown = true;
+        this.mouseup = false;
+        this.startX = event.offsetX;
+        this.startY = event.offsetY;
+      }
+    });
+  }
+
+  private onDragStart(wrapperElement) {
+    wrapperElement.addEventListener('dragstart', (event) => {
+      event.preventDefault();
+    });
+  }
+
+  private onMouseMove(wrapperElement) {
+
+    wrapperElement.addEventListener('mousemove', (event) => {
+
+      const notClickingInAnyTag = !((<Element>event.target.classList.contains('point-tag')));
+
+      const inQaMode = this.qaModeActive;
+
+      const mouseIsDown = this.mousedown && !this.mouseup;
+
+      if (inQaMode && mouseIsDown && notClickingInAnyTag) {
+
+        this.mousemove = true;
+
+        this.ensureNoMark();
+
+        this.squareMark = this.createNewSquareMark(event);
+
+        wrapperElement.appendChild(this.squareMark);
+      }
+
+      this.onMouseLeave(wrapperElement);
+
+      this.onMouseOut(wrapperElement);
+
+      event.preventDefault();
+    });
+  }
+
+  private createNewSquareMark(event) {
+    const squareMark = document.createElement('div');
+    squareMark.id = 'squareMark';
+    squareMark.style.position = 'absolute';
+    squareMark.style.pointerEvents = 'none';
+    squareMark.style.borderStyle = 'solid';
+    squareMark.style.borderColor = '#f33d3c';
+    squareMark.style.borderWidth = '2px';
+    squareMark.style.width = `${(event.offsetX - this.startX)}px`;
+    squareMark.style.height = `${(event.offsetY - this.startY)}px`;
+    squareMark.style.top = this.startY > event.offsetY ? `${event.offsetY}px` : `${this.startY}px`;
+    squareMark.style.left = this.startX > event.offsetX ? `${event.offsetX}px` : `${this.startX}px`;
+    squareMark.style.width = `${Math.abs(this.startX - event.offsetX)}px`;
+    squareMark.style.height = `${Math.abs(this.startY - event.offsetY)}px`;
+    return squareMark;
+  }
+
+  private onMouseLeave(wrapperElement) {
+
+    wrapperElement.onmouseleave = () => {
+      if (this.qaModeActive && this.squareMark) {
+        this.mousedown = false;
+        this.mouseup = true;
+        this.squareMark.remove();
+      }
+    };
+
+  }
+
+  private onMouseOut(wrapperElement) {
+
+    wrapperElement.onmouseout = () => {
+      if (this.qaModeActive && this.squareMark) {
+        this.mousedown = false;
+        this.mouseup = true;
+        this.squareMark.remove();
+      }
+    };
+
+  }
+
+  private ensureNoMark() {
+
+    if (document.getElementById('squareMark')) {
+
+      document.getElementById('squareMark').remove();
+
+    }
+
+  }
+
+  private removeSquareMark() {
+
+    if (this.squareMark) {
+
+      this.squareMark.remove();
+
+    }
   }
 }

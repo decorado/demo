@@ -27,6 +27,43 @@ export class DecGalleryMarksComponent {
   @Input() qaModeActive?: boolean;
 
   @Input()
+  set measures(value: any) {
+    if (value) {
+      this._measures = {};
+      this._measures.modelCubeX = {
+        cm: `${Math.round(value.modelCubeX).toFixed(2)} cm`,
+        in: `${Math.round(value.modelCubeX * 0.39370).toFixed(2)} in`
+      };
+      this._measures.referenceCubeX = {
+        cm: `${Math.round(value.referenceCubeX).toFixed(2)} cm`,
+        in: `${Math.round(value.referenceCubeX * 0.39370).toFixed(2)} in`
+      };
+      this._measures.modelCubeY = {
+        cm: `${Math.round(value.modelCubeY).toFixed(2)} cm`,
+        in: `${Math.round(value.modelCubeY * 0.39370).toFixed(2)} in`
+      };
+      this._measures.referenceCubeY = {
+        cm: `${Math.round(value.referenceCubeY).toFixed(2)} cm`,
+        in: `${Math.round(value.referenceCubeY * 0.39370).toFixed(2)} in`
+      };
+      this._measures.modelCubeZ = {
+        cm: `${Math.round(value.modelCubeZ).toFixed(2)} cm`,
+        in: `${Math.round(value.modelCubeZ * 0.39370).toFixed(2)} in`
+      };
+      this._measures.referenceCubeZ = {
+        cm: `${Math.round(value.referenceCubeZ).toFixed(2)} cm`,
+        in: `${Math.round(value.referenceCubeZ * 0.39370).toFixed(2)} in`
+      };
+    }
+  }
+
+  get measures(): any {
+
+    return this._measures;
+
+  }
+
+  @Input()
   set images(value: any[]) {
 
     value = value || new Array<any>();
@@ -51,6 +88,8 @@ export class DecGalleryMarksComponent {
 
   private _images: any[] = [];
 
+  private _measures: any;
+
   constructor() { }
 
   onSelectImage = ($event, sysFile) => {
@@ -73,9 +112,9 @@ export class DecGalleryMarksComponent {
 
   setExternalLink = () => {
 
-    if (this.imageHighlight) {
+    if (this.imageHighlight && this.imageHighlight.file) {
 
-      this.imgExternalLink = this.imageHighlight.fileUrl;
+      this.imgExternalLink = this.imageHighlight.file.fileUrl;
 
     }
 
@@ -105,12 +144,20 @@ export class DecGalleryMarksComponent {
 
   }
 
-  getClass(coord) {
-    if (coord.length === 2) {
-      return 'tags-item type-point';
+  getClass(comment) {
+    let cssClass = 'tags-item';
+
+    if (comment.coordinates.length === 2) {
+      cssClass += ' type-point';
     } else {
-      return 'tags-item type-square';
+      cssClass += ' type-square';
     }
+
+    if (comment.requestByClient) {
+      cssClass += ' client';
+    }
+
+    return cssClass;
   }
 
   deleteMark(target, commentIndex, renderIndex) {

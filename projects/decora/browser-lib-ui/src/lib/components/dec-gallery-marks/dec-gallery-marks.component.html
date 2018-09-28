@@ -25,7 +25,65 @@
 
   </ngu-carousel>
 
-  <div fxLayout="column">
+  <div fxLayout="column" fxLayoutGap="8px">
+    <mat-expansion-panel class="mat-elevation-z0" *ngIf="measures">
+      <mat-expansion-panel-header>
+        {{ 'label.measures' | translate }}
+      </mat-expansion-panel-header>
+      <mat-list role="list">
+        <mat-list-item role="listitem">
+          <div fxLayout="row" fxFlex fxLayoutAlign="space-between center">
+            <div fxLayout="row" fxFlex="33" fxLayoutAlign="start center" fxLayoutGap="32px">
+            </div>
+            <div fxLayout="row" fxFlex="33" fxLayoutAlign="start center" fxLayoutGap="32px">
+              <span>{{ 'label.product' | translate }}</span>
+            </div>
+            <div fxLayout="row" fxFlex="33" fxLayoutAlign="start center" fxLayoutGap="32px">
+              <span>{{ 'label.model' | translate }}</span>
+            </div>
+          </div>
+        </mat-list-item>
+        <mat-list-item role="listitem">
+          <div fxLayout="row" fxFlex fxLayoutAlign="space-between center">
+            <div fxLayout="row" fxFlex="33" fxLayoutAlign="start center" fxLayoutGap="32px">
+              <span>{{ 'label.cubeX' | translate }}</span>
+            </div>
+            <div fxLayout="row" fxFlex="33" fxLayoutAlign="start center" fxLayoutGap="32px">
+              <span>{{ measures.modelCubeX?.cm }} - {{ measures.modelCubeX?.in }} in</span>
+            </div>
+            <div fxLayout="row" fxFlex="33" fxLayoutAlign="start center" fxLayoutGap="32px">
+              <span>{{ measures.referenceCubeX?.cm }} - {{ measures.referenceCubeX?.in }}</span>
+            </div>
+          </div>
+        </mat-list-item>
+        <mat-list-item role="listitem">
+          <div fxLayout="row" fxFlex fxLayoutAlign="space-between center">
+            <div fxLayout="row" fxFlex="33" fxLayoutAlign="start center" fxLayoutGap="32px">
+              <span>{{ 'label.cubeZ' | translate }}</span>
+            </div>
+            <div fxLayout="row" fxFlex="33" fxLayoutAlign="start center" fxLayoutGap="32px">
+              <span>{{ measures.modelCubeZ?.cm }} - {{ measures.modelCubeZ?.in }} in</span>
+            </div>
+            <div fxLayout="row" fxFlex="33" fxLayoutAlign="start center" fxLayoutGap="32px">
+              <span>{{ measures.referenceCubeZ?.cm }} - {{ measures.referenceCubeZ?.in }}</span>
+            </div>
+          </div>
+        </mat-list-item>
+        <mat-list-item role="listitem">
+          <div fxLayout="row" fxFlex fxLayoutAlign="space-between center">
+            <div fxLayout="row" fxFlex="33" fxFlex="33" fxLayoutAlign="start center" fxLayoutGap="32px">
+              <span>{{ 'label.cubeY' | translate }}</span>
+            </div>
+            <div fxLayout="row" fxFlex="33" fxLayoutAlign="start center" fxLayoutGap="32px">
+              <span>{{ measures.modelCubeY?.cm }} - {{ measures.modelCubeY?.in }} in</span>
+            </div>
+            <div fxLayout="row" fxFlex="33" fxLayoutAlign="start center" fxLayoutGap="32px">
+              <span>{{ measures.referenceCubeY?.cm }} - {{ measures.referenceCubeY?.in }}</span>
+            </div>
+          </div>
+        </mat-list-item>
+      </mat-list>
+    </mat-expansion-panel>
     <div fxLayout="row" fxLayoutGap="8px">
       <dec-icon class="dec-icon-size" font="mat">bookmarks</dec-icon>
       <span class="dec-icon-text-size">Tags</span>
@@ -34,14 +92,13 @@
       <div *ngIf="c?.comments?.length > 0" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="space-between start">
         <h4 class="title-render">{{ 'label.Render' | translate}} {{ r+1 }}</h4>
         <div fxLayoutAlign="space-between center" fxLayoutGap="16px" class="markdown-item" *ngFor="let comments of c?.comments; let i = index">
-          <span fxFlex="24px" class="{{getClass(comments.coordinates)}}">{{i + 1}}</span>
+          <span fxFlex="24px" class="{{getClass(comments)}}">{{i + 1}}</span>
           <span *ngIf="comments.comment" class="text-markdown">
             {{comments.comment}}
           </span>
-          <mat-icon class="delete-button" *ngIf="qaModeActive" (click)="deleteMark(imgMarker.decMarks.marksWrapper.nativeElement.querySelectorAll('.point-tag'), i, r)">delete</mat-icon>
+          <mat-icon class="delete-button" *ngIf="qaModeActive && !comments.requestByClient" (click)="deleteMark(imgMarker.decMarks.marksWrapper.nativeElement.querySelectorAll('.point-tag'), i, r)">delete</mat-icon>
         </div>
       </div>
     </div>
   </div>
-
 </div>

@@ -5,7 +5,8 @@ export declare class DecImageMarksComponent {
     imgRef: ElementRef;
     constructor();
     drawMarks(): void;
-    createPointTag(x: number, y: number, index: number): HTMLDivElement;
-    createSquareTag(x: number, y: number, x2: number, y2: number, index: number): void;
-    removeCommentNode(): void;
+    createPointTag(coordinates: number[], index: number, requestByClient: boolean): HTMLDivElement;
+    createSquareTag(coordinates: number[], index: number, requestByClient: boolean): void;
+    private addCommentNode;
+    private removeCommentNode();
 }

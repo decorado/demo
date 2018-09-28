@@ -10,5 +10,6 @@ export enum StatusColors {
   JOB_IN_QA = '#ff9800',
   JOB_DENIED = '#f44336',
   COMMITED = '#259844',
-  WAITING_SKU_FIX = '#656d74'
+  WAITING_SKU_FIX = '#656d74',
+  TIME_EXPIRED = '#f44336',
 }
