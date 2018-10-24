@@ -1,0 +1,18 @@
+<div class="zoom-container">
+  <div #loadingContainer class="loading-container">
+    <div class="spinner"></div>
+  </div>
+  <div #marksWrapper class="marks-wrapper"></div>
+  <canvas #canvas></canvas>
+</div>
+
+<div fxLayoutAlign="center center" fxLayoutGap="8px">
+  <button mat-icon-button color="primary" (click)="zoomOut()" [disabled]="zoomScale == minZoomLevel">
+    <mat-icon aria-label="Zoom out">remove</mat-icon>
+  </button>
+  <mat-slider fxFlex color="primary" [min]="minZoomLevel" [max]="maxZoomLevel" [step]="stepZoomLevel" [(ngModel)]="zoomScale"
+    (input)="onZoomSlide($event.value)"></mat-slider>
+  <button mat-icon-button color="primary" (click)="zoomIn()" [disabled]="zoomScale == maxZoomLevel">
+    <mat-icon aria-label="Zoom in">add</mat-icon>
+  </button>
+</div>

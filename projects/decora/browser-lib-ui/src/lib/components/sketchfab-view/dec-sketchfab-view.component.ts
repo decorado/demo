@@ -41,7 +41,7 @@ export class DecSketchfabViewComponent implements OnInit {
     return this._materialName;
   }
 
-  @Input() 
+  @Input()
   set material (v){
     if (v && this.update) {
       this.updateMaterials(v);
@@ -54,20 +54,20 @@ export class DecSketchfabViewComponent implements OnInit {
       this.addClickEvent();
       this._editMode = v;
     }
-  } 
+  }
 
   get editMode() {
     return this._editMode;
   }
 
-  @Input() 
+  @Input()
   set getAllMaterials(v) {
     if (v) {
       this._getAllMaterials = v;
       this.sendAllMaterials();
     }
   }
-  
+
   get getAllMaterials() {
     return this._getAllMaterials;
   }
@@ -144,7 +144,7 @@ export class DecSketchfabViewComponent implements OnInit {
         this._materialName = e.material.name;
         this.selectEffect(e.material);
         this.selectMaterialByName(e.material.name, true);
-      }); 
+      });
     }
   }
 

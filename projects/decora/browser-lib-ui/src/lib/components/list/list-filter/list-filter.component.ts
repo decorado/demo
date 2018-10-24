@@ -5,7 +5,8 @@ import { DecListAdvancedFilterComponent } from './../list-advanced-filter/list-a
 import { Subscription } from 'rxjs';
 import { DecListPreSearch, DecListFilter } from './../list.models';
 import { FilterGroups } from './../../../services/api/decora-api.model';
-import { PlatformLocation } from '@angular/common';
+
+const DEFAULT_FILTER = [{ label: 'default', filters: [] }];
 
 @Component({
   selector: 'dec-list-filter',
@@ -70,7 +71,7 @@ export class DecListFilterComponent implements OnInit, OnDestroy {
 
   private watchUrlFilterSubscription: Subscription;
 
-  private _filters: DecListFilter[] = [];
+  private _filters: DecListFilter[] = DEFAULT_FILTER;
 
   private _loadCountReport: boolean;
 
@@ -84,6 +85,8 @@ export class DecListFilterComponent implements OnInit, OnDestroy {
 
   @Input()
   set filters(v: DecListFilter[]) {
+
+    v = (v && v.length > 0) ? v : DEFAULT_FILTER;
 
     if (this._filters !== v) {
 
@@ -117,7 +120,6 @@ export class DecListFilterComponent implements OnInit, OnDestroy {
   @ContentChild(DecListAdvancedFilterComponent) advancedFilterComponent: DecListAdvancedFilterComponent;
 
   constructor(
-    private platformLocation: PlatformLocation,
     private route: ActivatedRoute,
     private router: Router
   ) { }
@@ -155,7 +157,7 @@ export class DecListFilterComponent implements OnInit, OnDestroy {
   }
 
   onSearch = (appendCurrentForm = true) => {
-    
+
     if (this.filterForm && appendCurrentForm) {
 
       const newDecFilterGroup = {
@@ -406,7 +408,6 @@ export class DecListFilterComponent implements OnInit, OnDestroy {
           this.childrenFilters = undefined;
 
         }
-
 
         this.tabsFilter = filterEvent.filters;
 

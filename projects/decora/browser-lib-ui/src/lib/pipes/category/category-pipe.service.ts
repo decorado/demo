@@ -16,27 +16,32 @@ export class CategoryPipeService {
       return this.getData().pipe(
         map(data => {
 
-          let category = '';
+          if (data) {
+            let category = '';
 
-          let map = data.sub;
-          for (let i in codes) {
-            if (category.length > 0) {
-              category += ' > ';
-            }
-
-            if (map[codes[i]]) {
-
-              category += map[codes[i]].name;
-              if (map[codes[i]].sub) {
-                map = map[codes[i]].sub;
+            let map = data.sub;
+            for (let i in codes) {
+              if (category.length > 0) {
+                category += ' > ';
               }
 
-            } else {
-              category += 'INVALID';
+              if (map[codes[i]]) {
+
+                category += map[codes[i]].name;
+                if (map[codes[i]].sub) {
+                  map = map[codes[i]].sub;
+                }
+
+              } else {
+                category += 'INVALID';
+              }
+
             }
+            return category;
 
           }
-          return category;
+
+          return '';
         })
       );
     }

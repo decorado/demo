@@ -1,7 +1,6 @@
 import { EventEmitter } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 export declare const BASE_ENDPOINT = "companies/${companyId}/departments/options";
-export declare const AUTOCOMPLETE_DEPARTMENT_CONTROL_VALUE_ACCESSOR: any;
 export declare class DecAutocompleteDepartmentComponent implements ControlValueAccessor {
     endpoint: string;
     labelAttr: string;

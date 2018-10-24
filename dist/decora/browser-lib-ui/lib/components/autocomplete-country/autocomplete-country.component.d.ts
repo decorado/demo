@@ -1,7 +1,6 @@
 import { EventEmitter } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 import { Observable } from 'rxjs';
-export declare const AUTOCOMPLETE_COUNTRY_CONTROL_VALUE_ACCESSOR: any;
 export declare class DecAutocompleteCountryComponent implements ControlValueAccessor {
     countries$: Observable<any>;
     lang: 'en' | 'pt-br';

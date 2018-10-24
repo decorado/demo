@@ -27,6 +27,9 @@ export * from './lib/components/autocomplete-role/autocomplete-role.module';
 // AUTOCOMPLETE SQUADS
 export * from './lib/components/autocomplete-squads/autocomplete-squads.component';
 export * from './lib/components/autocomplete-squads/autocomplete-squads.module';
+// AUTOCOMPLETE PRODUCT
+export * from './lib/components/autocomplete-product/autocomplete-product.component';
+export * from './lib/components/autocomplete-product/autocomplete-product.module';
 // AUTOCOMPLETE PROJECT
 export * from './lib/components/autocomplete-project/autocomplete-project.component';
 export * from './lib/components/autocomplete-project/autocomplete-project.module';
@@ -39,13 +42,31 @@ export * from './lib/components/autocomplete-tags/autocomplete-tags.module';
 // BREADCRUMB
 export * from './lib/components/breadcrumb/breadcrumb.component';
 export * from './lib/components/breadcrumb/breadcrumb.module';
-// DIALOG
-export * from './lib/components/dec-dialog/dec-dialog.component';
-export * from './lib/components/dec-dialog/dec-dialog.module';
-export * from './lib/components/dec-dialog/dec-dialog.service';
+// CAROUSEL
+export * from './lib/components/dec-carousel/dec-carousel.component';
+export * from './lib/components/dec-carousel/dec-carousel.module';
+// EVENTS LIST
+export * from './lib/components/dec-events-list/dec-events-list.component';
+export * from './lib/components/dec-events-list/dec-events-list-event/dec-events-list-event.component';
+export * from './lib/components/dec-events-list/dec-events-list.module';
 // GALLERY
 export * from './lib/components/gallery/dec-gallery.component';
 export * from './lib/components/gallery/dec-gallery.module';
+// ZOOM AREA
+export * from './lib/components/dec-zoom-area/dec-zoom-area.component';
+export * from './lib/components/dec-zoom-area/dec-zoom-area.module';
+// ZOOM MARKS
+export * from './lib/components/dec-zoom-marks/dec-zoom-marks.component';
+export * from './lib/components/dec-zoom-marks/dec-zoom-marks.module';
+// MARKS GALLERY
+export * from './lib/components/dec-zoom-marks-gallery/dec-zoom-marks-gallery.component';
+export * from './lib/components/dec-zoom-marks-gallery/dec-zoom-marks-gallery.module';
+// MARKS
+export * from './lib/components/dec-marks/dec-marks.component';
+export * from './lib/components/dec-marks/dec-marks.module';
+// GRID
+export * from './lib/components/dec-grid/dec-grid.component';
+export * from './lib/components/dec-grid/dec-grid.module';
 // ICON
 export * from './lib/components/dec-icon/dec-icon.module';
 export * from './lib/components/dec-icon/dec-icon.component';
@@ -78,15 +99,31 @@ export * from './lib/components/list/list-table/list-table.component';
 export * from './lib/components/list/list-table-column/list-table-column.component';
 export * from './lib/components/list/list-actions/list-actions.module';
 export * from './lib/components/list/list-actions/list-actions.component';
+// MARKDOWNS COMMENT
+export * from './lib/components/dec-markdowns-comment/dec-markdowns-comment.component';
+export * from './lib/components/dec-markdowns-comment/dec-markdowns-comment.module';
+// MARKDOWNS ZOOM AREA
+export * from './lib/components/dec-markdowns-zoom-area/dec-markdowns-zoom-area.component';
+export * from './lib/components/dec-markdowns-zoom-area/dec-markdowns-zoom-area.module';
 // PAGE FORBIDEN
 export * from './lib/components/page-forbiden/page-forbiden.component';
 export * from './lib/components/page-forbiden/page-forbiden.module';
 // PAGE NOT FOUND
 export * from './lib/components/page-not-found/page-not-found.component';
 export * from './lib/components/page-not-found/page-not-found.module';
+// PRODUCT MEASURES
+export * from './lib/components/dec-product-measures-comparison/dec-product-measures-comparison.component';
+export * from './lib/components/dec-product-measures-comparison/dec-product-measures-comparison.module';
 // PRODUCT SPIN
 export * from './lib/components/product-spin/product-spin.component';
 export * from './lib/components/product-spin/product-spin.module';
+// PRODUCT INFO
+export * from './lib/components/dec-product-info/dec-product-info.component';
+export * from './lib/components/dec-product-info/dec-product-info-extra/dec-product-info-extra.component';
+export * from './lib/components/dec-product-info/dec-product-info.module';
+// ROUND
+export * from './lib/components/dec-job-round/dec-job-round.component';
+export * from './lib/components/dec-job-round/dec-job-round.module';
 // SIDENAV
 export * from './lib/components/sidenav/sidenav.module';
 export * from './lib/components/sidenav/sidenav.component';
@@ -129,7 +166,15 @@ export * from './lib/components/dec-image-marker/dec-image-marker.module';
 // GALLERY MARKER
 export * from './lib/components/dec-gallery-marks/dec-gallery-marks.component';
 export * from './lib/components/dec-gallery-marks/dec-gallery-marks.module';
-
+// ZOOM MARKS GALLERY
+export * from './lib/components/dec-zoom-marks-gallery/dec-zoom-marks-gallery.component';
+export * from './lib/components/dec-zoom-marks-gallery/dec-zoom-marks-gallery.module';
+// COLOR PICKER
+export * from './lib/components/dec-color-picker/dec-color-picker.component';
+export * from './lib/components/dec-color-picker/dec-color-picker.module';
+// AVATAR
+export * from './lib/components/dec-avatar/dec-avatar.component';
+export * from './lib/components/dec-avatar/dec-avatar.module';
 
 /*********************************************************
 *
@@ -162,6 +207,7 @@ export * from './lib/guard/auth-guard.service';
 *
 **********************************************************/
 export * from './lib/pipes/category/category-pipe.module';
+export * from './lib/pipes/category/category-pipe.service';
 
 /*********************************************************
 *
@@ -177,6 +223,14 @@ export * from './lib/services/api/decora-api.model';
 // DECORA CONFIGURATION
 export * from './lib/services/configuration/configuration.service';
 export * from './lib/services/configuration/configuration-service.module';
+// DIALOG
+export * from './lib/services/dialog/dec-dialog.component';
+export * from './lib/services/dialog/dec-dialog.module';
+export * from './lib/services/dialog/dec-dialog.service';
+// DIALOG
+export * from './lib/services/confirm-dialog/dec-confirm-dialog.component';
+export * from './lib/services/confirm-dialog/dec-confirm-dialog.module';
+export * from './lib/services/confirm-dialog/dec-confirm-dialog.service';
 // SNACKBAR
 export * from './lib/services/snack-bar/dec-snack-bar.service';
 export * from './lib/services/snack-bar/dec-snack-bar.module';
@@ -196,6 +250,9 @@ export * from './lib/services/ws-client/ws-client.models';
 // Script Loader
 export * from './lib/services/script-loader/dec-script-loader.service';
 export * from './lib/services/script-loader/dec-script-loader.module';
-// Status Color
-export * from './lib/services/status-color/dec-status-color.service';
-export * from './lib/services/status-color/dec-status-color.module';
+// DEC COLOR
+export * from './lib/services/color/dec-color.service';
+export * from './lib/services/color/dec-color-service.module';
+// COLOR PICKER
+export * from './lib/services/color-picker/color-picker.service';
+export * from './lib/services/color-picker/color-picker.module';

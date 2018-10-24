@@ -4,7 +4,6 @@ import { DecApiService } from './../../services/api/decora-api.service';
 import { Observable } from 'rxjs';
 import { LabelFunction, ValueFunction, SelectionEvent, CustomFetchFunction } from './autocomplete.models';
 import { MatAutocompleteTrigger } from '@angular/material';
-export declare const AUTOCOMPLETE_CONTROL_VALUE_ACCESSOR: any;
 export declare class DecAutocompleteComponent implements ControlValueAccessor, AfterViewInit, OnDestroy {
     private service;
     autocompleteTrigger: MatAutocompleteTrigger;

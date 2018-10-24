@@ -1,4 +1,4 @@
-import { OnDestroy, EventEmitter } from '@angular/core';
+import { OnDestroy } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { UserAuthData, LoginData, FacebookLoginData, DecFilter, QueryParams } from './decora-api.model';
@@ -19,10 +19,11 @@ export declare class DecApiService implements OnDestroy {
     private decConfig;
     user: UserAuthData;
     user$: BehaviorSubject<UserAuthData>;
-    loading$: EventEmitter<boolean>;
+    loading$: Observable<boolean | string>;
     private sessionToken;
     private userSubscripion;
     private loadingMap;
+    private loadingStream$;
     constructor(http: HttpClient, decConfig: DecConfigurationService);
     ngOnDestroy(): void;
     readonly host: any;
@@ -60,5 +61,6 @@ export declare class DecApiService implements OnDestroy {
     private extratSessionToken(res);
     private subscribeToUser();
     private unsubscribeToUser();
+    private subscribeToLoading();
     private shareObservable(call);
 }

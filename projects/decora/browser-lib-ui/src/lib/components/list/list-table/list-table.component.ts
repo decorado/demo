@@ -22,7 +22,7 @@ export class DecListTableComponent {
 
   @Input() selectable: boolean;
 
-  selected = [];
+  selected: any[] = []; // from list component
 
   @ViewChild(DatatableComponent) tableComponent: DatatableComponent;
 

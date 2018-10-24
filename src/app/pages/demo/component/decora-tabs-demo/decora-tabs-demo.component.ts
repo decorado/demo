@@ -10,7 +10,9 @@ export class DecoraTabsDemoComponent implements OnInit {
 
   baseHref;
 
-  activeTab;
+  activeTab = 'tab-2';
+
+  activeTab2;
 
   constructor(private decConfig: DecConfigurationService) {
     this.baseHref = this.decConfig.config.host;

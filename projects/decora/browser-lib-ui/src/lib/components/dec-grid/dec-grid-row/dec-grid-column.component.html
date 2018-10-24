@@ -1,0 +1,24 @@
+<ng-template #content let-gap="gap">
+
+  <div class="dec-grid-column" fxFlex fxFill>
+
+    <div *ngIf="(rows && rows.length) else innerContent" fxLayout="column" fxLayoutAlign="start" [fxLayoutGap]="gap">
+
+      <div *ngFor="let row of rows">
+
+        <ng-template [ngTemplateOutlet]="row.content" [ngTemplateOutletContext]="{gap: gap}"></ng-template>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+</ng-template>
+
+<ng-template #innerContent>
+
+  <ng-content></ng-content>
+
+</ng-template>

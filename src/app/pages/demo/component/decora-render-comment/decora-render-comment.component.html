@@ -1,0 +1,17 @@
+<dec-avatar></dec-avatar>
+
+<app-demo-container readmeSrc="/assets/docs/browser-lib-ui/components/dec-render-comment/README.md">
+  <button mat-raised-button color="primary" (click)="openRenderComment()">Open</button>
+
+  <br>
+  <br>
+
+  Your choice is:
+  <pre *ngIf="commentResult" class="container-result">{{ commentResult | json }}</pre>
+
+  <br>
+
+  <div>
+    <button mat-button (click)="editRenderComment(commentResult)" [disabled]="!commentResult">Edit</button>
+  </div>
+</app-demo-container>

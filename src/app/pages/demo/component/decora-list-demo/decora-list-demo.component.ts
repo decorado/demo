@@ -15,6 +15,12 @@ export class DecoraListDemoComponent implements OnInit {
     { id: 3, name: 'teste 3' },
   ];
 
+  rows2 = [
+    { id: 1, name: 'teste 1' },
+    { id: 2, name: 'teste 2' },
+    { id: 3, name: 'teste 3' },
+  ];
+
   filters = [
     { label: 'bruno', filters: [{ property: 'name', value: 'bruno' }] },
     { label: 'bruno OR rene', default: true, filters: [{ property: 'name', value: ['bruno', 'rene'] }] },

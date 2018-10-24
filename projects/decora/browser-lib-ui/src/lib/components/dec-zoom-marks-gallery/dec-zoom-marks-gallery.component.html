@@ -1,0 +1,34 @@
+<div class="gallery-size" fxLayout="column" fxLayoutGap="32px" fxLayoutAlign="space-between start">
+  <dec-zoom-marks fxFlex class="gallery-size" [marker]="markedObj" [qaMode]="qaModeActive" (openZoomArea)="onOpenZoomArea($event)"
+    minZoomLevel="1" maxZoomLevel="8" stepZoomLevel="0.1"></dec-zoom-marks>
+
+  <div class="gallery-size">
+    <ngu-carousel class="carousel-wrapper " [inputs]="carouselConfig" (initData)="onInitDataFn($event)" (onMove)="onMoveFn($event)">
+
+      <ngu-item NguCarouselItem *ngFor="let image of markedObjs; let i = index;" [class.active]="image == markedObj">
+        <img [decImage]="image.file" [decImageSize]="{width:300, height:300}" (click)="onSelectImage($event,image, i)">
+      </ngu-item>
+
+      <mat-icon NguCarouselPrev class="left-previous" [ngClass]="{'disabled': isFirst}">chevron_left</mat-icon>
+
+      <mat-icon NguCarouselNext class="right-next" [ngClass]="{'disabled': isLast}">chevron_right</mat-icon>
+
+    </ngu-carousel>
+  </div>
+
+  <div *ngIf="showTags" class="container-comments" fxLayout="column" fxLayoutGap="16px">
+    <div>
+      <h3><dec-icon class="dec-icon-size dec-color-grey" font="mat">bookmarks</dec-icon>
+        <span class="dec-icon-text-size-zoom-area"> Tags </span>
+      </h3>
+    </div>
+    <dec-markdowns-comment [renders]="markedObjs"></dec-markdowns-comment>
+
+    <div>
+      <h3><dec-icon class="dec-icon-size dec-color-grey" font="mat">error</dec-icon>
+        <span class="dec-icon-text-size-zoom-area"> Zoom areas </span>
+      </h3>
+    </div>
+    <dec-markdowns-zoom-area [renders]="markedObjs"></dec-markdowns-zoom-area>
+  </div>
+</div>

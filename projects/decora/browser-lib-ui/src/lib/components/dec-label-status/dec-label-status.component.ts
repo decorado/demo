@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { DecStatusColorService } from './../../services/status-color/dec-status-color.service';
+import { DecColorService } from './../../services/color/dec-color.service';
 
 @Component({
   selector: 'dec-label-status',
@@ -8,23 +8,12 @@ import { DecStatusColorService } from './../../services/status-color/dec-status-
 })
 export class DecLabelStatusComponent {
 
-  @Input()
-  set status(v: string) {
-    if (v !== this._status) {
-      this.statusColor = this.decStatusColorService.getStatusColor(v);
-    }
-  }
+  @Input() status: string;
 
-  get status() {
-    return this._status;
-  }
+  @Input() stretched: boolean;
 
-  @Input() stretched?: boolean;
-
-  private _status: string;
-
-  statusColor: string;
-
-  constructor(public decStatusColorService: DecStatusColorService) { }
+  constructor(
+    public decColorService: DecColorService
+  ) { }
 
 }

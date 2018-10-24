@@ -1,9 +1,7 @@
 import { EventEmitter } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
-import { Observable } from 'rxjs';
 import { DecApiService } from './../../services/api/decora-api.service';
-export declare const BASE_AUTOCOMPLETE_PROJECT_ENDPOINT = "/legacy/project/search/keyValue";
-export declare const AUTOCOMPLETE_PROJECT_CONTROL_VALUE_ACCESSOR: any;
+export declare const BASE_AUTOCOMPLETE_PROJECT_ENDPOINT = "/projects/options";
 export declare class DecAutocompleteProjectComponent implements ControlValueAccessor {
     private decoraApi;
     endpoint: any;
@@ -30,5 +28,4 @@ export declare class DecAutocompleteProjectComponent implements ControlValueAcce
     writeValue(value: any): void;
     setEndpointBasedOnCompanyId(): void;
     onAutocompleteBlur($event: any): void;
-    customFetchFunction: (textSearch: any) => Observable<any>;
 }

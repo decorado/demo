@@ -11,7 +11,7 @@ const noop = () => {
 const QUOTE_ENDPOINT = '/projects/${projectId}/quotes/options';
 
 //  Used to extend ngForms functions
-export const AUTOCOMPLETE_QUOTE_CONTROL_VALUE_ACCESSOR: any = {
+const AUTOCOMPLETE_QUOTE_CONTROL_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => DecAutocompleteQuoteComponent),
   multi: true
@@ -49,9 +49,12 @@ export class DecAutocompleteQuoteComponent implements ControlValueAccessor, Afte
 
   @Input()
   set projectId(v: string) {
-    this._projectId = v;
-    if (this.viewInitialized) {
-      this.setEndpointBasedOnInputs();
+    if (this._projectId !== v) {
+      this._projectId = v;
+
+      if (this.viewInitialized) {
+        this.setEndpointBasedOnInputs();
+      }
     }
   }
 
@@ -61,9 +64,12 @@ export class DecAutocompleteQuoteComponent implements ControlValueAccessor, Afte
 
   @Input()
   set decoraProduct(v: string) {
-    this._decoraProduct = v;
-    if (this.viewInitialized) {
-      this.setEndpointBasedOnInputs();
+    if (this._decoraProduct !== v) {
+      this._decoraProduct = v;
+
+      if (this.viewInitialized) {
+        this.setEndpointBasedOnInputs();
+      }
     }
   }
 
@@ -73,9 +79,12 @@ export class DecAutocompleteQuoteComponent implements ControlValueAccessor, Afte
 
   @Input()
   set decoraProductVariant(v: string) {
-    this._decoraProductVariant = v;
-    if (this.viewInitialized) {
-      this.setEndpointBasedOnInputs();
+    if (this._decoraProductVariant !== v) {
+      this._decoraProductVariant = v;
+
+      if (this.viewInitialized) {
+        this.setEndpointBasedOnInputs();
+      }
     }
   }
 

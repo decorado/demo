@@ -12,7 +12,7 @@ const noop = () => {
 };
 
 //  Used to extend ngForms functions
-export const AUTOCOMPLETE_CONTROL_VALUE_ACCESSOR: any = {
+const AUTOCOMPLETE_CONTROL_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => DecAutocompleteComponent),
   multi: true
@@ -26,7 +26,7 @@ export const AUTOCOMPLETE_CONTROL_VALUE_ACCESSOR: any = {
 })
 export class DecAutocompleteComponent implements ControlValueAccessor, AfterViewInit, OnDestroy {
 
-  @ViewChild(MatAutocompleteTrigger)  autocompleteTrigger: MatAutocompleteTrigger;
+  @ViewChild(MatAutocompleteTrigger) autocompleteTrigger: MatAutocompleteTrigger;
 
   autocompleteInput: FormControl;
 
@@ -104,7 +104,7 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
 
   private innerOptions: any[] = [];
 
-  private responses: {[key: string]: any} = {};
+  private responses: { [key: string]: any } = {};
 
   private search$ = new BehaviorSubject<string>(undefined);
 
@@ -367,13 +367,12 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
   }
 
   private loadRemoteObjectByWrittenValue(writtenValue: any): Promise<any> {
-    console.log('loadRemoteObjectByWrittenValue', writtenValue)
     return new Promise<any>((resolve, reject) => {
       if (writtenValue) {
         this.searchBasedFetchingType(writtenValue, true)
-        .subscribe((res) => {
-          resolve(res[0]);
-        });
+          .subscribe((res) => {
+            resolve(res[0]);
+          });
       } else {
         resolve(writtenValue);
       }
@@ -458,13 +457,13 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
   private subscribeToInputValueChanges() {
 
     this.searchInputSubscription = this.autocompleteInput.valueChanges
-    .pipe(
-      debounceTime(300),
-      distinctUntilChanged(),
-    )
-    .subscribe(searchText => {
-      this.search$.next(searchText);
-    });
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+      )
+      .subscribe(searchText => {
+        this.search$.next(searchText);
+      });
 
   }
 
@@ -476,23 +475,23 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
 
   private subscribeToSearchAndSetOptionsObservable() {
     this.options$ = this.search$
-    .pipe(
-      map(v => v ? v : ''),
-      distinctUntilChanged(),
-      switchMap((textSearch: string) => {
+      .pipe(
+        map(v => v ? v : ''),
+        distinctUntilChanged(),
+        switchMap((textSearch: string) => {
 
-        const searchTerm = textSearch || '';
+          const searchTerm = textSearch || '';
 
-        const isStringTerm = typeof searchTerm === 'string';
+          const isStringTerm = typeof searchTerm === 'string';
 
-        if (isStringTerm) {
-          return this.searchBasedFetchingType(searchTerm);
-        } else {
-          return of(this.innerOptions);
-        }
+          if (isStringTerm) {
+            return this.searchBasedFetchingType(searchTerm);
+          } else {
+            return of(this.innerOptions);
+          }
 
-      })
-    );
+        })
+      );
   }
 
   getSelectableOptions = (options) => {
@@ -513,7 +512,7 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
               return this.compareAsString(selectedValue, optionValue);
             }) ? true : false;
           } else {
-            alreadySelected = this.compareAsString(this.value, optionValue);;
+            alreadySelected = this.compareAsString(this.value, optionValue);
           }
           return !alreadySelected;
         } else {
@@ -587,12 +586,12 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
 
     if (termString) {
       filteredData = this.innerOptions
-      .filter(item => {
-        const label: string = this.extractLabel(item);
-        const lowerCaseLabel = label.toLowerCase();
-        const lowerCaseTerm = termString.toLowerCase();
-        return lowerCaseLabel.search(lowerCaseTerm) >= 0;
-      });
+        .filter(item => {
+          const label: string = this.extractLabel(item);
+          const lowerCaseLabel = label.toLowerCase();
+          const lowerCaseTerm = termString.toLowerCase();
+          return lowerCaseLabel.search(lowerCaseTerm) >= 0;
+        });
     }
 
     return of(filteredData);

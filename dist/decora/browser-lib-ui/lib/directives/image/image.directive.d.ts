@@ -14,6 +14,7 @@ export declare class DecImageDirective implements OnInit, AfterViewInit {
     private imagePath;
     private finalImageUrl;
     private viewInitialized;
+    private imageData;
     constructor(viewContainerRef: ViewContainerRef);
     ngOnInit(): void;
     ngAfterViewInit(): void;
@@ -31,4 +32,5 @@ export declare class DecImageDirective implements OnInit, AfterViewInit {
     private appendImageToBg();
     private setImageelementSrc();
     private setElementWidth();
+    private convertImageToDataURI(img);
 }

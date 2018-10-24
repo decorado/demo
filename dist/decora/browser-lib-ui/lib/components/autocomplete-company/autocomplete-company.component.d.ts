@@ -1,6 +1,5 @@
 import { EventEmitter } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
-export declare const AUTOCOMPLETE_COMPANY_CONTROL_VALUE_ACCESSOR: any;
 export declare class DecAutocompleteCompanyComponent implements ControlValueAccessor {
     endpoint: string;
     valueAttr: string;

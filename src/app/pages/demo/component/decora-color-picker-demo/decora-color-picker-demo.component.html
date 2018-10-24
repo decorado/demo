@@ -1,0 +1,22 @@
+<app-demo-container readmeSrc="/assets/docs/browser-lib-ui/components/dec-color-picker/README.md">
+
+  {{ empty }}
+  <dec-color-picker [(ngModel)]="empty"></dec-color-picker>
+
+  {{ rgbColor }}
+  <dec-color-picker [(ngModel)]="rgbColor"></dec-color-picker>
+
+  {{ hexColor }}
+  <dec-color-picker [(ngModel)]="hexColor" colorFormat="hex"></dec-color-picker>
+
+  <form [formGroup]="form">
+
+    {{form.get('colorHex').value}}
+    <dec-color-picker formControlName="colorHex" colorFormat="hex"></dec-color-picker>
+
+    {{form.get('colorRgb').value}}
+    <dec-color-picker formControlName="colorRgb"></dec-color-picker>
+
+  </form>
+
+</app-demo-container>

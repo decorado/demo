@@ -68,12 +68,14 @@ export class DecTabsComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     this.ensureUniqueTabNames()
     .then(() => {
-      const queryParams: Params = Object.assign({}, this.route.snapshot.queryParams);
-      if (queryParams && queryParams[this.componentTabName()]) {
-        const currentTab = queryParams[this.componentTabName()];
-        this.selectTab(currentTab);
-      } else {
-        this.startSelectedTab();
+      if (this.persist) {
+        const queryParams: Params = Object.assign({}, this.route.snapshot.queryParams);
+        if (queryParams && queryParams[this.componentTabName()]) {
+          const currentTab = queryParams[this.componentTabName()];
+          this.selectTab(currentTab);
+        } else {
+          this.startSelectedTab();
+        }
       }
     });
 
@@ -146,6 +148,8 @@ export class DecTabsComponent implements OnInit, AfterViewInit, OnDestroy {
       const queryParams: Params = Object.assign({}, this.route.snapshot.queryParams);
       queryParams[this.componentTabName()] = tab;
       this.router.navigate(['.'], { relativeTo: this.route, queryParams: queryParams, replaceUrl: true });
+    } else {
+      this.selectTab(tab);
     }
   }
 
@@ -169,8 +173,10 @@ export class DecTabsComponent implements OnInit, AfterViewInit, OnDestroy {
   private watchTabInUrlQuery() {
     this.queryParamsSubscription = this.route.queryParams
     .subscribe((params) => {
-      const tab: string = params[this.componentTabName()];
-      this.selectTab(tab);
+      if (this.persist) {
+        const tab: string = params[this.componentTabName()];
+        this.selectTab(tab);
+      }
     });
   }
 

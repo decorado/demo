@@ -1,0 +1,59 @@
+@import '../../../../bootstrap/constants/_colors.scss';
+
+.dialog-content {
+  width: 600px;
+  height: 310px;
+}
+
+.dec-dialog-title {
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+
+.choices-container{
+  max-height: 244px;
+  overflow: auto;
+}
+
+.backspace-icon{
+  user-select: none;
+  cursor: pointer;
+  color: $dec-color-grey-light;
+}
+
+.container-result{
+  height: 284px;
+  margin-top: 16px;
+}
+
+.label-result {
+  color: $dec-color-grey-light;
+  margin-top: 8px;
+}
+
+.container-description {
+  margin-top: auto;
+}
+
+.container-choice{
+  display: flex;
+}
+
+.number-choice {
+  display: flex;
+  width: 20px;
+  height: 20px;
+  align-items: center;
+  justify-content: center;
+  background-color: $dec-color-red-light;
+  border-radius: 2px;
+  color: white;
+}
+
+.pointer-choice {
+  padding-left: 8px;
+  cursor: pointer;
+  font-family: 'Roboto';
+  font-weight: 400;
+  font-size: 13px;
+}

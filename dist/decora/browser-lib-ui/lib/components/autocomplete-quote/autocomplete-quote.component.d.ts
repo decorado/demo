@@ -1,7 +1,6 @@
 import { EventEmitter, AfterViewInit } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 import { DecApiService } from './../../services/api/decora-api.service';
-export declare const AUTOCOMPLETE_QUOTE_CONTROL_VALUE_ACCESSOR: any;
 export declare class DecAutocompleteQuoteComponent implements ControlValueAccessor, AfterViewInit {
     private decoraApi;
     endpoint: string;

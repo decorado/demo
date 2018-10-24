@@ -1,0 +1,23 @@
+.dec-measure-list {
+
+    .dec-measure-list-row {
+        font-size: 13px;
+        padding: 8px 16px 8px 16px;
+        line-height: 32px;
+
+        &:nth-child(odd) {
+        background: #f4f4f4;
+        }
+        &:nth-child(even) {
+        background: #fbfbfb;
+        }
+
+    }
+
+}
+
+.dec-subhead {
+    font-size: 13px;
+    font-weight: 400;
+    margin: 10px 0px;
+}

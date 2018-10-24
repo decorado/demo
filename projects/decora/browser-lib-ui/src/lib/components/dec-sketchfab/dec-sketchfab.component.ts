@@ -351,7 +351,7 @@ export class DecSketchfabComponent implements OnInit {
   }
 
   onSave() {
-    this.getMaterialsSketchfab = true; 
+    this.getMaterialsSketchfab = true;
   }
 
   getAllMaterials($event) {
@@ -371,5 +371,5 @@ export class DecSketchfabComponent implements OnInit {
       this.getMaterialsSketchfab = false;
       this.save.emit(this.assetMax);
     });
-  } 
+  }
 }

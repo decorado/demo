@@ -2,13 +2,15 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DecLabelStatusComponent } from './dec-label-status.component';
 import { DecLabelModule } from './../dec-label/dec-label.module';
-import { DecStatusColorModule } from '../../services/status-color/dec-status-color.module';
+import { DecColorServiceModule } from './../../services/color/dec-color-service.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
     CommonModule,
     DecLabelModule,
-    DecStatusColorModule
+    DecColorServiceModule,
+    TranslateModule
   ],
   declarations: [DecLabelStatusComponent],
   exports: [DecLabelStatusComponent]

@@ -1,0 +1,49 @@
+<div fxLayout="column">
+  <div class="color-preview" [ngStyle]="{'backgroundColor': hex}">
+    <dec-icon font="mat" class="close-preview" (click)="close()">close</dec-icon>
+  </div>
+  <div class="color-options-container" fxLayout="column">
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+      <span>R</span>
+      <mat-slider fxFlex min="0" max="255" step="1" [value]="red" [(ngModel)]="red" (ngModelChange)="changeRgbValue()"></mat-slider>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+      <span>G</span>
+      <mat-slider fxFlex min="0" max="255" step="1" [value]="green" [(ngModel)]="green" (ngModelChange)="changeRgbValue()"></mat-slider>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+      <span>B</span>
+      <mat-slider fxFlex min="0" max="255" step="1" [value]="blue" [(ngModel)]="blue" (ngModelChange)="changeRgbValue()"></mat-slider>
+    </div>
+
+    <div fxLayout="column" fxLayoutAlign="start" fxLayoutGap="16px" class="color-input-container">
+
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
+
+        <div fxFlex>RGB</div>
+
+        <input matInput type="number" min="0" max="255" value="red" [(ngModel)]="red" (ngModelChange)="changeRgbValue()"
+          autocomplete="off">
+
+        <input matInput type="number" min="0" max="255" value="green" [(ngModel)]="green" (ngModelChange)="changeRgbValue()"
+          autocomplete="off">
+
+        <input matInput type="number" min="0" max="255" value="blue" [(ngModel)]="blue" (ngModelChange)="changeRgbValue()"
+          autocomplete="off">
+
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
+
+        <div fxFlex>HEX</div>
+
+        <input matInput type="text" value="hex" [(ngModel)]="hex" autocomplete="off">
+
+        <dec-icon font="mat" (click)="startColorPicker()">colorize</dec-icon>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>

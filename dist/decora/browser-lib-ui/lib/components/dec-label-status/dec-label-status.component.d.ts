@@ -1,9 +1,7 @@
-import { DecStatusColorService } from './../../services/status-color/dec-status-color.service';
+import { DecColorService } from './../../services/color/dec-color.service';
 export declare class DecLabelStatusComponent {
-    decStatusColorService: DecStatusColorService;
+    decColorService: DecColorService;
     status: string;
-    stretched?: boolean;
-    private _status;
-    statusColor: string;
-    constructor(decStatusColorService: DecStatusColorService);
+    stretched: boolean;
+    constructor(decColorService: DecColorService);
 }

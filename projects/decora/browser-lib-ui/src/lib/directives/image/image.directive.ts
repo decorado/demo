@@ -43,6 +43,8 @@ export class DecImageDirective implements OnInit, AfterViewInit {
 
   private viewInitialized: boolean;
 
+  private imageData;
+
   constructor(private viewContainerRef: ViewContainerRef) { }
 
   ngOnInit() {
@@ -157,7 +159,9 @@ export class DecImageDirective implements OnInit, AfterViewInit {
 
   private tryToLoadImage() {
     const downloadingImage = new Image();
+    downloadingImage.setAttribute('crossOrigin', 'Anonymous');
     downloadingImage.onload = () => {
+      this.imageData = this.convertImageToDataURI(downloadingImage);
       this.createImage();
     };
 
@@ -178,12 +182,12 @@ export class DecImageDirective implements OnInit, AfterViewInit {
   }
 
   private appendImageToBg() {
-    this.containerElement.style.backgroundImage = 'url(' + this.finalImageUrl + ')';
+    this.containerElement.style.backgroundImage = 'url(' + this.imageData + ')';
     this.containerElement.classList.remove('dec-image-bg-loading');
   }
 
   private setImageelementSrc() {
-    this.containerElement.setAttribute('src', this.finalImageUrl);
+    this.containerElement.setAttribute('src', this.imageData);
   }
 
   private setElementWidth() {
@@ -195,6 +199,17 @@ export class DecImageDirective implements OnInit, AfterViewInit {
       this.containerElement.style.backgroundPosition = 'center';
       this.containerElement.style.backgroundRepeat = 'no-repeat';
     }
+  }
+
+  private convertImageToDataURI(img) {
+    const canvas = document.createElement('canvas');
+    canvas.width = img.width;
+    canvas.height = img.height;
+
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0);
+
+    return canvas.toDataURL('image/png');
   }
 
 }

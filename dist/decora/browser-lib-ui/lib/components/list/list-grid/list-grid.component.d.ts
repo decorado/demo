@@ -1,5 +1,6 @@
 import { OnInit, TemplateRef, EventEmitter } from '@angular/core';
 export declare class DecListGridComponent implements OnInit {
+    selected: any[];
     templateRef: TemplateRef<any>;
     itemWidth: string;
     itemGap: string;

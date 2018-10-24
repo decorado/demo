@@ -1,0 +1,28 @@
+<div *ngIf="items" class="dec-carousel-wrapper" fxLayout="row" [fxLayoutGap]="gap" fxLayoutAlign="space-between center">
+
+  <div fxFlex="24px" *ngIf="showNavigators">
+    <div (click)="goPrev()" *ngIf="showPrevButton" class="dec-carousel-navigator dec-carousel-navigator-left"></div>
+  </div>
+
+  <div fxFlex>
+
+    <div fxLayout="row" [fxLayoutGap]="gap">
+
+      <div *ngFor="let item of visibleItems;" class="dec-carousel-item" [ngClass]="{'selected': selectedIndex === item.index}"
+        [fxFlex]="itemWidth" (click)="selectItem(item.index)">
+
+        <ng-template [ngTemplateOutlet]="item.component.template"></ng-template>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div fxFlex="24px" *ngIf="showNavigators">
+    <div (click)="goNext()" *ngIf="showNextButton" class="dec-carousel-navigator dec-carousel-navigator-right"></div>
+  </div>
+
+</div>
+
+<ng-content></ng-content>

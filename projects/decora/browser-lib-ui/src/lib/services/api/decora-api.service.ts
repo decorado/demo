@@ -1,9 +1,8 @@
-import { Injectable, OnDestroy, OnInit, EventEmitter } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpRequest } from '@angular/common/http';
 import { Observable, throwError, BehaviorSubject, Subscription } from 'rxjs';
-import { catchError, share, tap, finalize } from 'rxjs/operators';
+import { catchError, share, tap, finalize, debounceTime } from 'rxjs/operators';
 import { UserAuthData, LoginData, FacebookLoginData, DecFilter, SerializedDecFilter, QueryParams } from './decora-api.model';
-import { DecSnackBarService } from './../snack-bar/dec-snack-bar.service';
 import { DecConfigurationService } from './../configuration/configuration.service';
 
 export type CallOptions = {
@@ -26,7 +25,7 @@ export class DecApiService implements OnDestroy {
 
   user$: BehaviorSubject<UserAuthData> = new BehaviorSubject<UserAuthData>(undefined);
 
-  loading$: EventEmitter<boolean> = new EventEmitter<boolean>(undefined);
+  loading$: Observable<boolean | string>;
 
   private sessionToken: string;
 
@@ -34,11 +33,14 @@ export class DecApiService implements OnDestroy {
 
   private loadingMap = {};
 
+  private loadingStream$ = new BehaviorSubject<boolean | string>(undefined);
+
   constructor(
     private http: HttpClient,
     private decConfig: DecConfigurationService,
   ) {
     this.subscribeToUser();
+    this.subscribeToLoading();
   }
 
   ngOnDestroy() {
@@ -316,7 +318,7 @@ export class DecApiService implements OnDestroy {
     const keys = Object.keys(this.loadingMap);
     const hasLoading = keys.length > 0;
     const loadingMessage = this.loadingMap[keys[0]];
-    this.loading$.emit(hasLoading ? loadingMessage : false);
+    this.loadingStream$.next(hasLoading ? loadingMessage : false);
   }
 
   private fetchCurrentLoggedUser = () => {
@@ -476,6 +478,11 @@ export class DecApiService implements OnDestroy {
 
   private unsubscribeToUser() {
     this.userSubscripion.unsubscribe();
+  }
+
+
+  private subscribeToLoading() {
+    this.loading$ = this.loadingStream$.pipe(debounceTime(100));
   }
 
   /*

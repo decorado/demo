@@ -13,3 +13,15 @@
 .mat-form-field-suffix {
   margin-left: 8px !important;
 }
+
+.no-padding {
+  .mat-dialog-container {
+    padding: 0;
+  }
+}
+
+.box-shadow-none {
+  .mat-dialog-container {
+    box-shadow: none;
+  }
+}

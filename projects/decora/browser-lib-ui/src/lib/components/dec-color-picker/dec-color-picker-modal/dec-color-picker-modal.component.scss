@@ -1,0 +1,50 @@
+.color-preview {
+  height: 320px;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  cursor: grab;
+
+  .close-preview {
+    position: absolute;
+    right: 0;
+    top: 0;
+    cursor: pointer;
+
+    &:hover {
+      color: #ffffff;
+    }
+  }
+}
+
+.color-options-container {
+  background-color: #eeeeee;
+  padding: 0 16px;
+  box-shadow: 0 11px 15px -7px rgba(0, 0, 0, .2), 0 24px 38px 3px rgba(0, 0, 0, .14), 0 9px 46px 8px rgba(0, 0, 0, .12);
+
+  .color-input-container {
+    margin-bottom: 16px;
+
+    input {
+      text-align: center;
+      border-bottom: 1px solid #ccc;
+
+      &:focus {
+        border-color: rgba(0, 0, 0, 0.7);
+      }
+    }
+
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+    }
+
+    input[type="number"] {
+      -moz-appearance: textfield;
+    }
+
+    dec-icon {
+      cursor: pointer;
+    }
+  }
+}

@@ -1,0 +1,89 @@
+$color-white: rgb(255, 255, 255);
+$color-black: rgb(0, 0, 0);
+$color-red: rgb(255, 10, 222);
+
+#squareMark {
+  position: absolute;
+  border: 2px solid $color-red;
+  pointer-events: none;
+}
+
+.zoom-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+
+  .marks-wrapper {
+    position: absolute;
+
+    .point-tag {
+      position: absolute;
+      font-size: 12px;
+      width: 24px;
+      height: 24px;
+      background-color: $color-red;
+      font-weight: 500;
+      text-align: center;
+      cursor: pointer;
+      line-height: 24px;
+      color: $color-white;
+      border-radius: 100%;
+      border: 1px solid $color-white;
+      box-sizing: border-box;
+      text-shadow: 0 0 10px $color-black;
+      user-select: none;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      pointer-events: all;
+
+      &:hover {
+        border-color: $color-red;
+      }
+
+      .link-button {
+        width: 12px;
+        height: 12px;
+        background-color: $color-red;
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        left: -16px;
+        border: 1px solid $color-white;
+
+        &:hover {
+          border-color: $color-red;
+        }
+      }
+
+    }
+
+    .square-tag {
+      position: absolute;
+      border-color: $color-red;
+      border-width: 2px;
+      border-style: solid;
+      user-select: none;
+      pointer-events: none;
+    }
+  }
+
+  .comment-hover {
+    background-color: $color-red;
+    box-sizing: border-box;
+    padding: 8px 12px;
+    border-radius: 4px;
+    position: absolute;
+    font-size: 12px;
+    line-height: 18px;
+    text-shadow: none;
+    text-align: left;
+    color: $color-white;
+    left: 10px;
+    top: 10px;
+    z-index: 1;
+  }
+}

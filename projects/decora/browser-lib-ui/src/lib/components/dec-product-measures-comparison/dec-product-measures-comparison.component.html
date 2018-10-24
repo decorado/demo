@@ -1,0 +1,76 @@
+<dec-grid gap="0">
+
+  <dec-grid-row>
+    <dec-grid-column>
+      <div>
+        <button mat-button class="dec-color-grey">
+          <mat-icon>straighten</mat-icon>
+          <span>{{ 'label.measures' | translate }}</span>
+        </button>
+      </div>
+    </dec-grid-column>
+  </dec-grid-row>
+
+  <dec-grid-row>
+    <dec-grid-column span="12">
+      <div fxLayout="column" fxLayoutGap="1px" class="dec-measure-list">
+        <div fxLayout="row">
+          <div fxFlex>
+            <div fxLayout="row" fxLayoutAlign="start center">
+              <div></div>
+            </div>
+          </div>
+          <!-- <div fxFlex>
+              <div fxLayout="row" fxLayoutAlign="end center">
+                <div></div>
+              </div>
+            </div> -->
+          <div fxFlex>
+            <div fxLayout="row" fxLayoutAlign="center center">
+              <div class="dec-subhead dec-color-grey">{{ 'label.product' | translate }}</div>
+            </div>
+          </div>
+          <div fxFlex>
+            <div fxLayout="row" fxLayoutAlign="center center">
+              <div class="dec-subhead dec-color-grey">{{ 'label.model' | translate }}</div>
+            </div>
+          </div>
+        </div>
+        <div fxFlex *ngFor="let measure of formatedMeasures" class="dec-measure-list-row">
+          <div fxLayout="row">
+            <div fxFlex>
+              <div fxLayout="row" fxLayoutAlign="start center">
+                <div>
+                  {{measure.label | translate}}
+                </div>
+              </div>
+            </div>
+            <div fxFlex>
+              <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
+                <div>
+                  {{measure.product}}
+                </div>
+                <div> | </div>
+                <div>
+                  {{ measure.productIn}}
+                </div>
+              </div>
+            </div>
+            <div fxFlex>
+              <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
+                <div>
+                  {{measure.model}}
+                </div>
+                <div> | </div>
+                <div>
+                  {{measure.modelIn}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </dec-grid-column>
+  </dec-grid-row>
+
+</dec-grid>

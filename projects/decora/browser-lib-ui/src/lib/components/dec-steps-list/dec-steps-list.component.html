@@ -1,11 +1,9 @@
 <div class="history-container" [ngClass]="{'limited-height': maxHeight}" [style.maxHeight]="maxHeight || '100%'">
 
   <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px" class="dec-color-grey-dark">
-
-    <mat-icon fxFlex="24px">{{icon}}</mat-icon>
-
-    <span class="bigger-font">{{ title }}</span>
-
+      <h2>
+        <dec-icon [font]="iconFont">{{ icon }}</dec-icon> {{ title }}
+      </h2>
   </div>
 
   <br>

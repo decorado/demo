@@ -29,6 +29,7 @@ export declare class DecImageZoomComponent implements AfterViewInit {
     getStepsDiff(): void;
     getNativeElement(divImage: any): any;
     loadHighLightImage(): void;
+    private convertImageToDataURI(img);
     private getImageUrl();
     uploadedFunction(event: any): void;
 }

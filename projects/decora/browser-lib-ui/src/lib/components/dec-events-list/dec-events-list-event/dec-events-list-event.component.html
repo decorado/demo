@@ -1,0 +1,8 @@
+<ng-template #contentTemplate>
+  <span #ref>
+    <ng-content></ng-content>
+  </span>
+  <span *ngIf="!ref.innerHTML.trim()">
+    -
+  </span>
+</ng-template>

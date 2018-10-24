@@ -1,0 +1,12 @@
+<div fxLayout="column">
+  <div fxFlex *ngFor="let event of events">
+    <div fxLayout="row" fxLayoutGap="8px">
+      <div fxFlex="72px" class="text-right">{{ event.label }}</div>
+      <div fxFlex="80px">
+        <strong>
+          <ng-container [ngTemplateOutlet]="event.contentTemplate"></ng-container>
+        </strong>
+      </div>
+    </div>
+  </div>
+</div>

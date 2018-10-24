@@ -1,3 +1,4 @@
-<dec-label [colorHex]="statusColor" [stretched]="stretched">
+<dec-label [colorHex]="decColorService.getStatusColor(status)" [stretched]="stretched">
   <ng-content></ng-content>
+  {{ 'label.'+status | translate }}
 </dec-label>

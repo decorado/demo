@@ -4,9 +4,7 @@ import { DecListTabsFilterComponent } from './list-tabs-filter/list-tabs-filter.
 import { DecListAdvancedFilterComponent } from './../list-advanced-filter/list-advanced-filter.component';
 import { DecListPreSearch, DecListFilter } from './../list.models';
 import { FilterGroups } from './../../../services/api/decora-api.model';
-import { PlatformLocation } from '@angular/common';
 export declare class DecListFilterComponent implements OnInit, OnDestroy {
-    private platformLocation;
     private route;
     private router;
     count: number;
@@ -41,7 +39,7 @@ export declare class DecListFilterComponent implements OnInit, OnDestroy {
     inputSearch: any;
     tabsFilterComponent: DecListTabsFilterComponent;
     advancedFilterComponent: DecListAdvancedFilterComponent;
-    constructor(platformLocation: PlatformLocation, route: ActivatedRoute, router: Router);
+    constructor(route: ActivatedRoute, router: Router);
     ngOnInit(): void;
     ngOnDestroy(): void;
     toggleSearchInput(): void;

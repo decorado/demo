@@ -209,6 +209,13 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
   private _name: string;
 
   /*
+   * _givenRows
+   *
+   *
+   */
+  private _givenRows: any[];
+
+  /*
    * customFetchMethod
    *
    * method used to fetch data from back-end
@@ -271,7 +278,8 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input('rows')
 
   set rows(rows) {
-    this.setRows(rows);
+    this._givenRows = rows;
+    this.setRows(this._givenRows);
   }
 
   get rows() {
@@ -305,6 +313,13 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
    * Properties to be searched when using basic search
    */
   @Input() searchableProperties: string[];
+
+  /*
+   * showFooter
+   *
+   *
+   */
+  @Input() selected = [];
 
   /*
    * showFooter
@@ -391,15 +406,16 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
   * - Start watching Filter
   * - Do the first load
   */
-  ngAfterViewInit() {
-    this.watchFilter();
-    this.doFirstLoad();
-    this.detectListMode();
-    this.watchTabsChange();
-    this.watchTableSort();
-    this.registerChildWatchers();
-    this.watchScroll();
-    this.watchScrollEventEmitter();
+ ngAfterViewInit() {
+   this.watchFilter();
+   this.doFirstLoad();
+   this.detectListMode();
+   this.watchTabsChange();
+   this.watchTableSort();
+   this.registerChildWatchers();
+   this.shareSelectedRowsArray();
+   this.watchScroll();
+   this.watchScrollEventEmitter();
   }
 
   /*
@@ -850,8 +866,6 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   private loadByOpennedCollapse(filterUid) {
 
-    console.log('loadByOpennedCollapse', filterUid);
-
     const filter = this.collapsableFilters.children.find(item => item.uid === filterUid);
 
     const filterGroup: FilterGroup = { filters: filter.filters };
@@ -914,15 +928,15 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
 
           });
 
-      } else if (!this.rows) {
+      } else if (this.rows) {
+
+        console.log('DecList:: Local filter not implemented. Talk to Bruno to see how to do it!');
+
+      } else {
 
         setTimeout(() => {
 
-          if (!this.rows) {
-
-            rej('No endpoint, customFetchMethod or rows set');
-
-          }
+          rej('No endpoint, customFetchMethod or rows set');
 
           this.loading = false;
 
@@ -1040,7 +1054,7 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
    * Sets the current table rows
    *
    */
-  private setRows(rows = []) {
+  private setRows(rows = this._givenRows || []) {
 
     this.report = {
 
@@ -1108,9 +1122,9 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
 
           const payloadWithSearchableProperties = this.getPayloadWithSearchTransformedIntoSearchableProperties(this.payload);
 
-          if (filterData && filterData.clear) {
-            this.setRows([]);
-          }
+        if (filterData && filterData.clear) {
+          this.setRows();
+        }
 
           fetchMethod(endpoint, payloadWithSearchableProperties)
             .subscribe(res => {
@@ -1275,15 +1289,19 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
   private updateContentChildren() {
 
     const rows = this.endpoint ? this.report.result.rows : this.rows;
+
     if (this.grid) {
       this.grid.rows = rows;
     }
+
     if (this.table) {
       this.table.rows = rows;
     }
+
     if (this.filter) {
       this.filter.count = this.report.result.count;
     }
+
   }
 
   /*
@@ -1299,6 +1317,23 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
 
     if (this.table) {
       this.watchTableRowClick();
+    }
+
+  }
+
+  /*
+   * shareSelectedRowsArray
+   *
+   * Share the selected array between views
+   */
+  private shareSelectedRowsArray() {
+
+    if (this.table) {
+      this.table.selected = this.selected;
+    }
+
+    if (this.grid) {
+      this.grid.selected = this.selected;
     }
 
   }
@@ -1331,8 +1366,6 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.filter) {
       this.filterSubscription = this.filter.search.subscribe(event => {
 
-        console.log('EVENT', event);
-
         const tabChanged = !this.previousSelectedTab || (this.previousSelectedTab !== this.selectedTab);
 
         const filterModeChanged = this.filterMode !== event.filterMode;
@@ -1341,7 +1374,7 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
 
           this.previousSelectedTab = this.selectedTab;
 
-          this.setRows([]); // if changing tabs, clear the results before showing the rows because it is done only after fetching the data
+          this.setRows(); // if changing tabs, clear the results before showing the rows because it is done only after fetching the data
 
         }
 
@@ -1495,7 +1528,7 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   /*
   * Reset Selected Rows in Table
-  * 
+  *
   */
  private resetSelected() {
   this.table.selected = [];

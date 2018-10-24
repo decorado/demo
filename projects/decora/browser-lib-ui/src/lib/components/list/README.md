@@ -172,6 +172,7 @@ Used to enabling list filtering.
 |getListMode| Function| internal method | You can provide a custom function to define when a list should be displayed as `table` or `grid` |
 |rowClick   |event  | -       | Emits an event when one row or card is clicked |
 |searchableProperties| string[] | undefined | Used to define which properties the basic search should look for |
+|selected | any[] | [] | Array of selected rows |
 |selectedCollapsable | FilterGroup | undefined | accessor for selected Collapsable |
 |selectedTab | FilterGroup | undefined | accessor for selected Tab |
 

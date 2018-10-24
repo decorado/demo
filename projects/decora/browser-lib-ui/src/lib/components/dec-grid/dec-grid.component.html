@@ -1,0 +1,9 @@
+<div fxLayout="column" [fxLayoutGap]="gap">
+
+  <div fxFlex *ngFor="let row of rows">
+
+    <ng-template [ngTemplateOutlet]="row.content" [ngTemplateOutletContext]="{gap: gap}"></ng-template>
+
+  </div>
+
+</div>

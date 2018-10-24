@@ -1,0 +1,37 @@
+<app-demo-container readmeSrc="/assets/docs/browser-lib-ui/components/autocomplete-product/README.md">
+
+  Company Selected: {{ companyId }}<br>
+
+  <dec-autocomplete-company
+  [(ngModel)]="companyId"
+  (selected)="optionSelected($event)">
+  </dec-autocomplete-company>
+
+  <button type="button" mat-stroked-button (click)="companyId = undefined">Clear company</button>
+
+  <h2>Single</h2>
+
+  Department Selected: {{ product }}
+
+  <dec-autocomplete-product
+  [(ngModel)]="product"
+  [companyId]="companyId"
+  (selected)="optionSelected($event)">
+  </dec-autocomplete-product>
+
+  <button type="button" mat-stroked-button (click)="product = undefined">Clear product</button>
+
+  <h2>Multi</h2>
+
+  Department Selected: {{ products | json }}
+
+  <dec-autocomplete-product
+  [(ngModel)]="products"
+  [companyId]="companyId"
+  [multi]="true"
+  (selected)="optionSelected($event)">
+  </dec-autocomplete-product>
+
+  <button type="button" mat-stroked-button (click)="products = undefined">Clear product</button>
+
+</app-demo-container>

@@ -1,0 +1,30 @@
+.text-area {
+    width: 95%;
+    height: 185px;
+    padding: 15px;
+}
+
+.zoom-container {
+    width: 100%;
+}
+
+.main-container {
+    position: relative;
+    background-color: white;
+}
+
+.button-save {
+    position: absolute;
+    z-index: 5;
+    right: 0;
+    top: 45%;
+}
+
+.fake-div {
+    width: 100%;
+    height: 36px;
+}
+
+.container-comments {
+    padding-left: 20px;
+}

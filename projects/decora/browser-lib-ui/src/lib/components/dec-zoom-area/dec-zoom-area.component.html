@@ -1,0 +1,40 @@
+<div class="main-container" fxLayout="column" fxLayoutGap="16px">
+  <div fxLayout="row" fxLayoutAlign="start start">
+
+    <div fxFlex="50" class="zoom-container" fxLayout="column" fxLayoutGap="16px">
+      <dec-marks class="zoom-container" #referenceZoom [noComments]="true" [marker]="reference" [qaMode]="referenceQaMode" [parentId]="parentId"
+        (referenceQa)="onReferenceQa($event)" [comentIndex]="commentIndex" [zoomScale]="reference?.zoomScale" [zoomPosition]="reference?.position">
+      </dec-marks>
+      <div class="fake-div">
+
+      </div>
+      <div div fxLayout="row" fxLayoutAlign="start center">
+        <h2 class="dec-color-grey">
+          <dec-icon font="mat">description</dec-icon>{{ 'label.observations' | translate }}
+        </h2>
+      </div>
+      <textarea [(ngModel)]="descripition" class="text-area"></textarea>
+    </div>
+
+
+    <div fxFlex="50" fxLayout="column" fxLayoutGap="16px" class="zoom-container">
+      <dec-marks #renderZoom [noComments]="false" [marker]="render" [parentId]="parentId" [qaMode]="true" (link)="onLinkTag($event)"
+        [zoomScale]="render?.zoomScale" [zoomPosition]="render?.position">
+      </dec-marks>
+
+      <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="16px" class="fake-div">
+        <button mat-button (click)="onCancel()"> {{ 'label.cancel' | translate }} </button>
+        <button mat-flat-button color="primary" (click)="onSave()"> {{ 'label.save' | translate }} </button>
+      </div>
+
+      <div class="container-comments" fxLayout="column" fxLayoutGap="16px">
+        <div fxLayout="row" fxLayoutGap="8px">
+          <h2 class="dec-color-grey">
+            <dec-icon font="mat">bookmarks</dec-icon>Tags
+          </h2>
+        </div>
+        <dec-markdowns-comment [parentId]="parentId" [renders]="renderMarkdons"></dec-markdowns-comment>
+      </div>
+    </div>
+  </div>
+</div>

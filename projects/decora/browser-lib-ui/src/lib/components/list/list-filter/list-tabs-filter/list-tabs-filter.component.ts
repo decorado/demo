@@ -130,6 +130,7 @@ export class DecListTabsFilterComponent implements OnDestroy {
 
         const tab = params[this.componentTabName()] || this.defaultTab;
 
+
         if (tab !== this.selectedTabUid) {
 
           const selectedTab = this.filters.find(filter => filter.uid === tab);

@@ -1,0 +1,53 @@
+<div class="dec-dialog-title">{{ 'label.markdowns' | translate }}</div>
+
+<mat-dialog-content class="dialog-content">
+  <div fxLayoutGap="16px">
+    <div fxLayout="column" fxFlex="50">
+
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+        <mat-form-field>
+          <input matInput placeholder="{{ 'label.choices' | translate }}" [(ngModel)]="selectedChoicesDisplay"
+            (keydown)="keydownChoice($event)" (keydown.backspace)="backspaceChoice()" autocomplete="off" onpaste="return false;">
+        </mat-form-field>
+
+        <mat-icon class="backspace-icon" style="user-select: none;cursor: pointer;" (click)="backspaceChoice()">backspace</mat-icon>
+      </div>
+
+      <div class="choices-container">
+        <div fxLayout="column" fxLayoutGap="8px" fxLayoutAlign="space-between stretch">
+          <div *ngFor="let choice of listOptionsDisplay">
+            <div class="container-choice">
+              <span class="number-choice">{{choice.key}}</span>
+              <span class="pointer-choice" (click)="selectChoice(choice.key)"> {{choice.name}} </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div fxLayout="column" fxFlex="50" class="container-result">
+      <div>
+        {{ 'label.Result' | translate }}
+
+        <div *ngFor="let choice of stepsChoice" class="label-result">
+          {{choice.name}}
+        </div>
+      </div>
+
+      <div class="container-description" *ngIf="descriptionLastLevel()">
+        Description
+        <p class="label-result">
+          {{ descriptionLastLevel() }}
+        </p>
+      </div>
+
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions style="justify-content: flex-end;">
+  <button mat-button mat-dialog-close>{{ 'label.cancel' | translate | uppercase }}</button>
+  <button mat-raised-button color="primary" [disabled]="!descriptionLastLevel()" (click)="confirm()">
+    {{ 'label.confirm' | translate | uppercase }}
+  </button>
+</mat-dialog-actions>

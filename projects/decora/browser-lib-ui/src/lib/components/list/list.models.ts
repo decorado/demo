@@ -55,7 +55,7 @@ export class DecListFilter {
   filters: Filters;
   hide?: boolean;
   label: string;
-  color: string;
+  color?: string;
   listMode?: DecListType;
   permissions?: string[];
   uid?: string;

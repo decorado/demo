@@ -7,7 +7,7 @@ const noop = () => {
 };
 
 //  Used to extend ngForms functions
-export const AUTOCOMPLETE_COUNTRY_CONTROL_VALUE_ACCESSOR: any = {
+const AUTOCOMPLETE_COUNTRY_CONTROL_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => DecAutocompleteCountryComponent),
   multi: true

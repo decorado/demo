@@ -10,6 +10,8 @@ export class DecStepsListComponent {
 
   @Input() icon = 'history';
 
+  @Input() iconFont = 'mat';
+
   @Input() title = '';
 
   @Input() showTime: boolean;

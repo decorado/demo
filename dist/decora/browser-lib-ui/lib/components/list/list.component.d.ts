@@ -36,6 +36,7 @@ export declare class DecListComponent implements OnInit, OnDestroy, AfterViewIni
     private _endpoint;
     private _filter;
     private _name;
+    private _givenRows;
     customFetchMethod: DecListFetchMethod;
     columnsSortConfig: any;
     disableShowMoreButton: boolean;
@@ -46,6 +47,7 @@ export declare class DecListComponent implements OnInit, OnDestroy, AfterViewIni
     listMode: any;
     scrollableContainerClass: string;
     searchableProperties: string[];
+    selected: any[];
     showFooter: boolean;
     postSearch: EventEmitter<any>;
     rowClick: EventEmitter<any>;
@@ -95,6 +97,7 @@ export declare class DecListComponent implements OnInit, OnDestroy, AfterViewIni
     private unsubscribeToReactiveReport();
     private updateContentChildren();
     private registerChildWatchers();
+    private shareSelectedRowsArray();
     private watchGridRowClick();
     private watchTableRowClick();
     private watchFilter();

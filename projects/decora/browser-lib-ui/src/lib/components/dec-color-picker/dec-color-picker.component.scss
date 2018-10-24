@@ -1,0 +1,34 @@
+.dec-color-picker-wrapper {
+
+  .color-picker {
+    cursor: pointer;
+    height: 32px;
+    margin-bottom: 10px;
+    border: 2px solid rgba(0, 0, 0, 0.42);
+    border-radius: 2px;
+
+    &:hover {
+      border-color: rgba(0, 0, 0, 0.87);
+    }
+  }
+
+  dec-icon {
+    font-size: 24px;
+    cursor: pointer;
+
+    &:hover {
+      color: rgba(0, 0, 0, 0.87);
+    }
+  }
+}
+
+#contentBlocker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  overflow: hidden;
+  background-color: transparent;
+}

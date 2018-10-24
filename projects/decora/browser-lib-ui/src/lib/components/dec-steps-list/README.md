@@ -37,8 +37,11 @@ stepsListWithTitleDateAndTime = [
 
 ## Inputs
 
-### icon = 'history';
-The icon to be used. Default is `history`.
+### icon: boolean;
+Icon to be used
+
+### iconfont: string;
+Type of icon font(mat or fas)
 
 ### maxHeight: boolean;
 Set a maximum height to the container and make the container scrollable.

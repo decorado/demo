@@ -8,6 +8,5 @@ import { ServiceRoutingModule } from './service-routing.module';
     CommonModule,
     ServiceRoutingModule
   ],
-  declarations: []
 })
 export class ServiceModule { }

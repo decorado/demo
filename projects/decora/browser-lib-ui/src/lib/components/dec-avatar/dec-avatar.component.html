@@ -1,0 +1,5 @@
+<div class="avatar" *ngIf="account?.profilePicture" [decImage]="account?.profilePicture" [decImageSize]="{width:200, height:200}"></div>
+
+<div *ngIf="!account?.profilePicture" class="avatar-initials">
+  {{ initialsName }}
+</div>

@@ -1,17 +1,15 @@
 import { Component, Input, forwardRef, Output, EventEmitter } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { Observable } from 'rxjs';
 import { DecApiService } from './../../services/api/decora-api.service';
-import { map } from 'rxjs/operators';
 
-export const BASE_AUTOCOMPLETE_PROJECT_ENDPOINT = '/legacy/project/search/keyValue';
+export const BASE_AUTOCOMPLETE_PROJECT_ENDPOINT = '/projects/options';
 
 //  Return an empty function to be used as default trigger functions
 const noop = () => {
 };
 
 //  Used to extend ngForms functions
-export const AUTOCOMPLETE_PROJECT_CONTROL_VALUE_ACCESSOR: any = {
+const AUTOCOMPLETE_PROJECT_CONTROL_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => DecAutocompleteProjectComponent),
   multi: true
@@ -120,24 +118,14 @@ export class DecAutocompleteProjectComponent implements ControlValueAccessor {
   setEndpointBasedOnCompanyId() {
     if (this.companyId) {
       this.endpoint = BASE_AUTOCOMPLETE_PROJECT_ENDPOINT + '?companyId=' + this.companyId;
+    } else {
+      this.endpoint = BASE_AUTOCOMPLETE_PROJECT_ENDPOINT;
     }
   }
 
   onAutocompleteBlur($event) {
     this.onTouchedCallback();
     this.blur.emit(this.value);
-  }
-
-  customFetchFunction = (textSearch): Observable<any> => {
-    const params: any = {};
-    params.textSearch = textSearch;
-    this.setEndpointBasedOnCompanyId();
-    return this.decoraApi.get(this.endpoint, params)
-    .pipe(
-      map(projects => {
-        return projects;
-      })
-    );
   }
 
 }

@@ -7,6 +7,8 @@ import { Component, OnInit, ContentChild, TemplateRef, Output, EventEmitter, Inp
 })
 export class DecListGridComponent implements OnInit {
 
+  selected: any[] = []; // from list component
+
   @ContentChild(TemplateRef) templateRef: TemplateRef<any>;
 
   @Input() itemWidth = '280px';

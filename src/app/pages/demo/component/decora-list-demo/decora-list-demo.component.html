@@ -1,6 +1,12 @@
 <app-demo-container readmeSrc="/assets/docs/browser-lib-ui/components/list/README.md">
 
   <mat-accordion>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>Without tabs</mat-expansion-panel-header>
+      <ng-container [ngTemplateOutlet]="example0"></ng-container>
+    </mat-expansion-panel>
+
     <mat-expansion-panel>
       <mat-expansion-panel-header>Passing rows</mat-expansion-panel-header>
       <ng-container [ngTemplateOutlet]="example1"></ng-container>
@@ -23,6 +29,25 @@
   </mat-accordion>
 
 </app-demo-container>
+
+
+<ng-template #example0>
+
+  <dec-list name="list-test-without-filters" [rows]="rows2">
+
+    <dec-list-filter></dec-list-filter>
+
+    <dec-list-table [selectable]="true">
+      <dec-list-table-column title="#ID">
+        <ng-template let-row="row">
+          {{ row.id }}
+        </ng-template>
+      </dec-list-table-column>
+    </dec-list-table>
+
+  </dec-list>
+
+</ng-template>
 
 <ng-template #example1>
 

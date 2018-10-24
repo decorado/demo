@@ -1,9 +1,28 @@
 <app-demo-container readmeSrc="/assets/docs/browser-lib-ui/components/tabs/README.md">
 
-  <dec-tabs name="tabs-test"
-  [activeTab]="activeTab"
-  [destroyOnBlur]="true"
-  [persist]="true">
+  <h2>Dec Tabs</h2>
+
+  <h3>Persistent tabs</h3>
+
+  <dec-tabs name="tabs-test" [activeTab]="activeTab" [destroyOnBlur]="true" [persist]="true">
+
+    <dec-tab label="Tab 1" name="tab-1">
+      <ng-template>
+        Conteúdo da aba 1
+      </ng-template>
+    </dec-tab>
+
+    <dec-tab label="Tab 2" name="tab-2">
+      <ng-template>
+        Conteúdo da aba 2
+        <dec-autocomplete-company></dec-autocomplete-company>
+      </ng-template>
+    </dec-tab>
+  </dec-tabs>
+
+  <h3>Not persistent tabs</h3>
+
+  <dec-tabs name="tabs-test" [activeTab]="activeTab2" [destroyOnBlur]="true" [persist]="false">
 
     <dec-tab label="Tab 1" name="tab-1">
       <ng-template>

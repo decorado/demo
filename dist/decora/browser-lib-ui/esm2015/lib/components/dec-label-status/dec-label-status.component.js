@@ -3,35 +3,21 @@
  * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 import { Component, Input } from '@angular/core';
-import { DecStatusColorService } from './../../services/status-color/dec-status-color.service';
+import { DecColorService } from './../../services/color/dec-color.service';
 export class DecLabelStatusComponent {
     /**
-     * @param {?} decStatusColorService
+     * @param {?} decColorService
      */
-    constructor(decStatusColorService) {
-        this.decStatusColorService = decStatusColorService;
-    }
-    /**
-     * @param {?} v
-     * @return {?}
-     */
-    set status(v) {
-        if (v !== this._status) {
-            this.statusColor = this.decStatusColorService.getStatusColor(v);
-        }
-    }
-    /**
-     * @return {?}
-     */
-    get status() {
-        return this._status;
+    constructor(decColorService) {
+        this.decColorService = decColorService;
     }
 }
 DecLabelStatusComponent.decorators = [
     { type: Component, args: [{
                 selector: 'dec-label-status',
-                template: `<dec-label [colorHex]="statusColor" [stretched]="stretched">
+                template: `<dec-label [colorHex]="decColorService.getStatusColor(status)" [stretched]="stretched">
   <ng-content></ng-content>
+  {{ 'label.'+status | translate }}
 </dec-label>
 `,
                 styles: [``]
@@ -39,7 +25,7 @@ DecLabelStatusComponent.decorators = [
 ];
 /** @nocollapse */
 DecLabelStatusComponent.ctorParameters = () => [
-    { type: DecStatusColorService }
+    { type: DecColorService }
 ];
 DecLabelStatusComponent.propDecorators = {
     status: [{ type: Input }],
@@ -47,13 +33,11 @@ DecLabelStatusComponent.propDecorators = {
 };
 if (false) {
     /** @type {?} */
+    DecLabelStatusComponent.prototype.status;
+    /** @type {?} */
     DecLabelStatusComponent.prototype.stretched;
     /** @type {?} */
-    DecLabelStatusComponent.prototype._status;
-    /** @type {?} */
-    DecLabelStatusComponent.prototype.statusColor;
-    /** @type {?} */
-    DecLabelStatusComponent.prototype.decStatusColorService;
+    DecLabelStatusComponent.prototype.decColorService;
 }
 
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZGVjLWxhYmVsLXN0YXR1cy5jb21wb25lbnQuanMiLCJzb3VyY2VSb290Ijoibmc6Ly9AZGVjb3JhL2Jyb3dzZXItbGliLXVpLyIsInNvdXJjZXMiOlsibGliL2NvbXBvbmVudHMvZGVjLWxhYmVsLXN0YXR1cy9kZWMtbGFiZWwtc3RhdHVzLmNvbXBvbmVudC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7O0FBQUEsT0FBTyxFQUFFLFNBQVMsRUFBRSxLQUFLLEVBQUUsTUFBTSxlQUFlLENBQUM7QUFDakQsT0FBTyxFQUFFLHFCQUFxQixFQUFFLE1BQU0sd0RBQXdELENBQUM7QUFVL0YsTUFBTTs7OztJQW1CSixZQUFtQixxQkFBNEM7UUFBNUMsMEJBQXFCLEdBQXJCLHFCQUFxQixDQUF1QjtLQUFLOzs7OztJQWpCcEUsSUFDSSxNQUFNLENBQUMsQ0FBUztRQUNsQixFQUFFLENBQUMsQ0FBQyxDQUFDLEtBQUssSUFBSSxDQUFDLE9BQU8sQ0FBQyxDQUFDLENBQUM7WUFDdkIsSUFBSSxDQUFDLFdBQVcsR0FBRyxJQUFJLENBQUMscUJBQXFCLENBQUMsY0FBYyxDQUFDLENBQUMsQ0FBQyxDQUFDO1NBQ2pFO0tBQ0Y7Ozs7SUFFRCxJQUFJLE1BQU07UUFDUixNQUFNLENBQUMsSUFBSSxDQUFDLE9BQU8sQ0FBQztLQUNyQjs7O1lBbkJGLFNBQVMsU0FBQztnQkFDVCxRQUFRLEVBQUUsa0JBQWtCO2dCQUM1QixRQUFRLEVBQUU7OztDQUdYO2dCQUNDLE1BQU0sRUFBRSxDQUFDLEVBQUUsQ0FBQzthQUNiOzs7O1lBVFEscUJBQXFCOzs7cUJBWTNCLEtBQUs7d0JBV0wsS0FBSyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IENvbXBvbmVudCwgSW5wdXQgfSBmcm9tICdAYW5ndWxhci9jb3JlJztcbmltcG9ydCB7IERlY1N0YXR1c0NvbG9yU2VydmljZSB9IGZyb20gJy4vLi4vLi4vc2VydmljZXMvc3RhdHVzLWNvbG9yL2RlYy1zdGF0dXMtY29sb3Iuc2VydmljZSc7XG5cbkBDb21wb25lbnQoe1xuICBzZWxlY3RvcjogJ2RlYy1sYWJlbC1zdGF0dXMnLFxuICB0ZW1wbGF0ZTogYDxkZWMtbGFiZWwgW2NvbG9ySGV4XT1cInN0YXR1c0NvbG9yXCIgW3N0cmV0Y2hlZF09XCJzdHJldGNoZWRcIj5cbiAgPG5nLWNvbnRlbnQ+PC9uZy1jb250ZW50PlxuPC9kZWMtbGFiZWw+XG5gLFxuICBzdHlsZXM6IFtgYF1cbn0pXG5leHBvcnQgY2xhc3MgRGVjTGFiZWxTdGF0dXNDb21wb25lbnQge1xuXG4gIEBJbnB1dCgpXG4gIHNldCBzdGF0dXModjogc3RyaW5nKSB7XG4gICAgaWYgKHYgIT09IHRoaXMuX3N0YXR1cykge1xuICAgICAgdGhpcy5zdGF0dXNDb2xvciA9IHRoaXMuZGVjU3RhdHVzQ29sb3JTZXJ2aWNlLmdldFN0YXR1c0NvbG9yKHYpO1xuICAgIH1cbiAgfVxuXG4gIGdldCBzdGF0dXMoKSB7XG4gICAgcmV0dXJuIHRoaXMuX3N0YXR1cztcbiAgfVxuXG4gIEBJbnB1dCgpIHN0cmV0Y2hlZD86IGJvb2xlYW47XG5cbiAgcHJpdmF0ZSBfc3RhdHVzOiBzdHJpbmc7XG5cbiAgc3RhdHVzQ29sb3I6IHN0cmluZztcblxuICBjb25zdHJ1Y3RvcihwdWJsaWMgZGVjU3RhdHVzQ29sb3JTZXJ2aWNlOiBEZWNTdGF0dXNDb2xvclNlcnZpY2UpIHsgfVxuXG59XG4iXX0=
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZGVjLWxhYmVsLXN0YXR1cy5jb21wb25lbnQuanMiLCJzb3VyY2VSb290Ijoibmc6Ly9AZGVjb3JhL2Jyb3dzZXItbGliLXVpLyIsInNvdXJjZXMiOlsibGliL2NvbXBvbmVudHMvZGVjLWxhYmVsLXN0YXR1cy9kZWMtbGFiZWwtc3RhdHVzLmNvbXBvbmVudC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7O0FBQUEsT0FBTyxFQUFFLFNBQVMsRUFBRSxLQUFLLEVBQUUsTUFBTSxlQUFlLENBQUM7QUFDakQsT0FBTyxFQUFFLGVBQWUsRUFBRSxNQUFNLDBDQUEwQyxDQUFDO0FBVzNFLE1BQU07Ozs7SUFNSixZQUNTO1FBQUEsb0JBQWUsR0FBZixlQUFlO0tBQ25COzs7WUFqQk4sU0FBUyxTQUFDO2dCQUNULFFBQVEsRUFBRSxrQkFBa0I7Z0JBQzVCLFFBQVEsRUFBRTs7OztDQUlYO2dCQUNDLE1BQU0sRUFBRSxDQUFDLEVBQUUsQ0FBQzthQUNiOzs7O1lBVlEsZUFBZTs7O3FCQWFyQixLQUFLO3dCQUVMLEtBQUsiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBDb21wb25lbnQsIElucHV0IH0gZnJvbSAnQGFuZ3VsYXIvY29yZSc7XG5pbXBvcnQgeyBEZWNDb2xvclNlcnZpY2UgfSBmcm9tICcuLy4uLy4uL3NlcnZpY2VzL2NvbG9yL2RlYy1jb2xvci5zZXJ2aWNlJztcblxuQENvbXBvbmVudCh7XG4gIHNlbGVjdG9yOiAnZGVjLWxhYmVsLXN0YXR1cycsXG4gIHRlbXBsYXRlOiBgPGRlYy1sYWJlbCBbY29sb3JIZXhdPVwiZGVjQ29sb3JTZXJ2aWNlLmdldFN0YXR1c0NvbG9yKHN0YXR1cylcIiBbc3RyZXRjaGVkXT1cInN0cmV0Y2hlZFwiPlxuICA8bmctY29udGVudD48L25nLWNvbnRlbnQ+XG4gIHt7ICdsYWJlbC4nK3N0YXR1cyB8IHRyYW5zbGF0ZSB9fVxuPC9kZWMtbGFiZWw+XG5gLFxuICBzdHlsZXM6IFtgYF1cbn0pXG5leHBvcnQgY2xhc3MgRGVjTGFiZWxTdGF0dXNDb21wb25lbnQge1xuXG4gIEBJbnB1dCgpIHN0YXR1czogc3RyaW5nO1xuXG4gIEBJbnB1dCgpIHN0cmV0Y2hlZDogYm9vbGVhbjtcblxuICBjb25zdHJ1Y3RvcihcbiAgICBwdWJsaWMgZGVjQ29sb3JTZXJ2aWNlOiBEZWNDb2xvclNlcnZpY2VcbiAgKSB7IH1cblxufVxuIl19

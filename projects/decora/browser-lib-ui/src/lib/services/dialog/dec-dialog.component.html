@@ -1,0 +1,72 @@
+<div class="fixActionRow">
+
+  <mat-toolbar [color]="color" [ngStyle]="color === 'transparent' ? {'background': 'rgba(255, 255, 255, 0)'} : {}">
+
+    <div fxLayout="row" fxFlexFill fxLayoutAlign="start center">
+      <div *ngIf="!hideBackButton">
+        <button type="button" mat-icon-button class="uppercase" mat-dialog-close>
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+      </div>
+      <div class="dec-dialog-title">{{ title }}</div>
+      <div fxFlex>
+        <div fxLayout="row" fxLayoutAlign="end center">
+          <div *ngIf="topActions">
+            <mat-menu #decDialogActionsMenu="matMenu">
+              <button *ngFor="let action of topActions" mat-menu-item (click)="action.callback(context)">
+                <span *ngIf="action.label">{{ action.label }}</span>
+                <span *ngIf="action.i18nLabel">{{ action.i18nLabel | translate }}</span>
+              </button>
+            </mat-menu>
+
+            <button mat-icon-button [matMenuTriggerFor]="decDialogActionsMenu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </mat-toolbar>
+
+  <div mat-dialog-content>
+
+    <template #childContainer></template>
+
+    <dec-spinner *ngIf="!loaded"></dec-spinner>
+
+  </div>
+
+  <div class="spacer"></div>
+
+
+  <div mat-dialog-actions align="end" *ngIf="showCancelButton || bottomActions">
+
+    <button *ngIf="showCancelButton" mat-button mat-dialog-close>
+      {{ 'label.Cancel' | translate }}
+    </button>
+
+    <ng-container *ngFor="let action of bottomActions">
+
+      <ng-container [ngSwitch]="action.buttonType">
+
+        <button *ngSwitchCase="'mat-button'" mat-button (click)="action.callback(context)" [color]="action.color">
+          <span *ngIf="action.label">{{ action.label }}</span>
+          <span *ngIf="action.i18nLabel">{{ action.i18nLabel | translate }}</span>
+        </button>
+
+        <button *ngSwitchCase="'mat-raised-button'" mat-raised-button (click)="action.callback(context)" [color]="action.color">
+          <span *ngIf="action.label">{{ action.label }}</span>
+          <span *ngIf="action.i18nLabel">{{ action.i18nLabel | translate }}</span>
+        </button>
+
+        <button *ngSwitchDefault mat-raised-button (click)="action.callback(context)" [color]="action.color">
+          <span *ngIf="action.label">{{ action.label }}</span>
+          <span *ngIf="action.i18nLabel">{{ action.i18nLabel | translate }}</span>
+        </button>
+
+      </ng-container>
+
+    </ng-container>
+  </div>
+</div>
