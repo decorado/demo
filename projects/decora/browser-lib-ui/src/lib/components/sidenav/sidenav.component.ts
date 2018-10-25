@@ -63,6 +63,7 @@ export class DecSidenavComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.detectAndShowChildComponents();
     this.subscribeToToolbarEvents();
+    this.setToolbarLoadingState();
   }
 
   // API //
@@ -172,4 +173,11 @@ export class DecSidenavComponent implements AfterViewInit {
     this.leftMenu.leftMenuVisible.next(!this.decSidenavService.getSidenavVisibility('leftMenuHidden'));
   }
 
+  private setToolbarLoadingState() {
+    this.decSidenavService.progressBarVisible.subscribe(state => {
+      if (this.toolbar) {
+        this.toolbar.progressBarVisible = state;
+      }
+    });
+  }
 }

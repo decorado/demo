@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { DecConfirmDialogConfig } from './dec-confirm-dialog.models';
 import { DecDialogService } from './../dialog/dec-dialog.service';
 import { DecConfirmDialogComponent } from './dec-confirm-dialog.component';
-import { DialogAction } from './../dialog/dec-dialog.models';
+import { DecDialogAction } from './../dialog/dec-dialog.models';
 import { MatDialogRef } from '@angular/material';
 
 @Injectable()
@@ -16,7 +16,7 @@ export class DecConfirmDialogService {
 
     config = new DecConfirmDialogConfig(config);
 
-    const actions: DialogAction[] = [{ i18nLabel: config.customButtonTitle, callback: () => ref.close(true), color: 'primary' }];
+    const actions: DecDialogAction[] = [{ i18nLabel: config.customButtonTitle, callback: () => ref.close(true), color: 'primary' }];
 
     if (config.extraButtons) {
       actions.push(...config.extraButtons);

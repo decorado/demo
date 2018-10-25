@@ -13,11 +13,11 @@ export class DecSnackBarService {
   constructor(public snackBarService: MatSnackBar,
     private translate: TranslateService) { }
 
-  open(message: string, type: MessageType, duration = 4e3, translate = true): MatSnackBarRef<SimpleSnackBar> {
+  open(message: string, type: MessageType, duration = 4e3, translate: any = {}): MatSnackBarRef<SimpleSnackBar> {
     if (!message) {
       return;
     }
-    const msg = translate ? this.translate.instant(message) : message;
+    const msg = translate ? this.translate.instant(message, translate) : message;
     const snackClass = this.getClass(type);
 
     return this.snackBarService.open(msg, '', {

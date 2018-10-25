@@ -1,4 +1,4 @@
-import { Component, Input, forwardRef, Output, EventEmitter } from '@angular/core';
+import { Component, Input, forwardRef, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { DecApiService } from './../../services/api/decora-api.service';
 
@@ -21,7 +21,7 @@ const AUTOCOMPLETE_PRODUCT_CONTROL_VALUE_ACCESSOR: any = {
   styles: [],
   providers: [AUTOCOMPLETE_PRODUCT_CONTROL_VALUE_ACCESSOR]
 })
-export class DecAutocompleteProductComponent implements ControlValueAccessor {
+export class DecAutocompleteProductComponent implements ControlValueAccessor, AfterViewInit {
 
   endpoint;
 
@@ -32,15 +32,29 @@ export class DecAutocompleteProductComponent implements ControlValueAccessor {
     if (this._companyId !== v) {
       this._companyId = v;
       this.value = undefined;
-      this.endpoint = undefined;
-      setTimeout(() => { // ensures a digest cicle before reseting the endpoint
-        this.setEndpointBasedOnCompanyId();
-      }, 0);
+      this.endpoint = undefined; // enforce autocomplete reload
+      if (this.initialized) {
+        this.setEndpointBasedOnInputs();
+      }
     }
   }
 
   get companyId() {
     return this._companyId;
+  }
+
+  @Input()
+  set modelApproved(v: boolean) {
+    if (this._modelApproved !== v) {
+      this._modelApproved = v;
+      if (this.initialized) {
+        this.setEndpointBasedOnInputs();
+      }
+    }
+  }
+
+  get modelApproved() {
+    return this._modelApproved;
   }
 
   @Input() disabled: boolean;
@@ -61,6 +75,12 @@ export class DecAutocompleteProductComponent implements ControlValueAccessor {
 
   private _companyId: string;
 
+  private _modelApproved: boolean;
+
+  private params: any = [];
+
+  private initialized;
+
   /*
   ** ngModel propertie
   ** Used to two way data bind using [(ngModel)]
@@ -73,6 +93,15 @@ export class DecAutocompleteProductComponent implements ControlValueAccessor {
   private onChangeCallback: (_: any) => void = noop;
 
   constructor(private decoraApi: DecApiService) { }
+
+  ngAfterViewInit() {
+    this.initialized = true;
+
+    setTimeout(() => {
+      this.setEndpointBasedOnInputs();
+    }, 0);
+
+  }
 
   /*
   ** ngModel API
@@ -110,22 +139,46 @@ export class DecAutocompleteProductComponent implements ControlValueAccessor {
   }
 
   writeValue(value: any) {
-    if (value !== null && `${value}` !== `${this.value}`) { // convert to string to avoid problems comparing values
+    if (`${value}` !== `${this.value}`) { // convert to string to avoid problems comparing values
       this.value = value;
     }
   }
 
-  setEndpointBasedOnCompanyId() {
-    if (this.companyId) {
-      this.endpoint = BASE_AUTOCOMPLETE_PRODUCT_ENDPOINT + '?companyId=' + this.companyId;
-    } else {
-      this.endpoint = BASE_AUTOCOMPLETE_PRODUCT_ENDPOINT;
+  setEndpointBasedOnInputs() {
+    this.indentifyParams();
+    this.endpoint = BASE_AUTOCOMPLETE_PRODUCT_ENDPOINT;
+    if (this.params.length > 0) {
+      this.params.forEach(function(param, index) {
+        const paramName = Object.keys(param)[0];
+        const paramValue = param[paramName];
+        this.endpoint += index === 0 ? '?' : '&';
+        this.endpoint += paramName;
+        this.endpoint += '=';
+        this.endpoint += paramValue;
+      }, this);
     }
   }
 
   onAutocompleteBlur($event) {
     this.onTouchedCallback();
     this.blur.emit(this.value);
+  }
+
+  private indentifyParams() {
+
+    this.params = [];
+
+    if (this.companyId) {
+      this.params.push({
+        companyId: this.companyId
+      });
+    }
+
+    if (this.modelApproved) {
+      this.params.push({
+        modelApproved: this.modelApproved
+      });
+    }
   }
 
 }

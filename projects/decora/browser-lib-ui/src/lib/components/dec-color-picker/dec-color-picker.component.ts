@@ -7,7 +7,7 @@ import { DecColorService } from './../../services/color/dec-color.service';
 
 const noop = () => { };
 
-const CLOCK_PICKER_CONTROL_VALUE_ACCESSOR = {
+const COLOR_PICKER_CONTROL_VALUE_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => DecColorPickerComponent),
   multi: true
@@ -18,7 +18,7 @@ const CLOCK_PICKER_CONTROL_VALUE_ACCESSOR = {
   templateUrl: './dec-color-picker.component.html',
   styleUrls: ['./dec-color-picker.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  providers: [CLOCK_PICKER_CONTROL_VALUE_ACCESSOR]
+  providers: [COLOR_PICKER_CONTROL_VALUE_ACCESSOR]
 })
 export class DecColorPickerComponent implements ControlValueAccessor {
 
@@ -89,8 +89,10 @@ export class DecColorPickerComponent implements ControlValueAccessor {
     this.dialog.open(DecColorPickerModalComponent, {
       data: { color: this.hexValue }, width: '320px', id: 'colorContainer', panelClass: ['color-picker-container', 'no-padding', 'box-shadow-none'], hasBackdrop: false, disableClose: true
     }).afterClosed().subscribe(color => {
-      this.hexValue = color;
-      this.setValueBasedOnColorFormat();
+      if (color) {
+        this.hexValue = color;
+        this.setValueBasedOnColorFormat();
+      }
     });
   }
 

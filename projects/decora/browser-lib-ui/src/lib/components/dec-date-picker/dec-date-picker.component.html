@@ -1,0 +1,11 @@
+<mat-form-field>
+  <input matInput
+  #dueDateInput
+  [matDatepicker]="decPicker"
+  [placeholder]="placeholder"
+  [(ngModel)]="dateValue"
+  (blur)="onInputBlur($event)"
+  (focus)="dueDateInput.blur(); decPicker.open();">
+  <mat-datepicker-toggle matSuffix [for]="decPicker"></mat-datepicker-toggle>
+  <mat-datepicker #decPicker></mat-datepicker>
+</mat-form-field>

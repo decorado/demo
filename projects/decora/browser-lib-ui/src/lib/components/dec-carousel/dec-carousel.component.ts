@@ -8,19 +8,56 @@ import { DecCarouselItemComponent } from './dec-carousel-item/dec-carousel-item.
 })
 export class DecCarouselComponent {
 
-  @Input() selectedIndex = 0;
+  @Input()
+  set selectedIndex(v) {
+    if (v !== this._selectedIndex) {
+      this._selectedIndex = v;
+      if (this.items) {
+        this.mountAndEmitSelected();
+      }
+    }
+  }
+
+  get selectedIndex() {
+    return this._selectedIndex;
+  }
 
   @Input() itemsPerPage = 4;
 
+  @Input() highlightSelected = true;
+
   @Input() gap = '8px';
 
-  @ContentChildren(DecCarouselItemComponent) items: QueryList<DecCarouselItemComponent>;
+  @ContentChildren(DecCarouselItemComponent)
+  set items(v: QueryList<DecCarouselItemComponent>) {
+    if (this._items !== v) {
+      this._items = v;
+      this.mountSelectedItem();
+      this.detectVisibleItems();
+      this.mountAndEmitSelected();
+    }
+  }
+
+  get items() {
+    return this._items;
+  }
 
   @Output() itemSelected = new EventEmitter<any>();
+
+  visibleItems = [];
+
+  selectedItem: { index: number, value: any } = {
+    index: 0,
+    value: undefined,
+  };
 
   private initialIndex = 0;
 
   private finalIndex;
+
+  private _items;
+
+  private _selectedIndex = 0;
 
   constructor() { }
 
@@ -41,44 +78,48 @@ export class DecCarouselComponent {
     return !this.items || this.items.length > this.itemsPerPage;
   }
 
-  get visibleItems() {
-
+  detectVisibleItems() {
     const itemsArray = this.items.toArray();
-
     this.finalIndex = this.initialIndex + this.itemsPerPage;
-
     const itemsObjects = itemsArray.map((item, index) => {
       return {
         index: index,
         component: item
       };
     });
-
-    return itemsObjects.slice(this.initialIndex, this.finalIndex);
-
-  }
-
-  get selectedItem() {
-    return this.items.toArray()[this.selectedIndex];
+    this.visibleItems = itemsObjects.slice(this.initialIndex, this.finalIndex);
   }
 
   goPrev() {
     this.initialIndex--;
+    this.detectVisibleItems();
   }
 
   goNext() {
     this.initialIndex++;
+    this.detectVisibleItems();
   }
 
   selectItem(index) {
-
     this.selectedIndex = index;
+    this.mountAndEmitSelected();
+  }
 
-    this.itemSelected.emit({
+  private mountAndEmitSelected() {
+    this.mountSelectedItem();
+    this.emitSelectedItem();
+  }
+
+  private mountSelectedItem() {
+    const item = this.items.toArray()[this.selectedIndex];
+    this.selectedItem = {
       index: this.selectedIndex,
-      value: this.selectedItem.value
-    });
+      value: item.value
+    };
+  }
 
+  private emitSelectedItem() {
+    this.itemSelected.emit(this.selectedItem);
   }
 
 }

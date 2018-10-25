@@ -32,9 +32,9 @@ export class DecAutocompleteProjectComponent implements ControlValueAccessor {
     if (this._companyId !== v) {
       this._companyId = v;
       this.value = undefined;
-      this.endpoint = undefined;
+      this.endpoint = undefined; // enforce autocomplete reload
       setTimeout(() => { // ensures a digest cicle before reseting the endpoint
-        this.setEndpointBasedOnCompanyId();
+        this.setEndpointBasedOnInputs();
       }, 0);
     }
   }
@@ -110,12 +110,12 @@ export class DecAutocompleteProjectComponent implements ControlValueAccessor {
   }
 
   writeValue(value: any) {
-    if (value !== null && `${value}` !== `${this.value}`) { // convert to string to avoid problems comparing values
+    if (`${value}` !== `${this.value}`) { // convert to string to avoid problems comparing values
       this.value = value;
     }
   }
 
-  setEndpointBasedOnCompanyId() {
+  setEndpointBasedOnInputs() {
     if (this.companyId) {
       this.endpoint = BASE_AUTOCOMPLETE_PROJECT_ENDPOINT + '?companyId=' + this.companyId;
     } else {

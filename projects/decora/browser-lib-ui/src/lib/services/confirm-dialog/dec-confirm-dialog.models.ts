@@ -1,4 +1,4 @@
-import { DialogAction } from './../dialog/dec-dialog.models';
+import { DecDialogAction } from './../dialog/dec-dialog.models';
 
 export class DecConfirmDialogConfig {
   title?: string;
@@ -7,7 +7,7 @@ export class DecConfirmDialogConfig {
   width?: string;
   height?: string;
   color?: 'primary' | 'accent' | 'warn' | 'default' | 'transparent' = 'primary';
-  extraButtons?: DialogAction[];
+  extraButtons?: DecDialogAction[];
 
   constructor(data: any = {}) {
     this.title = data.title;

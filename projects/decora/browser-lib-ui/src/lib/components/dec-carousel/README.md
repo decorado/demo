@@ -7,7 +7,7 @@ Used to present a list of items navigated by pages
 ## Examples
 
 ```html
-  <dec-carousel (itemSelected)="onItemSelected($event)">
+  <dec-carousel (itemSelected)="onItemSelected($event)" [highlightSelected]="true">
 
     <dec-carousel-item value="1">item 1</dec-carousel-item>
 
@@ -32,6 +32,10 @@ Used to present a list of items navigated by pages
 
 
 # dec-carousel  Inputs
+
+## highlightSelected
+
+Defines if a border is placed around the selected item to highlight it.
 
 ## selectedIndex = 0
 

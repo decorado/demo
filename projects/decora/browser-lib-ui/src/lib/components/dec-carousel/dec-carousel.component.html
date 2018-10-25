@@ -8,10 +8,17 @@
 
     <div fxLayout="row" [fxLayoutGap]="gap">
 
-      <div *ngFor="let item of visibleItems;" class="dec-carousel-item" [ngClass]="{'selected': selectedIndex === item.index}"
-        [fxFlex]="itemWidth" (click)="selectItem(item.index)">
+      <div *ngFor="let item of visibleItems;" class="dec-carousel-item" [ngClass]="{'highlight-selected': highlightSelected}" [fxFlex]="itemWidth">
 
-        <ng-template [ngTemplateOutlet]="item.component.template"></ng-template>
+        <div class="dec-carousel-item-content-wrapper" [ngClass]="{'dec-carousel-item-content-wrapper-selected': selectedIndex === item.index}" (click)="selectItem(item.index)">
+
+          <div class="dec-carousel-item-content">
+
+            <ng-template [ngTemplateOutlet]="item.component.template"></ng-template>
+
+          </div>
+
+        </div>
 
       </div>
 

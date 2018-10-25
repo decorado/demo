@@ -22,3 +22,18 @@
   font-size: 24px;
   padding: 0 16px;
 }
+
+.mat-toolbar {
+  position: relative;
+  .progress-bar-wrapper {
+    position: absolute;
+    bottom: 0;
+    width: inherit;
+    margin-left: -16px;
+    .progress-bar-message {
+      text-align: center;
+      font-size: 12px;
+      line-height: 12px;
+    }
+  }
+}

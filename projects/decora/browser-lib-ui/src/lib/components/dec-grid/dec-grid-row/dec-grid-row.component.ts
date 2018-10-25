@@ -1,6 +1,9 @@
 import { Component,  ContentChildren, QueryList, ViewChild, TemplateRef, forwardRef, Input } from '@angular/core';
 
-// In the same file to avoid circular dependency using forwardRef
+// IMPORTANT //
+// DecGridColumnComponent and DecGridRowComponent are in the same file to avoid circular dependency using forwardRef
+// ...
+
 @Component({
   selector: 'dec-grid-column',
   templateUrl: './dec-grid-column.component.html',
@@ -18,7 +21,6 @@ export class DecGridColumnComponent {
 
   get columnWidth() {
     return (100 / 12) * this.span;
-
   }
 
 }

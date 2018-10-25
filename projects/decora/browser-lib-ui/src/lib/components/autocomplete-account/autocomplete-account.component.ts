@@ -33,9 +33,12 @@ export class DecAutocompleteAccountComponent implements ControlValueAccessor, Af
   set types(v: string[]) {
     if (v !== this._types) {
       this._types = v;
-
+      this.value = undefined;
+      this.endpoint = undefined; // enforce autocomplete reload
       if (this.initialized) {
-        this.setRolesParams();
+        setTimeout(() => { // ensures a digest cicle before reseting the endpoint
+          this.setEndpointBasedOnInputs();
+        });
       }
     }
   }
@@ -81,7 +84,7 @@ export class DecAutocompleteAccountComponent implements ControlValueAccessor, Af
   ngAfterViewInit() {
     this.initialized = true;
     setTimeout(() => {
-      this.setRolesParams();
+      this.setEndpointBasedOnInputs();
     }, 0);
   }
 
@@ -117,7 +120,7 @@ export class DecAutocompleteAccountComponent implements ControlValueAccessor, Af
   }
 
   writeValue(value: any) {
-    if (value !== null &&`${value}` !== `${this.value}`) { // convert to string to avoid problems comparing values
+    if (`${value}` !== `${this.value}`) { // convert to string to avoid problems comparing values
       this.value = value;
     }
   }
@@ -131,7 +134,7 @@ export class DecAutocompleteAccountComponent implements ControlValueAccessor, Af
     return `${account.value} #${account.key}`;
   }
 
-  setRolesParams() {
+  setEndpointBasedOnInputs() {
     const params = [];
     let endpoint = `${ACCOUNTS_ENDPOINT}`;
 

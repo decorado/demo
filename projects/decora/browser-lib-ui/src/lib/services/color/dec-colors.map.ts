@@ -1,5 +1,6 @@
 export enum DEC_COLOR_BY_STATUS {
   ACTIVE = '#097509',
+  APPROVED = '#4DBD74',
   COMMITED = '#259844',
   DEFAULT = '#656d74',
   DELETED = '#FF5252',
@@ -22,9 +23,9 @@ export enum DEC_COLOR_BY_STATUS {
   WAITING_MODEL = '#656d74',
   WORKING_ON_IT = '#63c2de',
   IN_DEVELOPMENT = '#63c2de',
-  INACTIVE = '#F4F4F4',
   IN_QA = '#63c2de',
   IN_FIX = '#BA68CB',
   DENIED = '#f44336',
-  APPROVED = '#4DBD74'
+  DEVELOPMENT = '#63c2de',
+  INACTIVE = '#F4F4F4',
 }

@@ -94,7 +94,7 @@ export class DecAutocompleteRoleComponent implements ControlValueAccessor {
   }
 
   writeValue(value: any) {
-    if (value !== null && `${value}` !== `${this.value}`) { // convert to string to avoid problems comparing values
+    if (`${value}` !== `${this.value}`) { // convert to string to avoid problems comparing values
       this.value = value;
     }
   }
@@ -103,18 +103,5 @@ export class DecAutocompleteRoleComponent implements ControlValueAccessor {
     this.onTouchedCallback();
     this.blur.emit(this.value);
   }
-
-  // customFetchFunction = (textSearch): Observable<any> => {
-  //   const search = textSearch ? { textSearch } : undefined;
-  //   return this.decoraApi.get(this.endpoint, search)
-  //   .pipe(
-  //     map(roles => {
-  //       return roles.filter(role => {
-  //         const roleType = (role && role.key) ? role.key.split('.')[0] : undefined;
-  //         return !this.types ? true : this.types.indexOf(roleType) >= 0;
-  //       });
-  //     })
-  //   );
-  // }
 
 }

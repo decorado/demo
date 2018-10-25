@@ -2,7 +2,35 @@
 
   <h1>Dec Carousel</h1>
 
-  <dec-carousel (itemSelected)="onItemSelected($event)">
+<p>Index selected = {{ carousel1?.selectedItem.index }}</p>
+
+  <dec-carousel (itemSelected)="onItemSelected($event)" #carousel1>
+
+    <dec-carousel-item value="1">item 1</dec-carousel-item>
+
+    <dec-carousel-item value="2">item 2</dec-carousel-item>
+
+    <dec-carousel-item value="3">item 3</dec-carousel-item>
+
+    <dec-carousel-item value="4">item 4</dec-carousel-item>
+
+    <dec-carousel-item value="5">item 5</dec-carousel-item>
+
+    <dec-carousel-item value="6">item 6</dec-carousel-item>
+
+    <dec-carousel-item value="7">item 7</dec-carousel-item>
+
+    <dec-carousel-item value="8">item 8</dec-carousel-item>
+
+    <dec-carousel-item value="9">item 9</dec-carousel-item>
+
+  </dec-carousel>
+
+  <h2>Highlight disabled</h2>
+
+  <p>Index selected = {{ carousel2?.selectedItem.index }}</p>
+
+  <dec-carousel (itemSelected)="onItemSelected($event)" #carousel2 [highlightSelected]="false">
 
     <dec-carousel-item value="1">item 1</dec-carousel-item>
 

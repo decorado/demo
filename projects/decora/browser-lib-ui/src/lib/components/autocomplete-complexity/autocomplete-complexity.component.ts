@@ -32,7 +32,11 @@ export class AutocompleteComplexityComponent implements ControlValueAccessor {
   set type(v) {
     if (v !== this._type) {
       this._type = v;
-      this.setTypeParams();
+      this.value = undefined;
+      this.endpoint = undefined; // enforce autocomplete reload
+      setTimeout(() => { // ensures a digest cicle before reseting the endpoint
+        this.setEndpointBasedOnInputs();
+      });
     }
   }
 
@@ -119,7 +123,7 @@ export class AutocompleteComplexityComponent implements ControlValueAccessor {
     this.blur.emit(this.value);
   }
 
-  setTypeParams() {
+  setEndpointBasedOnInputs() {
     const params = [];
     let endpoint = `${BASIC_ENDPOINT}`;
 

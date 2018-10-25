@@ -157,7 +157,7 @@ export class DecListFilterComponent implements OnInit, OnDestroy {
   }
 
   onSearch = (appendCurrentForm = true) => {
-
+    
     if (this.filterForm && appendCurrentForm) {
 
       const newDecFilterGroup = {

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { ComponentType } from '@angular/cdk/portal';
 import { DecDialogComponent } from './dec-dialog.component';
-import { OpenConfiguration } from './dec-dialog.models';
+import { DecDialogOpenConfiguration } from './dec-dialog.models';
 
 @Injectable()
 export class DecDialogService {
@@ -12,9 +12,9 @@ export class DecDialogService {
   ) { }
 
 
-  open(childComponent: ComponentType<any>, config: OpenConfiguration) {
+  open(childComponent: ComponentType<any>, config: DecDialogOpenConfiguration) {
 
-    config = new OpenConfiguration(config);
+    config = new DecDialogOpenConfiguration(config);
 
     const fullscreen = !(config.width || config.height);
 

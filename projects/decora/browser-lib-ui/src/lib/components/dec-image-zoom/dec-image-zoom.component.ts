@@ -87,7 +87,7 @@ export class DecImageZoomComponent implements AfterViewInit {
       this.lastMouseX = e.offsetX;
       this.lastMouseY = e.offsetY;
       mousedown = true;
-    }
+    };
 
     el.onmousemove = (e) => {
       if (this.isZoom && mousedown) {
@@ -114,7 +114,7 @@ export class DecImageZoomComponent implements AfterViewInit {
 
         return;
       }
-    }
+    };
 
     el.onmouseup = () => {
       if (this.isZoom) {
@@ -141,7 +141,7 @@ export class DecImageZoomComponent implements AfterViewInit {
       return;
     }
     const el = this.divImage.nativeElement;
-    this.imageSize += this.stepsDiff
+    this.imageSize += this.stepsDiff;
     el.style.backgroundSize = this.imageSize + 'px';
     this.offsetX = (el.offsetWidth - this.imageSize) / 2;
     this.offsetY = (el.offsetHeight - this.imageSize) / 2;
@@ -201,7 +201,7 @@ export class DecImageZoomComponent implements AfterViewInit {
       this.imageSizeRaw = {
         width: downloadImage.width,
         height: downloadImage.height
-      }
+      };
     };
 
     downloadImage.src = this.getImageUrl();

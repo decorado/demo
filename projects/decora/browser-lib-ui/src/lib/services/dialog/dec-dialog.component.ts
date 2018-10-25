@@ -1,7 +1,8 @@
 import { Component, ViewChild, OnInit, ComponentFactoryResolver, ComponentFactory, ComponentRef, ViewContainerRef, Output, EventEmitter } from '@angular/core';
 import { ComponentType } from '@angular/cdk/portal';
-import { DialogAction } from './dec-dialog.models';
+import { DecDialogAction } from './dec-dialog.models';
 import { MatDialogRef } from '@angular/material';
+import { DecApiService } from './../api/decora-api.service';
 
 @Component({
   selector: 'dec-dialog',
@@ -15,9 +16,9 @@ export class DecDialogComponent implements OnInit {
 
   childComponentInstance: any;
 
-  topActions: DialogAction[] = [];
+  topActions: DecDialogAction[] = [];
 
-  bottomActions: DialogAction[] = [];
+  bottomActions: DecDialogAction[] = [];
 
   title: string;
 
@@ -29,6 +30,8 @@ export class DecDialogComponent implements OnInit {
 
   showCancelButton = false;
 
+  progressBarVisible: string | boolean = false;
+
   color = 'transparent';
 
   @ViewChild('childContainer', { read: ViewContainerRef }) childContainer: ViewContainerRef;
@@ -37,8 +40,13 @@ export class DecDialogComponent implements OnInit {
 
   constructor(
     private factor: ComponentFactoryResolver,
-    private dialogRef: MatDialogRef<DecDialogComponent>
-  ) {}
+    private dialogRef: MatDialogRef<DecDialogComponent>,
+    private decApi: DecApiService,
+  ) {
+    this.decApi.loading$.subscribe(state => {
+      this.progressBarVisible = state;
+    });
+  }
 
   ngOnInit() {
 

@@ -1,0 +1,20 @@
+<app-demo-container readmeSrc="/assets/docs/browser-lib-ui/components/dec-date-picker/README.md">
+
+  <h2>Date mode: {{date}}</h2>
+
+  <dec-date-picker [(ngModel)]="date" mode="date"></dec-date-picker>
+
+  <h2>Auto detect Date mode: {{date}}</h2>
+
+  <dec-date-picker [(ngModel)]="date"></dec-date-picker>
+
+  <h1>Timestamp mode: {{dateTimestamp}}</h1>
+
+  <dec-date-picker [(ngModel)]="dateTimestamp" mode="timestamp"></dec-date-picker>
+
+  <h1>Auto detect Timestamp mode: {{dateTimestamp}}</h1>
+
+  <dec-date-picker [(ngModel)]="dateTimestamp"></dec-date-picker>
+
+</app-demo-container>
+

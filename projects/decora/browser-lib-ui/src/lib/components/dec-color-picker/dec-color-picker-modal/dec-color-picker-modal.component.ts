@@ -13,7 +13,9 @@ import { fromEvent } from 'rxjs';
 export class DecColorPickerModalComponent implements OnInit {
 
   red: number;
+
   green: number;
+
   blue: number;
 
   hex: string;
@@ -82,7 +84,11 @@ export class DecColorPickerModalComponent implements OnInit {
     });
   }
 
-  close() {
+  cancel() {
+    this.dialogRef.close();
+  }
+
+  apply() {
     this.dialogRef.close(this.hex);
   }
 

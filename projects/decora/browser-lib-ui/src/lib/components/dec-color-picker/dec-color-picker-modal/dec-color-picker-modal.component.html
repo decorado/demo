@@ -1,6 +1,6 @@
 <div fxLayout="column">
   <div class="color-preview" [ngStyle]="{'backgroundColor': hex}">
-    <dec-icon font="mat" class="close-preview" (click)="close()">close</dec-icon>
+    <dec-icon font="mat" class="close-preview" (click)="cancel()">close</dec-icon>
   </div>
   <div class="color-options-container" fxLayout="column">
     <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
@@ -45,5 +45,11 @@
 
     </div>
 
+    <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="end center" class="dialog-actions">
+      <button mat-button type="button" (click)="cancel()">{{ 'label.Cancel' | translate | uppercase }}</button>
+      <button mat-raised-button color="primary" type="button" (click)="apply()">{{ 'label.Apply' | translate | uppercase }}</button>
+    </div>
+
   </div>
+
 </div>

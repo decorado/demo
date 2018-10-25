@@ -27,8 +27,6 @@ export class DecAutocompleteQuoteComponent implements ControlValueAccessor, Afte
 
   endpoint: string;
 
-  labelAttr = 'value';
-
   valueAttr = 'key';
 
   @Input() disabled: boolean;
@@ -51,16 +49,18 @@ export class DecAutocompleteQuoteComponent implements ControlValueAccessor, Afte
   set projectId(v: string) {
     if (this._projectId !== v) {
       this._projectId = v;
-
-      if (this.viewInitialized) {
+      this.value = undefined;
+      this.endpoint = undefined; // enforce autocomplete reload
+      setTimeout(() => { // ensures a digest cicle before reseting the endpoint
         this.setEndpointBasedOnInputs();
-      }
+      }, 0);
     }
   }
 
   get projectId() {
     return this._projectId;
   }
+
 
   @Input()
   set decoraProduct(v: string) {
@@ -150,7 +150,7 @@ export class DecAutocompleteQuoteComponent implements ControlValueAccessor, Afte
   }
 
   writeValue(value: any) {
-    if (value !== null && `${value}` !== `${this.value}`) { // convert to string to avoid problems comparing values
+    if (`${value}` !== `${this.value}`) { // convert to string to avoid problems comparing values
       this.value = value;
     }
   }
@@ -158,6 +158,10 @@ export class DecAutocompleteQuoteComponent implements ControlValueAccessor, Afte
   onAutocompleteBlur($event) {
     this.onTouchedCallback();
     this.blur.emit(this.value);
+  }
+
+  labelFn(item: any = {}) {
+    return `${item.value} #${item.key}`;
   }
 
   private setEndpointBasedOnInputs() {

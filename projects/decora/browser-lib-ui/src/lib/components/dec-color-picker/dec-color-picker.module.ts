@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { DecIconModule } from './../dec-icon/dec-icon.module';
 import { DecColorPickerModalComponent } from './dec-color-picker-modal/dec-color-picker-modal.component';
 import { ColorPickerModule } from './../../services/color-picker/color-picker.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { ColorPickerModule } from './../../services/color-picker/color-picker.mo
     DecIconModule,
     FormsModule,
     MatDialogModule,
-    ColorPickerModule
+    ColorPickerModule,
+    TranslateModule,
   ],
   declarations: [DecColorPickerComponent, DecColorPickerModalComponent],
   exports: [DecColorPickerComponent],

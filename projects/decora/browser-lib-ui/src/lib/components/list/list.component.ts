@@ -9,6 +9,8 @@ import { DecListFetchMethod, CountReport } from './list.models';
 import { FilterData, DecFilter, FilterGroups, FilterGroup } from './../../services/api/decora-api.model';
 import { DecListFilter } from './list.models';
 
+const DELETE_COMPARE_FUNCTION = (_item, id) => _item.id === id;
+
 @Component({
   selector: 'dec-list',
   templateUrl: './list.component.html',
@@ -468,23 +470,43 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
    *
    * Removes an item from the list
    */
-  removeItem(id) {
+  removeItem(ids: number | number[], compareFn = DELETE_COMPARE_FUNCTION, recount = true) {
 
-    const item = this.rows.find(_item => _item.id === id);
+    if (Array.isArray(ids)) {
 
-    if (item) {
+      ids.forEach(id => {
 
-      const itemIndex = this.rows.indexOf(item);
+        this.removeItem(id, compareFn, false);
 
-      if (itemIndex >= 0) {
+      });
 
-        this.rows.splice(itemIndex, 1);
+    } else {
+
+      const item = this.rows.find((_item) => compareFn(_item, ids));
+
+      if (item) {
+
+          const itemIndex = this.rows.indexOf(item);
+
+          if (itemIndex >= 0) {
+
+            this.rows.splice(itemIndex, 1);
+
+          }
+
+          const selectedItemIndex = this.selected.indexOf(item);
+
+          if (selectedItemIndex >= 0) {
+
+              this.selected.splice(selectedItemIndex, 1);
+
+          }
 
       }
 
     }
 
-    if (this.endpoint) {
+    if (recount && this.endpoint) {
 
       this.reloadCountReport();
 
@@ -1328,13 +1350,15 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   private shareSelectedRowsArray() {
 
-    if (this.table) {
-      this.table.selected = this.selected;
-    }
+    setTimeout(() => {
+      if (this.table) {
+        this.table.selected = this.selected;
+      }
 
-    if (this.grid) {
-      this.grid.selected = this.selected;
-    }
+      if (this.grid) {
+        this.grid.selected = this.selected;
+      }
+    }, 0);
 
   }
 
@@ -1531,6 +1555,7 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
   *
   */
  private resetSelected() {
-  this.table.selected = [];
+  this.selected = [];
+  this.shareSelectedRowsArray();
  }
 }

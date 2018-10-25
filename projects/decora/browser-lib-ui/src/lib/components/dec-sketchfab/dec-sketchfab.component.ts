@@ -52,47 +52,47 @@ export class DecSketchfabComponent implements OnInit {
 
   environmentConfig(id) {
     const config = {
-      "options": {
-        "version": 7,
-        "background": {
-          "enable": "ambient",
-          "uid": "51af6a870cce449eb75b0345feebaebb",
-          "color": [
+      'options': {
+        'version': 7,
+        'background': {
+          'enable': 'ambient',
+          'uid': '51af6a870cce449eb75b0345feebaebb',
+          'color': [
             0.2,
             0.2,
             0.2
           ]
         },
-        "environment": {
-          "enable": true,
-          "backgroundExposure": 1,
-          "exposure": 2.200000000000001,
-          "rotation": 4.71238898038469,
-          "uid": "8a4074ac8a3a4b83bf1f6a177a0f9a34",
-          "blur": 0.1,
-          "shadowEnable": false,
-          "lightIntensity": 5,
-          "shadowBias": 0.005
+        'environment': {
+          'enable': true,
+          'backgroundExposure': 1,
+          'exposure': 2.200000000000001,
+          'rotation': 4.71238898038469,
+          'uid': '8a4074ac8a3a4b83bf1f6a177a0f9a34',
+          'blur': 0.1,
+          'shadowEnable': false,
+          'lightIntensity': 5,
+          'shadowBias': 0.005
         },
-        "lighting": {
-          "enable": false,
-          "lights": [
+        'lighting': {
+          'enable': false,
+          'lights': [
             {
-              "type": "DIRECTION",
-              "enable": true,
-              "color": [
+              'type': 'DIRECTION',
+              'enable': true,
+              'color': [
                 0.7806122449,
                 0.7985214494,
                 1
               ],
-              "intensity": 0.96,
-              "ground": [
+              'intensity': 0.96,
+              'ground': [
                 0.3,
                 0.2,
                 0.2
               ],
-              "intensityGround": 1,
-              "matrix": [
+              'intensityGround': 1,
+              'matrix': [
                 -0.98158045,
                 0.1909922167,
                 -0.0046683273,
@@ -110,29 +110,29 @@ export class DecSketchfabComponent implements OnInit {
                 -1.2725570917,
                 1
               ],
-              "falloff": 0.0009534586,
-              "attachedToCamera": false,
-              "angle": 45,
-              "hardness": 0.5,
-              "castShadows": false,
-              "shadowBias": 0.005
+              'falloff': 0.0009534586,
+              'attachedToCamera': false,
+              'angle': 45,
+              'hardness': 0.5,
+              'castShadows': false,
+              'shadowBias': 0.005
             },
             {
-              "type": "DIRECTION",
-              "enable": true,
-              "color": [
+              'type': 'DIRECTION',
+              'enable': true,
+              'color': [
                 1,
                 0.878331945,
                 0.7091836735
               ],
-              "intensity": 1,
-              "ground": [
+              'intensity': 1,
+              'ground': [
                 0.3,
                 0.2,
                 0.2
               ],
-              "intensityGround": 1,
-              "matrix": [
+              'intensityGround': 1,
+              'matrix': [
                 0.7755211495,
                 -0.066660286,
                 0.6277924442,
@@ -150,29 +150,29 @@ export class DecSketchfabComponent implements OnInit {
                 73.9232059257,
                 1
               ],
-              "falloff": 0.0009534586,
-              "attachedToCamera": false,
-              "angle": 45,
-              "hardness": 0.5,
-              "castShadows": false,
-              "shadowBias": 0.005
+              'falloff': 0.0009534586,
+              'attachedToCamera': false,
+              'angle': 45,
+              'hardness': 0.5,
+              'castShadows': false,
+              'shadowBias': 0.005
             },
             {
-              "type": "DIRECTION",
-              "enable": true,
-              "color": [
+              'type': 'DIRECTION',
+              'enable': true,
+              'color': [
                 0.4234693878,
                 0.7352665556,
                 1
               ],
-              "intensity": 0.12,
-              "ground": [
+              'intensity': 0.12,
+              'ground': [
                 0.9642857143,
                 0.6484128637,
                 0.2607507289
               ],
-              "intensityGround": 0.06,
-              "matrix": [
+              'intensityGround': 0.06,
+              'matrix': [
                 0.6903299131,
                 -0.7076363669,
                 -0.1506498699,
@@ -190,17 +190,17 @@ export class DecSketchfabComponent implements OnInit {
                 42.4873454685,
                 1
               ],
-              "falloff": 0.0009534586,
-              "attachedToCamera": false,
-              "angle": 45,
-              "hardness": 0.5,
-              "castShadows": false,
-              "shadowBias": 0.005
+              'falloff': 0.0009534586,
+              'attachedToCamera': false,
+              'angle': 45,
+              'hardness': 0.5,
+              'castShadows': false,
+              'shadowBias': 0.005
             }
           ]
         },
-        "orientation": {
-          "matrix": [
+        'orientation': {
+          'matrix': [
             1,
             0,
             0,
@@ -228,7 +228,7 @@ export class DecSketchfabComponent implements OnInit {
           this.sketchfabId = id;
           this.textures = textureResp.results;
         }
-      })
+      });
     });
   }
 
@@ -355,7 +355,7 @@ export class DecSketchfabComponent implements OnInit {
   }
 
   getAllMaterials($event) {
-    let mat = {};
+    const mat = {};
 
     for (let i = 0; i < $event.length; i++) {
       mat[$event[i].id] = $event[i];
@@ -373,3 +373,4 @@ export class DecSketchfabComponent implements OnInit {
     });
   }
 }
+

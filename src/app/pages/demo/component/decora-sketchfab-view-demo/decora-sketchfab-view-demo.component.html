@@ -1,5 +1,61 @@
 <app-demo-container readmeSrc="/assets/docs/browser-lib-ui/components/sketchfab-view/README.md">
 
-  <dec-sketchfab-view [sketchfabId]="sketchfabId"></dec-sketchfab-view>
+  <div fxLayout="row">
+
+    <div fxFlex="50">
+
+      <dec-sketchfab-view [sketchfabId]="sketchfabId" (materialSelected)="onMaterialSelected($event)" [editMode]="true"></dec-sketchfab-view>
+
+      <div *ngIf="selectedMaterial else selectaAmterial">
+
+        <p *ngIf="selectedMaterial">
+          Selected Material: {{ selectedMaterial?.name }}
+        </p>
+
+        <div>
+
+          <button mat-stroked-button type="button" (click)="testaColor()">{{selectedMaterial ? 'Color' : 'nothing selected'}}</button> &nbsp;
+
+          <button mat-stroked-button type="button" (click)="testaRough()">{{selectedMaterial ? 'Rough' : 'nothing selected'}}</button> &nbsp;
+
+          <button mat-stroked-button type="button" (click)="testaMetal()">{{selectedMaterial ? 'Metal' : 'nothing selected'}}</button> &nbsp;
+
+          <button mat-stroked-button type="button" (click)="testaHighlight()">{{selectedMaterial ? 'Highlight' : 'nothing selected'}}</button> &nbsp;
+
+          <button mat-stroked-button type="button" (click)="testaTexture()">{{selectedMaterial ? 'Texture' : 'nothing selected'}}</button> &nbsp;
+
+          <button mat-stroked-button type="button" (click)="setMaterial()">{{selectedMaterial ? 'Config' : 'nothing selected'}}</button> &nbsp;
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <small fxFlex="50">
+
+      <div *ngFor="let channel of channels" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
+
+        <div fxFlex="160px">{{ channel.name }}</div>
+
+        <mat-form-field fxFlex="50px">
+
+          <input matInput type="number" [name]="channel.name + '-factor'" [(ngModel)]="channel.model.factor">
+
+        </mat-form-field>
+
+        <mat-checkbox [name]="channel.name + '-enable'" [(ngModel)]="channel.model.enable">Enable</mat-checkbox>
+
+        <mat-checkbox [name]="channel.name + '-texture'" [(ngModel)]="channel.model.texture">Texture</mat-checkbox>
+
+      </div>
+
+    </small>
+
+  </div>
 
 </app-demo-container>
+
+<ng-template #selectaAmterial>
+  <p>Click on the image to select a Material to edit.</p>
+</ng-template>

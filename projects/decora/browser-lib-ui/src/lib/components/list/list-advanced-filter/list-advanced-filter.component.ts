@@ -21,13 +21,32 @@ export class DecListAdvancedFilterComponent implements OnInit {
 
   @ContentChild(TemplateRef) templateRef: TemplateRef<any>;
 
-  onSearch = () => {};
+  onSearch = () => { };
 
-  onClear = () => {};
+  onClear = () => { };
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  private clearEmptyKeys() {
+
+    const emptyKeys = Object.keys(this.form).filter(key => {
+      const value = this.form[key];
+      if (typeof value === 'string') {
+        return value === '' || value === undefined;
+      } else if (Array.isArray(value)) {
+        return value.length === 0;
+      } else {
+        return false;
+      }
+    });
+
+    emptyKeys.forEach(key => {
+      delete this.form[key];
+    });
+
   }
 
   reset() {
@@ -35,7 +54,10 @@ export class DecListAdvancedFilterComponent implements OnInit {
   }
 
   submit() {
-    this.onSearch();
-  }
 
+    this.clearEmptyKeys();
+
+    this.onSearch();
+
+  }
 }

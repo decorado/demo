@@ -32,7 +32,10 @@ export class DecAutocompleteDepartmentComponent implements ControlValueAccessor 
   set companyId(v: string) {
     this._companyId = v;
     this.value = undefined;
-    this.setEndpointBasedOncompanyId();
+    this.endpoint = undefined; // enforce autocomplete reload
+    setTimeout(() => { // ensures a digest cicle before reseting the endpoint
+      this.setEndpointBasedInputs();
+    });
   }
 
   get companyId() {
@@ -102,7 +105,7 @@ export class DecAutocompleteDepartmentComponent implements ControlValueAccessor 
   }
 
   writeValue(value: any) {
-    if (value !== null && `${value}` !== `${this.value}`) { // convert to string to avoid problems comparing values
+    if (`${value}` !== `${this.value}`) { // convert to string to avoid problems comparing values
       this.value = value;
     }
   }
@@ -112,7 +115,7 @@ export class DecAutocompleteDepartmentComponent implements ControlValueAccessor 
     this.blur.emit(this.value);
   }
 
-  setEndpointBasedOncompanyId() {
+  setEndpointBasedInputs() {
     this.endpoint = !this.companyId ? undefined : BASE_ENDPOINT.replace('${companyId}', this.companyId);
   }
 

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatDialogModule, MatToolbarModule, MatIconModule, MatButtonModule, MatMenuModule } from '@angular/material';
+import { MatDialogModule, MatToolbarModule, MatIconModule, MatButtonModule, MatMenuModule, MatProgressBarModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { DecSpinnerModule } from './../../components/dec-spinner/dec-spinner.module';
@@ -16,7 +16,9 @@ import { DecDialogService } from './dec-dialog.service';
     MatIconModule,
     MatMenuModule,
     MatButtonModule,
+    MatProgressBarModule,
     FlexLayoutModule,
+    MatProgressBarModule,
     DecSpinnerModule,
     TranslateModule,
   ],

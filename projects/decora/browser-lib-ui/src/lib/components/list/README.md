@@ -170,6 +170,7 @@ Used to enabling list filtering.
 |disableShowMoreButton| boolean| false | Used to hide the Show More button |
 |listMode| table &#124; grid | table | Used to set the default list mode. This can be `table` or `grid` |
 |getListMode| Function| internal method | You can provide a custom function to define when a list should be displayed as `table` or `grid` |
+|removeItem| Function| removes an item or a list of items | You can call the remove function to remove a list or a single row. You can provide a custom compare function to compare and find the desired rows |
 |rowClick   |event  | -       | Emits an event when one row or card is clicked |
 |searchableProperties| string[] | undefined | Used to define which properties the basic search should look for |
 |selected | any[] | [] | Array of selected rows |

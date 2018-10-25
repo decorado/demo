@@ -45,6 +45,9 @@ export * from './lib/components/breadcrumb/breadcrumb.module';
 // CAROUSEL
 export * from './lib/components/dec-carousel/dec-carousel.component';
 export * from './lib/components/dec-carousel/dec-carousel.module';
+// DATEPICKER
+export * from './lib/components/dec-date-picker/dec-date-picker.component';
+export * from './lib/components/dec-date-picker/dec-date-picker.module';
 // EVENTS LIST
 export * from './lib/components/dec-events-list/dec-events-list.component';
 export * from './lib/components/dec-events-list/dec-events-list-event/dec-events-list-event.component';
@@ -117,10 +120,6 @@ export * from './lib/components/dec-product-measures-comparison/dec-product-meas
 // PRODUCT SPIN
 export * from './lib/components/product-spin/product-spin.component';
 export * from './lib/components/product-spin/product-spin.module';
-// PRODUCT INFO
-export * from './lib/components/dec-product-info/dec-product-info.component';
-export * from './lib/components/dec-product-info/dec-product-info-extra/dec-product-info-extra.component';
-export * from './lib/components/dec-product-info/dec-product-info.module';
 // ROUND
 export * from './lib/components/dec-job-round/dec-job-round.component';
 export * from './lib/components/dec-job-round/dec-job-round.module';
@@ -226,6 +225,7 @@ export * from './lib/services/configuration/configuration-service.module';
 // DIALOG
 export * from './lib/services/dialog/dec-dialog.component';
 export * from './lib/services/dialog/dec-dialog.module';
+export * from './lib/services/dialog/dec-dialog.models';
 export * from './lib/services/dialog/dec-dialog.service';
 // DIALOG
 export * from './lib/services/confirm-dialog/dec-confirm-dialog.component';

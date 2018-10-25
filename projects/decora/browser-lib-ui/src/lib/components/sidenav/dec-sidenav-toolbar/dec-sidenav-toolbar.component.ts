@@ -22,6 +22,8 @@ export class DecSidenavToolbarComponent implements AfterViewInit, OnInit {
 
   @Input() rightMenuTriggerVisible = true;
 
+  @Input() progressBarVisible: string | boolean = false;
+
   @Output() toggleLeftMenu: EventEmitter<any> = new EventEmitter<any>();
 
   @Output() toggleRightMenu: EventEmitter<any> = new EventEmitter<any>();

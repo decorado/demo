@@ -1,17 +1,17 @@
-export interface DialogAction {
+export interface DecDialogAction {
   label?: string;
   i18nLabel?: string;
-  callback: Function;
   color?: 'primary' | 'accent' | 'warn' | 'default';
   buttonType?: 'mat-button' | 'mat-raised-button';
+  callback: (context: any) => any;
 }
 
-export class OpenConfiguration {
+export class DecDialogOpenConfiguration {
   width?: string;
   height?: string;
   title?: string;
-  topActions?: DialogAction[];
-  bottomActions?: DialogAction[];
+  topActions?: DecDialogAction[];
+  bottomActions?: DecDialogAction[];
   context?: any;
   hideBackButton?: boolean;
   showCancelButton?: boolean;

@@ -22,8 +22,12 @@ export class DecAutocompleteTagsComponent implements ControlValueAccessor {
 
   @Input()
   set endpoint(v) {
-    if (v) {
-      this._endpoint = v;
+    if (v && v !== this._endpoint) {
+      this.value = undefined;
+      this._endpoint = undefined; // enforce autocomplete reload
+      setTimeout(() => { // ensures a digest cicle before reseting the endpoint
+        this._endpoint = v;
+      }, 0);
     }
   }
 
@@ -104,7 +108,7 @@ export class DecAutocompleteTagsComponent implements ControlValueAccessor {
   }
 
   writeValue(value: any) {
-    if (value !== null && `${value}` !== `${this.value}`) { // convert to string to avoid problems comparing values
+    if (`${value}` !== `${this.value}`) { // convert to string to avoid problems comparing values
       this.value = value;
     }
   }

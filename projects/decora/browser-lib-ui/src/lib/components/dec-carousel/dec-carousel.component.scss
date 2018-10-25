@@ -1,14 +1,42 @@
+@import './../../../../bootstrap/constants/colors';
+
 .dec-carousel-wrapper {
   padding: 2px;
 
   .dec-carousel-item {
-    border: 1px solid black;
-    padding: 4px;
-    cursor: pointer;
 
-    &.selected {
-      border-color: goldenrod;
+    .dec-carousel-item-content-wrapper {
+
+      text-align: center;
+
+      .dec-carousel-item-content {
+
+        text-align: left;
+
+        cursor: pointer;
+
+        display: inline-block;
+
+      }
+
     }
+
+    &.highlight-selected {
+
+      .dec-carousel-item-content-wrapper {
+        border: 2px solid rgba(0, 0, 0, 0);
+
+        &.dec-carousel-item-content-wrapper-selected {
+
+          border-color: $dec-color-primary;
+
+        }
+
+      }
+
+
+    }
+
   }
 
   .dec-carousel-navigator {

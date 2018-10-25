@@ -124,6 +124,10 @@ export class DecStringArrayInputComponent implements OnInit {
 
       return stringOfArray.match(regExp);
 
+    } else {
+
+      return [];
+
     }
   }
 
@@ -132,6 +136,10 @@ export class DecStringArrayInputComponent implements OnInit {
     if (arrayOfstring) {
 
       return arrayOfstring.join(', ');
+
+    } else {
+
+      return undefined;
 
     }
 
