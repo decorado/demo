@@ -1,0 +1,58 @@
+import { ElementRef, Renderer2, AfterViewChecked, EventEmitter } from '@angular/core';
+import { Marker } from './../dec-zoom-marks/models/marker.model';
+import { DecRenderCommentService } from './../dec-render-comment/dec-render-comment.service';
+import { MatDialog } from '@angular/material';
+export interface ZoomPosition {
+    x: number;
+    y: number;
+}
+export declare class DecMarksComponent implements AfterViewChecked {
+    private renderer;
+    private dialog;
+    private decRenderCommentService;
+    marker: Marker;
+    zoomScale: number;
+    zoomPosition: ZoomPosition;
+    noComments: boolean;
+    parentId: number;
+    comentIndex: any;
+    qaMode: boolean;
+    private _qaMode;
+    link: EventEmitter<{}>;
+    referenceQa: EventEmitter<{}>;
+    canvas: ElementRef;
+    canvasEl: HTMLCanvasElement;
+    private ctx;
+    marksWrapper: ElementRef;
+    marksWrapperEl: HTMLDivElement;
+    private imageElement;
+    private contentDone;
+    private startX;
+    private startY;
+    private mouseMoved;
+    onResize(): void;
+    constructor(renderer: Renderer2, dialog: MatDialog, decRenderCommentService: DecRenderCommentService);
+    ngAfterViewChecked(): void;
+    private setupCanvas();
+    private setupMarksWrapper();
+    private addInCommentsArray(comment);
+    private setupMouseEvents();
+    private formatTagId();
+    private setCanvasSize(size);
+    private setWrapperCursor();
+    private setWrapperSize(size);
+    private setMouseMoved(moved);
+    private enablePointEvents(elements);
+    private disablePointEvents(elements);
+    private createPointTag(coordinates, index);
+    linkTag(comment: any): void;
+    private clickEventPointTag(comment);
+    private createSquareTag(coordinates, index);
+    private clearSquare();
+    private addCommentNode;
+    private removeCommentNode();
+    private drawMarks();
+    private cleanMarks();
+    private deleteMark(comment);
+    private configureNoComments(square);
+}

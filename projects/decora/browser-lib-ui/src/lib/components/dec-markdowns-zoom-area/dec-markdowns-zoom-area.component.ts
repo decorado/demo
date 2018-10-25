@@ -7,6 +7,8 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class DecMarkdownsZoomAreaComponent implements OnInit {
 
+  @Input() zoomAreas;
+
   @Input()
   set renders(v) {
     if (v) {
