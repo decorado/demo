@@ -46,8 +46,9 @@ export * from './lib/components/dec-zoom-marks-gallery/dec-zoom-marks-gallery.co
 export * from './lib/components/dec-zoom-marks-gallery/dec-zoom-marks-gallery.module';
 export * from './lib/components/dec-marks/dec-marks.component';
 export * from './lib/components/dec-marks/dec-marks.module';
-export * from './lib/components/dec-grid/dec-grid.component';
 export * from './lib/components/dec-grid/dec-grid.module';
+export * from './lib/components/dec-grid/dec-grid.component';
+export * from './lib/components/dec-grid/dec-grid-row/dec-grid-row.component';
 export * from './lib/components/dec-icon/dec-icon.module';
 export * from './lib/components/dec-icon/dec-icon.component';
 export * from './lib/components/dec-image-zoom/dec-image-zoom.module';
