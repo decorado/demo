@@ -1,12 +1,12 @@
-import { Component, HostListener, Input, OnInit, Output, EventEmitter, Renderer  } from '@angular/core';
+import { Component, HostListener, Input, OnInit, Output, EventEmitter, Renderer } from '@angular/core';
 
 const FALLBACK_IMAGE = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAAmJLR0QA/4ePzL8AAAAJcEhZcwAACxMAAAsTAQCanBgAAAALSURBVAjXY2BgAAAAAwABINWUxwAAAABJRU5' +
-'ErkJggg==';
+  'ErkJggg==';
 
 const LOADING_IMAGE = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWlkWU1pZCIg' +
-'Y2xhc3M9InVpbC1yaW5nIj48cGF0aCBmaWxsPSJub25lIiBjbGFzcz0iYmsiIGQ9Ik0wIDBoMTAwdjEwMEgweiIvPjxjaXJjbGUgY3g9Ijc1IiBjeT0iNzUiIHI9IjQ1IiBzdHJva2UtZGFzaGFycmF5PSIyMjYuMTk1IDU2LjU0OSI' +
-'gc3Ryb2tlPSIjMjMyZTM4IiBmaWxsPSJub25lIiBzdHJva2Utd2lkdGg9IjEwIj48YW5pbWF0ZVRyYW5zZm9ybSBhdHRyaWJ1dGVOYW1lPSJ0cmFuc2Zvcm0iIHR5cGU9InJvdGF0ZSIgdmFsdWVzPSIwIDc1IDc1OzE4MCA3NSA3NT' +
-'szNjAgNzUgNzU7IiBrZXlUaW1lcz0iMDswLjU7MSIgZHVyPSIxcyIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiIGJlZ2luPSIwcyIvPjwvY2lyY2xlPjwvc3ZnPg==';
+  'Y2xhc3M9InVpbC1yaW5nIj48cGF0aCBmaWxsPSJub25lIiBjbGFzcz0iYmsiIGQ9Ik0wIDBoMTAwdjEwMEgweiIvPjxjaXJjbGUgY3g9Ijc1IiBjeT0iNzUiIHI9IjQ1IiBzdHJva2UtZGFzaGFycmF5PSIyMjYuMTk1IDU2LjU0OSI' +
+  'gc3Ryb2tlPSIjMjMyZTM4IiBmaWxsPSJub25lIiBzdHJva2Utd2lkdGg9IjEwIj48YW5pbWF0ZVRyYW5zZm9ybSBhdHRyaWJ1dGVOYW1lPSJ0cmFuc2Zvcm0iIHR5cGU9InJvdGF0ZSIgdmFsdWVzPSIwIDc1IDc1OzE4MCA3NSA3NT' +
+  'szNjAgNzUgNzU7IiBrZXlUaW1lcz0iMDswLjU7MSIgZHVyPSIxcyIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiIGJlZ2luPSIwcyIvPjwvY2lyY2xlPjwvc3ZnPg==';
 
 @Component({
   selector: 'dec-product-spin',
@@ -16,7 +16,7 @@ const LOADING_IMAGE = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ
 export class DecProductSpinComponent implements OnInit {
 
   frameShown: number;
-  scenes: string[];
+  scenes = [];
   loadingImages: boolean;
   placeholderScene: string;
   started: boolean;
@@ -31,18 +31,14 @@ export class DecProductSpinComponent implements OnInit {
 
   @Input()
   set spin(spin: any) {
-    if (spin) {
+    if (spin && spin !== this._spin) {
       const scenes = this.loadScenes(spin);
-
       const scenesChanged = !this.scenes || (scenes && this.scenes.join() !== scenes.join());
-
       if (scenesChanged) {
         this.resetScenesData(scenes);
-        // this.resetStartPositionBasedOnCompany(spin, scenes);
       }
-
       this._spin = spin;
-
+      this.detectFrameShown();
     }
   }
 
@@ -100,18 +96,14 @@ export class DecProductSpinComponent implements OnInit {
     }
   }
 
-  constructor(private renderer: Renderer) {}
+  constructor(private renderer: Renderer) { }
 
   ngOnInit() {
-
-    this.frameShown = 0;
-
     this.renderer.listenGlobal('document', 'mouseup', (event) => {
       if (this.mouseDown) {
         this.mouseDown = false;
       }
     });
-
   }
 
   markAsLoaded = (event) => {
@@ -155,22 +147,15 @@ export class DecProductSpinComponent implements OnInit {
 
   }
 
-  /*
-   *
-   * IMPORTANT
-   *
-   * resetStartPositionBasedOnCompany
-   *
-   * This method is responsible for ensuring the Business Rule of the spin sequence
-   * The Home Depot aka customer 100, have a particular behavior starting 180º in the middle
-   *
-  */
-  private resetStartPositionBasedOnCompany(spin, scenes) {
+  private detectFrameShown() {
+    this.frameShown = !this.startInCenter ? 0 : this.getMiddle();
+  }
 
-    this.startInCenter = spin.company.id === 100 ? true : false;
-
-    this.startInCenter = this.startInCenter && scenes.length <= 16;
-
+  private getMiddle() {
+    const total = this.scenes.length;
+    const exeed = total % 2;
+    const center = (total - exeed) / 2;
+    return center;
   }
 
   private resetScenesData(scenes) {
@@ -192,7 +177,7 @@ export class DecProductSpinComponent implements OnInit {
     const target: any = event['target'];
 
     if (this.containerWidth !== target.clientWidth) {
-      this.containerWidth =  target.clientWidth;
+      this.containerWidth = target.clientWidth;
       this.interval = (this.containerWidth / this.scenesLen) / 1.6;
     }
 

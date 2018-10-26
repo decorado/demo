@@ -1,7 +1,0 @@
-@import './decora-theme';
-
-// APPLY THE THEME TO THE MATERIAL COMPONENTS
-@include angular-material-theme($decora-theme);
-
-@import './../../theming/decora-lib-ui-theming';
-@include decora-lib-ui-theming($decora-theme);
