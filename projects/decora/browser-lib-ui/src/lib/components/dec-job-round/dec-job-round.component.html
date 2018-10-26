@@ -25,17 +25,20 @@
   </dec-grid-row>
   <dec-grid-row>
     <dec-grid-column span="8">
-      <dec-job-round-item [jobId]="job?.id" [round]="job?.rounds[0]" [roundQnt]="roundsQnt" [roundNumber]="1"></dec-job-round-item>
+      <dec-job-round-item [jobId]="job?.id" [round]="job?.rounds[0]" [roundQnt]="roundsQnt" [roundNumber]="1"
+        [readonly]="readonly"></dec-job-round-item>
     </dec-grid-column>
   </dec-grid-row>
   <dec-grid-row>
     <dec-grid-column span="8">
-      <dec-job-round-item [jobId]="job?.id" [round]="job?.rounds[1]" [roundQnt]="roundsQnt" [roundNumber]="2"></dec-job-round-item>
+      <dec-job-round-item [jobId]="job?.id" [round]="job?.rounds[1]" [roundQnt]="roundsQnt" [roundNumber]="2"
+        [readonly]="readonly"></dec-job-round-item>
     </dec-grid-column>
   </dec-grid-row>
   <dec-grid-row>
     <dec-grid-column span="8">
-      <dec-job-round-item [jobId]="job?.id" [round]="job?.rounds[2]" [roundQnt]="roundsQnt" [roundNumber]="3"></dec-job-round-item>
+      <dec-job-round-item [jobId]="job?.id" [round]="job?.rounds[2]" [roundQnt]="roundsQnt" [roundNumber]="3"
+        [readonly]="readonly"></dec-job-round-item>
     </dec-grid-column>
   </dec-grid-row>
 </dec-grid>

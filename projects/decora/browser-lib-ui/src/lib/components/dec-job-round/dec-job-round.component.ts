@@ -7,6 +7,15 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class DecJobRoundComponent implements OnInit {
 
+  private _readonly: boolean;
+  public get readonly(): boolean {
+    return this._readonly;
+  }
+  @Input()
+  public set readonly(v: boolean) {
+    this._readonly = v;
+  }
+
   @Input()
   set job(v) {
     if (v) {

@@ -36,7 +36,11 @@
           {{ countdown }}
         </span> -->
         <span class="smaller-font" [ngClass]="{'red-qa': negativeQA}">
-          <dec-countdown [interval]='300' (finished)="toggleNegative()"></dec-countdown>
+          <dec-countdown *ngIf="!readonly; else placeholderCountDown" [interval]='300' (finished)="toggleNegative()"></dec-countdown>
+          <ng-template #placeholderCountDown>
+            <span class="smaller-font"> 00:05:00 </span>
+          </ng-template>
+
         </span>
       </div>
 

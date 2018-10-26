@@ -175,7 +175,9 @@ export * from './lib/components/dec-color-picker/dec-color-picker.module';
 // AVATAR
 export * from './lib/components/dec-avatar/dec-avatar.component';
 export * from './lib/components/dec-avatar/dec-avatar.module';
-
+// COUNTDOWN
+export * from './lib/components/dec-countdown/dec-countdown.component';
+export * from './lib/components/dec-countdown/dec-countdown.module';
 /*********************************************************
 *
 * DIRECTIVES

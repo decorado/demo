@@ -9,6 +9,15 @@ export class DecJobRoundItemComponent {
 
   countdown: any;
 
+  private _readonly: boolean;
+  public get readonly(): boolean {
+    return this._readonly;
+  }
+  @Input()
+  public set readonly(v: boolean) {
+    this._readonly = v;
+  }
+
   @Input()
   set round(v) {
     if (v) {
