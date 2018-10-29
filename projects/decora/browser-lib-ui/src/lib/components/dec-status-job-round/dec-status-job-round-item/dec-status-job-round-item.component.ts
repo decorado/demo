@@ -1,11 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  selector: 'dec-job-round-item',
-  templateUrl: './dec-job-round-item.component.html',
-  styleUrls: ['./dec-job-round-item.component.scss']
+  selector: 'dec-status-job-round-item',
+  templateUrl: './dec-status-job-round-item.component.html',
+  styleUrls: ['./dec-status-job-round-item.component.scss']
 })
-export class DecJobRoundItemComponent {
+export class DecStatusJobRoundItemComponent {
 
   countdown: any;
 

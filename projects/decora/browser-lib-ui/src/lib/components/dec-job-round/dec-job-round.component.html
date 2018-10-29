@@ -1,44 +1,46 @@
-<dec-grid gap="0">
-  <dec-grid-row>
-    <dec-grid-column>
-      <div class="header-title">
-        <div *ngIf="job?.type == 'MODELING_FIX'" class="left-triangle modeling-fix">
-          <mat-icon class="icon-position">build</mat-icon>
+<div class="container-renders" [ngClass]="getClass()">
+
+  <dec-grid gap="0">
+    <dec-grid-row>
+      <dec-grid-column span="6">
+        <div class="reference-header" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="32px">
+          <mat-button-toggle-group (change)="setView($event)" value="reference" *ngIf="roundNumber > 1">
+            <mat-button-toggle value="reference">{{ 'label.reference-images' | translate }}</mat-button-toggle>
+            <mat-button-toggle value="round1">Round 1</mat-button-toggle>
+            <mat-button-toggle value="round2" *ngIf="roundNumber > 2">Round 2</mat-button-toggle>
+          </mat-button-toggle-group>
         </div>
-        <div *ngIf="job?.type == 'COLOR'" class="left-triangle texture-color-swap">
-          <mat-icon class="icon-position">palette</mat-icon>
+        <dec-zoom-marks-gallery #referenceGallery *ngIf="markedReference" [markedObjs]="markedReference">
+        </dec-zoom-marks-gallery>
+        <div class="measures-container">
+          <dec-product-measures-comparison [measures]="measures"></dec-product-measures-comparison>
         </div>
-        <div *ngIf="job?.type == 'MODELING'" class="left-triangle full-model">
-          <mat-icon class="icon-position"></mat-icon>
+      </dec-grid-column>
+
+      <dec-grid-column span="6">
+        <div class="render-header" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="32px">
+          <h3>
+            <dec-icon class="click" font="mat">flash_on</dec-icon>Render
+          </h3>
+          <span class="click" (click)="openZoomArea()">
+            <span *ngIf="qaMode">
+              Open zoom area
+            </span>
+          </span>
         </div>
-        <div class="text-header" fxLayout="column" fxLayoutGap="2px">
-          <span class="smaller-font dec-color-grey uppercase">{{ 'label.type' | translate }}</span>
-          <span *ngIf="job?.type == 'MODELING_FIX'" class="font-text dec-font-500 uppercase">{{
-            'label.modeling-fix-info' | translate }}</span>
-          <span *ngIf="job?.type == 'COLOR'" class="font-text dec-font-500 uppercase">{{ 'label.color-variation-info' |
-            translate }}</span>
-          <span *ngIf="job?.type == 'MODELING'" class="font-text dec-font-500 uppercase">{{ 'label.full-model-info' |
-            translate }}</span>
-        </div>
-      </div>
-    </dec-grid-column>
-  </dec-grid-row>
-  <dec-grid-row>
-    <dec-grid-column span="8">
-      <dec-job-round-item [jobId]="job?.id" [round]="job?.rounds[0]" [roundQnt]="roundsQnt" [roundNumber]="1"
-        [readonly]="readonly"></dec-job-round-item>
-    </dec-grid-column>
-  </dec-grid-row>
-  <dec-grid-row>
-    <dec-grid-column span="8">
-      <dec-job-round-item [jobId]="job?.id" [round]="job?.rounds[1]" [roundQnt]="roundsQnt" [roundNumber]="2"
-        [readonly]="readonly"></dec-job-round-item>
-    </dec-grid-column>
-  </dec-grid-row>
-  <dec-grid-row>
-    <dec-grid-column span="8">
-      <dec-job-round-item [jobId]="job?.id" [round]="job?.rounds[2]" [roundQnt]="roundsQnt" [roundNumber]="3"
-        [readonly]="readonly"></dec-job-round-item>
-    </dec-grid-column>
-  </dec-grid-row>
-</dec-grid>
+        <dec-zoom-marks-gallery #renderGallery *ngIf="renderImages" [showTags]="true" (openZoomArea)="openEditZoomArea($event)"
+          [markedObjs]="round?.qualityAssurance?.renders" [qaModeActive]="qaMode">
+        </dec-zoom-marks-gallery>
+      </dec-grid-column>
+
+    </dec-grid-row>
+  </dec-grid>
+
+  <div *ngIf="zoomAreaOpen" class="zoom-area-container">
+    <div class="render-header" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="32px"></div>
+    <dec-zoom-area (save)="onSaveZoomArea($event)" [reference]="reference" (cancel)="onCancel()" [render]="render"
+      [parentId]="parentId">
+    </dec-zoom-area>
+  </div>
+
+</div>

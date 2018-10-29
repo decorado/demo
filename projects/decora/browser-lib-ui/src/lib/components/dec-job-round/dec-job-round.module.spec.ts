@@ -1,13 +1,13 @@
 import { DecJobRoundModule } from './dec-job-round.module';
 
 describe('DecJobRoundModule', () => {
-  let decJobRoundModule: DecJobRoundModule;
+  let decjobRoundModule: DecJobRoundModule;
 
   beforeEach(() => {
-    decJobRoundModule = new DecJobRoundModule();
+    decjobRoundModule = new DecJobRoundModule();
   });
 
   it('should create an instance', () => {
-    expect(decJobRoundModule).toBeTruthy();
+    expect(decjobRoundModule).toBeTruthy();
   });
 });

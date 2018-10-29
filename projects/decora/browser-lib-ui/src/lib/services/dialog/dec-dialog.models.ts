@@ -16,6 +16,7 @@ export class DecDialogOpenConfiguration {
   hideBackButton?: boolean;
   showCancelButton?: boolean;
   color?: 'primary' | 'accent' | 'warn' | 'default' | 'transparent' = 'primary';
+  disableClose?: boolean;
 
   constructor(data: any = {}) {
     this.width = data.width;
@@ -27,5 +28,6 @@ export class DecDialogOpenConfiguration {
     this.hideBackButton = data.hideBackButton;
     this.showCancelButton = data.showCancelButton;
     this.color = data.color || 'primary';
+    this.disableClose = data.disableClose || false;
   }
 }

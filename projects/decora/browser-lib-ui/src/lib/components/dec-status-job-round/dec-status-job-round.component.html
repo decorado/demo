@@ -1,0 +1,44 @@
+<dec-grid gap="0">
+  <dec-grid-row>
+    <dec-grid-column>
+      <div class="header-title">
+        <div *ngIf="job?.type == 'MODELING_FIX'" class="left-triangle modeling-fix">
+          <mat-icon class="icon-position">build</mat-icon>
+        </div>
+        <div *ngIf="job?.type == 'COLOR'" class="left-triangle texture-color-swap">
+          <mat-icon class="icon-position">palette</mat-icon>
+        </div>
+        <div *ngIf="job?.type == 'MODELING'" class="left-triangle full-model">
+          <mat-icon class="icon-position"></mat-icon>
+        </div>
+        <div class="text-header" fxLayout="column" fxLayoutGap="2px">
+          <span class="smaller-font dec-color-grey uppercase">{{ 'label.type' | translate }}</span>
+          <span *ngIf="job?.type == 'MODELING_FIX'" class="font-text dec-font-500 uppercase">{{
+            'label.modeling-fix-info' | translate }}</span>
+          <span *ngIf="job?.type == 'COLOR'" class="font-text dec-font-500 uppercase">{{ 'label.color-variation-info' |
+            translate }}</span>
+          <span *ngIf="job?.type == 'MODELING'" class="font-text dec-font-500 uppercase">{{ 'label.full-model-info' |
+            translate }}</span>
+        </div>
+      </div>
+    </dec-grid-column>
+  </dec-grid-row>
+  <dec-grid-row>
+    <dec-grid-column span="8">
+      <dec-status-job-round-item [jobId]="job?.id" [round]="job?.rounds[0]" [roundQnt]="roundsQnt" [roundNumber]="1"
+        [readonly]="readonly"></dec-status-job-round-item>
+    </dec-grid-column>
+  </dec-grid-row>
+  <dec-grid-row>
+    <dec-grid-column span="8">
+      <dec-status-job-round-item [jobId]="job?.id" [round]="job?.rounds[1]" [roundQnt]="roundsQnt" [roundNumber]="2"
+        [readonly]="readonly"></dec-status-job-round-item>
+    </dec-grid-column>
+  </dec-grid-row>
+  <dec-grid-row>
+    <dec-grid-column span="8">
+      <dec-status-job-round-item [jobId]="job?.id" [round]="job?.rounds[2]" [roundQnt]="roundsQnt" [roundNumber]="3"
+        [readonly]="readonly"></dec-status-job-round-item>
+    </dec-grid-column>
+  </dec-grid-row>
+</dec-grid>

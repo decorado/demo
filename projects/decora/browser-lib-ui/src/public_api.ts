@@ -121,7 +121,10 @@ export * from './lib/components/dec-product-measures-comparison/dec-product-meas
 // PRODUCT SPIN
 export * from './lib/components/product-spin/product-spin.component';
 export * from './lib/components/product-spin/product-spin.module';
-// ROUND
+// STATUS JOB ROUND
+export * from './lib/components/dec-status-job-round/dec-status-job-round.component';
+export * from './lib/components/dec-status-job-round/dec-status-job-round.module';
+// JOB ROUND
 export * from './lib/components/dec-job-round/dec-job-round.component';
 export * from './lib/components/dec-job-round/dec-job-round.module';
 // SIDENAV
@@ -178,6 +181,10 @@ export * from './lib/components/dec-avatar/dec-avatar.module';
 // COUNTDOWN
 export * from './lib/components/dec-countdown/dec-countdown.component';
 export * from './lib/components/dec-countdown/dec-countdown.module';
+// PRODUCT-INFO
+export * from './lib/components/dec-product-info/dec-product-info.component';
+export * from './lib/components/dec-product-info/dec-product-info.module';
+
 /*********************************************************
 *
 * DIRECTIVES

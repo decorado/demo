@@ -24,6 +24,7 @@ export class DecDialogService {
         width: fullscreen ? '100vw' : config.width,
         height: fullscreen ? '100vh' : config.height,
         panelClass: fullscreen ? 'dec-dialog-container-full-screen' : 'dec-dialog-container',
+        disableClose: config.disableClose || false,
       }
     );
 

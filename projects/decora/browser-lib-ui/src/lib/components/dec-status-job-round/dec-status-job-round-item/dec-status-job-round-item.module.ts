@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DecJobRoundItemComponent } from './dec-job-round-item.component';
+import { DecStatusJobRoundItemComponent } from './dec-status-job-round-item.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatIconModule } from '@angular/material';
 import { DecLabelStatusModule } from './../../dec-label-status/dec-label-status.module';
@@ -19,10 +19,10 @@ import { DecCountdownModule } from './../../dec-countdown/dec-countdown.module';
     DecCountdownModule
   ],
   declarations: [
-    DecJobRoundItemComponent
+    DecStatusJobRoundItemComponent
   ],
   exports: [
-    DecJobRoundItemComponent
+    DecStatusJobRoundItemComponent
   ]
 })
-export class DecJobRoundItemModule { }
+export class DecStatusJobRoundItemModule { }

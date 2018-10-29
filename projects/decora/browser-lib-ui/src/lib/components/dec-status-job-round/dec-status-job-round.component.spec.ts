@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DecJobRoundComponent } from './dec-job-round.component';
+import { DecStatusJobRoundComponent } from './dec-status-job-round.component';
 
 describe('DecJobRoundComponent', () => {
-  let component: DecJobRoundComponent;
-  let fixture: ComponentFixture<DecJobRoundComponent>;
+  let component: DecStatusJobRoundComponent;
+  let fixture: ComponentFixture<DecStatusJobRoundComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [DecJobRoundComponent]
+      declarations: [DecStatusJobRoundComponent]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DecJobRoundComponent);
+    fixture = TestBed.createComponent(DecStatusJobRoundComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,0 +1,102 @@
+<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px" class="dec-color-grey-dark">
+
+  <h2>
+    <dec-icon font="mat">info</dec-icon> {{ 'label.Info' | translate }}
+  </h2>
+
+</div>
+
+<br>
+
+<div *ngIf="product" fxLayout="column" fxLayoutGap="16px">
+
+  <div fxFlex *ngIf="isVisible(infoTypes.ID)">
+    <div fxLayout="row" fxLayoutGap="8px">
+      <div fxFlex="80px" class="dec-color-grey">
+        {{ 'label.Product_ID' | translate }}
+      </div>
+      <strong fxFlex class="dec-color-black">{{ product.id }}</strong>
+    </div>
+  </div>
+
+  <div fxFlex *ngIf="isVisible(infoTypes.SKU)">
+    <div fxLayout="row" fxLayoutGap="8px">
+      <div fxFlex="80px" class="dec-color-grey">
+        {{ 'label.sku' | translate }}
+      </div>
+      <strong fxFlex class="dec-color-black">{{ product.sku }}
+        <dec-icon (click)="onClick()" class="click" font="mat">open_in_new</dec-icon>
+      </strong>
+    </div>
+  </div>
+
+
+  <div fxFlex *ngIf="isVisible(infoTypes.NAME)">
+    <div fxLayout="row" fxLayoutGap="8px">
+      <div fxFlex="80px" class="dec-color-grey">
+        {{ 'label.Name' | translate }}
+      </div>
+      <strong fxFlex class="dec-color-black">{{ product.name }}</strong>
+    </div>
+  </div>
+
+  <div fxFlex *ngIf="isVisible(infoTypes.COMPANY_NAME)">
+    <div fxLayout="row" fxLayoutGap="8px">
+      <div fxFlex="80px" class="dec-color-grey">
+        {{ 'label.Company' | translate }}
+      </div>
+      <strong fxFlex class="dec-color-black">#{{product.company?.id}} - {{ product.company?.name }}</strong>
+    </div>
+  </div>
+
+  <div fxFlex *ngIf="isVisible(infoTypes.PROJECT_TITLE)">
+    <div fxLayout="row" fxLayoutGap="8px">
+      <div fxFlex="80px" class="dec-color-grey">
+        {{ 'label.Project' | translate }}
+      </div>
+      <strong fxFlex class="dec-color-black">{{ product.project?.title }}</strong>
+    </div>
+  </div>
+
+  <div fxFlex *ngIf="isVisible(infoTypes.PROJECT_QUOTE)">
+    <div fxLayout="row" fxLayoutGap="8px">
+      <div fxFlex="80px" class="dec-color-grey">
+        {{ 'label.Project' | translate }}
+      </div>
+      <strong fxFlex class="dec-color-black">{{ product.project?.quote }}</strong>
+    </div>
+  </div>
+
+  <div fxFlex *ngIf="isVisible(infoTypes.CATEGORY)">
+    <div fxLayout="row" fxLayoutGap="8px">
+      <div fxFlex="80px" class="dec-color-grey">
+        {{ 'label.Category' | translate }}
+      </div>
+      <strong fxFlex class="dec-color-black">{{ product.category }}</strong>
+    </div>
+  </div>
+
+  <div fxFlex *ngIf="isVisible(infoTypes.MEASURES)">
+    <div fxLayout="row" fxLayoutGap="8px">
+      <div fxFlex="80px" class="dec-color-grey">
+        {{ 'label.measures' | translate }}
+      </div>
+      <strong fxLayout="column" fxLayoutGap="4px" class="dec-color-black">
+        <div fxFlex>{{ 'label.cubeX' | translate }}: {{ product?.referenceCubeX?.toFixed(2) }} cm</div>
+        <div fxFlex>{{ 'label.cubeY' | translate }}: {{ product?.referenceCubeY?.toFixed(2) }} cm</div>
+        <div fxFlex>{{ 'label.cubeZ' | translate }}: {{ product?.referenceCubeZ?.toFixed(2) }} cm</div>
+      </strong>
+    </div>
+  </div>
+
+  <div fxFlex *ngFor="let extraInfo of extraInfos">
+    <div fxLayout="row" fxLayoutGap="8px">
+      <div fxFlex="80px" class="dec-color-grey">
+        {{ extraInfo.title }}
+      </div>
+      <strong fxFlex class="dec-color-black">
+        <ng-container [ngTemplateOutlet]="extraInfo.template"></ng-container>
+      </strong>
+    </div>
+  </div>
+</div>
