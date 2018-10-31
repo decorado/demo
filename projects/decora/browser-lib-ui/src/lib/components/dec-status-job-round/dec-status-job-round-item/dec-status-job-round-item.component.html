@@ -9,7 +9,7 @@
     </div>
   </div>
 
-  <div *ngIf="round">
+  <div *ngIf="round && !showQaStatus">
     <div *ngIf="round?.status === 'DELIVERED' ||
                 round?.status === 'DENIED' ||
                 round?.status === 'APPROVED'"
@@ -32,11 +32,9 @@
       fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="space-between center">
       <div fxFlex="40" fxLayout="column" fxLayoutAlign="end start" fxLayoutGap="4px">
         <span class="smaller-font"> {{ 'label.dead-line' | translate }}: </span>
-        <!-- <span class="smaller-font" [ngClass]="{'red-qa': negativeQA}">
-          {{ countdown }}
-        </span> -->
         <span class="smaller-font" [ngClass]="{'red-qa': negativeQA}">
-          <dec-countdown *ngIf="!readonly; else placeholderCountDown" [interval]='300' (finished)="toggleNegative()"></dec-countdown>
+          <!-- <dec-countdown *ngIf="!readonly; else placeholderCountDown" [interval]='300' (finished)="toggleNegative()"></dec-countdown> -->
+          <span class="smaller-font"> 00:05:00 </span>
           <ng-template #placeholderCountDown>
             <span class="smaller-font"> 00:05:00 </span>
           </ng-template>
@@ -48,6 +46,23 @@
         <span class="smaller-font">{{ 'label.status' | translate }}</span>
         <dec-label-status [status]="round?.status">
         </dec-label-status>
+      </div>
+    </div>
+
+  </div>
+
+  <div *ngIf="round && showQaStatus">
+    <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="space-between center">
+      <div fxFlex="40" fxLayout="column" fxLayoutAlign="end start" fxLayoutGap="4px">
+        <span class="smaller-font"> {{ 'label.delivered' | translate }}: </span>
+        <span class="smaller-font"> {{ round?.delivered | timeAgo }} </span>
+      </div>
+
+      <div class="position-status" fxFlex="60" fxLayout="column" fxLayoutAlign="end start">
+        <span class="smaller-font">{{ 'label.status' | translate }}</span>
+        <dec-label-status *ngIf="round?.qualityAssurance?.status === 'APPROVED_FOR_REVIEW' || round?.qualityAssurance?.status === 'APPROVED'" [status]="'APPROVED'">
+        </dec-label-status>
+        <dec-label-status *ngIf="round?.qualityAssurance?.status === 'DENIED_FOR_REVIEW' || round?.qualityAssurance?.status === 'DENIED'" [status]="'DENIED'"></dec-label-status>
       </div>
     </div>
 

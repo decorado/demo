@@ -26,19 +26,19 @@
   <dec-grid-row>
     <dec-grid-column span="8">
       <dec-status-job-round-item [jobId]="job?.id" [round]="job?.rounds[0]" [roundQnt]="roundsQnt" [roundNumber]="1"
-        [readonly]="readonly"></dec-status-job-round-item>
+        [readonly]="readonly" [showQaStatus]="showQaStatus"></dec-status-job-round-item>
     </dec-grid-column>
   </dec-grid-row>
   <dec-grid-row>
     <dec-grid-column span="8">
       <dec-status-job-round-item [jobId]="job?.id" [round]="job?.rounds[1]" [roundQnt]="roundsQnt" [roundNumber]="2"
-        [readonly]="readonly"></dec-status-job-round-item>
+        [readonly]="readonly" [showQaStatus]="showQaStatus"></dec-status-job-round-item>
     </dec-grid-column>
   </dec-grid-row>
   <dec-grid-row>
     <dec-grid-column span="8">
       <dec-status-job-round-item [jobId]="job?.id" [round]="job?.rounds[2]" [roundQnt]="roundsQnt" [roundNumber]="3"
-        [readonly]="readonly"></dec-status-job-round-item>
+        [readonly]="readonly" [showQaStatus]="showQaStatus"></dec-status-job-round-item>
     </dec-grid-column>
   </dec-grid-row>
 </dec-grid>

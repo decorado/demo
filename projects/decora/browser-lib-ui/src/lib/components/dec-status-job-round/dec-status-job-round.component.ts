@@ -16,6 +16,15 @@ export class DecStatusJobRoundComponent implements OnInit {
     this._readonly = v;
   }
 
+  private _showQaStatus: boolean;
+  public get showQaStatus(): boolean {
+    return this._showQaStatus;
+  }
+  @Input()
+  public set showQaStatus(v: boolean) {
+    this._showQaStatus = v;
+  }
+
   @Input()
   set job(v) {
     if (v) {
