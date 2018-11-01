@@ -7,9 +7,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DecConfirmDialogComponent implements OnInit {
 
-  message: string;
+  description: string;
 
   customButtonTitle: string;
+
+  requiredMessage: boolean;
+
+  optionalMessage: boolean;
+
+  message: string;
+
+  messagePlaceholder: string;
+
+  title: string;
 
   constructor() { }
 

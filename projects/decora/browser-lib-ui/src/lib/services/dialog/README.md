@@ -14,12 +14,6 @@ const person = {name: 'my name', birth: '2001/15/05'};
 
 const dialogRef = this.decDialog.open(PersonDetailComponent, {
   title: `My person dialog title`,
-  topActions: [
-    { i18nLabel: 'label.delete', callback: (data: any) => console.log('DELETED', data)}
-  ],
-  bottomActions: [
-    { i18nLabel: 'label.delete', callback: (data: any) => console.log('DELETED', data), color: 'primary', buttonType: 'mat-button'}
-  ],
   context: {
     person: person,
   }
@@ -60,23 +54,29 @@ Subscribe to `child` to get access to know when the child component is ready. Th
 ## Models
 
 ```javascript
-export class DialogAction {
-  label?: string;
-  i18nLabel?: string;
-  callback: (data?: any) => {};
-  color?: 'primary' | 'accent' | 'warn' | 'default';
-  buttonType?: 'mat-button' | 'mat-raised-button' = 'mat-raised-button';
-}
+export type DecDialogColor = 'primary' | 'accent' | 'warn' | 'default' | 'basic';
 
-export class OpenConfiguration {
-  width?: string;
-  height?: string;
-  title?: string;
-  topActions?: DialogAction[];
-  bottomActions?: DialogAction[];
+export class DecDialogOpenConfiguration {
+  autoFocus?: boolean;
+  color?: DecDialogColor;
   context?: any;
+  disableClose?: boolean;
+  height?: string;
   hideBackButton?: boolean;
-  showCancelButton?: boolean;
-  toolbarColor?: 'primary' | 'accent' | 'warn' | 'default' | 'transparent' = 'transparent';
+  id?: number;
+  title?: string;
+  width?: string;
+
+  constructor(data: any = {}) {
+    this.autoFocus = data.autoFocus;
+    this.color = data.color || 'primary';
+    this.context = data.context;
+    this.disableClose = data.disableClose;
+    this.height = data.height;
+    this.hideBackButton = data.hideBackButton;
+    this.id = data.id || parseInt(`${Date.now()}${Math.random() * 10000 * Math.random() * 100}`, 10);
+    this.title = data.title;
+    this.width = data.width;
+  }
 }
 ```

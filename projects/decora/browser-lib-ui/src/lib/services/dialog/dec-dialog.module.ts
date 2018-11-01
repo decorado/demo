@@ -7,6 +7,10 @@ import { DecSpinnerModule } from './../../components/dec-spinner/dec-spinner.mod
 
 import { DecDialogComponent } from './dec-dialog.component';
 import { DecDialogService } from './dec-dialog.service';
+import { DecDialogTitleComponent } from './dec-dialog-title/dec-dialog-title.component';
+import { DecDialogActionsComponent } from './dec-dialog-actions/dec-dialog-actions.component';
+import { DecDialogContentComponent } from './dec-dialog-content/dec-dialog-content.component';
+import { DecDialogCloseDirective } from './dec-dialog-close/dec-dialog-close.directive';
 
 @NgModule({
   imports: [
@@ -22,8 +26,9 @@ import { DecDialogService } from './dec-dialog.service';
     DecSpinnerModule,
     TranslateModule,
   ],
-  declarations: [DecDialogComponent],
+  declarations: [DecDialogComponent, DecDialogTitleComponent, DecDialogActionsComponent, DecDialogContentComponent, DecDialogCloseDirective],
   entryComponents: [DecDialogComponent],
   providers: [DecDialogService],
+  exports: [DecDialogTitleComponent, DecDialogActionsComponent, DecDialogContentComponent, DecDialogCloseDirective],
 })
 export class DecDialogModule { }

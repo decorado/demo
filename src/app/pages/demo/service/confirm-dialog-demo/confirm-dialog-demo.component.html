@@ -1,8 +1,9 @@
 <app-demo-container readmeSrc="/assets/docs/browser-lib-ui/services/confirm-dialog/README.md">
-
   <h1>Confirm dialog</h1>
 
-  <button mat-raised-button type="button" color="" (click)="open()">Transparent dialog</button> &nbsp;
+  <h2>Normal confirmation</h2>
+
+  <button mat-raised-button type="button" color="" (click)="open()">Basic dialog</button> &nbsp;
 
   <button mat-raised-button type="button" color="accent" (click)="open('accent')">Accent dialog</button> &nbsp;
 
@@ -12,4 +13,28 @@
 
   <button mat-raised-button type="button" color="default" (click)="open('default')">Default dialog</button> &nbsp;
 
+  <h2>Optional message</h2>
+
+  <button mat-raised-button type="button" color="" (click)="openWithOptionalMessage()">Basic dialog</button> &nbsp;
+
+  <button mat-raised-button type="button" color="accent" (click)="openWithOptionalMessage('accent')">Accent dialog</button> &nbsp;
+
+  <button mat-raised-button type="button" color="primary" (click)="openWithOptionalMessage('primary')">Primary dialog</button> &nbsp;
+
+  <button mat-raised-button type="button" color="warn" (click)="openWithOptionalMessage('warn')">Warn dialog</button> &nbsp;
+
+  <button mat-raised-button type="button" color="default" (click)="openWithOptionalMessage('default')">Default dialog</button> &nbsp;
+
+
+  <h2>Required message</h2>
+
+  <button mat-raised-button type="button" color="" (click)="openWithRequiredMessage()">Basic dialog</button> &nbsp;
+
+  <button mat-raised-button type="button" color="accent" (click)="openWithRequiredMessage('accent')">Accent dialog</button> &nbsp;
+
+  <button mat-raised-button type="button" color="primary" (click)="openWithRequiredMessage('primary')">Primary dialog</button> &nbsp;
+
+  <button mat-raised-button type="button" color="warn" (click)="openWithRequiredMessage('warn')">Warn dialog</button> &nbsp;
+
+  <button mat-raised-button type="button" color="default" (click)="openWithRequiredMessage('default')">Default dialog</button> &nbsp;
 </app-demo-container>

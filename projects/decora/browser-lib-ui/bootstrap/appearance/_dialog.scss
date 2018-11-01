@@ -1,13 +1,10 @@
 .dec-dialog-container {
 
-  .mat-dialog-container {
-      padding: 0;
-      margin: 0;
-  }
+  max-height: 80vh;
 
-  .mat-dialog-content {
-      padding: 0;
-      margin: 0;
+  .mat-dialog-container {
+    padding: 0;
+    margin: 0;
   }
 
 }
@@ -19,17 +16,10 @@
   max-width: none !important;
 
   .mat-dialog-container {
-      padding: 0;
-      margin: 0;
-      max-width: 100vw;
-      width: 100vw;
-  }
-
-  .mat-dialog-content {
-      padding: 0;
-      margin: 0;
-      max-height: 100vh;
-      height: 100vh;
+    padding: 0;
+    margin: 0;
+    max-width: 100vw;
+    width: 100vw;
   }
 
 }

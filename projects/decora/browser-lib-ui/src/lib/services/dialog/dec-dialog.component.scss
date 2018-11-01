@@ -1,39 +1,42 @@
-@import './../../../../bootstrap/constants/positioning';
-
-.mat-dialog-content, .mat-dialog-actions {
-  padding: $sidenav-and-dialog-content-padding;
-}
-
-.mat-dialog-actions {
-  margin-bottom: 0;
-}
-
-.fixActionRow {
+.dec-dialog-content-wrapper {
   height: 100%;
-  display: flex;
-  flex-direction: column;
-}
 
-.spacer {
-  flex-grow: 1;
-}
+  .dec-dialog-content-flex-wrapper {
+    height: 100%;
+    max-height: 100%;
 
-.dec-dialog-title {
-  font-size: 24px;
-  padding: 0 16px;
-}
+    .dec-dialog-content-toolbar {
 
-.mat-toolbar {
-  position: relative;
-  .progress-bar-wrapper {
-    position: absolute;
-    bottom: 0;
-    width: inherit;
-    margin-left: -16px;
-    .progress-bar-message {
-      text-align: center;
-      font-size: 12px;
-      line-height: 12px;
+      font-size: 24px;
+
+      .mat-toolbar {
+        position: relative;
+
+        .dec-dialog-progress-bar-wrapper {
+          position: absolute;
+          bottom: 0;
+          width: inherit;
+          margin-left: -16px;
+
+          .dec-dialog-progress-bar-message {
+            text-align: center;
+            font-size: 12px;
+            line-height: 12px;
+          }
+        }
+      }
+    }
+
+    .dec-dialog-content {
+      padding: 0 16px;
+      overflow: auto;
+      height: 100%;
+    }
+
+    .dec-dialog-content-actions {
+      padding: 16px;
+      text-align: right;
     }
   }
+
 }
