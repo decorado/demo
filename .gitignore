@@ -4,6 +4,7 @@
 /tmp
 /dist
 /out-tsc
+/dist
 /dist/decora-browser-lib-ui
 
 # dependencies
