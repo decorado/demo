@@ -7,7 +7,8 @@
       <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
         <mat-form-field>
           <input matInput placeholder="{{ 'label.choices' | translate }}" [(ngModel)]="selectedChoicesDisplay"
-            (keydown)="keydownChoice($event)" (keydown.backspace)="backspaceChoice()" autocomplete="off" onpaste="return false;">
+            (keydown.enter)="confirm()" (keydown)="keydownChoice($event)" (keydown.backspace)="backspaceChoice()"
+            autocomplete="off" onpaste="return false;">
         </mat-form-field>
 
         <mat-icon class="backspace-icon" style="user-select: none;cursor: pointer;" (click)="backspaceChoice()">backspace</mat-icon>
@@ -47,7 +48,7 @@
 
 <mat-dialog-actions style="justify-content: flex-end;">
   <button mat-button mat-dialog-close>{{ 'label.cancel' | translate | uppercase }}</button>
-  <button mat-raised-button color="primary" [disabled]="!descriptionLastLevel()" (click)="confirm()">
+  <button mat-raised-button color="primary" type="submit" [disabled]="!descriptionLastLevel()" (click)="confirm()">
     {{ 'label.confirm' | translate | uppercase }}
   </button>
 </mat-dialog-actions>
