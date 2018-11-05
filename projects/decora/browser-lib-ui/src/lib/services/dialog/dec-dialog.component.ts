@@ -1,6 +1,5 @@
-import { Component, ViewChild, OnInit, ComponentFactoryResolver, ComponentFactory, ComponentRef, ViewContainerRef, Output, EventEmitter } from '@angular/core';
+import { Component, ViewChild, AfterContentInit, ComponentFactoryResolver, ComponentFactory, ComponentRef, ViewContainerRef, Output, EventEmitter, TemplateRef } from '@angular/core';
 import { ComponentType } from '@angular/cdk/portal';
-import { DecDialogAction } from './dec-dialog.models';
 import { MatDialogRef } from '@angular/material';
 import { DecApiService } from './../api/decora-api.service';
 
@@ -9,30 +8,36 @@ import { DecApiService } from './../api/decora-api.service';
   templateUrl: './dec-dialog.component.html',
   styleUrls: ['./dec-dialog.component.scss']
 })
-export class DecDialogComponent implements OnInit {
+export class DecDialogComponent implements AfterContentInit {
 
-  // CURRENT
-  childComponentType: ComponentType<any>;
-
+  // CONFIG DATA
   childComponentInstance: any;
 
-  topActions: DecDialogAction[] = [];
-
-  bottomActions: DecDialogAction[] = [];
-
-  title: string;
+  childComponentType: ComponentType<any>;
 
   context: any = {};
 
-  loaded: boolean;
+  title: string;
+
+  message: string;
 
   hideBackButton = false;
 
-  showCancelButton = false;
+  color = 'basic';
+
+  // TEMPLATE PARSING DATA
+  decDialogActionsTemplate: TemplateRef<any>;
+
+  decDialogContentTemplate: TemplateRef<any>;
+
+  decDialogTitleTemplate: TemplateRef<any>;
+
+  // CONTROLLER DATA
+  loaded: boolean;
 
   progressBarVisible: string | boolean = false;
 
-  color = 'transparent';
+  basicBgStyle = { 'background': 'rgba(255, 255, 255, 0)' };
 
   @ViewChild('childContainer', { read: ViewContainerRef }) childContainer: ViewContainerRef;
 
@@ -48,7 +53,7 @@ export class DecDialogComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  ngAfterContentInit() {
 
     this.dialogRef.afterOpen()
     .toPromise()
@@ -58,17 +63,21 @@ export class DecDialogComponent implements OnInit {
 
   private factoryTheComponent = () => {
 
-    const componentFactory: ComponentFactory<any> = this.factor.resolveComponentFactory(this.childComponentType);
+    if (this.childComponentType) {
 
-    const componentRef: ComponentRef<any> = this.childContainer.createComponent(componentFactory);
+      const componentFactory: ComponentFactory<any> = this.factor.resolveComponentFactory(this.childComponentType);
 
-    this.childComponentInstance = componentRef.instance;
+      const componentRef: ComponentRef<any> = this.childContainer.createComponent(componentFactory);
 
-    this.child.emit(this.childComponentInstance);
+      this.childComponentInstance = componentRef.instance;
 
-    this.child.complete(); // unsubsribe subscribers
+      this.appendContextToInstance(componentRef.instance, this.context);
 
-    this.appendContextToInstance(componentRef.instance, this.context);
+      this.child.emit(this.childComponentInstance);
+
+      this.child.complete(); // unsubsribe subscribers
+
+    }
 
     this.loaded = true;
 

@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { DecConfirmDialogConfig } from './dec-confirm-dialog.models';
 import { DecDialogService } from './../dialog/dec-dialog.service';
 import { DecConfirmDialogComponent } from './dec-confirm-dialog.component';
-import { DecDialogAction } from './../dialog/dec-dialog.models';
 import { MatDialogRef } from '@angular/material';
 
 @Injectable()
@@ -16,24 +15,24 @@ export class DecConfirmDialogService {
 
     config = new DecConfirmDialogConfig(config);
 
-    const actions: DecDialogAction[] = [{ i18nLabel: config.customButtonTitle, callback: () => ref.close(true), color: 'primary' }];
-
-    if (config.extraButtons) {
-      actions.push(...config.extraButtons);
-    }
-
-    const ref = this.decDialog.open(DecConfirmDialogComponent, {
+    const dialogRef: MatDialogRef<DecConfirmDialogComponent> = this.decDialog.open(DecConfirmDialogComponent, {
       width: config.width,
       height: config.height,
-      title: config.title,
-      context: config,
-      bottomActions: actions,
       hideBackButton: true,
-      showCancelButton: true,
-      color: config.color
+      color: config.color,
+      disableClose: config.disableClose,
+      context: {
+        description: config.description,
+        customButtonTitle: config.customButtonTitle,
+        requiredMessage: config.requiredMessage,
+        optionalMessage: config.optionalMessage,
+        message: config.message,
+        messagePlaceholder: config.messagePlaceholder,
+        title: config.title,
+      },
     });
 
-    return ref;
+    return dialogRef;
 
   }
 

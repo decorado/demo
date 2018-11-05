@@ -1,6 +1,8 @@
 <app-demo-container readmeSrc="/assets/docs/browser-lib-ui/services/dialog/README.md">
 
-  <h1>Confirm dialog</h1>
+  <h1>Dec dialog</h1>
+
+  <h2>Custom title set on template using dec-dialog-title</h2>
 
   <button mat-raised-button type="button" color="" (click)="open('transparent')">Transparent dialog</button> &nbsp;
 
@@ -12,5 +14,17 @@
 
   <button mat-raised-button type="button" color="default" (click)="open('default')">Default dialog</button> &nbsp;
 
+
+  <h2>Custom title set on open method</h2>
+
+  <button mat-raised-button type="button" color="" (click)="open('transparent', 'Custom title set on open method')">Transparent dialog</button> &nbsp;
+
+  <button mat-raised-button type="button" color="accent" (click)="open('accent', 'Custom title set on open method')">Accent dialog</button> &nbsp;
+
+  <button mat-raised-button type="button" color="primary" (click)="open('primary', 'Custom title set on open method')">Primary dialog</button> &nbsp;
+
+  <button mat-raised-button type="button" color="warn" (click)="open('warn', 'Custom title set on open method')">Warn dialog</button> &nbsp;
+
+  <button mat-raised-button type="button" color="default" (click)="open('default', 'Custom title set on open method')">Default dialog</button> &nbsp;
 </app-demo-container>
 

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ElementRef } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { ComponentType } from '@angular/cdk/portal';
 import { DecDialogComponent } from './dec-dialog.component';
@@ -6,6 +6,8 @@ import { DecDialogOpenConfiguration } from './dec-dialog.models';
 
 @Injectable()
 export class DecDialogService {
+
+  private openDialogInstances: {[key: number]: MatDialogRef<any>} = {};
 
   constructor(
     private dialog: MatDialog
@@ -24,15 +26,12 @@ export class DecDialogService {
         width: fullscreen ? '100vw' : config.width,
         height: fullscreen ? '100vh' : config.height,
         panelClass: fullscreen ? 'dec-dialog-container-full-screen' : 'dec-dialog-container',
-        disableClose: config.disableClose || false,
+        disableClose: config.disableClose,
+        autoFocus: config.autoFocus,
       }
     );
 
     dialogInstance.componentInstance.childComponentType = childComponent;
-
-    dialogInstance.componentInstance.topActions = config.topActions;
-
-    dialogInstance.componentInstance.bottomActions = config.bottomActions;
 
     dialogInstance.componentInstance.title = config.title;
 
@@ -40,11 +39,41 @@ export class DecDialogService {
 
     dialogInstance.componentInstance.hideBackButton = config.hideBackButton;
 
-    dialogInstance.componentInstance.showCancelButton = config.showCancelButton;
-
     dialogInstance.componentInstance.color = config.color;
+
+    this.registerDialog(config.id, dialogInstance);
+
+    this.watchToUnregisterDialogWhenClosed(config.id, dialogInstance);
 
     return dialogInstance;
 
+  }
+
+  dialogRef(dialogId) {
+    return this.openDialogInstances[dialogId];
+  }
+
+  getClosestDialog(element: ElementRef<HTMLElement>, openDialogs: MatDialogRef<any>[]) {
+
+    let parent: HTMLElement | null = element.nativeElement.parentElement;
+
+    while (parent && !parent.classList.contains('mat-dialog-container')) {
+      parent = parent.parentElement;
+    }
+
+    return parent ? openDialogs.find(dialog => dialog.id === parent.id) : null;
+
+  }
+
+  private registerDialog(dialogId, dialogInstance) {
+    this.openDialogInstances[dialogId] = dialogInstance;
+  }
+
+  private watchToUnregisterDialogWhenClosed(dialogId, dialogInstance) {
+    dialogInstance.afterClosed().subscribe(() => {
+      if (this.openDialogInstances[dialogId]) {
+        delete this.openDialogInstances[dialogId];
+      }
+    });
   }
 }

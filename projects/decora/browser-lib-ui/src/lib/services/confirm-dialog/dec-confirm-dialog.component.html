@@ -1,1 +1,24 @@
-{{ message }}
+<dec-dialog-title>{{ title | translate }}</dec-dialog-title>
+
+<dec-dialog-content>
+
+  <p>{{ description | translate }}</p>
+
+  <mat-form-field *ngIf="optionalMessage || requiredMessage">
+
+    <textarea rows="4" matInput matTextareaAutosize name="message" [(ngModel)]="message" [required]="requiredMessage" placeholder="{{ messagePlaceholder |
+    translate }}"></textarea>
+
+  </mat-form-field>
+
+</dec-dialog-content>
+
+<dec-dialog-actions>
+
+  <button mat-button [decDialogClose]="false">{{ 'label.cancel' | translate | uppercase }}</button>
+
+  &nbsp;
+
+  <button mat-raised-button color="primary" [decDialogClose]="message || true" [disabled]="requiredMessage && !message">{{ customButtonTitle | translate | uppercase }}</button>
+
+</dec-dialog-actions>
