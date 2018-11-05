@@ -267,6 +267,7 @@ export class DecZoomMarksComponent implements AfterViewChecked {
     this.decRenderCommentService.getRenderDescriptionsByCode(this.marker.comments);
     if (this.marker.comments && this.marker.comments.length > 0) {
       this.marker.comments.forEach((comment: Comment) => {
+        console.log(comment);
         if (comment.coordinates.length > 2) {
           this.createSquareTag(comment.coordinates, comment.id);
         } else {
@@ -277,6 +278,7 @@ export class DecZoomMarksComponent implements AfterViewChecked {
     }
     if (this.marker.zoomAreas && this.marker.zoomAreas.length > 0) {
       this.marker.zoomAreas.forEach((zoomArea: ZoomArea) => {
+        console.log(zoomArea);
         this.createZoomAreaTag(zoomArea.coordinates, zoomArea.id);
       });
       this.commentsArraySize += this.marker.zoomAreas.length;
