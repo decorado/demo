@@ -57,6 +57,10 @@ $color-red: rgb(255, 10, 222);
         &:hover {
           border-color: $color-red;
         }
+
+        &.right-side {
+          left: 24px;
+        }
       }
 
     }

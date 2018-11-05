@@ -24,7 +24,7 @@ export class DecoraZoomMarksDemoComponent implements OnInit {
         comment: '1163',
         feedback: '',
         status: '',
-        coordinates: [32, 56],
+        coordinates: [2, 56],
         version: 21
       },
       {
@@ -32,7 +32,7 @@ export class DecoraZoomMarksDemoComponent implements OnInit {
         comment: '2K5',
         feedback: '',
         status: '',
-        coordinates: [28, 40, 53, 32],
+        coordinates: [8, 40, 53, 32],
         version: 21
       },
       {

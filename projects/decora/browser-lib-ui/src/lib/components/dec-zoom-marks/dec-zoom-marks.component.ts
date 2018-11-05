@@ -128,16 +128,20 @@ export class DecZoomMarksComponent implements AfterViewChecked {
 
   private wheelEvent(): void {
     fromEvent(this.marksWrapperEl, 'wheel').subscribe((event: WheelEvent) => {
-      event.preventDefault();
-      const target = event.target as HTMLDivElement;
-      if (!target.classList.contains('point-tag') && !target.classList.contains('zoom-area-tag')) {
-        this.setZoomPosition(
-          ((100 * event.offsetX) / this.marksWrapperEl.offsetWidth * this.canvasEl.offsetWidth) / 100,
-          ((100 * event.offsetY) / this.marksWrapperEl.offsetHeight * this.canvasEl.offsetHeight) / 100);
-        if (event.deltaY < 0) {
-          this.zoomIn(0.5);
+      const usedCtrlKey = event.ctrlKey;
+      const usedMetaKey = event.metaKey;
+      if (usedCtrlKey || usedMetaKey) {
+        event.preventDefault();
+        const target = event.target as HTMLDivElement;
+        if (!target.classList.contains('point-tag') && !target.classList.contains('zoom-area-tag')) {
+          this.setZoomPosition(
+            ((100 * event.offsetX) / this.marksWrapperEl.offsetWidth * this.canvasEl.offsetWidth) / 100,
+            ((100 * event.offsetY) / this.marksWrapperEl.offsetHeight * this.canvasEl.offsetHeight) / 100);
+          if (event.deltaY < 0) {
+            this.zoomIn(0.5);
+          }
+          event.deltaY < 0 ? this.zoomIn(0.5) : this.zoomOut(0.5);
         }
-        event.deltaY < 0 ? this.zoomIn(0.5) : this.zoomOut(0.5);
       }
     });
   }

@@ -249,7 +249,7 @@ export class DecMarksComponent implements AfterViewChecked {
     });
   }
 
-  private createPointTag(coordinates: number[], index: number): HTMLDivElement {
+  private createPointTag(coordinates: number[], index: number, parentX?: number): HTMLDivElement {
     const [x, y] = coordinates;
     const tag = this.renderer.createElement('div');
     tag.innerHTML = this.noComments ? index : `${this.parentId}.${index}`;
@@ -259,8 +259,13 @@ export class DecMarksComponent implements AfterViewChecked {
     this.marksWrapperEl.appendChild(tag);
     if (!this.noComments) {
       const link = this.renderer.createElement('div');
-      link.className = 'link-button';
+      link.classList.add('link-button');
       link.innerHTML = '+';
+      const xPos = parentX ? parentX : x;
+      const xPositionInPixels = xPos * this.marksWrapperEl.offsetWidth / 100;
+      if (xPositionInPixels <= 24) {
+        link.classList.add('right-side');
+      }
       tag.appendChild(link);
       const comment = this.marker.comments.find(c => c.id === index);
       tag.addEventListener('click', (event: MouseEvent) => {
@@ -300,7 +305,7 @@ export class DecMarksComponent implements AfterViewChecked {
     square.style.height = `${Math.abs(y - y2)}%`;
     square.style.top = `${y2 > y ? y : y2}%`;
     square.style.left = `${x2 > x ? x : x2}%`;
-    const point = this.createPointTag([0, 0], index);
+    const point = this.createPointTag([0, 0], index, x);
     square.appendChild(point);
     this.marksWrapperEl.appendChild(square);
   }
