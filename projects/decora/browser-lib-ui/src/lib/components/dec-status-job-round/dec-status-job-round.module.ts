@@ -6,6 +6,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { DecGridModule } from '../dec-grid/dec-grid.module';
 import { MatIconModule } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
+import { DecIconModule } from '../dec-icon/dec-icon.module';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { TranslateModule } from '@ngx-translate/core';
     FlexLayoutModule,
     DecGridModule,
     MatIconModule,
-    TranslateModule
+    TranslateModule,
+    DecIconModule
   ],
   declarations: [
     DecStatusJobRoundComponent
