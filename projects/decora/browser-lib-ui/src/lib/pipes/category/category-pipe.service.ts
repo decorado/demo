@@ -60,7 +60,7 @@ export class CategoryPipeService {
     switch (i18n) {
       case 'PT_BR':
         return 'pt-br';
-      case 'EN':
+      case 'EN_US':
         return 'en';
     }
   }

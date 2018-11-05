@@ -1,3 +1,4 @@
+import { CategoryPipeModule } from './../../pipes/category/category-pipe.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -12,6 +13,7 @@ import { DecIconModule } from './../dec-icon/dec-icon.module';
     DecIconModule,
     FlexLayoutModule,
     TranslateModule,
+    CategoryPipeModule
   ],
   declarations: [
     DecProductInfoComponent,

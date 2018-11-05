@@ -72,7 +72,7 @@
       <div fxFlex="80px" class="dec-color-grey">
         {{ 'label.Category' | translate }}
       </div>
-      <strong fxFlex class="dec-color-black">{{ product.category }}</strong>
+      <strong fxFlex class="dec-color-black">{{ product.category | decCategory | async }}</strong>
     </div>
   </div>
 
