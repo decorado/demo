@@ -82,7 +82,7 @@ export class DecJobRoundComponent {
     this.markedReference = v.referenceImages.map(x => {
       return {
         file: x.sysFile,
-        comments: []
+        tags: []
       };
     });
   }
@@ -92,7 +92,7 @@ export class DecJobRoundComponent {
       v.qualityAssurance.renders = v.qualityAssurance.renders.map(x => {
         return {
           file: x.file,
-          comments: x.comments || [],
+          tags: x.tags || [],
           zoomAreas: x.zoomAreas || []
         };
       });
@@ -115,10 +115,10 @@ export class DecJobRoundComponent {
       let ref: any = {};
       let render: any = {};
       ref = this.referenceGallery.getFormatedPositionAndScale();
-      ref.comments = [];
+      ref.tags = [];
       this.reference = ref;
       render = this.renderGallery.getFormatedPositionAndScale();
-      render.comments = [];
+      render.tags = [];
       this.render = render;
       this.parentId = this.renderGallery.getImageIndex();
       this.parentId++;
@@ -154,7 +154,7 @@ export class DecJobRoundComponent {
     return round.qualityAssurance.renders.map(x => {
       return {
         file: x.file,
-        comments: x.comments || [],
+        tags: x.tags || [],
         zoomAreas: x.zoomAreas || []
       };
     });

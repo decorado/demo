@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DecApiService } from './../../services/api/decora-api.service';
-import { Comment } from './../../components/dec-zoom-marks/models/comment.model';
-
+import { Tag } from './../../components/dec-zoom-marks/models/tag.model';
 
 @Injectable()
 export class DecRenderCommentService {
@@ -24,7 +23,7 @@ export class DecRenderCommentService {
     return this.decApi.get(this.RENDERFEEDBACKTREE_ENDPOINT, queryParams).toPromise();
   }
 
-  public getRenderDescriptionsByCode(comments: Comment[]): Comment[] {
+  public getRenderDescriptionsByCode(comments: Tag[]): Tag[] {
     const groupedComments = comments.reduce((r, v, i, a, k = v.version) => ((r[k] || (r[k] = [])).push(v), r), {});
 
     Object.keys(groupedComments).forEach(async key => {

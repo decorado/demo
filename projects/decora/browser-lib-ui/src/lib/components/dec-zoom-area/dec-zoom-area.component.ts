@@ -34,7 +34,7 @@ export class DecZoomAreaComponent implements OnInit {
   @Output() save = new EventEmitter();
 
   @Output() cancel = new EventEmitter();
-  
+
   private _reference;
   private _render;
 
@@ -63,14 +63,14 @@ export class DecZoomAreaComponent implements OnInit {
       descripition: this.descripition,
       renderShot: this.renderZoom.marker,
       referenceShot: this.referenceZoom.marker
-    }
+    };
     console.log(saveObj);
     this.save.emit(saveObj);
   }
 
   onLinkTag(event) {
     this.referenceQaMode = true;
-    this.commentIndex = event.id;
+    this.commentIndex = event.reference;
   }
 
   onReferenceQa($event) {

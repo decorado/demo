@@ -1,7 +1,7 @@
 import { Component, AfterViewChecked, Input, ViewChild, ElementRef, HostListener, Renderer2, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Marker } from './models/marker.model';
-import { Comment } from './models/comment.model';
+import { Tag } from './models/tag.model';
 import { ZoomPosition } from './models/zoom-position.interface';
 import { fromEvent, Observable } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
@@ -132,6 +132,7 @@ export class DecZoomMarksComponent implements AfterViewChecked {
       const usedMetaKey = event.metaKey;
       if (usedCtrlKey || usedMetaKey) {
         event.preventDefault();
+        // FIXME
         const target = event.target as HTMLDivElement;
         if (!target.classList.contains('point-tag') && !target.classList.contains('zoom-area-tag')) {
           this.setZoomPosition(
@@ -154,8 +155,11 @@ export class DecZoomMarksComponent implements AfterViewChecked {
     return fromEvent(this.marksWrapperEl, 'mouseup');
   }
 
-  private addInCommentsArray(comment: Comment): void {
-    this.marker.comments.push(comment);
+  private addInCommentsArray(comment: Tag): void {
+    if (!this.marker.tags) {
+      this.marker.tags = [];
+    }
+    this.marker.tags.push(comment);
     this.commentsArraySize++;
   }
 
@@ -175,14 +179,14 @@ export class DecZoomMarksComponent implements AfterViewChecked {
           const dialogRef = this.dialog.open(DecRenderCommentComponent);
           dialogRef.afterClosed().subscribe(result => {
             if (result) {
-              const comment = new Comment({
+              const comment = new Tag({
                 coordinates: [x, y, x2, y2],
                 comment: result.comment,
                 description: result.description,
-                id: this.commentsArraySize + 1
+                reference: this.commentsArraySize + 1
               });
               this.addInCommentsArray(comment);
-              this.createSquareTag([x, y, x2, y2], comment.id);
+              this.createSquareTag([x, y, x2, y2], comment.reference);
               this.clearSquare();
             }
           });
@@ -191,14 +195,14 @@ export class DecZoomMarksComponent implements AfterViewChecked {
             const dialogRef = this.dialog.open(DecRenderCommentComponent);
             dialogRef.afterClosed().subscribe(result => {
               if (result) {
-                const comment = new Comment({
+                const comment = new Tag({
                   coordinates: [x, y],
                   comment: result.comment,
                   description: result.description,
-                  id: this.commentsArraySize + 1
+                  ref: this.commentsArraySize + 1
                 });
                 this.addInCommentsArray(comment);
-                this.createPointTag([x, y], comment.id);
+                this.createPointTag([x, y], comment.reference);
               }
             });
           }
@@ -268,22 +272,20 @@ export class DecZoomMarksComponent implements AfterViewChecked {
   private drawMarks() {
     this.cleanMarks();
     this.commentsArraySize = 0;
-    this.decRenderCommentService.getRenderDescriptionsByCode(this.marker.comments);
-    if (this.marker.comments && this.marker.comments.length > 0) {
-      this.marker.comments.forEach((comment: Comment) => {
-        console.log(comment);
+    if (this.marker.tags && this.marker.tags.length > 0) {
+      this.decRenderCommentService.getRenderDescriptionsByCode(this.marker.tags);
+      this.marker.tags.forEach((comment: Tag) => {
         if (comment.coordinates.length > 2) {
-          this.createSquareTag(comment.coordinates, comment.id);
+          this.createSquareTag(comment.coordinates, comment.reference);
         } else {
-          this.createPointTag(comment.coordinates, comment.id);
+          this.createPointTag(comment.coordinates, comment.reference);
         }
       });
-      this.commentsArraySize += this.marker.comments.length;
+      this.commentsArraySize += this.marker.tags.length;
     }
     if (this.marker.zoomAreas && this.marker.zoomAreas.length > 0) {
       this.marker.zoomAreas.forEach((zoomArea: ZoomArea) => {
-        console.log(zoomArea);
-        this.createZoomAreaTag(zoomArea.coordinates, zoomArea.id);
+        this.createZoomAreaTag(zoomArea.coordinates, zoomArea.reference);
       });
       this.commentsArraySize += this.marker.zoomAreas.length;
     }
@@ -361,7 +363,7 @@ export class DecZoomMarksComponent implements AfterViewChecked {
     tag.style.top = `calc(${y}% - 12px)`;
     tag.style.left = `calc(${x}% - 12px)`;
     this.marksWrapperEl.appendChild(tag);
-    const comment = this.marker.comments.find(c => c.id === index);
+    const comment = this.marker.tags.find(c => c.reference === index);
     tag.addEventListener('click', () => this.clickEventPointTag(comment));
     tag.addEventListener('mouseover', () => this.addCommentNode(comment));
     tag.addEventListener('mouseout', this.removeCommentNode);
@@ -376,7 +378,7 @@ export class DecZoomMarksComponent implements AfterViewChecked {
     tag.style.top = `calc(${y}% - 12px)`;
     tag.style.left = `calc(${x}% - 12px)`;
     this.marksWrapperEl.appendChild(tag);
-    const zoomArea = this.marker.zoomAreas.find(z => z.id === index);
+    const zoomArea = this.marker.zoomAreas.find(z => z.reference === index);
     tag.addEventListener('click', () => this.clickEventZoomTag(zoomArea));
     return tag;
   }
@@ -394,7 +396,7 @@ export class DecZoomMarksComponent implements AfterViewChecked {
     this.marksWrapperEl.appendChild(square);
   }
 
-  private clickEventPointTag(comment: Comment) {
+  private clickEventPointTag(comment: Tag) {
     const dialogRef = this.dialog.open(DecRenderCommentComponent, { data: { comment: comment.comment, version: comment.version } });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -414,7 +416,7 @@ export class DecZoomMarksComponent implements AfterViewChecked {
     }
   }
 
-  private addCommentNode = (comment: Comment): void => {
+  private addCommentNode = (comment: Tag): void => {
     const span = this.renderer.createElement('span');
 
     span.innerHTML = `${comment.comment} - ${comment.description}`;
@@ -512,17 +514,16 @@ export class DecZoomMarksComponent implements AfterViewChecked {
       this.editZoomArea(newZoomArea);
       return;
     }
-
     newZoomArea.coordinates.push(Math.round(Math.round(((this.startX / this.marksWrapperEl.offsetWidth) * 100) * 100) / 100));
     newZoomArea.coordinates.push(Math.round(Math.round(((this.startY / this.marksWrapperEl.offsetHeight) * 100) * 100) / 100));
-    newZoomArea.id = this.commentsArraySize + 1;
+    newZoomArea.reference = this.commentsArraySize + 1;
     this.marker.zoomAreas.push(newZoomArea);
     this.commentsArraySize++;
     this.drawMarks();
   }
 
   editZoomArea(newZoomArea) {
-    const za = this.marker.zoomAreas.find(x => x.id === newZoomArea.id);
+    const za = this.marker.zoomAreas.find(x => x.reference === newZoomArea.ref);
     if (za) {
       za.renderShot = newZoomArea.renderShot;
       za.referenceShot = newZoomArea.referenceShot;

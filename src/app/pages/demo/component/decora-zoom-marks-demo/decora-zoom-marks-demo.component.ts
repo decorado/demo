@@ -18,7 +18,7 @@ export class DecoraZoomMarksDemoComponent implements OnInit {
       size: 325983,
       order: 1
     },
-    comments: [
+    tags: [
       {
         id: 1,
         comment: '1163',
@@ -61,897 +61,144 @@ export class DecoraZoomMarksDemoComponent implements OnInit {
   qaMode: boolean;
 
   constructor() {
-
     this.markedObjs = [
       {
-        file: {
-          extension: 'jpg',
-          fileBasePath: '2018/5/29/5b0cf3d418ab527a27ef718b.jpg',
-          fileBaseUrl: 'https://s3.amazonaws.com/decora-platform-1-nv/2018/5/29/5b0cf3d418ab527a27ef718b',
-          fileUrl: 'https://s3.amazonaws.com/decora-platform-1-nv/2018/5/29/5b0cf3d418ab527a27ef718b.jpg',
-          id: '5b0cf3d418ab527a27ef718b',
-          originalName: '7I5RdLBE03Q.jpg',
-          size: 325983,
-          order: 1
+        'file': {
+          'id': '5bb51ff2af4d0b12a262de3c',
+          'extension': 'jpg',
+          'size': 2741819,
+          'originalName': '5bb5201249d9bc0729766e598170125292556642597.jpg',
+          'fileBasePath': '2018/10/3/5bb51ff2af4d0b12a262de3c.jpg',
+          'fileUrl': 'http://s3.amazonaws.com/decora-platform-1-nv/2018/10/3/5bb51ff2af4d0b12a262de3c.jpg'
         },
-        comments: [
+        tags: [
           {
-            id: 1,
-            comment: '1163',
-            feedback: '',
-            status: '',
-            coordinates: [32, 56],
-            version: 21
-          },
-          {
-            id: 5,
-            comment: '2K5',
-            feedback: '',
-            status: '',
-            coordinates: [28, 40, 53, 32],
-            version: 21
-          },
-          {
-            id: 3,
-            comment: '73',
-            feedback: '',
-            status: '',
-            coordinates: [54, 40],
-            version: 23
-          },
-          {
-            id: 4,
-            comment: '2C3',
-            feedback: '',
-            status: '',
-            coordinates: [12, 67, 32, 45],
-            version: 23
+            'id': '5bc88add0e8e3d0001958448',
+            'ref': '1',
+            'comment': '2K5',
+            'coordinates': [
+              12.3548387096774,
+              3.8387096774194,
+              23.9677419354839,
+              11.6774193548387
+            ]
           }
         ],
-        zoomAreas: [
-          {
-            feedback: '',
-            renderShot: {
-              file: '',
-              comments: [
-                {
-                  comment: '',
-                  feedback: '',
-                  status: '',
-                  coordinates: [68, 12]
-                },
-                {
-                  comment: '',
-                  feedback: '',
-                  status: '',
-                  coordinates: [68, 12, 34, 45]
-                }
-              ]
-            },
-            referenceShot: {
-              file: '',
-              comments: [
-                {
-                  comment: '',
-                  feedback: '',
-                  status: '',
-                  coordinates: [12, 78]
-                }
-              ]
-            },
-            status: '',
-            id: 2,
-            coordinates: [56, 70]
-          }
-        ]
-      }, {
-        file: {
-          extension: 'jpg',
-          fileBasePath: '2018/5/29/5b0cf3d418ab527a27ef718b.jpg',
-          fileBaseUrl: 'https://s3.amazonaws.com/decora-platform-1-nv/2018/5/29/5b0cf3d418ab527a27ef718b',
-          fileUrl: 'https://s3.amazonaws.com/decora-platform-1-nv/2018/5/29/5b0cf3d418ab527a27ef718b.jpg',
-          id: '5b0cf3d418ab527a27ef718b',
-          originalName: '7I5RdLBE03Q.jpg',
-          size: 325983,
-          order: 1
+        'zoomAreas': []
+      },
+      {
+        'file': {
+          'id': '5bb51ff2af4d0b12a262de3d',
+          'extension': 'jpg',
+          'size': 1728365,
+          'originalName': '5bb5201149d9bc0729766e566907899728795121544.jpg',
+          'fileBasePath': '2018/10/3/5bb51ff2af4d0b12a262de3d.jpg',
+          'fileUrl': 'http://s3.amazonaws.com/decora-platform-1-nv/2018/10/3/5bb51ff2af4d0b12a262de3d.jpg'
         },
-        comments: [
+        'tags': [
           {
-            id: 1,
-            comment: '1163',
-            feedback: '',
-            status: '',
-            coordinates: [32, 56],
-            version: 21
+            'id': '5bc88add0e8e3d0001958448',
+            'ref': '2',
+            'comment': '73',
+            'coordinates': [
+              56.3548387096774,
+              77.8387096774194,
+              3.9677419354839,
+              90.6774193548387
+            ]
           },
           {
-            id: 5,
-            comment: '2K5',
-            feedback: '',
-            status: '',
-            coordinates: [28, 40, 53, 32],
-            version: 21
+            'id': '5bc88aea0e8e3d000195844c',
+            'ref': '3',
+            'comment': '2C3',
+            'coordinates': [
+              76.3548387096774,
+              45.8387096774194,
+              98.9677419354839,
+              34.6774193548387
+            ]
           },
           {
-            id: 3,
-            comment: '73',
-            feedback: '',
-            status: '',
-            coordinates: [54, 40],
-            version: 23
-          },
-          {
-            id: 4,
-            comment: '2C3',
-            feedback: '',
-            status: '',
-            coordinates: [12, 67, 32, 45],
-            version: 23
+            'id': '5bdb4b5a83cfe0353206d83f',
+            'ref': '4',
+            'comment': '2C3',
+            'coordinates': [
+              34.3548387096776,
+              23.8387096774194,
+              45.9677419354839,
+              76.6774193548387
+            ]
           }
         ],
-        zoomAreas: [
-          {
-            feedback: '',
-            renderShot: {
-              file: '',
-              comments: [
-                {
-                  comment: '',
-                  feedback: '',
-                  status: '',
-                  coordinates: [68, 12]
-                },
-                {
-                  comment: '',
-                  feedback: '',
-                  status: '',
-                  coordinates: [68, 12, 34, 45]
-                }
-              ]
-            },
-            referenceShot: {
-              file: '',
-              comments: [
-                {
-                  comment: '',
-                  feedback: '',
-                  status: '',
-                  coordinates: [12, 78]
-                }
-              ]
-            },
-            status: '',
-            id: 2,
-            coordinates: [56, 70]
-          }
-        ]
-      }, {
-        file: {
-          extension: 'jpg',
-          fileBasePath: '2018/5/29/5b0cf3d418ab527a27ef718b.jpg',
-          fileBaseUrl: 'https://s3.amazonaws.com/decora-platform-1-nv/2018/5/29/5b0cf3d418ab527a27ef718b',
-          fileUrl: 'https://s3.amazonaws.com/decora-platform-1-nv/2018/5/29/5b0cf3d418ab527a27ef718b.jpg',
-          id: '5b0cf3d418ab527a27ef718b',
-          originalName: '7I5RdLBE03Q.jpg',
-          size: 325983,
-          order: 1
+        'zoomAreas': []
+      },
+      {
+        'file': {
+          'id': '5bb51ff2af4d0b12a262de3e',
+          'extension': 'jpg',
+          'size': 116876,
+          'originalName': '5bb5201149d9bc0729766e557433528998158692428.jpg',
+          'fileBasePath': '2018/10/3/5bb51ff2af4d0b12a262de3e.jpg',
+          'fileUrl': 'http://s3.amazonaws.com/decora-platform-1-nv/2018/10/3/5bb51ff2af4d0b12a262de3e.jpg'
         },
-        comments: [
+        'tags': [
           {
-            id: 1,
-            comment: '1163',
-            feedback: '',
-            status: '',
-            coordinates: [32, 56],
-            version: 21
+            'id': '5bdb4b5a83cfe0353206d83f',
+            'ref': '1',
+            'comment': '2C3',
+            'coordinates': [
+              79.3548387096776,
+              69.8387096774194,
+              47.9677419354839,
+              59.6774193548387
+            ]
           },
           {
-            id: 5,
-            comment: '2K5',
-            feedback: '',
-            status: '',
-            coordinates: [28, 40, 53, 32],
-            version: 21
-          },
-          {
-            id: 3,
-            comment: '73',
-            feedback: '',
-            status: '',
-            coordinates: [54, 40],
-            version: 23
-          },
-          {
-            id: 4,
-            comment: '2C3',
-            feedback: '',
-            status: '',
-            coordinates: [12, 67, 32, 45],
-            version: 23
+            'id': '5bdb4b5a83cfe0353206d83f',
+            'ref': '3',
+            'comment': '2C3',
+            'coordinates': [
+              34.3548387096776,
+              43.8387096774194,
+              23.9677419354839,
+              12.6774193548387
+            ]
           }
         ],
-        zoomAreas: [
+        'zoomAreas': [
           {
-            feedback: '',
-            renderShot: {
-              file: '',
-              comments: [
+            'id': '5bdb4b5a83cfe0353206d840',
+            'ref': '2',
+            'coordinates': [
+              65.9677419354839,
+              67.6774193548387
+            ],
+            'renderShot': {
+              'x': 10,
+              'y': 20,
+              'scale': 30,
+              'file': {
+                'id': '5bb51ff2af4d0b12a262de3e',
+                'extension': 'jpg',
+                'size': 116876,
+                'originalName': '5bb5201149d9bc0729766e557433528998158692428.jpg',
+                'fileBasePath': '2018/10/3/5bb51ff2af4d0b12a262de3e.jpg',
+                'fileUrl': 'http://s3.amazonaws.com/decora-platform-1-nv/2018/10/3/5bb51ff2af4d0b12a262de3e.jpg'
+              },
+              'tags': [
                 {
-                  comment: '',
-                  feedback: '',
-                  status: '',
-                  coordinates: [68, 12]
-                },
-                {
-                  comment: '',
-                  feedback: '',
-                  status: '',
-                  coordinates: [68, 12, 34, 45]
+                  'id': '5bdb4b5a83cfe0353206d841',
+                  'ref': '1',
+                  'comment': '2C3',
+                  'coordinates': [
+                    34.3548387096774,
+                    46.8387096774194,
+                    23.9677419354839,
+                    68.6774193548387
+                  ]
                 }
               ]
-            },
-            referenceShot: {
-              file: '',
-              comments: [
-                {
-                  comment: '',
-                  feedback: '',
-                  status: '',
-                  coordinates: [12, 78]
-                }
-              ]
-            },
-            status: '',
-            id: 2,
-            coordinates: [56, 70]
-          }
-        ]
-      }, {
-        file: {
-          extension: 'jpg',
-          fileBasePath: '2018/5/29/5b0cf3d418ab527a27ef718b.jpg',
-          fileBaseUrl: 'https://s3.amazonaws.com/decora-platform-1-nv/2018/5/29/5b0cf3d418ab527a27ef718b',
-          fileUrl: 'https://s3.amazonaws.com/decora-platform-1-nv/2018/5/29/5b0cf3d418ab527a27ef718b.jpg',
-          id: '5b0cf3d418ab527a27ef718b',
-          originalName: '7I5RdLBE03Q.jpg',
-          size: 325983,
-          order: 1
-        },
-        comments: [
-          {
-            id: 1,
-            comment: '1163',
-            feedback: '',
-            status: '',
-            coordinates: [32, 56],
-            version: 21
-          },
-          {
-            id: 5,
-            comment: '2K5',
-            feedback: '',
-            status: '',
-            coordinates: [28, 40, 53, 32],
-            version: 21
-          },
-          {
-            id: 3,
-            comment: '73',
-            feedback: '',
-            status: '',
-            coordinates: [54, 40],
-            version: 23
-          },
-          {
-            id: 4,
-            comment: '2C3',
-            feedback: '',
-            status: '',
-            coordinates: [12, 67, 32, 45],
-            version: 23
-          }
-        ],
-        zoomAreas: [
-          {
-            feedback: '',
-            renderShot: {
-              file: '',
-              comments: [
-                {
-                  comment: '',
-                  feedback: '',
-                  status: '',
-                  coordinates: [68, 12]
-                },
-                {
-                  comment: '',
-                  feedback: '',
-                  status: '',
-                  coordinates: [68, 12, 34, 45]
-                }
-              ]
-            },
-            referenceShot: {
-              file: '',
-              comments: [
-                {
-                  comment: '',
-                  feedback: '',
-                  status: '',
-                  coordinates: [12, 78]
-                }
-              ]
-            },
-            status: '',
-            id: 2,
-            coordinates: [56, 70]
-          }
-        ]
-      }, {
-        file: {
-          extension: 'jpg',
-          fileBasePath: '2018/5/29/5b0cf3d418ab527a27ef718b.jpg',
-          fileBaseUrl: 'https://s3.amazonaws.com/decora-platform-1-nv/2018/5/29/5b0cf3d418ab527a27ef718b',
-          fileUrl: 'https://s3.amazonaws.com/decora-platform-1-nv/2018/5/29/5b0cf3d418ab527a27ef718b.jpg',
-          id: '5b0cf3d418ab527a27ef718b',
-          originalName: '7I5RdLBE03Q.jpg',
-          size: 325983,
-          order: 1
-        },
-        comments: [
-          {
-            id: 1,
-            comment: '1163',
-            feedback: '',
-            status: '',
-            coordinates: [32, 56],
-            version: 21
-          },
-          {
-            id: 5,
-            comment: '2K5',
-            feedback: '',
-            status: '',
-            coordinates: [28, 40, 53, 32],
-            version: 21
-          },
-          {
-            id: 3,
-            comment: '73',
-            feedback: '',
-            status: '',
-            coordinates: [54, 40],
-            version: 23
-          },
-          {
-            id: 4,
-            comment: '2C3',
-            feedback: '',
-            status: '',
-            coordinates: [12, 67, 32, 45],
-            version: 23
-          }
-        ],
-        zoomAreas: [
-          {
-            feedback: '',
-            renderShot: {
-              file: '',
-              comments: [
-                {
-                  comment: '',
-                  feedback: '',
-                  status: '',
-                  coordinates: [68, 12]
-                },
-                {
-                  comment: '',
-                  feedback: '',
-                  status: '',
-                  coordinates: [68, 12, 34, 45]
-                }
-              ]
-            },
-            referenceShot: {
-              file: '',
-              comments: [
-                {
-                  comment: '',
-                  feedback: '',
-                  status: '',
-                  coordinates: [12, 78]
-                }
-              ]
-            },
-            status: '',
-            id: 2,
-            coordinates: [56, 70]
-          }
-        ]
-      }, {
-        file: {
-          extension: 'jpg',
-          fileBasePath: '2018/5/29/5b0cf3d418ab527a27ef718b.jpg',
-          fileBaseUrl: 'https://s3.amazonaws.com/decora-platform-1-nv/2018/5/29/5b0cf3d418ab527a27ef718b',
-          fileUrl: 'https://s3.amazonaws.com/decora-platform-1-nv/2018/5/29/5b0cf3d418ab527a27ef718b.jpg',
-          id: '5b0cf3d418ab527a27ef718b',
-          originalName: '7I5RdLBE03Q.jpg',
-          size: 325983,
-          order: 1
-        },
-        comments: [
-          {
-            id: 1,
-            comment: '1163',
-            feedback: '',
-            status: '',
-            coordinates: [32, 56],
-            version: 21
-          },
-          {
-            id: 5,
-            comment: '2K5',
-            feedback: '',
-            status: '',
-            coordinates: [28, 40, 53, 32],
-            version: 21
-          },
-          {
-            id: 3,
-            comment: '73',
-            feedback: '',
-            status: '',
-            coordinates: [54, 40],
-            version: 23
-          },
-          {
-            id: 4,
-            comment: '2C3',
-            feedback: '',
-            status: '',
-            coordinates: [12, 67, 32, 45],
-            version: 23
-          }
-        ],
-        zoomAreas: [
-          {
-            feedback: '',
-            renderShot: {
-              file: '',
-              comments: [
-                {
-                  comment: '',
-                  feedback: '',
-                  status: '',
-                  coordinates: [68, 12]
-                },
-                {
-                  comment: '',
-                  feedback: '',
-                  status: '',
-                  coordinates: [68, 12, 34, 45]
-                }
-              ]
-            },
-            referenceShot: {
-              file: '',
-              comments: [
-                {
-                  comment: '',
-                  feedback: '',
-                  status: '',
-                  coordinates: [12, 78]
-                }
-              ]
-            },
-            status: '',
-            id: 2,
-            coordinates: [56, 70]
-          }
-        ]
-      }, {
-        file: {
-          extension: 'jpg',
-          fileBasePath: '2018/5/29/5b0cf3d418ab527a27ef718b.jpg',
-          fileBaseUrl: 'https://s3.amazonaws.com/decora-platform-1-nv/2018/5/29/5b0cf3d418ab527a27ef718b',
-          fileUrl: 'https://s3.amazonaws.com/decora-platform-1-nv/2018/5/29/5b0cf3d418ab527a27ef718b.jpg',
-          id: '5b0cf3d418ab527a27ef718b',
-          originalName: '7I5RdLBE03Q.jpg',
-          size: 325983,
-          order: 1
-        },
-        comments: [
-          {
-            id: 1,
-            comment: '1163',
-            feedback: '',
-            status: '',
-            coordinates: [32, 56],
-            version: 21
-          },
-          {
-            id: 5,
-            comment: '2K5',
-            feedback: '',
-            status: '',
-            coordinates: [28, 40, 53, 32],
-            version: 21
-          },
-          {
-            id: 3,
-            comment: '73',
-            feedback: '',
-            status: '',
-            coordinates: [54, 40],
-            version: 23
-          },
-          {
-            id: 4,
-            comment: '2C3',
-            feedback: '',
-            status: '',
-            coordinates: [12, 67, 32, 45],
-            version: 23
-          }
-        ],
-        zoomAreas: [
-          {
-            feedback: '',
-            renderShot: {
-              file: '',
-              comments: [
-                {
-                  comment: '',
-                  feedback: '',
-                  status: '',
-                  coordinates: [68, 12]
-                },
-                {
-                  comment: '',
-                  feedback: '',
-                  status: '',
-                  coordinates: [68, 12, 34, 45]
-                }
-              ]
-            },
-            referenceShot: {
-              file: '',
-              comments: [
-                {
-                  comment: '',
-                  feedback: '',
-                  status: '',
-                  coordinates: [12, 78]
-                }
-              ]
-            },
-            status: '',
-            id: 2,
-            coordinates: [56, 70]
-          }
-        ]
-      }, {
-        file: {
-          extension: 'jpg',
-          fileBasePath: '2018/5/29/5b0cf3d418ab527a27ef718b.jpg',
-          fileBaseUrl: 'https://s3.amazonaws.com/decora-platform-1-nv/2018/5/29/5b0cf3d418ab527a27ef718b',
-          fileUrl: 'https://s3.amazonaws.com/decora-platform-1-nv/2018/5/29/5b0cf3d418ab527a27ef718b.jpg',
-          id: '5b0cf3d418ab527a27ef718b',
-          originalName: '7I5RdLBE03Q.jpg',
-          size: 325983,
-          order: 1
-        },
-        comments: [
-          {
-            id: 1,
-            comment: '1163',
-            feedback: '',
-            status: '',
-            coordinates: [32, 56],
-            version: 21
-          },
-          {
-            id: 5,
-            comment: '2K5',
-            feedback: '',
-            status: '',
-            coordinates: [28, 40, 53, 32],
-            version: 21
-          },
-          {
-            id: 3,
-            comment: '73',
-            feedback: '',
-            status: '',
-            coordinates: [54, 40],
-            version: 23
-          },
-          {
-            id: 4,
-            comment: '2C3',
-            feedback: '',
-            status: '',
-            coordinates: [12, 67, 32, 45],
-            version: 23
-          }
-        ],
-        zoomAreas: [
-          {
-            feedback: '',
-            renderShot: {
-              file: '',
-              comments: [
-                {
-                  comment: '',
-                  feedback: '',
-                  status: '',
-                  coordinates: [68, 12]
-                },
-                {
-                  comment: '',
-                  feedback: '',
-                  status: '',
-                  coordinates: [68, 12, 34, 45]
-                }
-              ]
-            },
-            referenceShot: {
-              file: '',
-              comments: [
-                {
-                  comment: '',
-                  feedback: '',
-                  status: '',
-                  coordinates: [12, 78]
-                }
-              ]
-            },
-            status: '',
-            id: 2,
-            coordinates: [56, 70]
-          }
-        ]
-      }, {
-        file: {
-          extension: 'jpg',
-          fileBasePath: '2018/5/29/5b0cf3d418ab527a27ef718b.jpg',
-          fileBaseUrl: 'https://s3.amazonaws.com/decora-platform-1-nv/2018/5/29/5b0cf3d418ab527a27ef718b',
-          fileUrl: 'https://s3.amazonaws.com/decora-platform-1-nv/2018/5/29/5b0cf3d418ab527a27ef718b.jpg',
-          id: '5b0cf3d418ab527a27ef718b',
-          originalName: '7I5RdLBE03Q.jpg',
-          size: 325983,
-          order: 1
-        },
-        comments: [
-          {
-            id: 1,
-            comment: '1163',
-            feedback: '',
-            status: '',
-            coordinates: [32, 56],
-            version: 21
-          },
-          {
-            id: 5,
-            comment: '2K5',
-            feedback: '',
-            status: '',
-            coordinates: [28, 40, 53, 32],
-            version: 21
-          },
-          {
-            id: 3,
-            comment: '73',
-            feedback: '',
-            status: '',
-            coordinates: [54, 40],
-            version: 23
-          },
-          {
-            id: 4,
-            comment: '2C3',
-            feedback: '',
-            status: '',
-            coordinates: [12, 67, 32, 45],
-            version: 23
-          }
-        ],
-        zoomAreas: [
-          {
-            feedback: '',
-            renderShot: {
-              file: '',
-              comments: [
-                {
-                  comment: '',
-                  feedback: '',
-                  status: '',
-                  coordinates: [68, 12]
-                },
-                {
-                  comment: '',
-                  feedback: '',
-                  status: '',
-                  coordinates: [68, 12, 34, 45]
-                }
-              ]
-            },
-            referenceShot: {
-              file: '',
-              comments: [
-                {
-                  comment: '',
-                  feedback: '',
-                  status: '',
-                  coordinates: [12, 78]
-                }
-              ]
-            },
-            status: '',
-            id: 2,
-            coordinates: [56, 70]
-          }
-        ]
-      }, {
-        file: {
-          extension: 'jpg',
-          fileBasePath: '2018/5/29/5b0cf3d418ab527a27ef718b.jpg',
-          fileBaseUrl: 'https://s3.amazonaws.com/decora-platform-1-nv/2018/5/29/5b0cf3d418ab527a27ef718b',
-          fileUrl: 'https://s3.amazonaws.com/decora-platform-1-nv/2018/5/29/5b0cf3d418ab527a27ef718b.jpg',
-          id: '5b0cf3d418ab527a27ef718b',
-          originalName: '7I5RdLBE03Q.jpg',
-          size: 325983,
-          order: 1
-        },
-        comments: [
-          {
-            id: 1,
-            comment: '1163',
-            feedback: '',
-            status: '',
-            coordinates: [32, 56],
-            version: 21
-          },
-          {
-            id: 5,
-            comment: '2K5',
-            feedback: '',
-            status: '',
-            coordinates: [28, 40, 53, 32],
-            version: 21
-          },
-          {
-            id: 3,
-            comment: '73',
-            feedback: '',
-            status: '',
-            coordinates: [54, 40],
-            version: 23
-          },
-          {
-            id: 4,
-            comment: '2C3',
-            feedback: '',
-            status: '',
-            coordinates: [12, 67, 32, 45],
-            version: 23
-          }
-        ],
-        zoomAreas: [
-          {
-            feedback: '',
-            renderShot: {
-              file: '',
-              comments: [
-                {
-                  comment: '',
-                  feedback: '',
-                  status: '',
-                  coordinates: [68, 12]
-                },
-                {
-                  comment: '',
-                  feedback: '',
-                  status: '',
-                  coordinates: [68, 12, 34, 45]
-                }
-              ]
-            },
-            referenceShot: {
-              file: '',
-              comments: [
-                {
-                  comment: '',
-                  feedback: '',
-                  status: '',
-                  coordinates: [12, 78]
-                }
-              ]
-            },
-            status: '',
-            id: 2,
-            coordinates: [56, 70]
-          }
-        ]
-      }, {
-        file: {
-          extension: 'jpg',
-          fileBasePath: '2018/5/29/5b0cf3d418ab527a27ef718b.jpg',
-          fileBaseUrl: 'https://s3.amazonaws.com/decora-platform-1-nv/2018/5/29/5b0cf3d418ab527a27ef718b',
-          fileUrl: 'https://s3.amazonaws.com/decora-platform-1-nv/2018/5/29/5b0cf3d418ab527a27ef718b.jpg',
-          id: '5b0cf3d418ab527a27ef718b',
-          originalName: '7I5RdLBE03Q.jpg',
-          size: 325983,
-          order: 1
-        },
-        comments: [
-          {
-            id: 1,
-            comment: '1163',
-            feedback: '',
-            status: '',
-            coordinates: [32, 56],
-            version: 21
-          },
-          {
-            id: 5,
-            comment: '2K5',
-            feedback: '',
-            status: '',
-            coordinates: [28, 40, 53, 32],
-            version: 21
-          },
-          {
-            id: 3,
-            comment: '73',
-            feedback: '',
-            status: '',
-            coordinates: [54, 40],
-            version: 23
-          },
-          {
-            id: 4,
-            comment: '2C3',
-            feedback: '',
-            status: '',
-            coordinates: [12, 67, 32, 45],
-            version: 23
-          }
-        ],
-        zoomAreas: [
-          {
-            feedback: '',
-            renderShot: {
-              file: '',
-              comments: [
-                {
-                  comment: '',
-                  feedback: '',
-                  status: '',
-                  coordinates: [68, 12]
-                },
-                {
-                  comment: '',
-                  feedback: '',
-                  status: '',
-                  coordinates: [68, 12, 34, 45]
-                }
-              ]
-            },
-            referenceShot: {
-              file: '',
-              comments: [
-                {
-                  comment: '',
-                  feedback: '',
-                  status: '',
-                  coordinates: [12, 78]
-                }
-              ]
-            },
-            status: '',
-            id: 2,
-            coordinates: [56, 70]
+            }
           }
         ]
       }

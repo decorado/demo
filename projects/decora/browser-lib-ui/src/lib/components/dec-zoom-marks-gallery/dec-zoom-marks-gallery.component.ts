@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { NguCarouselStore } from '@ngu/carousel';
 import { CarouselZoomConfig } from './../gallery/carousel-config';
 import { DecZoomMarksComponent } from './../dec-zoom-marks/dec-zoom-marks.component';
@@ -39,7 +39,7 @@ export class DecZoomMarksGalleryComponent {
 
   @Input() qaModeActive: boolean;
 
-  @ViewChild(DecZoomMarksComponent) zoomMarks: DecZoomMarksComponent; 
+  @ViewChild(DecZoomMarksComponent) zoomMarks: DecZoomMarksComponent;
 
   @Output() openZoomArea = new EventEmitter();
 

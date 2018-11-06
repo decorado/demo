@@ -1,6 +1,6 @@
 import { Component, Input, ViewChild, ElementRef, HostListener, Renderer2, AfterViewChecked, Output, EventEmitter } from '@angular/core';
 import { Marker } from './../dec-zoom-marks/models/marker.model';
-import { Comment } from './../dec-zoom-marks/models/comment.model';
+import { Tag } from './../dec-zoom-marks/models/tag.model';
 import { fromEvent } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { DecRenderCommentService } from './../dec-render-comment/dec-render-comment.service';
@@ -92,7 +92,6 @@ export class DecMarksComponent implements AfterViewChecked {
       this.ctx.restore();
       this.drawMarks();
     };
-    console.log('marks', this.marker);
     this.imageElement.src = this.marker.file.fileUrl;
   }
 
@@ -102,8 +101,11 @@ export class DecMarksComponent implements AfterViewChecked {
     this.setWrapperCursor();
   }
 
-  private addInCommentsArray(comment: Comment): void {
-    this.marker.comments.push(comment);
+  private addInCommentsArray(comment: Tag): void {
+    if (!this.marker.tags) {
+      this.marker.tags = [];
+    }
+    this.marker.tags.push(comment);
   }
 
   private setupMouseEvents(): void {
@@ -115,17 +117,17 @@ export class DecMarksComponent implements AfterViewChecked {
         const y = Math.round(((this.startY / this.marksWrapperEl.offsetWidth) * 100) * 100) / 100;
         const x2 = Math.round(((event.offsetX / this.marksWrapperEl.offsetHeight) * 100) * 100) / 100;
         const y2 = Math.round(((event.offsetY / this.marksWrapperEl.offsetWidth) * 100) * 100) / 100;
-        const index = this.marker.comments.length + 1;
+        const index = this.marker.tags.length + 1;
         if (this.mouseMoved) {
           this.enablePointEvents(this.marksWrapperEl.querySelectorAll('.point-tag'));
           this.setMouseMoved(false);
           if (this.noComments) {
-            const comment = new Comment({
+            const comment = new Tag({
               coordinates: [x, y, x2, y2],
-              id: this.noComments ? this.formatTagId() : index
+              reference: this.noComments ? this.formatTagId() : index
             });
             this.addInCommentsArray(comment);
-            this.createSquareTag([x, y, x2, y2], comment.id);
+            this.createSquareTag([x, y, x2, y2], comment.reference);
             this.clearSquare();
             this.referenceQa.emit(false);
             return;
@@ -133,40 +135,40 @@ export class DecMarksComponent implements AfterViewChecked {
           const dialogRef = this.dialog.open(DecRenderCommentComponent);
           dialogRef.afterClosed().subscribe(result => {
             if (result) {
-              const comment = new Comment({
+              const comment = new Tag({
                 coordinates: [x, y, x2, y2],
                 comment: result.comment,
                 description: result.description,
-                id: index
+                reference: index
               });
               this.addInCommentsArray(comment);
-              this.createSquareTag([x, y, x2, y2], comment.id);
+              this.createSquareTag([x, y, x2, y2], comment.reference);
               this.clearSquare();
             }
           });
         } else {
           if (!target.classList.contains('point-tag') && !target.classList.contains('link-button')) {
             if (this.noComments) {
-              const comment = new Comment({
+              const comment = new Tag({
                 coordinates: [x, y],
-                id: this.noComments ? this.formatTagId() : index
+                reference: this.noComments ? this.formatTagId() : index
               });
               this.addInCommentsArray(comment);
-              this.createPointTag([x, y], comment.id);
+              this.createPointTag([x, y], comment.reference);
               this.referenceQa.emit(false);
               return;
             }
             const dialogRef = this.dialog.open(DecRenderCommentComponent);
             dialogRef.afterClosed().subscribe(result => {
               if (result) {
-                const comment = new Comment({
+                const comment = new Tag({
                   coordinates: [x, y],
                   comment: result.comment,
                   description: result.description,
-                  id: index
+                  reference: index
                 });
                 this.addInCommentsArray(comment);
-                this.createPointTag([x, y], comment.id);
+                this.createPointTag([x, y], comment.reference);
               }
             });
           }
@@ -267,7 +269,7 @@ export class DecMarksComponent implements AfterViewChecked {
         link.classList.add('right-side');
       }
       tag.appendChild(link);
-      const comment = this.marker.comments.find(c => c.id === index);
+      const comment = this.marker.tags.find(c => c.reference === index);
       tag.addEventListener('click', (event: MouseEvent) => {
         const target = event.target as HTMLDivElement;
         if (target.classList.contains('link-button')) {
@@ -286,7 +288,7 @@ export class DecMarksComponent implements AfterViewChecked {
     this.link.emit(comment);
   }
 
-  private clickEventPointTag(comment: Comment) {
+  private clickEventPointTag(comment: Tag) {
     const dialogRef = this.dialog.open(DecRenderCommentComponent, { data: { comment: comment.comment, version: comment.version } });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -316,7 +318,7 @@ export class DecMarksComponent implements AfterViewChecked {
     }
   }
 
-  private addCommentNode = (comment: Comment): void => {
+  private addCommentNode = (comment: Tag): void => {
     const span = this.renderer.createElement('span');
     span.innerHTML = `${comment.comment} - ${comment.description}`;
     const commentDiv = this.renderer.createElement('div');
@@ -335,13 +337,13 @@ export class DecMarksComponent implements AfterViewChecked {
 
   private drawMarks() {
     this.cleanMarks();
-    this.decRenderCommentService.getRenderDescriptionsByCode(this.marker.comments);
-    if (this.marker.comments && this.marker.comments.length > 0) {
-      this.marker.comments.forEach((comment: Comment) => {
+    if (this.marker.tags && this.marker.tags.length > 0) {
+      this.decRenderCommentService.getRenderDescriptionsByCode(this.marker.tags);
+      this.marker.tags.forEach((comment: Tag) => {
         if (comment.coordinates.length > 2) {
-          this.createSquareTag(comment.coordinates, comment.id);
+          this.createSquareTag(comment.coordinates, comment.reference);
         } else {
-          this.createPointTag(comment.coordinates, comment.id);
+          this.createPointTag(comment.coordinates, comment.reference);
         }
       });
     }
@@ -363,10 +365,10 @@ export class DecMarksComponent implements AfterViewChecked {
   }
 
   private deleteMark(comment) {
-    this.marker.comments.splice(this.marker.comments.indexOf(comment), 1);
-    this.marker.comments.forEach(c => {
-      if (c.id > comment.id) {
-        c.id--;
+    this.marker.tags.splice(this.marker.tags.indexOf(comment), 1);
+    this.marker.tags.forEach(c => {
+      if (c.reference > comment.reference) {
+        c.reference--;
       }
     });
     this.removeCommentNode();
