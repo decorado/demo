@@ -6,7 +6,7 @@
       <ng-container [ngTemplateOutlet]="dialogTitleTemplate"></ng-container>
     </div>
 
-    <div class="dec-dialog-content">
+    <div class="dec-dialog-content" [ngStyle]="{'padding': contentPadding}">
       <ng-container [ngTemplateOutlet]="dialogContentTemplate"></ng-container>
     </div>
 

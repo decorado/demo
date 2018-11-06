@@ -408,16 +408,16 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
   * - Start watching Filter
   * - Do the first load
   */
- ngAfterViewInit() {
-   this.watchFilter();
-   this.doFirstLoad();
-   this.detectListMode();
-   this.watchTabsChange();
-   this.watchTableSort();
-   this.registerChildWatchers();
-   this.shareSelectedRowsArray();
-   this.watchScroll();
-   this.watchScrollEventEmitter();
+  ngAfterViewInit() {
+    this.watchFilter();
+    this.doFirstLoad();
+    this.detectListMode();
+    this.watchTabsChange();
+    this.watchTableSort();
+    this.registerChildWatchers();
+    this.shareSelectedRowsArray();
+    this.watchScroll();
+    this.watchScrollEventEmitter();
   }
 
   /*
@@ -486,21 +486,21 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
 
       if (item) {
 
-          const itemIndex = this.rows.indexOf(item);
+        const itemIndex = this.rows.indexOf(item);
 
-          if (itemIndex >= 0) {
+        if (itemIndex >= 0) {
 
-            this.rows.splice(itemIndex, 1);
+          this.rows.splice(itemIndex, 1);
 
-          }
+        }
 
-          const selectedItemIndex = this.selected.indexOf(item);
+        const selectedItemIndex = this.selected.indexOf(item);
 
-          if (selectedItemIndex >= 0) {
+        if (selectedItemIndex >= 0) {
 
-              this.selected.splice(selectedItemIndex, 1);
+          this.selected.splice(selectedItemIndex, 1);
 
-          }
+        }
 
       }
 
@@ -1144,9 +1144,9 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
 
           const payloadWithSearchableProperties = this.getPayloadWithSearchTransformedIntoSearchableProperties(this.payload);
 
-        if (filterData && filterData.clear) {
-          this.setRows();
-        }
+          if (filterData && filterData.clear) {
+            this.setRows();
+          }
 
           fetchMethod(endpoint, payloadWithSearchableProperties)
             .subscribe(res => {
@@ -1217,7 +1217,7 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
 
           newFilterGroup.filters[basicSearchIndex] = {
             property: property,
-            value: [basicSearch.value]
+            value: basicSearch.value.split(',').map(value => value.trim())
           };
 
           filterGroups.push(newFilterGroup);
@@ -1554,8 +1554,8 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
   * Reset Selected Rows in Table
   *
   */
- private resetSelected() {
-  this.selected = [];
-  this.shareSelectedRowsArray();
- }
+  private resetSelected() {
+    this.selected = [];
+    this.shareSelectedRowsArray();
+  }
 }

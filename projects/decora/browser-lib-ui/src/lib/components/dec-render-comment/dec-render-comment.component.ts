@@ -82,7 +82,9 @@ export class DecRenderCommentComponent {
   }
 
   confirm(): void {
-    this.dialogRef.close({ version: this._version, comment: this.selectedChoicesDisplay, description: this.descriptionLastLevel() });
+    if (this.descriptionLastLevel()) {
+      this.dialogRef.close({ version: this._version, comment: this.selectedChoicesDisplay, description: this.descriptionLastLevel() });
+    }
   }
 
   private filloptions(options: any): RenderFeedback[] {
