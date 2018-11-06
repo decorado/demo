@@ -27,6 +27,8 @@ export class DecProductSpinComponent implements OnInit {
   @Input() onlyModal = false;
   @Input() FALLBACK_IMAGE: string = FALLBACK_IMAGE;
   @Input() startInCenter = false;
+  @Input() rotateToIndex: number;
+  @Input() rotateToMiddle: number;
   @Input() showOpenDialogButton = true;
 
   @Input()
@@ -36,6 +38,7 @@ export class DecProductSpinComponent implements OnInit {
       const scenesChanged = !this.scenes || (scenes && this.scenes.join() !== scenes.join());
       if (scenesChanged) {
         this.resetScenesData(scenes);
+        this.reorderScenesBasedOnOpposedDirectionsIndex();
       }
       this._spin = spin;
       this.detectFrameShown();
@@ -182,6 +185,32 @@ export class DecProductSpinComponent implements OnInit {
     }
 
     this.positionDiff = event.clientX - this.lastMouseEvent.clientX;
+  }
+
+  private reorderScenesBasedOnOpposedDirectionsIndex() {
+
+    if (this.rotateToIndex || this.rotateToMiddle) {
+
+      try {
+
+        const scenesCopy = JSON.parse(JSON.stringify(this.scenes));
+
+        const scenesLength = scenesCopy.length;
+
+        const middleIndex = this.rotateToIndex ? this.rotateToIndex : Math.ceil(scenesLength / 2);
+
+        const firstHalf = scenesCopy.slice(0, middleIndex).reverse();
+
+        const secondHalf = scenesCopy.slice(middleIndex, scenesLength).reverse();
+
+        const reorderedScenes = firstHalf.concat(secondHalf).reverse();
+
+        this.scenes = reorderedScenes;
+
+      } catch (error) { }
+
+    }
+
   }
 
   private getUrlsFromSysFiles(sysFiles) {
