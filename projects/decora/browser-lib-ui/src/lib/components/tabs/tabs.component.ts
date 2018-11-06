@@ -13,12 +13,8 @@ export class DecTabsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ContentChildren(DecTabComponent)
   set tabs(v: QueryList<DecTabComponent>) {
-    const currentAsString = JSON.stringify(this._tabs);
-    const nextAsString = JSON.stringify(v);
-    if (currentAsString !== nextAsString) {
-      this._tabs = v;
-      this.setSelectedTabBasedOnActiveTab();
-    }
+    this._tabs = v;
+    this.setSelectedTabBasedOnActiveTab();
   }
 
   get tabs() {
@@ -140,14 +136,16 @@ export class DecTabsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private ensureUniqueTabNames = () => {
     return new Promise<any>((res, rej) => {
-      const names = {};
-      this.tabs.toArray().forEach(tab => {
-        if (!names[tab.name]) {
-          names[tab.name] = true;
-        } else {
-           throw new Error(`DecTabComponentError: The <dec-tabs> component must have an unique name. The name ${tab.name} was used more than once.`);
-        }
-      });
+      if (this.tabs) {
+        const names = {};
+        this.tabs.toArray().forEach(tab => {
+          if (!names[tab.name]) {
+            names[tab.name] = true;
+          } else {
+             throw new Error(`DecTabComponentError: The <dec-tabs> component must have an unique name. The name ${tab.name} was used more than once.`);
+          }
+        });
+      }
       res();
     });
   }
