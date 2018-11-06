@@ -4,12 +4,14 @@ import { MatTabsModule } from '@angular/material';
 import { DecTabsComponent } from './tabs.component';
 import { DecTabModule } from './tab/tab.module';
 import { DecTabMenuComponent } from './tab-menu/tab-menu.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
     CommonModule,
     MatTabsModule,
-    DecTabModule
+    DecTabModule,
+    RouterModule,
   ],
   declarations: [DecTabsComponent, DecTabMenuComponent],
   exports: [

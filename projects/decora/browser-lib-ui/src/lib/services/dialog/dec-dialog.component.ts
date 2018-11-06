@@ -35,6 +35,8 @@ export class DecDialogComponent implements AfterContentInit {
   // CONTROLLER DATA
   loaded: boolean;
 
+  contentPadding = '32px';
+
   progressBarVisible: string | boolean = false;
 
   basicBgStyle = { 'background': 'rgba(255, 255, 255, 0)' };

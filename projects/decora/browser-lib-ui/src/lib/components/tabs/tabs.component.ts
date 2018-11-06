@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ContentChildren, QueryList, ContentChild } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ActivatedRoute, Router, Params } from '@angular/router';
+import { ActivatedRoute, Router, Params, RouterStateSnapshot } from '@angular/router';
 import { DecTabComponent } from './tab/tab.component';
 import { DecTabMenuComponent } from './tab-menu/tab-menu.component';
 
@@ -11,7 +11,19 @@ import { DecTabMenuComponent } from './tab-menu/tab-menu.component';
 })
 export class DecTabsComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  @ContentChildren(DecTabComponent) tabs: QueryList<DecTabComponent>;
+  @ContentChildren(DecTabComponent)
+  set tabs(v: QueryList<DecTabComponent>) {
+    const currentAsString = JSON.stringify(this._tabs);
+    const nextAsString = JSON.stringify(v);
+    if (currentAsString !== nextAsString) {
+      this._tabs = v;
+      this.setSelectedTabBasedOnActiveTab();
+    }
+  }
+
+  get tabs() {
+    return this._tabs;
+  }
 
   @ContentChild(DecTabMenuComponent) tabMenuComponent: DecTabMenuComponent;
 
@@ -32,6 +44,7 @@ export class DecTabsComponent implements OnInit, AfterViewInit, OnDestroy {
       this.persistTab(v);
     }
   }
+
   get activeTab() {
     return this._activeTab;
   }
@@ -56,9 +69,12 @@ export class DecTabsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private queryParamsSubscription: Subscription;
 
-  private pathFromRoot = '';
+  private _tabs: QueryList<DecTabComponent>;
 
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+  ) {}
 
   ngOnInit() {
     this.ensureUniqueName();
@@ -87,8 +103,8 @@ export class DecTabsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   shouldTabBeDisplayed(tab) {
     const isSelected = this._activeTabObject === tab;
-    const isActivated = this.activatedTabs[tab.name];
-    return isSelected || (!this.destroyOnBlur && isActivated);
+    const wasAlreadyOpenned = this.activatedTabs[tab.name];
+    return isSelected || (!this.destroyOnBlur && wasAlreadyOpenned);
   }
 
   onChangeTab($event) {
@@ -97,21 +113,14 @@ export class DecTabsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   parseTotal(total) {
-
     return total !== null && total >= 0 ?  total : '?';
-
   }
 
   reset() {
-
     this.hidden = true;
-
     setTimeout(() => {
-
       this.hidden = false;
-
     }, 10);
-
   }
 
   private componentTabName() {
@@ -144,13 +153,21 @@ export class DecTabsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private persistTab(tab) {
+
     if (this.persist) {
+
       const queryParams: Params = Object.assign({}, this.route.snapshot.queryParams);
+
       queryParams[this.componentTabName()] = tab;
-      this.router.navigate(['.'], { relativeTo: this.route, queryParams: queryParams, replaceUrl: true });
+
+      this.router.navigate([], { relativeTo: this.route, queryParams: queryParams, replaceUrl: true });
+
     } else {
+
       this.selectTab(tab);
+
     }
+
   }
 
   private selectTab = (tabName) => {
@@ -182,6 +199,28 @@ export class DecTabsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private stopWatchingTabInUrlQuery() {
     this.queryParamsSubscription.unsubscribe();
+  }
+
+  private setSelectedTabBasedOnActiveTab() {
+    const tabsList = this.tabs.toArray();
+    if (tabsList) {
+      if (this.activeTab) {
+        const activeTabExist = tabsList.find(tab => tab.name === this.activeTab);
+        if (activeTabExist) {
+          this.selectTab(this.activeTab);
+        } else {
+          this.selectFirstTab();
+        }
+      } else {
+        this.selectFirstTab();
+      }
+    }
+  }
+
+  private selectFirstTab() {
+    const tabsList = this.tabs.toArray();
+    const firstTabName = tabsList[0].name;
+    this.selectTab(firstTabName);
   }
 
 }

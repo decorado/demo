@@ -35,6 +35,8 @@ export class DecDialogService {
 
     dialogInstance.componentInstance.title = config.title;
 
+    dialogInstance.componentInstance.contentPadding = config.contentPadding;
+
     dialogInstance.componentInstance.context = config.context;
 
     dialogInstance.componentInstance.hideBackButton = config.hideBackButton;
