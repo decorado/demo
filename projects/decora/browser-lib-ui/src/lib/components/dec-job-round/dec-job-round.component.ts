@@ -146,6 +146,8 @@ export class DecJobRoundComponent {
     this.editZoomArea = $event;
     this.reference = $event.referenceShot;
     this.render = $event.renderShot;
+    this.parentId = this.renderGallery.getImageIndex();
+    this.parentId++;
     this.zoomAreaOpen = true;
     this.setZoomAreaOpen.emit(this.zoomAreaOpen);
   }
