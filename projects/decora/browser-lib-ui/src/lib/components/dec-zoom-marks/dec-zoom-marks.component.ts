@@ -199,7 +199,7 @@ export class DecZoomMarksComponent implements AfterViewChecked {
                   coordinates: [x, y],
                   comment: result.comment,
                   description: result.description,
-                  ref: this.commentsArraySize + 1
+                  reference: this.commentsArraySize + 1
                 });
                 this.addInCommentsArray(comment);
                 this.createPointTag([x, y], comment.reference);

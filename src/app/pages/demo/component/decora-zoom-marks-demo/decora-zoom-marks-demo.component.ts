@@ -20,32 +20,32 @@ export class DecoraZoomMarksDemoComponent implements OnInit {
     },
     tags: [
       {
-        id: 1,
         comment: '1163',
+        reference: '1',
         feedback: '',
         status: '',
         coordinates: [2, 56],
         version: 21
       },
       {
-        id: 2,
         comment: '2K5',
+        reference: '2',
         feedback: '',
         status: '',
         coordinates: [8, 40, 53, 32],
         version: 21
       },
       {
-        id: 3,
         comment: '73',
+        reference: '3',
         feedback: '',
         status: '',
         coordinates: [54, 40],
         version: 23
       },
       {
-        id: 4,
         comment: '2C3',
+        reference: '4',
         feedback: '',
         status: '',
         coordinates: [12, 67, 32, 45],
@@ -74,7 +74,7 @@ export class DecoraZoomMarksDemoComponent implements OnInit {
         tags: [
           {
             'id': '5bc88add0e8e3d0001958448',
-            'ref': '1',
+            'reference': '1',
             'comment': '2K5',
             'coordinates': [
               12.3548387096774,
@@ -98,7 +98,7 @@ export class DecoraZoomMarksDemoComponent implements OnInit {
         'tags': [
           {
             'id': '5bc88add0e8e3d0001958448',
-            'ref': '2',
+            'reference': '2',
             'comment': '73',
             'coordinates': [
               56.3548387096774,
@@ -109,7 +109,7 @@ export class DecoraZoomMarksDemoComponent implements OnInit {
           },
           {
             'id': '5bc88aea0e8e3d000195844c',
-            'ref': '3',
+            'reference': '3',
             'comment': '2C3',
             'coordinates': [
               76.3548387096774,
@@ -120,7 +120,7 @@ export class DecoraZoomMarksDemoComponent implements OnInit {
           },
           {
             'id': '5bdb4b5a83cfe0353206d83f',
-            'ref': '4',
+            'reference': '4',
             'comment': '2C3',
             'coordinates': [
               34.3548387096776,
@@ -144,7 +144,7 @@ export class DecoraZoomMarksDemoComponent implements OnInit {
         'tags': [
           {
             'id': '5bdb4b5a83cfe0353206d83f',
-            'ref': '1',
+            'reference': '1',
             'comment': '2C3',
             'coordinates': [
               79.3548387096776,
@@ -155,7 +155,7 @@ export class DecoraZoomMarksDemoComponent implements OnInit {
           },
           {
             'id': '5bdb4b5a83cfe0353206d83f',
-            'ref': '3',
+            'reference': '3',
             'comment': '2C3',
             'coordinates': [
               34.3548387096776,
@@ -168,7 +168,7 @@ export class DecoraZoomMarksDemoComponent implements OnInit {
         'zoomAreas': [
           {
             'id': '5bdb4b5a83cfe0353206d840',
-            'ref': '2',
+            'reference': '2',
             'coordinates': [
               65.9677419354839,
               67.6774193548387
@@ -188,7 +188,7 @@ export class DecoraZoomMarksDemoComponent implements OnInit {
               'tags': [
                 {
                   'id': '5bdb4b5a83cfe0353206d841',
-                  'ref': '1',
+                  'reference': '1',
                   'comment': '2C3',
                   'coordinates': [
                     34.3548387096774,
