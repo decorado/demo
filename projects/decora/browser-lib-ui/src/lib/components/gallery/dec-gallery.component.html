@@ -11,6 +11,7 @@
       <img [decImage]="image" [decImageSize]="{width:300, height:300}" (click)="onSelectImage($event,image, i)">
       <span *ngIf="image.order">{{ 'label.shot-order' | translate }}: {{ image.order }}</span>
       <span *ngIf="resolutions.length > 0">{{ 'label.size' | translate }}: {{ resolutions[i]}}</span>
+      <span *ngIf="showThumbIndex">{{ i + 1 }}</span>
     </ngu-item>
 
     <mat-icon NguCarouselPrev class="left-previous" [ngClass]="{'disabled': isFirst}">chevron_left</mat-icon>
