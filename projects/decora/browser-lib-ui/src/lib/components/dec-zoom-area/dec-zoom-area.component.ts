@@ -12,6 +12,7 @@ export class DecZoomAreaComponent implements OnInit {
   set reference(v) {
     if (v) {
       this._reference = v;
+      console.log(v);
     }
   }
 
@@ -23,6 +24,7 @@ export class DecZoomAreaComponent implements OnInit {
   set render(v) {
     if (v) {
       this._render = v;
+      console.log(v);
       this.renderMarkdons.push(this._render);
     }
   }
@@ -43,7 +45,7 @@ export class DecZoomAreaComponent implements OnInit {
   commentIndex;
   referenceQaMode = false;
 
-  descripition: any;
+  note: any;
 
   renderMarkdons = [];
 
@@ -59,7 +61,7 @@ export class DecZoomAreaComponent implements OnInit {
   onSave() {
     const saveObj = {
       coordinates: [],
-      descripition: this.descripition,
+      note: this.note,
       renderShot: this.renderZoom.marker,
       referenceShot: this.referenceZoom.marker
     };
