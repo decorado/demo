@@ -1,24 +1,24 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'dec-markdowns-comment',
   templateUrl: './dec-markdowns-comment.component.html',
   styleUrls: ['./dec-markdowns-comment.component.scss']
 })
-export class DecMarkdownsCommentComponent implements OnInit {
+export class DecMarkdownsCommentComponent {
 
   @Input()
   set renders(v) {
     if (v) {
       this._renders = v;
     }
-  } 
+  }
 
   get renders() {
     return this._renders;
   }
 
-  @Input() 
+  @Input()
   set parentId(v) {
     if (v) {
       this._parentId = v;
@@ -31,11 +31,6 @@ export class DecMarkdownsCommentComponent implements OnInit {
 
   _parentId: any;
   _renders: any;
-
-  constructor() { }
-
-  ngOnInit() {
-  }
 
   getClass(comment) {
     let cssClass = 'tags-item';

@@ -296,6 +296,10 @@ export class DecMarksComponent implements AfterViewChecked {
         comment.description = result.description;
       }
     });
+
+    dialogRef.componentInstance.deleteMark.subscribe(() => {
+      this.deleteMark(comment);
+    });
   }
 
   private createSquareTag(coordinates: number[], index: number): void {

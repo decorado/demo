@@ -7,7 +7,6 @@ import { fromEvent, Observable } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { ZoomArea } from './models/zoom-area.model';
 import { DecRenderCommentComponent } from './../dec-render-comment/dec-render-comment.component';
-import { DecRenderCommentService } from './../dec-render-comment/dec-render-comment.service';
 
 @Component({
   selector: 'dec-zoom-marks',
@@ -79,7 +78,7 @@ export class DecZoomMarksComponent implements AfterViewChecked {
     this.zoom(this.zoomScale);
   }
 
-  constructor(private renderer: Renderer2, private dialog: MatDialog, private decRenderCommentService: DecRenderCommentService) {
+  constructor(private renderer: Renderer2, private dialog: MatDialog) {
     this.zoomPosition = { x: 0, y: 0 };
     this.zoomScale = 1;
   }
@@ -271,9 +270,10 @@ export class DecZoomMarksComponent implements AfterViewChecked {
 
   private drawMarks() {
     this.cleanMarks();
+
     this.commentsArraySize = 0;
+
     if (this.marker.tags && this.marker.tags.length > 0) {
-      this.decRenderCommentService.getRenderDescriptionsByCode(this.marker.tags);
       this.marker.tags.forEach((comment: Tag) => {
         if (comment.coordinates.length > 2) {
           this.createSquareTag(comment.coordinates, comment.reference);
@@ -283,6 +283,7 @@ export class DecZoomMarksComponent implements AfterViewChecked {
       });
       this.commentsArraySize += this.marker.tags.length;
     }
+
     if (this.marker.zoomAreas && this.marker.zoomAreas.length > 0) {
       this.marker.zoomAreas.forEach((zoomArea: ZoomArea) => {
         this.createZoomAreaTag(zoomArea.coordinates, zoomArea.reference);
@@ -403,6 +404,10 @@ export class DecZoomMarksComponent implements AfterViewChecked {
         comment.comment = result.comment;
         comment.description = result.description;
       }
+    });
+
+    dialogRef.componentInstance.deleteMark.subscribe(() => {
+      this.deleteMark(comment);
     });
   }
 
@@ -528,6 +533,17 @@ export class DecZoomMarksComponent implements AfterViewChecked {
       za.renderShot = newZoomArea.renderShot;
       za.referenceShot = newZoomArea.referenceShot;
     }
+  }
+
+  private deleteMark(comment) {
+    this.marker.tags.splice(this.marker.tags.indexOf(comment), 1);
+    this.marker.tags.forEach(c => {
+      if (c.reference > comment.reference) {
+        c.reference--;
+      }
+    });
+    this.removeCommentNode();
+    this.drawMarks();
   }
 
 }

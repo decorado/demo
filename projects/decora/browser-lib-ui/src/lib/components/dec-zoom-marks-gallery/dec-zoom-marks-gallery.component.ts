@@ -1,3 +1,4 @@
+import { DecRenderCommentService } from './../dec-render-comment/dec-render-comment.service';
 import { Component, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { NguCarouselStore } from '@ngu/carousel';
 import { CarouselZoomConfig } from './../gallery/carousel-config';
@@ -17,6 +18,7 @@ export class DecZoomMarksGalleryComponent {
     if (this._markedObjs !== v) {
       this._markedObjs = v;
       this.markedObj = this.markedObjs[0];
+      this.bindRenderDescriptions();
     }
   }
 
@@ -52,7 +54,13 @@ export class DecZoomMarksGalleryComponent {
 
   isLast: boolean;
 
-  constructor() { }
+  constructor(private decRenderCommentService: DecRenderCommentService) { }
+
+  private bindRenderDescriptions(): void {
+    this.markedObjs.forEach(item => {
+      this.decRenderCommentService.getRenderDescriptionsByCode(item.tags);
+    });
+  }
 
   onInitDataFn(event: NguCarouselStore) {
 
@@ -86,7 +94,6 @@ export class DecZoomMarksGalleryComponent {
   public getFormatedPositionAndScale() {
     return this.zoomMarks.getFormatedPositionAndScale();
   }
-
 
   public addNewZoomArea(addNewZoomArea) {
     this.zoomMarks.addNewZoomArea(addNewZoomArea);

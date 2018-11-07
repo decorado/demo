@@ -1,14 +1,14 @@
 <div fxLayout="row" fxLayoutAlign="space-between center" *ngFor="let c of renders; let r = index;">
-  <div *ngIf="c?.comments?.length > 0" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="space-between start">
+  <div *ngIf="c?.tags?.length > 0" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="space-between start">
     <h4 class="title-render">
-      {{  'label.Render' | translate }} {{ parentId ? parentId : (r+1) }}
+      {{ 'label.Render' | translate }} {{ parentId ? parentId : (r+1) }}
     </h4>
-    <div fxLayoutAlign="space-between center" fxLayoutGap="16px" class="markdown-item" *ngFor="let comments of c?.comments; let i = index">
-      <span class="{{getClass(comments)}}">
+    <div fxLayoutAlign="space-between center" fxLayoutGap="16px" class="markdown-item" *ngFor="let tags of c?.tags; let i = index">
+      <span class="{{getClass(tags)}}">
         {{parentId ? parentId+'.'+(i + 1) : (i+1)}}
       </span>
-      <span *ngIf="comments.comment" class="text-markdown">
-          {{comments.comment}} - {{comments.description}}
+      <span *ngIf="tags.comment" class="text-markdown">
+        {{tags.comment}} - {{tags.description}}
       </span>
     </div>
   </div>
