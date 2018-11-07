@@ -28,8 +28,12 @@ export class DecoraRenderCommentComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.commentResult = result;
+      if (result) {
+        this.commentResult = result;
+      }
     });
+
+    dialogRef.componentInstance.deleteMark.subscribe(() => this.commentResult = null);
   }
 
 }

@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, Output, EventEmitter } from '@angular/core';
 import { BACKSPACE } from '@angular/cdk/keycodes';
 import { DecRenderCommentService } from './dec-render-comment.service';
 import RenderFeedback from './models/render-feedback.model';
@@ -18,6 +18,8 @@ export class DecRenderCommentComponent {
   private _version: number;
   selectedChoicesDisplay = '';
   stepsChoice: RenderFeedback[] = [];
+
+  @Output() deleteMark = new EventEmitter();
 
   constructor(private decRenderCommentService: DecRenderCommentService,
     public dialogRef: MatDialogRef<DecRenderCommentComponent>,
@@ -85,6 +87,11 @@ export class DecRenderCommentComponent {
     if (this.descriptionLastLevel()) {
       this.dialogRef.close({ version: this._version, comment: this.selectedChoicesDisplay, description: this.descriptionLastLevel() });
     }
+  }
+
+  delete(): void {
+    this.deleteMark.emit();
+    this.dialogRef.close();
   }
 
   private filloptions(options: any): RenderFeedback[] {
