@@ -59,7 +59,6 @@ export class DecZoomAreaComponent implements OnInit {
   onSave() {
     const saveObj = {
       coordinates: [],
-      id: this.parentId,
       descripition: this.descripition,
       renderShot: this.renderZoom.marker,
       referenceShot: this.referenceZoom.marker
