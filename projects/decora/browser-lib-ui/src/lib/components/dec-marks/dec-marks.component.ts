@@ -72,6 +72,7 @@ export class DecMarksComponent implements AfterViewChecked {
 
   ngAfterViewChecked(): void {
     if (!this.contentDone && this.canvas.nativeElement.parentElement.offsetWidth !== 0) {
+      console.log(this.zoomPosition);
       this.setupCanvas();
       this.setupMarksWrapper();
       this.setupMouseEvents();

@@ -73,7 +73,6 @@ export class DecZoomAreaComponent implements OnInit {
       renderShot: this.renderZoom.marker,
       referenceShot: this.referenceZoom.marker
     };
-    console.log(saveObj);
     this.save.emit(saveObj);
   }
 
