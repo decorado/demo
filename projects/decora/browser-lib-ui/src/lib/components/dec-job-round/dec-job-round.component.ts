@@ -114,7 +114,7 @@ export class DecJobRoundComponent {
 
   openZoomArea() {
     if (this.qaMode) {
-      
+
       let ref: any = {};
       let render: any = {};
       ref = this.referenceGallery.getFormatedPositionAndScale();

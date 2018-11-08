@@ -277,9 +277,9 @@ export class DecZoomMarksComponent implements AfterViewChecked {
     if (this.marker.tags && this.marker.tags.length > 0) {
       this.marker.tags.forEach((comment: Tag) => {
         if (comment.coordinates.length > 2) {
-          this.createSquareTag(comment.coordinates, comment.reference);
+          this.createSquareTag(comment.coordinates, comment.reference, comment.status);
         } else {
-          this.createPointTag(comment.coordinates, comment.reference);
+          this.createPointTag(comment.coordinates, comment.reference, comment.status);
         }
       });
       this.commentsArraySize += this.marker.tags.length;
@@ -287,7 +287,7 @@ export class DecZoomMarksComponent implements AfterViewChecked {
 
     if (this.marker.zoomAreas && this.marker.zoomAreas.length > 0) {
       this.marker.zoomAreas.forEach((zoomArea: ZoomArea) => {
-        this.createZoomAreaTag(zoomArea.coordinates, zoomArea.reference);
+        this.createZoomAreaTag(zoomArea.coordinates, zoomArea.reference, zoomArea.status);
       });
       this.commentsArraySize += this.marker.zoomAreas.length;
     }
@@ -357,11 +357,25 @@ export class DecZoomMarksComponent implements AfterViewChecked {
     }
   }
 
-  private createPointTag(coordinates: number[], index: number): HTMLDivElement {
+  private setClassyStatus(status) {
+    switch (status) {
+      case 'LASTCHECK_NEW':
+        return 'status-new';
+      case 'LASTCHECK_DELETED':
+        return 'status-deleted';
+      case 'LASTCHECK_UPDATED':
+        return 'status-updated';
+    }
+  }
+
+  private createPointTag(coordinates: number[], index: number, status?: string): HTMLDivElement {
     const [x, y] = coordinates;
     const tag = this.renderer.createElement('div');
-    tag.innerHTML = `${index}`;
+    tag.innerHTML = index ? `${index}` : `D`;
     tag.className = 'point-tag';
+    if (status) {
+      tag.classList.add(this.setClassyStatus(status));
+    }
     tag.style.top = `calc(${y}% - 12px)`;
     tag.style.left = `calc(${x}% - 12px)`;
     this.marksWrapperEl.appendChild(tag);
@@ -372,11 +386,14 @@ export class DecZoomMarksComponent implements AfterViewChecked {
     return tag;
   }
 
-  private createZoomAreaTag(coordinates: number[], index: number): HTMLDivElement {
+  private createZoomAreaTag(coordinates: number[], index: number, status?: string): HTMLDivElement {
     const [x, y] = coordinates;
     const tag = this.renderer.createElement('div');
-    tag.innerHTML = `${index}`;
+    tag.innerHTML = index ? `${index}` : `D`;
     tag.className = 'zoom-area-tag';
+    if (status) {
+      tag.classList.add(this.setClassyStatus(status));
+    }
     tag.style.top = `calc(${y}% - 12px)`;
     tag.style.left = `calc(${x}% - 12px)`;
     this.marksWrapperEl.appendChild(tag);
@@ -385,15 +402,18 @@ export class DecZoomMarksComponent implements AfterViewChecked {
     return tag;
   }
 
-  private createSquareTag(coordinates: number[], index: number): void {
+  private createSquareTag(coordinates: number[], index: number, status?: string): void {
     const [x, y, x2, y2] = coordinates;
     const square = this.renderer.createElement('div');
     square.className = 'square-tag';
+    if (status) {
+      square.classList.add(this.setClassyStatus(status));
+    }
     square.style.width = `${Math.abs(x - x2)}%`;
     square.style.height = `${Math.abs(y - y2)}%`;
     square.style.top = `${y2 > y ? y : y2}%`;
     square.style.left = `${x2 > x ? x : x2}%`;
-    const point = this.createPointTag([0, 0], index);
+    const point = this.createPointTag([0, 0], index, status);
     square.appendChild(point);
     this.marksWrapperEl.appendChild(square);
   }

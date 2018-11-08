@@ -2,6 +2,10 @@ $color-white: rgb(255, 255, 255);
 $color-black: rgb(0, 0, 0);
 $color-red: rgb(255, 10, 222);
 
+$color-new: rgb(64, 63, 138);
+$color-deleted: rgb(230, 14, 14);
+$color-updated: rgb(109, 100, 100);
+
 #squareMark {
   position: absolute;
   border: 2px solid $color-red;
@@ -73,6 +77,27 @@ $color-red: rgb(255, 10, 222);
         border: 1px solid $color-white;
       }
 
+      &.status-new {
+        background-color: $color-new;
+        &:before {
+          background-color: $color-new;
+        }
+      }
+
+      &.status-deleted {
+        background-color: $color-deleted;
+        &:before {
+          background-color: $color-deleted;
+        }
+      } 
+
+      &.status-updated {
+        background-color: $color-updated;
+        &:before {
+          background-color: $color-updated;
+        }
+      } 
+
       &:hover {
         border-color: $color-red;
 
@@ -107,6 +132,18 @@ $color-red: rgb(255, 10, 222);
       &:hover {
         border-color: $color-red
       }
+
+      &.status-new {
+        background-color: $color-new;
+      }
+
+      &.status-deleted {
+        background-color: $color-deleted;
+      } 
+
+      &.status-updated {
+        background-color: $color-updated;
+      } 
     }
 
     .square-tag {
@@ -116,6 +153,18 @@ $color-red: rgb(255, 10, 222);
       border-style: solid;
       user-select: none;
       pointer-events: none;
+
+      &.status-new {
+        border-color: $color-new;
+      }
+
+      &.status-deleted {
+        border-color: $color-deleted;
+      } 
+
+      &.status-updated {
+        border-color: $color-updated;
+      } 
     }
   }
 
