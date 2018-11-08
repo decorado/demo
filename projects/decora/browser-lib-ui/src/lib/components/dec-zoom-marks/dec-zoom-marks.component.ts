@@ -549,6 +549,15 @@ export class DecZoomMarksComponent implements AfterViewChecked {
         tagItem.reference--;
       }
     });
+
+    if (this.marker.zoomAreas) {
+      this.marker.zoomAreas.forEach(zoomArea => {
+        if (zoomArea.reference > tag.reference) {
+          zoomArea.reference--;
+        }
+      });
+    }
+
   }
 
 }
