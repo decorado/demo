@@ -68,6 +68,8 @@ export class DecJobRoundComponent {
 
   renderImages;
 
+  note;
+
   measures;
 
   parentId;
@@ -145,6 +147,7 @@ export class DecJobRoundComponent {
   openEditZoomArea($event) {
     this.editZoomArea = $event;
     this.reference = $event.referenceShot;
+    this.note = $event.note;
     this.render = $event.renderShot;
     this.parentId = this.renderGallery.getImageIndex();
     this.parentId++;
