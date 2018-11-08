@@ -18,14 +18,16 @@
 
   <div *ngIf="showTags" class="container-comments" fxLayout="column" fxLayoutGap="16px">
     <div>
-      <h3><dec-icon class="dec-icon-size dec-color-grey" font="mat">bookmarks</dec-icon>
+      <h3>
+        <dec-icon class="dec-icon-size dec-color-grey" font="mat">bookmarks</dec-icon>
         <span class="dec-icon-text-size-zoom-area"> Tags </span>
       </h3>
     </div>
-    <dec-markdowns-comment [renders]="markedObjs"></dec-markdowns-comment>
+    <dec-markdowns-comment [renders]="markedObjs" [decZoomMarksComponent]="zoomMarks"></dec-markdowns-comment>
 
     <div>
-      <h3><dec-icon class="dec-icon-size dec-color-grey" font="mat">error</dec-icon>
+      <h3>
+        <dec-icon class="dec-icon-size dec-color-grey" font="mat">error</dec-icon>
         <span class="dec-icon-text-size-zoom-area"> Zoom areas </span>
       </h3>
     </div>

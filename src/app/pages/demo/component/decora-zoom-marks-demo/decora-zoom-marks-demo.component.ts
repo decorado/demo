@@ -98,7 +98,7 @@ export class DecoraZoomMarksDemoComponent implements OnInit {
         'tags': [
           {
             'id': '5bc88add0e8e3d0001958448',
-            'reference': '2',
+            'reference': '1',
             'comment': '73',
             'coordinates': [
               56.3548387096774,
@@ -109,7 +109,7 @@ export class DecoraZoomMarksDemoComponent implements OnInit {
           },
           {
             'id': '5bc88aea0e8e3d000195844c',
-            'reference': '3',
+            'reference': '2',
             'comment': '2C3',
             'coordinates': [
               76.3548387096774,
@@ -120,7 +120,7 @@ export class DecoraZoomMarksDemoComponent implements OnInit {
           },
           {
             'id': '5bdb4b5a83cfe0353206d83f',
-            'reference': '4',
+            'reference': '3',
             'comment': '2C3',
             'coordinates': [
               34.3548387096776,
