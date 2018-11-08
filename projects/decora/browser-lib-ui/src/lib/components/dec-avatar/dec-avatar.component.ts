@@ -30,7 +30,7 @@ export class DecAvatarComponent {
       const { name } = this.account;
 
       this.initialsName = name[0].toUpperCase();
-      const arrName = name.split(' ');
+      const arrName = name.trim().split(' ');
       this.initialsName += arrName[arrName.length - 1][0].toUpperCase();
     }
   }

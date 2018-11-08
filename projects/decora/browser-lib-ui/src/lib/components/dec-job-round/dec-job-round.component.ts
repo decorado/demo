@@ -139,6 +139,7 @@ export class DecJobRoundComponent {
       this.editZoomArea = null;
       return;
     }
+    this.note = null;
     this.renderGallery.addNewZoomArea($event);
     this.zoomAreaOpen = false;
     this.setZoomAreaOpen.emit(this.zoomAreaOpen);
