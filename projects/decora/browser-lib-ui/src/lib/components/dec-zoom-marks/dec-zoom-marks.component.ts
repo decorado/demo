@@ -269,17 +269,17 @@ export class DecZoomMarksComponent implements AfterViewChecked {
     });
   }
 
-  private drawMarks() {
+  public drawMarks() {
     this.cleanMarks();
 
     this.commentsArraySize = 0;
 
     if (this.marker.tags && this.marker.tags.length > 0) {
-      this.marker.tags.forEach((comment: Tag) => {
-        if (comment.coordinates.length > 2) {
-          this.createSquareTag(comment.coordinates, comment.reference, comment.status);
+      this.marker.tags.forEach((tag: Tag) => {
+        if (tag.coordinates.length > 2) {
+          this.createSquareTag(tag.coordinates, tag.reference, tag.status);
         } else {
-          this.createPointTag(comment.coordinates, comment.reference, comment.status);
+          this.createPointTag(tag.coordinates, tag.reference, tag.status);
         }
       });
       this.commentsArraySize += this.marker.tags.length;
@@ -556,15 +556,29 @@ export class DecZoomMarksComponent implements AfterViewChecked {
     }
   }
 
-  private deleteMark(comment) {
-    this.marker.tags.splice(this.marker.tags.indexOf(comment), 1);
-    this.marker.tags.forEach(c => {
-      if (c.reference > comment.reference) {
-        c.reference--;
-      }
-    });
+  private deleteMark(tag: Tag) {
+    this.marker.tags.splice(this.marker.tags.indexOf(tag), 1);
+    this.recalculateReferences(tag);
+
     this.removeCommentNode();
     this.drawMarks();
+  }
+
+  public recalculateReferences(tag: Tag): void {
+    this.marker.tags.forEach(tagItem => {
+      if (tagItem.reference > tag.reference) {
+        tagItem.reference--;
+      }
+    });
+
+    if (this.marker.zoomAreas) {
+      this.marker.zoomAreas.forEach(zoomArea => {
+        if (zoomArea.reference > tag.reference) {
+          zoomArea.reference--;
+        }
+      });
+    }
+
   }
 
 }

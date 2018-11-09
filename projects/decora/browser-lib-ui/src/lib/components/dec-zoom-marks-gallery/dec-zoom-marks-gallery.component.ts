@@ -59,19 +59,22 @@ export class DecZoomMarksGalleryComponent {
   private bindRenderDescriptions(): void {
     this.markedObjs.forEach(item => {
       this.decRenderCommentService.getRenderDescriptionsByCode(item.tags);
+
+      if (item.zoomAreas) {
+        item.zoomAreas.forEach(zoomArea => {
+          this.decRenderCommentService.getRenderDescriptionsByCode(zoomArea.renderShot.tags);
+        });
+      }
+
     });
   }
 
   onInitDataFn(event: NguCarouselStore) {
-
     this.setPrevNextCheckers(event.isFirst, event.items >= this.markedObjs.length);
-
   }
 
   onMoveFn(event: NguCarouselStore) {
-
     this.setPrevNextCheckers(event.isFirst, event.isLast);
-
   }
 
   onSelectImage = ($event, sysFile, i) => {

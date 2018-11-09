@@ -1,41 +1,53 @@
 @import './../../../../bootstrap/constants/_colors';
 
 .markdown-item:last-child {
-    margin-bottom: 32px;
+  margin-bottom: 32px;
+}
+
+.markdown-item:hover .icon-delete {
+  display: block;
 }
 
 .text-markdown {
-    font-size: 13px;
-    line-height: 16px;
-    color: #656d74;
-    min-width: 540px;
+  font-size: 13px;
+  line-height: 16px;
+  color: #656d74;
+  min-width: 540px;
 }
 
 .tags-item {
-    background-color: #f44336;
-    text-align: center;
-    color: white;
-    font-weight: 500;
-    border: 2px solid transparent;
-    padding: 5px;
+  background-color: #f44336;
+  text-align: center;
+  color: white;
+  font-weight: 500;
+  border: 2px solid transparent;
+  padding: 5px;
 }
 
 .type-point {
-    border-radius: 50%;
-    height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  border-radius: 50%;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
 }
 
 .type-square {
-    background-color: transparent;
-    border-color: #f44336;
-    color: #f44336;
-    border-top: 2px solid;
-    border-left: 2px solid;
-    border-bottom: 2px dotted;
-    border-right: 2px dotted;
+  background-color: transparent;
+  border-color: #f44336;
+  color: #f44336;
+  border-top: 2px solid;
+  border-left: 2px solid;
+  border-bottom: 2px dotted;
+  border-right: 2px dotted;
+}
 
+.container-delete {
+  width: 40px;
+}
+
+.icon-delete {
+  display: none;
+  cursor: pointer;
 }

@@ -1,13 +1,13 @@
-<div *ngFor="let render of renders; let r = index">
-  <div fxLayout="row" fxLayoutAlign="space-between center" *ngFor="let area of render.zoomAreas;">
+<div *ngFor="let render of renders; let indexRender = index">
+  <div fxLayout="row" fxLayoutAlign="space-between center" *ngFor="let zoomArea of render.zoomAreas;">
     <div fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="space-between start">
       <h4 class="title-render">
-        {{ 'label.Render' | translate }} {{ r + 1 }}
+        {{ 'label.Render' | translate }} {{ indexRender + 1 }}
       </h4>
-      <div fxLayoutAlign="space-between center" fxLayoutGap="16px" class="markdown-item" *ngFor="let comments of area?.renderShot?.comments; let i = index">
-        <span class="{{getClass(comments)}}">{{ (r+1)+'.'+(i+1) }}</span>
-        <span *ngIf="comments.comment" class="text-markdown">
-          {{comments.comment}} - {{comments.description}}
+      <div fxLayoutAlign="space-between center" fxLayoutGap="16px" class="markdown-item" *ngFor="let tag of zoomArea?.renderShot?.tags; let i = index">
+        <span class="{{getClass(tag)}}">{{ (zoomArea.reference)+'.' + (tag.reference) }}</span>
+        <span *ngIf="tag.comment" class="text-markdown">
+          {{tag.comment}} - {{tag.description}}
         </span>
       </div>
     </div>

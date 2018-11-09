@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './decora-markdowns-comment-demo.component.html',
   styleUrls: ['./decora-markdowns-comment-demo.component.scss']
 })
-export class DecoraMarkdownsCommentDemoComponent implements OnInit {
+export class DecoraMarkdownsCommentDemoComponent {
 
   renderArray = [
     {
@@ -70,9 +70,5 @@ export class DecoraMarkdownsCommentDemoComponent implements OnInit {
       }]
     }
   ];
-  constructor() { }
-
-  ngOnInit() {
-  }
 
 }

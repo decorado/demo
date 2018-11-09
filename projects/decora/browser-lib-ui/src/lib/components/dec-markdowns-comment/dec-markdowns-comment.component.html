@@ -1,15 +1,18 @@
-<div fxLayout="row" fxLayoutAlign="space-between center" *ngFor="let c of renders; let r = index;">
-  <div *ngIf="c?.tags?.length > 0" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="space-between start">
+<div fxLayout="row" fxLayoutAlign="space-between center" *ngFor="let render of renders; let indexRender = index;">
+  <div *ngIf="render?.tags?.length > 0" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="space-between start">
     <h4 class="title-render">
-      {{ 'label.Render' | translate }} {{ parentId ? parentId : (r+1) }}
+      {{ 'label.Render' | translate }} {{ parentId ? parentId : (indexRender + 1) }}
     </h4>
-    <div fxLayoutAlign="space-between center" fxLayoutGap="16px" class="markdown-item" *ngFor="let tags of c?.tags; let i = index">
-      <span class="{{getClass(tags)}}">
-        {{parentId ? parentId+'.'+(i + 1) : (i+1)}}
+    <div fxLayoutAlign="space-between center" fxLayoutGap="16px" class="markdown-item" *ngFor="let tag of render?.tags; let indexTag = index">
+      <span [class]="getClass(tag)">
+        {{ parentId ? parentId+'.'+(indexTag + 1) : tag.reference }}
       </span>
-      <span *ngIf="tags.comment" class="text-markdown">
-        {{tags.comment}} - {{tags.description}}
+      <span *ngIf="tag.comment" class="text-markdown">
+        {{tag.comment}} - {{tag.description}}
       </span>
+      <div class="container-delete">
+        <mat-icon class="icon-delete" (click)="deleteTag(indexRender, tag)">delete</mat-icon>
+      </div>
     </div>
   </div>
 </div>
