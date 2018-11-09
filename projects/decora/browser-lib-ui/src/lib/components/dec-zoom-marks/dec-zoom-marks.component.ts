@@ -138,10 +138,13 @@ export class DecZoomMarksComponent implements AfterViewChecked {
             ((100 * event.offsetY) / this.marksWrapperEl.offsetHeight * this.canvasEl.offsetHeight) / 100);
           if (event.deltaY < 0) {
             this.zoomIn(0.5);
+            this.startX = ((100 * event.offsetX) / this.marksWrapperEl.offsetWidth * this.canvasEl.offsetWidth) / 100 * this.zoomScale;
+            this.startY = ((100 * event.offsetY) / this.marksWrapperEl.offsetHeight * this.canvasEl.offsetHeight) / 100 * this.zoomScale;
+          } else {
+            this.zoomOut(0.5);
+            this.startX = ((100 * event.offsetX) / this.marksWrapperEl.offsetWidth * this.canvasEl.offsetWidth) / 100 * this.zoomScale;
+            this.startY = ((100 * event.offsetY) / this.marksWrapperEl.offsetHeight * this.canvasEl.offsetHeight) / 100 * this.zoomScale;
           }
-          event.deltaY < 0 ? this.zoomIn(0.5) : this.zoomOut(0.5);
-          this.startX = ((100 * event.offsetX) / this.marksWrapperEl.offsetWidth * this.canvasEl.offsetWidth) / 100 * this.zoomScale + this.canvasEl.offsetWidth / 2;
-          this.startY = ((100 * event.offsetY) / this.marksWrapperEl.offsetHeight * this.canvasEl.offsetHeight) / 100 * this.zoomScale + this.canvasEl.offsetHeight / 2;
         }
       }
     });
