@@ -107,14 +107,13 @@ export class DecJobRoundComponent {
     this.measures.referenceCubeX = product.referenceCubeX;
     this.measures.referenceCubeY = product.referenceCubeY;
     this.measures.referenceCubeZ = product.referenceCubeZ;
-    this.measures.modelCubeX = product.modelCubeX;
-    this.measures.modelCubeY = product.modelCubeY;
-    this.measures.modelCubeZ = product.modelCubeZ;
+    this.measures.modelCubeX = this.round.modelCubeX;
+    this.measures.modelCubeY = this.round.modelCubeY;
+    this.measures.modelCubeZ = this.round.modelCubeZ;
   }
 
   openZoomArea() {
     if (this.qaMode) {
-
       let ref: any = {};
       let render: any = {};
       ref = this.referenceGallery.getFormatedPositionAndScale();
