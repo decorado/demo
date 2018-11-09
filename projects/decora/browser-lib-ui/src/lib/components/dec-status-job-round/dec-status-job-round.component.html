@@ -41,4 +41,16 @@
         [readonly]="readonly" [showQaStatus]="showQaStatus"></dec-status-job-round-item>
     </dec-grid-column>
   </dec-grid-row>
+  <dec-grid-row>
+    <dec-grid-column span="8">
+      <dec-status-job-round-item [jobId]="job?.id" *ngIf="job?.rounds[3]" [round]="job?.rounds[3]" [roundQnt]="roundsQnt"
+        [roundNumber]="4" [readonly]="readonly" [showQaStatus]="showQaStatus"></dec-status-job-round-item>
+    </dec-grid-column>
+  </dec-grid-row>
+  <dec-grid-row>
+    <dec-grid-column span="8">
+      <dec-status-job-round-item [jobId]="job?.id" *ngIf="job?.rounds[4]" [round]="job?.rounds[4]" [roundQnt]="roundsQnt"
+        [roundNumber]="5" [readonly]="readonly" [showQaStatus]="showQaStatus"></dec-status-job-round-item>
+    </dec-grid-column>
+  </dec-grid-row>
 </dec-grid>
