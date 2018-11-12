@@ -18,6 +18,7 @@
       </dec-grid-column>
 
       <dec-grid-column span="6">
+
         <div class="render-header" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="32px">
           <h3>
             <dec-icon class="click" font="mat">flash_on</dec-icon>Render
@@ -28,9 +29,17 @@
             </span>
           </span>
         </div>
-        <dec-zoom-marks-gallery #renderGallery *ngIf="renderImages" [showTags]="true" (openZoomArea)="openEditZoomArea($event)"
-          [markedObjs]="round?.qualityAssurance?.renders" [qaModeActive]="qaMode">
-        </dec-zoom-marks-gallery>
+
+        <div *ngIf="round.renderStatus !== 'RENDER_DONE'; else renderGalleryDone">
+          <dec-render-not-available [renderStatus]="round.renderStatus"></dec-render-not-available>
+        </div>
+
+        <ng-template #renderGalleryDone>
+          <dec-zoom-marks-gallery #renderGallery *ngIf="renderImages" [showTags]="true" (openZoomArea)="openEditZoomArea($event)"
+            [markedObjs]="round?.qualityAssurance?.renders" [qaModeActive]="qaMode">
+          </dec-zoom-marks-gallery>
+        </ng-template>
+
       </dec-grid-column>
 
     </dec-grid-row>

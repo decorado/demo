@@ -9,6 +9,7 @@ import { DecGridModule } from './../dec-grid/dec-grid.module';
 import { DecProductMeasuresComparisonModule } from './../dec-product-measures-comparison/dec-product-measures-comparison.module';
 import { DecIconModule } from './../dec-icon/dec-icon.module';
 import { DecZoomAreaModule } from './../dec-zoom-area/dec-zoom-area.module';
+import { RenderNotAvailableComponent } from './render-not-available/render-not-available.component';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import { DecZoomAreaModule } from './../dec-zoom-area/dec-zoom-area.module';
     TranslateModule,
   ],
   declarations: [
-    DecJobRoundComponent
+    DecJobRoundComponent,
+    RenderNotAvailableComponent
   ],
   exports: [
     DecJobRoundComponent

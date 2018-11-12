@@ -24,9 +24,9 @@ export class DecStatusJobRoundItemComponent {
   @Input()
   set round(v) {
     if (v) {
-      if (v.status !== 'DENIED' && 'APPROVED') {
-        v.status = 'IN_QA';
-      }
+      // if (v.status !== 'DENIED' && 'APPROVED') {
+      //   v.status = 'IN_QA';
+      // }
       this._round = v;
     }
   }

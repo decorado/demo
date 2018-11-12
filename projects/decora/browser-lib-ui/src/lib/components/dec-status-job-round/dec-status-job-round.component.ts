@@ -28,9 +28,9 @@ export class DecStatusJobRoundComponent implements OnInit {
   @Input()
   set job(v) {
     if (v) {
-      v.rounds.forEach((round, index) => {
-        if (index + 1 < v.rounds.length) { round.status = 'DENIED'; }
-      });
+      // v.rounds.forEach((round, index) => {
+      //   if (index + 1 < v.rounds.length) { round.status = 'DENIED'; }
+      // });
       this.roundsQnt = v.rounds.length;
       this._job = v;
     }

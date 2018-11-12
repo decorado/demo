@@ -4,7 +4,7 @@ export class UserAuthData {
   public name: string;
   public country: string;
   public company: string;
-  public role: number;
+  public role: string;
   public i18n: string;
   public permissions: Array<string>;
 
