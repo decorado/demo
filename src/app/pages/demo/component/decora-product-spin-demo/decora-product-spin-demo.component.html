@@ -1,10 +1,17 @@
 <app-demo-container readmeSrc="assets/docs/browser-lib-ui/components/product-spin/README.md">
 
+  <h2>Without interval</h2>
   <div class="dec-product-spin-wrapper">
 
-    <dec-product-spin #mainProductSpin [spin]="spin"></dec-product-spin>
+    <dec-product-spin #mainProductSpin [spin]="spin" rotateToMiddle="true"></dec-product-spin>
 
   </div>
 
+  <h2>With interval</h2>
+  <div class="dec-product-spin-wrapper">
+
+    <dec-product-spin #intervalProductSpin [spin]="spinWithInterval" rotateToMiddle="true"></dec-product-spin>
+
+  </div>
 </app-demo-container>
 

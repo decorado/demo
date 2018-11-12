@@ -26,22 +26,23 @@ export class DecProductSpinComponent implements OnInit {
   @Input() looping = false;
   @Input() onlyModal = false;
   @Input() FALLBACK_IMAGE: string = FALLBACK_IMAGE;
-  @Input() startInCenter = false;
+  @Input() startInCenter = true;
   @Input() rotateToIndex: number;
-  @Input() rotateToMiddle: number;
+  @Input() rotateToMiddle: boolean;
   @Input() showOpenDialogButton = true;
 
   @Input()
   set spin(spin: any) {
+
     if (spin && spin !== this._spin) {
       const scenes = this.loadScenes(spin);
-      const scenesChanged = !this.scenes || (scenes && this.scenes.join() !== scenes.join());
-      if (scenesChanged) {
+      const spinChanged = !this.scenes || (scenes && this.scenes.join() !== scenes.join());
+      if (spinChanged) {
+        this._spin = spin;
         this.resetScenesData(scenes);
         this.reorderScenesBasedOnOpposedDirectionsIndex();
+        this.detectFrameShown();
       }
-      this._spin = spin;
-      this.detectFrameShown();
     }
   }
 
@@ -150,6 +151,37 @@ export class DecProductSpinComponent implements OnInit {
 
   }
 
+  private detectJump(spin) {
+    if (spin) {
+      const shotsConfig = spin.config.shots.map(shot => shot.products[0].rotation[2]);
+      return this.hasJump(shotsConfig);
+    } else {
+      return false;
+    }
+  }
+
+  private hasJump(positions: number[]) {
+    let previousPosition;
+    let previousDistance;
+    let irregularJump = false;
+
+    positions.forEach(position => {
+      if (previousPosition) {
+        const distance = position - previousPosition;
+        const distanceDiff = distance / (previousDistance || distance);
+        const normalizedDistance = Math.round(distanceDiff);
+        if (normalizedDistance !== 1) {
+          irregularJump = true;
+        }
+        previousDistance = distance;
+      }
+      previousPosition = position;
+    });
+
+    return irregularJump;
+
+  }
+
   private detectFrameShown() {
     this.frameShown = !this.startInCenter ? 0 : this.getMiddle();
   }
@@ -189,7 +221,9 @@ export class DecProductSpinComponent implements OnInit {
 
   private reorderScenesBasedOnOpposedDirectionsIndex() {
 
-    if (this.rotateToIndex || this.rotateToMiddle) {
+    const hasJump = this.detectJump(this.spin);
+
+    if (this.rotateToIndex || hasJump) {
 
       try {
 
