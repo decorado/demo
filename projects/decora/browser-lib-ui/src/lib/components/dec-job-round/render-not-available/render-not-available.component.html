@@ -26,12 +26,24 @@
   </div>
 
   <div *ngIf="renderStatus === 'RENDERING'">
-    <span class="title">
-      {{ 'module.professional.job.info.model-rendering-title' | translate }}
-    </span>
-    <span class="description">
-      {{ 'module.professional.job.info.model-rendering-message' | translate }}
-    </span>
+    <div *ngIf="isProfessional">
+      <span class="title">
+        {{ 'module.professional.job.info.model-rendering-title' | translate }}
+      </span>
+      <br>
+      <span class="description">
+        {{ 'module.professional.job.info.model-rendering-message' | translate }}
+      </span>
+    </div>
+
+    <div *ngIf="!isProfessional">
+      <span class="title">The model is rendering.</span>
+      <br>
+      <br>
+      <span class="description">
+        The model was submitted by the professional and is rendering.
+      </span>
+    </div>
   </div>
 
 </div>
