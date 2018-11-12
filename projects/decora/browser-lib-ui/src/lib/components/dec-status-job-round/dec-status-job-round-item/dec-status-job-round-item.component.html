@@ -1,4 +1,49 @@
 <div class="round-item-container" fxLayout="column" fxLayoutGap="8px">
+
+  <div class="title-row-size" fxLayout="row" fxLayoutAlign="space-between center">
+
+    <div class="smaller-font">
+      Round {{ roundNumber }} of {{ roundQnt }}
+    </div>
+
+    <div>
+      <mat-icon>{{ round ? 'timer' : 'timelapse' }}</mat-icon>
+    </div>
+
+  </div>
+
+  <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="space-between center" *ngIf="round?.status; else inactiveStatusLabel">
+    <div fxFlex="40" fxLayout="column" fxLayoutAlign="end start" fxLayoutGap="4px">
+      <span class="smaller-font"> {{ 'label.delivered' | translate }}: </span>
+      <span class="smaller-font"> {{ round?.delivered | timeAgo }} </span>
+    </div>
+
+    <div class="position-status" fxFlex="60" fxLayout="column" fxLayoutAlign="end start">
+      <span class="smaller-font">Status</span>
+      <dec-label-status [status]="round?.status">
+      </dec-label-status>
+    </div>
+  </div>
+
+  <ng-template #inactiveStatusLabel>
+    <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="space-between center">
+      <div fxFlex="40" fxLayout="column" fxLayoutAlign="end start" fxLayoutGap="4px">
+        <span class="smaller-font"> - </span>
+        <span class="smaller-font"> 00:00:00 </span>
+      </div>
+
+      <div class="position-status" fxFlex="60" fxLayout="column" fxLayoutAlign="end start">
+        <span class="smaller-font">Status</span>
+        <dec-label-status [status]="'INACTIVE'">
+        </dec-label-status>
+      </div>
+    </div>
+  </ng-template>
+
+</div>
+
+<!-- 
+<div class="round-item-container" fxLayout="column" fxLayoutGap="8px">
   <div class="title-row-size" fxLayout="row" fxLayoutAlign="space-between center">
     <div class="smaller-font">
       Round {{ roundNumber }} of {{ roundQnt }}
@@ -33,7 +78,7 @@
       <div fxFlex="40" fxLayout="column" fxLayoutAlign="end start" fxLayoutGap="4px">
         <span class="smaller-font"> {{ 'label.dead-line' | translate }}: </span>
         <span class="smaller-font" [ngClass]="{'red-qa': negativeQA}">
-          <!-- <dec-countdown *ngIf="!readonly; else placeholderCountDown" [interval]='300' (finished)="toggleNegative()"></dec-countdown> -->
+
           <span class="smaller-font"> 00:05:00 </span>
           <ng-template #placeholderCountDown>
             <span class="smaller-font"> 00:05:00 </span>
@@ -60,9 +105,11 @@
 
       <div class="position-status" fxFlex="60" fxLayout="column" fxLayoutAlign="end start">
         <span class="smaller-font">{{ 'label.status' | translate }}</span>
-        <dec-label-status *ngIf="round?.qualityAssurance?.status === 'APPROVED_FOR_REVIEW' || round?.qualityAssurance?.status === 'APPROVED'" [status]="'APPROVED'">
+        <dec-label-status *ngIf="round?.qualityAssurance?.status === 'APPROVED_FOR_REVIEW' || round?.qualityAssurance?.status === 'APPROVED'"
+          [status]="'APPROVED'">
         </dec-label-status>
-        <dec-label-status *ngIf="round?.qualityAssurance?.status === 'DENIED_FOR_REVIEW' || round?.qualityAssurance?.status === 'DENIED'" [status]="'DENIED'"></dec-label-status>
+        <dec-label-status *ngIf="round?.qualityAssurance?.status === 'DENIED_FOR_REVIEW' || round?.qualityAssurance?.status === 'DENIED'"
+          [status]="'DENIED'"></dec-label-status>
       </div>
     </div>
 
@@ -80,4 +127,5 @@
       <dec-label-status [status]="'INACTIVE'"></dec-label-status>
     </div>
   </div>
-</div>
+</div> 
+-->
