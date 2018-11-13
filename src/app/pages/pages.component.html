@@ -4,31 +4,28 @@
 
     <dec-sidenav-toolbar color="default" [environment]="profile">
 
-      <dec-sidenav-toolbar-title routerLink="/" class="click">Decora Browser Lib UI</dec-sidenav-toolbar-title>
-
     </dec-sidenav-toolbar>
 
-    <dec-sidenav-menu-left [open]="leftMenuVisible" [mode]="leftMenuMode" (openedChange)="leftMenuVisible = $event;"
-      [persistVisibilityMode]="true">
+    <dec-sidenav-menu-left [open]="leftMenuVisible" [mode]="leftMenuMode" (openedChange)="leftMenuVisible = $event;" [persistVisibilityMode]="true">
 
       <dec-sidenav-menu-item routerLink="/">
-        <mat-icon>home</mat-icon>
+        <dec-icon [font]="'mat'">home</dec-icon>
         Home
       </dec-sidenav-menu-item>
 
       <dec-sidenav-menu-item>
-        <mat-icon>Best practices</mat-icon>
+        <dec-icon [font]="'mat'">format_bold</dec-icon>
         Best practices
-        <dec-sidenav-menu-item routerLink="/best-practices/component-styles">Component styles</dec-sidenav-menu-item>
-        <dec-sidenav-menu-item routerLink="/best-practices/forms">Forms</dec-sidenav-menu-item>
-        <dec-sidenav-menu-item routerLink="/best-practices/presentation-components">Presentation component</dec-sidenav-menu-item>
+        <dec-sidenav-menu-item prefix="CS" routerLink="/best-practices/component-styles">Component styles</dec-sidenav-menu-item>
+        <dec-sidenav-menu-item prefix="FR" routerLink="/best-practices/forms">Forms</dec-sidenav-menu-item>
+        <dec-sidenav-menu-item prefix="PC" routerLink="/best-practices/presentation-components">Presentation component</dec-sidenav-menu-item>
       </dec-sidenav-menu-item>
 
       <dec-sidenav-menu-item>
-        <mat-icon>view_quilt</mat-icon>
+        <dec-icon [font]="'mat'">view_quilt</dec-icon>
         Components
 
-        <dec-sidenav-menu-item>
+        <dec-sidenav-menu-item prefix="AC">
           Autocomplete
           <dec-sidenav-menu-item routerLink="/demo/component/autocomplete">Basic autocomplete</dec-sidenav-menu-item>
           <dec-sidenav-menu-item routerLink="/demo/component/autocomplete-account">Account</dec-sidenav-menu-item>
@@ -44,46 +41,46 @@
           <dec-sidenav-menu-item routerLink="/demo/component/autocomplete-tags">Tags</dec-sidenav-menu-item>
         </dec-sidenav-menu-item>
 
-        <dec-sidenav-menu-item routerLink="/demo/component/color-picker">Color Picker</dec-sidenav-menu-item>
-        <dec-sidenav-menu-item routerLink="/demo/component/carousel">Carousel</dec-sidenav-menu-item>
-        <dec-sidenav-menu-item routerLink="/demo/component/events-list">Events List</dec-sidenav-menu-item>
-        <dec-sidenav-menu-item routerLink="/demo/component/label">Label</dec-sidenav-menu-item>
-        <dec-sidenav-menu-item routerLink="/demo/component/list">List</dec-sidenav-menu-item>
-        <dec-sidenav-menu-item routerLink="/demo/component/markdowns-comment">Markdowns comment</dec-sidenav-menu-item>
-        <dec-sidenav-menu-item routerLink="/demo/component/markdowns-zoom-area">Markdowns zoom area</dec-sidenav-menu-item>
-        <dec-sidenav-menu-item routerLink="/demo/component/date-picker">Date Picker</dec-sidenav-menu-item>
-        <dec-sidenav-menu-item routerLink="/demo/component/mock-server">Mock server</dec-sidenav-menu-item>
-        <dec-sidenav-menu-item routerLink="/demo/component/breadcrumb">Breadcrumb</dec-sidenav-menu-item>
-        <dec-sidenav-menu-item routerLink="/demo/component/gallery">Gallery</dec-sidenav-menu-item>
-        <dec-sidenav-menu-item routerLink="/demo/component/grid">Grid</dec-sidenav-menu-item>
-        <dec-sidenav-menu-item routerLink="/demo/component/icon">Icon</dec-sidenav-menu-item>
-        <dec-sidenav-menu-item routerLink="/demo/component/image-marks">Image marks</dec-sidenav-menu-item>
-        <dec-sidenav-menu-item routerLink="/demo/component/zoom-area">Zoom area</dec-sidenav-menu-item>
-        <dec-sidenav-menu-item routerLink="/demo/component/zoom-marks">Zoom marks</dec-sidenav-menu-item>
-        <dec-sidenav-menu-item routerLink="/demo/component/image-zoom">Image zoom</dec-sidenav-menu-item>
-        <dec-sidenav-menu-item routerLink="/demo/component/page-forbiden">Page forbiden</dec-sidenav-menu-item>
-        <dec-sidenav-menu-item routerLink="/demo/component/product-measures">Product measures</dec-sidenav-menu-item>
-        <dec-sidenav-menu-item routerLink="/demo/component/product-spin">Product spin</dec-sidenav-menu-item>
-        <dec-sidenav-menu-item routerLink="/demo/component/round">Round</dec-sidenav-menu-item>
-        <dec-sidenav-menu-item routerLink="/demo/component/sidenav">Sidenav</dec-sidenav-menu-item>
-        <dec-sidenav-menu-item routerLink="/demo/component/sketchfab">Sketchfab</dec-sidenav-menu-item>
-        <dec-sidenav-menu-item routerLink="/demo/component/sketchfab-view">Sketchfab view</dec-sidenav-menu-item>
-        <dec-sidenav-menu-item routerLink="/demo/component/steps-list">Steps List</dec-sidenav-menu-item>
-        <dec-sidenav-menu-item routerLink="/demo/component/tabs">Tabs</dec-sidenav-menu-item>
-        <dec-sidenav-menu-item routerLink="/demo/component/upload">Upload</dec-sidenav-menu-item>
-        <dec-sidenav-menu-item routerLink="/demo/component/render-comment">Render Comment</dec-sidenav-menu-item>
+        <dec-sidenav-menu-item prefix="CP" routerLink="/demo/component/color-picker">Color Picker</dec-sidenav-menu-item>
+        <dec-sidenav-menu-item prefix="CA" routerLink="/demo/component/carousel">Carousel</dec-sidenav-menu-item>
+        <dec-sidenav-menu-item prefix="EL" routerLink="/demo/component/events-list">Events List</dec-sidenav-menu-item>
+        <dec-sidenav-menu-item prefix="LB" routerLink="/demo/component/label">Label</dec-sidenav-menu-item>
+        <dec-sidenav-menu-item prefix="LI" routerLink="/demo/component/list">List</dec-sidenav-menu-item>
+        <dec-sidenav-menu-item prefix="MC" routerLink="/demo/component/markdowns-comment">Markdowns comment</dec-sidenav-menu-item>
+        <dec-sidenav-menu-item prefix="MZ" routerLink="/demo/component/markdowns-zoom-area">Markdowns zoom area</dec-sidenav-menu-item>
+        <dec-sidenav-menu-item prefix="DP" routerLink="/demo/component/date-picker">Date Picker</dec-sidenav-menu-item>
+        <dec-sidenav-menu-item prefix="MS" routerLink="/demo/component/mock-server">Mock server</dec-sidenav-menu-item>
+        <dec-sidenav-menu-item prefix="BC" routerLink="/demo/component/breadcrumb">Breadcrumb</dec-sidenav-menu-item>
+        <dec-sidenav-menu-item prefix="GL" routerLink="/demo/component/gallery">Gallery</dec-sidenav-menu-item>
+        <dec-sidenav-menu-item prefix="GR" routerLink="/demo/component/grid">Grid</dec-sidenav-menu-item>
+        <dec-sidenav-menu-item prefix="IC" routerLink="/demo/component/icon">Icon</dec-sidenav-menu-item>
+        <dec-sidenav-menu-item prefix="IM" routerLink="/demo/component/image-marks">Image marks</dec-sidenav-menu-item>
+        <dec-sidenav-menu-item prefix="ZA" routerLink="/demo/component/zoom-area">Zoom area</dec-sidenav-menu-item>
+        <dec-sidenav-menu-item prefix="ZM" routerLink="/demo/component/zoom-marks">Zoom marks</dec-sidenav-menu-item>
+        <dec-sidenav-menu-item prefix="IZ" routerLink="/demo/component/image-zoom">Image zoom</dec-sidenav-menu-item>
+        <dec-sidenav-menu-item prefix="PF" routerLink="/demo/component/page-forbiden">Page forbiden</dec-sidenav-menu-item>
+        <dec-sidenav-menu-item prefix="PM" routerLink="/demo/component/product-measures">Product measures</dec-sidenav-menu-item>
+        <dec-sidenav-menu-item prefix="PS" routerLink="/demo/component/product-spin">Product spin</dec-sidenav-menu-item>
+        <dec-sidenav-menu-item prefix="RD" routerLink="/demo/component/round">Round</dec-sidenav-menu-item>
+        <dec-sidenav-menu-item prefix="SN" routerLink="/demo/component/sidenav">Sidenav</dec-sidenav-menu-item>
+        <dec-sidenav-menu-item prefix="SK" routerLink="/demo/component/sketchfab">Sketchfab</dec-sidenav-menu-item>
+        <dec-sidenav-menu-item prefix="SV" routerLink="/demo/component/sketchfab-view">Sketchfab view</dec-sidenav-menu-item>
+        <dec-sidenav-menu-item prefix="SL" routerLink="/demo/component/steps-list">Steps List</dec-sidenav-menu-item>
+        <dec-sidenav-menu-item prefix="TB" routerLink="/demo/component/tabs">Tabs</dec-sidenav-menu-item>
+        <dec-sidenav-menu-item prefix="UP" routerLink="/demo/component/upload">Upload</dec-sidenav-menu-item>
+        <dec-sidenav-menu-item prefix="RC" routerLink="/demo/component/render-comment">Render Comment</dec-sidenav-menu-item>
 
       </dec-sidenav-menu-item>
 
       <dec-sidenav-menu-item>
-        <mat-icon>view_quilt</mat-icon>
+        <dec-icon [font]="'mat'">view_quilt</dec-icon>
         Directives
         <dec-sidenav-menu-item routerLink="/demo/directive/image">Image</dec-sidenav-menu-item>
         <dec-sidenav-menu-item routerLink="/demo/directive/permission">Permission</dec-sidenav-menu-item>
       </dec-sidenav-menu-item>
 
       <dec-sidenav-menu-item>
-        <mat-icon>settings_input_component</mat-icon>
+        <dec-icon [font]="'mat'">settings_input_component</dec-icon>
         Patterns
 
         <dec-sidenav-menu-item routerLink="/patterns/structure">Folder structure</dec-sidenav-menu-item>
@@ -92,20 +89,20 @@
       </dec-sidenav-menu-item>
 
       <dec-sidenav-menu-item>
-        <mat-icon>view_quilt</mat-icon>
+        <dec-icon [font]="'mat'">view_quilt</dec-icon>
         Pipes
 
         <dec-sidenav-menu-item routerLink="/demo/pipe/category">Category</dec-sidenav-menu-item>
       </dec-sidenav-menu-item>
 
       <dec-sidenav-menu-item>
-        <mat-icon>opacity</mat-icon>
+        <dec-icon [font]="'mat'">opacity</dec-icon>
         Style
         <dec-sidenav-menu-item routerLink="/demo/bootstrap/overview">Bootstrap</dec-sidenav-menu-item>
       </dec-sidenav-menu-item>
 
       <dec-sidenav-menu-item>
-        <mat-icon>play_circle_outline</mat-icon>
+        <dec-icon [font]="'mat'">play_circle_outline</dec-icon>
         Services
         <dec-sidenav-menu-item routerLink="/demo/service/api">Api</dec-sidenav-menu-item>
         <dec-sidenav-menu-item routerLink="/demo/service/config">Configuration</dec-sidenav-menu-item>
@@ -119,7 +116,7 @@
       </dec-sidenav-menu-item>
 
       <dec-sidenav-menu-item>
-        <mat-icon>build</mat-icon>
+        <dec-icon [font]="'mat'">build</dec-icon>
         Tools
         <dec-sidenav-menu-item routerLink="/tools/object-sort">Object Sort</dec-sidenav-menu-item>
       </dec-sidenav-menu-item>

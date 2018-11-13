@@ -14,6 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { DecSidenavToolbarTitleComponent } from './dec-sidenav-toolbar-title/dec-sidenav-toolbar-title.component';
 import { DecSidenavService } from './sidenav.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { DecIconModule } from './../dec-icon/dec-icon.module';
 
 @NgModule({
   imports: [
@@ -26,6 +27,7 @@ import { TranslateModule } from '@ngx-translate/core';
     RouterModule,
     HttpClientModule,
     TranslateModule,
+    DecIconModule
   ],
   declarations: [
     DecSidenavComponent,

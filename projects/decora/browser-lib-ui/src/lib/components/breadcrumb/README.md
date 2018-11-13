@@ -6,6 +6,6 @@
 
 ```html
   <dec-breadcrumb feature="feature" breadcrumb="/ section a / item b">
-    <button mat-raised-button type="button" color="primary">action</button>
+    <button mat-flat-button type="button" color="primary">action</button>
   </dec-breadcrumb>
 ```

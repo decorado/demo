@@ -29,3 +29,8 @@
 .cdk-overlay-container .mat-menu-panel {
   max-width: 400px;
 }
+
+.mat-button, .mat-flat-button {
+  min-width: 78px !important;
+  line-height: 30px !important;
+}

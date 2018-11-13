@@ -5,5 +5,5 @@
 </ng-container>
 
 <ng-container *ngIf="items">
-  <dec-sidenav-menu [items]="items.toArray()"></dec-sidenav-menu>
+  <dec-sidenav-menu [items]="items.toArray()" [opened]="leftMenuVisible.value"></dec-sidenav-menu>
 </ng-container>

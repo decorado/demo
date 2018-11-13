@@ -9,7 +9,7 @@
 
     <p><strong>User Name</strong> {{user?.name}}</p>
 
-    <button mat-raised-button color="warn" (click)="logout()" [disabled]="!user">Logout</button>
+    <button mat-flat-button color="warn" (click)="logout()" [disabled]="!user">Logout</button>
 
     <button mat-button color="warn" (click)="changePassword(user?.id)" [disabled]="!user">Change password</button>
 
@@ -59,7 +59,7 @@
       {{ (callType | uppercase) || 'Method' }}
     </button>
     <input type="text" matInput [(ngModel)]="resource" placeholder="Resource" />
-    <button mat-raised-button color="primary" matSuffix (click)="test()">Test</button>
+    <button mat-flat-button color="primary" matSuffix (click)="test()">Test</button>
   </mat-form-field>
 
   <div>Loading: {{ decoraApi.loading$ | async }}</div>
@@ -95,7 +95,7 @@
 
       <input type="password" matInput [(ngModel)]="password" name="password" placeholder="Password" />
 
-      <button mat-raised-button color="primary" matSuffix [disabled]="!email || !password" type="submit">Auth</button>
+      <button mat-flat-button color="primary" matSuffix [disabled]="!email || !password" type="submit">Auth</button>
 
     </mat-form-field>
   </form>

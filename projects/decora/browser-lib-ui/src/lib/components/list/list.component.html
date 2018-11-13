@@ -55,7 +55,7 @@
     </div>
     <!-- LOAD MORE BUTTON -->
     <div fxFlex *ngIf="!isLastPage && !loading && !disableShowMoreButton" class="text-center">
-      <button type="button" mat-raised-button (click)="showMore()">{{'label.show-more' | translate}}</button>
+      <button type="button" mat-flat-button (click)="showMore()">{{'label.show-more' | translate}}</button>
     </div>
   </div>
 </ng-template>

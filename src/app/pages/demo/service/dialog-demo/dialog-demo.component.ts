@@ -16,7 +16,7 @@ export class DialogDemoComponent implements OnInit {
   ngOnInit() {
   }
 
-  open(color, title) {
+  open(color, title?) {
 
     this.decDialog.open(DialogContentDemoComponentComponent, { color, context: { color }, title });
 

@@ -1,11 +1,12 @@
-<mat-toolbar [color]="color" *ngIf="initialized" class="dec-sidenav-toolbar">
+<mat-toolbar *ngIf="initialized" class="dec-sidenav-toolbar">
 
-  <span class="items-icon item-left" *ngIf="leftMenuTriggerVisible" (click)="toggleLeftMenu.emit()">
-    &#9776;
+  <span>
+    <dec-sidenav-toolbar-title [openedPass]="leftMenu.leftMenuVisible | async"></dec-sidenav-toolbar-title>
   </span>
 
-  <span *ngIf="customTitle">
-    <ng-content select="dec-sidenav-toolbar-title"></ng-content>
+  <span class="items-icon item-left item-icon-left" *ngIf="leftMenu" (click)="toggleLeftMenu.emit()">
+    <span class="item-left-arrow" *ngIf="leftMenu.leftMenuVisible | async">&#9666;</span>
+    <span class="item-right-arrow" *ngIf="!(leftMenu.leftMenuVisible | async)">&#9656;</span>
   </span>
 
   <div class="ribbon {{ribbon}}" *ngIf="notProduction">
@@ -18,10 +19,10 @@
 
   <span class="items-spacer"></span>
 
-  <span class="items-icon item-right" *ngIf="rightMenuTriggerVisible" (click)="toggleRightMenu.emit()">
-    &#9776;
+  <span class="items-icon item-right" *ngIf="rightMenu" (click)="toggleRightMenu.emit()">
+    <span *ngIf="rightMenu.rightMenuVisible | async">&#9656;</span>
+    <span *ngIf="!(rightMenu.rightMenuVisible | async)">&#9666;</span>
   </span>
-
 
   <!-- PROGRESS BAR -->
   <div class="progress-bar-wrapper" *ngIf="progressBarVisible">

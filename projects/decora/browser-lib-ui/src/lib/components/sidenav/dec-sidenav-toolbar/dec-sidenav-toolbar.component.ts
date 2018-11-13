@@ -1,5 +1,8 @@
 import {Component, Input, Output, EventEmitter, ContentChild, AfterViewInit, OnInit} from '@angular/core';
 import { DecSidenavToolbarTitleComponent } from './../dec-sidenav-toolbar-title/dec-sidenav-toolbar-title.component';
+import { DecSidenavService } from './../sidenav.service';
+import { DecSidenavMenuLeftComponent } from './../dec-sidenav-menu-left/dec-sidenav-menu-left.component';
+import { DecSidenavMenuRightComponent } from './../dec-sidenav-menu-right/dec-sidenav-menu-right.component';
 
 @Component({
   selector: 'dec-sidenav-toolbar',
@@ -11,16 +14,20 @@ export class DecSidenavToolbarComponent implements AfterViewInit, OnInit {
   initialized;
 
   notProduction = true;
+
   ribbon = '';
+
   label = '';
+
+  leftMenuState$;
 
   @Input() color;
 
   @Input() environment;
 
-  @Input() leftMenuTriggerVisible = true;
+  @Input() leftMenu: DecSidenavMenuLeftComponent;
 
-  @Input() rightMenuTriggerVisible = true;
+  @Input() rightMenu: DecSidenavMenuRightComponent;
 
   @Input() progressBarVisible: string | boolean = false;
 
@@ -30,7 +37,11 @@ export class DecSidenavToolbarComponent implements AfterViewInit, OnInit {
 
   @ContentChild(DecSidenavToolbarTitleComponent) customTitle: DecSidenavToolbarTitleComponent;
 
-  constructor() { }
+  constructor(
+    private decSidenavService: DecSidenavService
+  ) {
+    this.leftMenuState$ = this.decSidenavService.getSidenavVisibility('left');
+  }
 
   ngAfterViewInit() {
     setTimeout(() => {

@@ -1,3 +1,8 @@
-<div [routerLink]="routerLink" class="dec-sidenav-toolbar-title">
-  <ng-content></ng-content>
+<div [routerLink]="routerLink" 
+  class="dec-sidenav-toolbar-title" 
+  [ngClass]="{close: !openedPass}">
+
+  <img *ngIf="openedPass" class="dec-logo-toolbar" src="//s3-sa-east-1.amazonaws.com/static-files-prod/platform/CORA-CGI.svg">
+  <img *ngIf="!openedPass" class="dec-logo-toolbar" src="//s3-sa-east-1.amazonaws.com/static-files-prod/platform/cora-cgi-icon.svg">
 </div>
+

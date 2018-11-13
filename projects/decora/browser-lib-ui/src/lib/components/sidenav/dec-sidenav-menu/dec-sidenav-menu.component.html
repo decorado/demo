@@ -1,10 +1,12 @@
-<mat-list>
-  <ng-container *ngFor="let item of items">
-    <ng-container *ngIf="item.started && item.template ? true : false">
-      <ng-template
-      [ngTemplateOutlet]="item.template"
-      [ngTemplateOutletContext]="{treeLevel: treeLevel + 1}"
-      ></ng-template>
+<div class="menuClass" [ngClass]="{menuOpen: openedPass, menuClose: !openedPass}">
+  <mat-list>
+    <ng-container *ngFor="let item of items">
+      <ng-container *ngIf="item.started && item.template ? true : false">
+        <ng-template 
+          [ngTemplateOutlet]="item.template" 
+          [ngTemplateOutletContext]="{treeLevel: treeLevel + 1, iconMode: openedPass}">
+        </ng-template>
+      </ng-container>
     </ng-container>
-  </ng-container>
-</mat-list>
+  </mat-list>
+</div>

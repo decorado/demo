@@ -4,6 +4,11 @@
 
 .items-icon {
 
+  width: 32px;
+  font-size: 14px;
+
+  background-color: #f9f9f9;
+
   cursor: pointer;
   -webkit-transform:scale(1.2, 0.8);
   -moz-transform:scale(1.2, 0.8);
@@ -11,12 +16,19 @@
   -o-transform:scale(1.2, 0.8);
   transform:scale(1.2, 0.8);
 
+
   &.item-right {
-    padding-left: 14px;
+    padding-left: 4px;
+    margin-right: -12px;
+    text-align: left;
+    border-radius: 50% 0 0 50%;
   }
 
   &.item-left {
-    padding-right: 14px;
+    padding-right: 4px;
+    margin-left: -12px;
+    text-align: right;
+    border-radius: 0 50% 50% 0;
   }
 
 }
@@ -64,9 +76,11 @@
   }
 }
 
-
 .mat-toolbar {
   position: relative;
+  background-color: transparent;
+  padding: 0;
+
   .progress-bar-wrapper {
     position: absolute;
     bottom: 0;

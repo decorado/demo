@@ -4,6 +4,6 @@
 </mat-form-field>
 <div fxLayoutAlign="end" fxLayoutGap="16px">
   <button mat-button (click)="cancel()">{{cancelLabel | uppercase}}</button>
-  <button mat-raised-button color="warn" *ngIf="editing" (click)="delete()">{{deleteLabel | uppercase}}</button>
-  <button mat-raised-button color="primary" [disabled]="!comment" (click)="confirm()">{{confirmLabel | uppercase}}</button>
+  <button mat-flat-button color="warn" *ngIf="editing" (click)="delete()">{{deleteLabel | uppercase}}</button>
+  <button mat-flat-button color="primary" [disabled]="!comment" (click)="confirm()">{{confirmLabel | uppercase}}</button>
 </div>

@@ -5,9 +5,9 @@
 @include mat-core();
 
 // COLORS
-$decora-theme-primary-palette: mat-palette($dec-grey);
-$decora-theme-accent-palette: mat-palette($dec-ligth-red);
-$decora-theme-warn-palette: mat-palette($mat-red);
+$decora-theme-primary-palette: mat-palette($dec-primary);
+$decora-theme-accent-palette: mat-palette($dec-accent);
+$decora-theme-warn-palette: mat-palette($dec-warn);
 
 // THEME
 $decora-theme: mat-light-theme($decora-theme-primary-palette, $decora-theme-accent-palette, $decora-theme-warn-palette);

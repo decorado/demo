@@ -1,29 +1,47 @@
-<ng-template let-treeLevel="treeLevel" #template>
+<ng-template let-treeLevel="treeLevel" let-iconMode="iconMode" #template>
 
-  <mat-list-item class="click dec-sidenav-menu-item"
-  (click)="subitems.length ? toggleSubmenu() : openLink()"
-  [ngClass]="getBackground(treeLevel)">
+  <mat-list-item class="click dec-sidenav-menu-item" (click)="subitems.length ? toggleSubmenu() : openLink()" [ngClass]="getBackground(treeLevel)">
 
     <div class="item-wrapper">
 
-      <div [ngStyle]="{paddingLeft: treeLevel * 16 + 'px'}" class="item-content">
-        <ng-content></ng-content>
+      <div class="item-content">
+        <span *ngIf="treeLevel === 1" class="fake-icon">{{ prefix }} &nbsp;</span>
+        <span *ngIf="treeLevel === 2" class="fake-icon">&nbsp; &#9899; &nbsp;</span>
+
+        <ng-container>
+          <ng-container *ngIf="iconMode else iconTemplate">
+            <ng-container [ngTemplateOutlet]="innerContent"></ng-container>
+          </ng-container>
+        </ng-container>
+
+        <div *ngIf="subitems.length && iconMode" class="text-right">
+          <ng-container [ngSwitch]="showSubmenu">
+            <span class="arrows-container" *ngSwitchCase="true"><i class="arrow down"></i></span>
+            <span class="arrows-container" *ngSwitchCase="false"><i class="arrow right"></i></span>
+          </ng-container>
+        </div>
       </div>
 
-      <div *ngIf="subitems.length" class="text-right">
-        <ng-container [ngSwitch]="showSubmenu">
-          <span *ngSwitchCase="true"><i class="arrow down"></i></span>
-          <span *ngSwitchCase="false"><i class="arrow right"></i></span>
-        </ng-container>
-      </div>
     </div>
 
   </mat-list-item>
 
   <div class="subitem-menu" *ngIf="showSubmenu">
 
-    <dec-sidenav-menu [items]="subitems" [treeLevel]="treeLevel"></dec-sidenav-menu>
+    <dec-sidenav-menu [items]="subitems" [treeLevel]="treeLevel" [opened]="iconMode"></dec-sidenav-menu>
 
   </div>
+
+</ng-template>
+
+<ng-template #innerContent>
+
+  <ng-content></ng-content>
+
+</ng-template>
+
+<ng-template #iconTemplate>
+
+  <dec-icon [font]="decIcon?.font">{{decIcon?.icon}}</dec-icon>
 
 </ng-template>

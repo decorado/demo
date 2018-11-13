@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, HostListener } from '@angular/core';
+import { DecSidenavMenuItemComponent } from '../dec-sidenav-menu-item/dec-sidenav-menu-item.component';
 
 @Component({
   selector: 'dec-sidenav-menu',
@@ -7,10 +8,96 @@ import { Component, Input } from '@angular/core';
 })
 export class DecSidenavMenuComponent {
 
-  @Input() items = [];
+  @Input() items: DecSidenavMenuItemComponent[] = [];
+
+  @Input()
+  set opened(v) {
+    if (v !== this._opened) {
+      this._opened = v;
+      this.openedPass = JSON.parse(JSON.stringify(v));
+    }
+  }
+
+  get opened() {
+    return this._opened;
+  }
+
+  _opened = true;
+
+  openedPass = true;
 
   @Input() treeLevel = -1;
 
+  // 
+  classesOut = [
+    'mat-list-item-content',
+    'dec-icon',
+    'material-icons',
+    'item-content',
+    'mat-list',
+    'mat-drawer-inner-container',
+    'dec-sidenav-toolbar-title',
+    'dec-logo-toolbar',
+    'item-icon-left',
+    'item-left-arrow',
+    'item-right-arrow',
+    'fake-icon',
+    'arrow',
+    'right',
+    'down',
+    'arrows-container'
+  ]
+
+  classesIn = [
+    'menuClass',
+    'mat-list-item-content',
+    'mat-drawer-inner-container',
+    'dec-sidenav-toolbar-title',
+    'dec-logo-toolbar',
+    'item-icon-left',
+    'item-left-arrow',
+    'item-right-arrow',
+    'fake-icon',
+    'arrow',
+    'right',
+    'down',
+    'arrows-container'
+  ]
+
   constructor() { }
 
+
+  @HostListener('document:mouseover', ['$event'])
+  onHover($event) {
+    if (!$event) {
+      return;
+    }
+    const el = $event.target;
+    if (this.verifyItemContent(el, this.classesIn)&& !this.opened) {
+      this.openedPass = true;
+    }
+  }
+
+  @HostListener('document:mousemove', ['$event'])
+  onOut($event) {
+    if (!$event) {
+      return;
+    }
+    const el = $event.target;
+    // console.log(el.classList);
+    if (!this.verifyItemContent(el, this.classesOut) && !this.opened) {
+      this.openedPass = false;
+    }
+  }
+
+  verifyItemContent(div, array) {
+    let exists = false;
+    for (let i=0;i<array.length;i++) {
+      if (div.classList.contains(array[i])) {
+        exists = true;
+      }
+    }
+    return exists;
+  }
+  
 }

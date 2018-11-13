@@ -17,9 +17,9 @@
         <!-- CONTENT  -->
         <ng-content></ng-content>
         <!-- BACK BUTTON -->
-        <button type="button" mat-raised-button color="default" *ngIf="backButtonPath" (click)="goBack()">{{ backLabel }}</button>
+        <button type="button" mat-flat-button color="default" *ngIf="backButtonPath" (click)="goBack()">{{ backLabel }}</button>
         <!-- FORWARD BUTTON -->
-        <button type="button" mat-raised-button color="default" *ngIf="forwardButton" (click)="goForward()">{{ forwardLabel }}</button>
+        <button type="button" mat-flat-button color="default" *ngIf="forwardButton" (click)="goForward()">{{ forwardLabel }}</button>
       </div>
     </div>
   </div>

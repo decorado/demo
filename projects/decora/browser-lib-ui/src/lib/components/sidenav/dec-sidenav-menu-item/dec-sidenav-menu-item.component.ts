@@ -1,5 +1,6 @@
-import { Component, ViewChild, TemplateRef, ContentChildren, QueryList, AfterViewInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, ViewChild, TemplateRef, ContentChildren, QueryList, AfterViewInit, Input, Output, EventEmitter, ContentChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { DecIconComponent } from './../../dec-icon/dec-icon.component';
 
 @Component({
   selector: 'dec-sidenav-menu-item',
@@ -10,9 +11,24 @@ export class DecSidenavMenuItemComponent implements AfterViewInit {
 
   @Input() routerLink;
 
+  @Input() prefix;
+
   @ViewChild(TemplateRef) template: TemplateRef<any>;
 
-  @ContentChildren(DecSidenavMenuItemComponent, {descendants: false}) _subitems: QueryList<DecSidenavMenuItemComponent>;
+  @ContentChild(DecIconComponent)
+  set decIcon(v: DecIconComponent) {
+    if (v) {
+      this._decIcon = v;
+    }
+  }
+
+  get decIcon(): DecIconComponent {
+    return this._decIcon;
+  }
+
+  _decIcon: DecIconComponent;
+
+  @ContentChildren(DecSidenavMenuItemComponent, { descendants: false }) _subitems: QueryList<DecSidenavMenuItemComponent>;
 
   @Output() toggle = new EventEmitter();
 
@@ -63,7 +79,15 @@ export class DecSidenavMenuItemComponent implements AfterViewInit {
   }
 
   getBackground(treeLevel) {
-    return this.checkIfActive() ? 'mat-list-item-active' : 'mat-list-item-' + treeLevel;
+    let className;
+    if (this.checkIfActive() && !treeLevel) {
+      className = 'mat-list-item-active';
+    } else if (this.checkIfActive() && treeLevel) {
+      className = 'mat-list-item-active mat-list-item-' + treeLevel;
+    } else {
+      className = 'mat-list-item-' + treeLevel;
+    }
+    return className;
   }
 
   checkIfActive() {

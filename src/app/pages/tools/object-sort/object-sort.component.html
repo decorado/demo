@@ -11,13 +11,13 @@
     <h3>Result</h3>
 
     <div fxflex>
-      <button mat-raised-button (click)="copyToClipboard()">Copy</button>
+      <button mat-flat-button (click)="copyToClipboard()">Copy</button>
     </div>
 
     <pre [innerHtml]="sortedObject | prettyjson:2" #prettyObjectElement></pre>
 
     <div fxflex>
-      <button mat-raised-button (click)="copyToClipboard()">Copy</button>
+      <button mat-flat-button (click)="copyToClipboard()">Copy</button>
     </div>
   </div>
 

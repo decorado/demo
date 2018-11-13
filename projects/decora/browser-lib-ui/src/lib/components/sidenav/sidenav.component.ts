@@ -61,7 +61,7 @@ export class DecSidenavComponent implements AfterViewInit {
   ) {}
 
   ngAfterViewInit() {
-    this.detectAndShowChildComponents();
+    this.setMenuContext();
     this.subscribeToToolbarEvents();
     this.setToolbarLoadingState();
   }
@@ -141,11 +141,11 @@ export class DecSidenavComponent implements AfterViewInit {
     this.rightMenu.rightMenuVisible.next(openedStatus);
   }
 
-  private detectAndShowChildComponents() {
+  private setMenuContext() {
 
-    this.toolbar.leftMenuTriggerVisible = this.leftMenu ? true : false;
+    this.toolbar.leftMenu = this.leftMenu;
 
-    this.toolbar.rightMenuTriggerVisible = this.rightMenu ? true : false;
+    this.toolbar.rightMenu = this.rightMenu;
 
   }
 
@@ -154,7 +154,8 @@ export class DecSidenavComponent implements AfterViewInit {
     if (this.toolbar) {
 
       this.toolbar.toggleLeftMenu.subscribe(() => {
-        this.leftSidenav.toggle();
+        this.leftMenu.open = !this.leftMenu.open;
+        this.leftMenu.leftMenuVisible.next(this.leftMenu.open);
       });
 
       this.toolbar.toggleRightMenu.subscribe(() => {

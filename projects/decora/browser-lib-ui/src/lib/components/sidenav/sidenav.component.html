@@ -1,16 +1,17 @@
-<div class="dec-sidenav-wraper">
-  <!-- TOOLBAR -->
-  <div *ngIf="toolbar" class="dec-sidenav-toolbar-wrapper" [ngClass]="{'full-screen': !(leftMenu.leftMenuVisible | async)}">
-    <ng-content select="dec-sidenav-toolbar"></ng-content>
-  </div>
-  <!-- / TOOLBAR -->
+<!-- TOOLBAR -->
+<div *ngIf="toolbar" class="dec-sidenav-toolbar-wrapper">
+  <ng-content select="dec-sidenav-toolbar"></ng-content>
+</div>
+<!-- / TOOLBAR -->
 
-  <mat-sidenav-container [ngClass]="{'with-toolbar': toolbar, 'full-screen': !(leftMenu.leftMenuVisible | async)}">
+<div class="dec-sidenav-wraper">
+
+  <mat-sidenav-container [ngClass]="{'with-toolbar': toolbar, 'full-screen': !(leftMenu.leftMenuVisible | async)}" autosize>
 
     <!-- LEFT MENU -->
     <mat-sidenav *ngIf="leftMenu"
-    [mode]="leftMenu.leftMenuMode | async"
-    [opened]="leftMenu.leftMenuVisible | async"
+    [mode]="'side'"
+    [opened]="true"
     position="start"
     (openedChange)="leftSidenavOpenedChange($event)"
     #leftSidenav>
