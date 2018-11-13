@@ -19,13 +19,14 @@
 
 
     <div fxFlex="50" fxLayout="column" fxLayoutGap="16px" class="zoom-container">
-      <dec-marks #renderZoom [noComments]="false" [marker]="render" [parentId]="parentId" [qaMode]="true" (link)="onLinkTag($event)"
+      <dec-marks #renderZoom [noComments]="false" [marker]="render" [parentId]="parentId" [qaMode]="qaMode" (link)="onLinkTag($event)"
         (deleteTag)="deleteTag($event)" [zoomScale]="render?.zoomScale" [zoomPosition]="render?.position">
       </dec-marks>
 
       <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="16px" class="fake-div">
         <button mat-button color="primary" (click)="onCancel()"> {{ 'label.cancel' | translate }} </button>
-        <button mat-flat-button color="primary" (click)="onSave()"> {{ 'label.save' | translate }} </button>
+        <button *ngIf="qaMode" mat-flat-button color="primary" (click)="onSave()"> {{ 'label.save' | translate }}
+        </button>
       </div>
 
       <div class="container-comments" fxLayout="column" fxLayoutGap="16px">
@@ -34,7 +35,7 @@
             <dec-icon font="mat">bookmarks</dec-icon>Tags
           </h2>
         </div>
-        <dec-markdowns-comment [parentId]="parentId" [qaMode]="true" [renders]="renderMarkdons"></dec-markdowns-comment>
+        <dec-markdowns-comment [parentId]="parentId" [qaMode]="qaMode" [renders]="renderMarkdons"></dec-markdowns-comment>
       </div>
     </div>
   </div>

@@ -42,6 +42,15 @@ export class DecZoomAreaComponent implements OnInit {
     return this._note;
   }
 
+  @Input()
+  public get qaMode(): boolean {
+    return this._qaMode;
+  }
+  public set qaMode(v: boolean) {
+    this._qaMode = v;
+  }
+
+
   @Output() save = new EventEmitter();
 
   @Output() cancel = new EventEmitter();
@@ -49,6 +58,7 @@ export class DecZoomAreaComponent implements OnInit {
   private _reference;
   private _render;
   private _note;
+  private _qaMode: boolean;
 
   @Input() parentId: number;
 
@@ -77,8 +87,10 @@ export class DecZoomAreaComponent implements OnInit {
   }
 
   onLinkTag(event) {
-    this.referenceQaMode = true;
-    this.commentIndex = event.reference;
+    if (this.qaMode) {
+      this.referenceQaMode = true;
+      this.commentIndex = event.reference;
+    }
   }
 
   deleteTag(event) {

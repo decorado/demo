@@ -438,9 +438,7 @@ export class DecZoomMarksComponent implements AfterViewChecked {
   }
 
   private clickEventZoomTag(zoomArea: ZoomArea) {
-    if (this.qaMode) {
-      this.openZoomArea.emit(zoomArea);
-    }
+    this.openZoomArea.emit(zoomArea);
   }
 
   private clearSquare(): void {
