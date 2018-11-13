@@ -422,21 +422,25 @@ export class DecZoomMarksComponent implements AfterViewChecked {
   }
 
   private clickEventPointTag(comment: Tag) {
-    const dialogRef = this.dialog.open(DecRenderCommentComponent, { data: { comment: comment.comment, version: comment.version } });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        comment.comment = result.comment;
-        comment.description = result.description;
-      }
-    });
+    if (this.qaMode) {
+      const dialogRef = this.dialog.open(DecRenderCommentComponent, { data: { comment: comment.comment, version: comment.version } });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          comment.comment = result.comment;
+          comment.description = result.description;
+        }
+      });
 
-    dialogRef.componentInstance.deleteMark.subscribe(() => {
-      this.deleteMark(comment);
-    });
+      dialogRef.componentInstance.deleteMark.subscribe(() => {
+        this.deleteMark(comment);
+      });
+    }
   }
 
   private clickEventZoomTag(zoomArea: ZoomArea) {
-    this.openZoomArea.emit(zoomArea);
+    if (this.qaMode) {
+      this.openZoomArea.emit(zoomArea);
+    }
   }
 
   private clearSquare(): void {

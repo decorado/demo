@@ -10,7 +10,7 @@
       <span *ngIf="tag.comment" class="text-markdown">
         {{tag.comment}} - {{tag.description}}
       </span>
-      <div class="container-delete">
+      <div class="container-delete" *ngIf="qaMode">
         <mat-icon class="icon-delete" (click)="deleteTag(indexRender, tag)">delete</mat-icon>
       </div>
     </div>

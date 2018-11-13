@@ -33,6 +33,17 @@ export class DecMarkdownsCommentComponent {
   }
   _parentId: any;
 
+
+  @Input()
+  public get qaMode(): string {
+    return this._qaMode;
+  }
+  public set qaMode(v: string) {
+    this._qaMode = v;
+  }
+  private _qaMode: string;
+
+
   @Input()
   decZoomMarksComponent: DecZoomMarksComponent;
 
