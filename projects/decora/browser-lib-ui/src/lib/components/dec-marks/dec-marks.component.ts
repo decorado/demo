@@ -45,6 +45,8 @@ export class DecMarksComponent implements AfterViewChecked {
 
   @Output() link = new EventEmitter();
   @Output() referenceQa = new EventEmitter();
+  @Output() deleteTag = new EventEmitter();
+
 
   @ViewChild('canvas') canvas: ElementRef;
   public canvasEl: HTMLCanvasElement;
@@ -371,12 +373,28 @@ export class DecMarksComponent implements AfterViewChecked {
 
   private deleteMark(comment) {
     this.marker.tags.splice(this.marker.tags.indexOf(comment), 1);
+    this.deleteTag.emit(comment);
     this.marker.tags.forEach(c => {
       if (c.reference > comment.reference) {
         c.reference--;
       }
     });
     this.removeCommentNode();
+    this.drawMarks();
+  }
+
+  public deleteMarkByReference(reference) {
+    const tags = this.marker.tags.filter(t => t.reference.toString() === reference);
+    if (tags && tags.length) {
+      tags.forEach(t => {
+        this.marker.tags.splice(this.marker.tags.indexOf(t), 1);
+      });
+    }
+    this.marker.tags.forEach(t => {
+      if (parseFloat(t.reference.toString()) > parseFloat(reference)) {
+        t.reference = parseFloat((parseFloat(t.reference.toString()) - 0.1).toFixed(1));
+      }
+    });
     this.drawMarks();
   }
 

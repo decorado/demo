@@ -64,11 +64,14 @@ export class DecMarkdownsCommentComponent {
   }
 
   deleteTag(indexRender: number, tag: Tag): void {
-    const indexTag = this.renders[indexRender].tags.indexOf(tag);
-    this.renders[indexRender].tags.splice(indexTag, 1);
+    if (this.parentId) {
 
-    this.decZoomMarksComponent.recalculateReferences(tag);
-    this.decZoomMarksComponent.drawMarks();
+    } else {
+      const indexTag = this.renders[indexRender].tags.indexOf(tag);
+      this.renders[indexRender].tags.splice(indexTag, 1);
+      this.decZoomMarksComponent.recalculateReferences(tag);
+      this.decZoomMarksComponent.drawMarks();
+    }
   }
 
 }

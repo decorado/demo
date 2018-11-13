@@ -18,7 +18,7 @@ export class DecoraZoomAreaDemoComponent implements OnInit {
       'fileBaseUrl': 'https://s3.amazonaws.com/decora-platform-1-nv/2018/5/8/5af21109d42cb34adaad2c8f.jpg',
       'fileUrl': 'https://s3.amazonaws.com/decora-platform-1-nv/2018/5/8/5af21109d42cb34adaad2c8f.jpg'
     },
-    comments: []
+    tags: []
   };
 
   reference = {
@@ -32,7 +32,7 @@ export class DecoraZoomAreaDemoComponent implements OnInit {
       'fileBaseUrl': 'https://s3.amazonaws.com/decora-platform-1-nv/2018/5/8/5af21109d42cb34adaad2c8f.jpg',
       'fileUrl': 'https://s3.amazonaws.com/decora-platform-1-nv/2018/5/8/5af21109d42cb34adaad2c8f.jpg'
     },
-    comments: []
+    tags: []
   };
 
   constructor() { }
