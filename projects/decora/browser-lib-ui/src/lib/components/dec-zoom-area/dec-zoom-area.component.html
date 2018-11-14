@@ -24,6 +24,8 @@
       </dec-marks>
 
       <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="16px" class="fake-div">
+        <button mat-button *ngIf="editMode" color="secondary" (click)="deleteZoomArea()"> {{ 'label.delete' | translate
+          }} </button>
         <button mat-button color="primary" (click)="onCancel()"> {{ 'label.cancel' | translate }} </button>
         <button *ngIf="qaMode" mat-flat-button color="primary" (click)="onSave()"> {{ 'label.save' | translate }}
         </button>

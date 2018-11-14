@@ -561,11 +561,20 @@ export class DecZoomMarksComponent implements AfterViewChecked {
     }
   }
 
-  private deleteMark(tag: Tag) {
-    this.marker.tags.splice(this.marker.tags.indexOf(tag), 1);
+  public deleteMark(tag: any) {
+    if (tag.referenceShot && tag.renderShot) {
+      this.marker.zoomAreas.splice(this.marker.zoomAreas.indexOf(tag), 1);
+    } else {
+      this.marker.tags.splice(this.marker.tags.indexOf(tag), 1);
+    }
     this.recalculateReferences(tag);
-
     this.removeCommentNode();
+    this.renewZoom();
+  }
+
+  public renewZoom() {
+    this.zoomScale = 1;
+    this.zoom(this.zoomScale);
     this.drawMarks();
   }
 

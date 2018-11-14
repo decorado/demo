@@ -137,12 +137,14 @@ export class DecJobRoundComponent {
       this.zoomAreaOpen = false;
       this.setZoomAreaOpen.emit(this.zoomAreaOpen);
       this.editZoomArea = null;
+      this.renewGallery();
       return;
     }
     this.note = null;
     this.renderGallery.addNewZoomArea($event);
     this.zoomAreaOpen = false;
     this.setZoomAreaOpen.emit(this.zoomAreaOpen);
+    this.renewGallery();
   }
 
   openEditZoomArea($event) {
@@ -154,6 +156,17 @@ export class DecJobRoundComponent {
     this.parentId++;
     this.zoomAreaOpen = true;
     this.setZoomAreaOpen.emit(this.zoomAreaOpen);
+  }
+
+  deleteZoomAreaByParentId(id) {
+    this.onCancel();
+    this.renderGallery.zoomMarks.deleteMark(this.renderGallery.markedObj.zoomAreas[id]);
+    this.renewGallery();
+  }
+
+  renewGallery() {
+    this.referenceGallery.zoomMarks.renewZoom();
+    this.renderGallery.zoomMarks.renewZoom();
   }
 
   formatRenderReference(round) {

@@ -47,8 +47,8 @@
 
   <div *ngIf="zoomAreaOpen" class="zoom-area-container">
     <div class="render-header" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="32px"></div>
-    <dec-zoom-area (save)="onSaveZoomArea($event)" [reference]="reference" [note]="note" (cancel)="onCancel()" [render]="render"
-      [parentId]="parentId" [qaMode]="qaMode">
+    <dec-zoom-area (save)="onSaveZoomArea($event)" [reference]="reference" [editMode]="editZoomArea" [note]="note"
+      (cancel)="onCancel()" [render]="render" [parentId]="parentId" [qaMode]="qaMode" (delete)="deleteZoomAreaByParentId($event)">
     </dec-zoom-area>
   </div>
 

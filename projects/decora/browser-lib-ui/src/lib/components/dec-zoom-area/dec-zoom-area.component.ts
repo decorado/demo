@@ -27,6 +27,17 @@ export class DecZoomAreaComponent implements OnInit {
     }
   }
 
+
+  private _editMode: string;
+  @Input()
+  public get editMode(): string {
+    return this._editMode;
+  }
+  public set editMode(v: string) {
+    this._editMode = v;
+  }
+
+
   get render() {
     return this._render;
   }
@@ -54,6 +65,8 @@ export class DecZoomAreaComponent implements OnInit {
   @Output() save = new EventEmitter();
 
   @Output() cancel = new EventEmitter();
+
+  @Output() delete = new EventEmitter();
 
   private _reference;
   private _render;
@@ -99,6 +112,10 @@ export class DecZoomAreaComponent implements OnInit {
 
   onReferenceQa($event) {
     this.referenceQaMode = false;
+  }
+
+  deleteZoomArea() {
+    this.delete.emit(this.parentId - 1);
   }
 
   onCancel() {
