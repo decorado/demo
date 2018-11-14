@@ -28,7 +28,6 @@ export class DecStatusJobRoundComponent implements OnInit {
   @Input()
   set job(v) {
     if (v) {
-      console.log(v);
       this.roundsQnt = v.rounds.length;
       this._job = v;
     }

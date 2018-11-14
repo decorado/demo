@@ -130,21 +130,29 @@ export class DecJobRoundComponent {
   }
 
   onSaveZoomArea($event) {
-    if (this.editZoomArea) {
-      this.editZoomArea.referenceShot = $event.referenceShot;
-      this.editZoomArea.renderShot = $event.renderShot;
-      this.renderGallery.addNewZoomArea(JSON.parse(JSON.stringify(this.editZoomArea)));
+    if ($event.renderShot.tags.length) {
+      if (this.editZoomArea) {
+        this.editZoomArea.referenceShot = $event.referenceShot;
+        this.editZoomArea.renderShot = $event.renderShot;
+        this.renderGallery.addNewZoomArea(JSON.parse(JSON.stringify(this.editZoomArea)));
+        this.zoomAreaOpen = false;
+        this.setZoomAreaOpen.emit(this.zoomAreaOpen);
+        this.editZoomArea = null;
+        this.renewGallery();
+        return;
+      }
+      this.note = null;
+      this.renderGallery.addNewZoomArea($event);
       this.zoomAreaOpen = false;
       this.setZoomAreaOpen.emit(this.zoomAreaOpen);
-      this.editZoomArea = null;
       this.renewGallery();
-      return;
+    } else if (this.editZoomArea) {
+      this.deleteZoomAreaByParentId(this.parentId - 1);
+    } else {
+      this.zoomAreaOpen = false;
+      this.setZoomAreaOpen.emit(this.zoomAreaOpen);
+      this.renewGallery();
     }
-    this.note = null;
-    this.renderGallery.addNewZoomArea($event);
-    this.zoomAreaOpen = false;
-    this.setZoomAreaOpen.emit(this.zoomAreaOpen);
-    this.renewGallery();
   }
 
   openEditZoomArea($event) {
