@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { DecMarksComponent } from './../dec-marks/dec-marks.component';
+import { DecConfirmDialogService } from './../../services/confirm-dialog/dec-confirm-dialog.service';
 
 @Component({
   selector: 'dec-zoom-area',
@@ -84,7 +85,7 @@ export class DecZoomAreaComponent implements OnInit {
 
   @ViewChild('referenceZoom') referenceZoom: DecMarksComponent;
 
-  constructor() { }
+  constructor(private confirmDialog: DecConfirmDialogService) { }
 
   ngOnInit() {
   }
@@ -115,7 +116,17 @@ export class DecZoomAreaComponent implements OnInit {
   }
 
   deleteZoomArea() {
-    this.delete.emit(this.parentId - 1);
+    const dialogRef = this.confirmDialog.open({
+      description: 'message.info.are-you-sure-you-want-to-delete-this-zoom-area',
+      height: '240px',
+      customButtonTitle: 'message.info.yes-delete-zoom-area'
+    });
+
+    dialogRef.afterClosed().subscribe(confirmed => {
+      if (confirmed) {
+        this.delete.emit(this.parentId - 1);
+      }
+    });
   }
 
   onCancel() {

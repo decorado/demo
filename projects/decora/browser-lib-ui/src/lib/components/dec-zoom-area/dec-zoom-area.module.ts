@@ -8,6 +8,7 @@ import { DecMarkdownsCommentModule } from './../dec-markdowns-comment/dec-markdo
 import { DecMarksModule } from './../dec-marks/dec-marks.module';
 import { DecIconModule } from './../dec-icon/dec-icon.module';
 import { FormsModule } from '@angular/forms';
+import { DecConfirmDialogModule } from './../../services/confirm-dialog/dec-confirm-dialog.module';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import { FormsModule } from '@angular/forms';
     DecMarkdownsCommentModule,
     DecMarksModule,
     DecIconModule,
+    DecConfirmDialogModule,
     FormsModule
   ],
   declarations: [
