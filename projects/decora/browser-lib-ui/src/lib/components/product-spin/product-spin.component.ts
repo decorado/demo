@@ -26,7 +26,7 @@ export class DecProductSpinComponent implements OnInit {
   @Input() looping = false;
   @Input() onlyModal = false;
   @Input() FALLBACK_IMAGE: string = FALLBACK_IMAGE;
-  @Input() startInCenter = true;
+  @Input() startInCenter = false;
   @Input() rotateToIndex: number;
   @Input() rotateToMiddle: boolean;
   @Input() showOpenDialogButton = true;
@@ -40,7 +40,6 @@ export class DecProductSpinComponent implements OnInit {
       if (spinChanged) {
         this._spin = spin;
         this.resetScenesData(scenes);
-        this.reorderScenesBasedOnOpposedDirectionsIndex();
         this.detectFrameShown();
       }
     }
@@ -151,37 +150,6 @@ export class DecProductSpinComponent implements OnInit {
 
   }
 
-  private detectJump(spin) {
-    if (spin) {
-      const shotsConfig = spin.config.shots.map(shot => shot.products[0].rotation[2]);
-      return this.hasJump(shotsConfig);
-    } else {
-      return false;
-    }
-  }
-
-  private hasJump(positions: number[]) {
-    let previousPosition;
-    let previousDistance;
-    let irregularJump = false;
-
-    positions.forEach(position => {
-      if (previousPosition) {
-        const distance = position - previousPosition;
-        const distanceDiff = distance / (previousDistance || distance);
-        const normalizedDistance = Math.round(distanceDiff);
-        if (normalizedDistance !== 1) {
-          irregularJump = true;
-        }
-        previousDistance = distance;
-      }
-      previousPosition = position;
-    });
-
-    return irregularJump;
-
-  }
-
   private detectFrameShown() {
     this.frameShown = !this.startInCenter ? 0 : this.getMiddle();
   }
@@ -217,34 +185,6 @@ export class DecProductSpinComponent implements OnInit {
     }
 
     this.positionDiff = event.clientX - this.lastMouseEvent.clientX;
-  }
-
-  private reorderScenesBasedOnOpposedDirectionsIndex() {
-
-    const hasJump = this.detectJump(this.spin);
-
-    if (this.rotateToIndex || hasJump) {
-
-      try {
-
-        const scenesCopy = JSON.parse(JSON.stringify(this.scenes));
-
-        const scenesLength = scenesCopy.length;
-
-        const middleIndex = this.rotateToIndex ? this.rotateToIndex : Math.ceil(scenesLength / 2);
-
-        const firstHalf = scenesCopy.slice(0, middleIndex).reverse();
-
-        const secondHalf = scenesCopy.slice(middleIndex, scenesLength).reverse();
-
-        const reorderedScenes = firstHalf.concat(secondHalf).reverse();
-
-        this.scenes = reorderedScenes;
-
-      } catch (error) { }
-
-    }
-
   }
 
   private getUrlsFromSysFiles(sysFiles) {
