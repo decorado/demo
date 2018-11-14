@@ -8,6 +8,8 @@
             <mat-button-toggle value="reference">{{ 'label.reference-images' | translate }}</mat-button-toggle>
             <mat-button-toggle value="round1">Round 1</mat-button-toggle>
             <mat-button-toggle value="round2" *ngIf="roundNumber > 2">Round 2</mat-button-toggle>
+            <mat-button-toggle value="round2" *ngIf="roundNumber > 3">Round 3</mat-button-toggle>
+            <mat-button-toggle value="round2" *ngIf="roundNumber > 4">Round 4</mat-button-toggle>
           </mat-button-toggle-group>
         </div>
         <dec-zoom-marks-gallery #referenceGallery *ngIf="markedReference" [markedObjs]="markedReference">
