@@ -268,7 +268,7 @@ export class DecMarksComponent implements AfterViewChecked {
       link.innerHTML = '+';
       const xPos = parentX ? parentX : x;
       const xPositionInPixels = xPos * this.marksWrapperEl.offsetWidth / 100;
-      if (xPositionInPixels <= 24) {
+      if (xPositionInPixels <= 32) {
         link.classList.add('right-side');
       }
       tag.appendChild(link);

@@ -206,8 +206,10 @@ export class DecJobRoundComponent {
         break;
       case 'round2':
         this.markedReference = this.formatRenderReference(this.rounds[1]);
+        break;
       case 'round3':
         this.markedReference = this.formatRenderReference(this.rounds[2]);
+        break;
       case 'round4':
         this.markedReference = this.formatRenderReference(this.rounds[3]);
         break;
