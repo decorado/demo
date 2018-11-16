@@ -283,6 +283,10 @@ export class DecMarksComponent implements AfterViewChecked {
       });
       tag.addEventListener('mouseover', () => this.addCommentNode(comment));
       tag.addEventListener('mouseout', this.removeCommentNode);
+    } else if (this.noComments) {
+      tag.addEventListener('click', () => {
+        this.clickEventPointTagReference(this.marker.tags.find(c => c.reference === index));
+      });
     }
     return tag;
   }
@@ -305,6 +309,11 @@ export class DecMarksComponent implements AfterViewChecked {
         this.deleteMark(comment);
       });
     }
+  }
+
+  private clickEventPointTagReference(tag: Tag) {
+    this.marker.tags.splice(this.marker.tags.indexOf(tag), 1);
+    this.drawMarks();
   }
 
   private createSquareTag(coordinates: number[], index: number): void {
