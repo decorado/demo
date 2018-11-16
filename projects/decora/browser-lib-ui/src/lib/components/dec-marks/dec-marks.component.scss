@@ -87,6 +87,7 @@ $color-red: #E94040;
     text-align: left;
     color: $color-white;
     left: 10px;
+    pointer-events: none;
     top: 10px;
     z-index: 1;
   }

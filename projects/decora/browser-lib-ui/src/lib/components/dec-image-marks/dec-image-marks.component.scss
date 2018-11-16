@@ -57,6 +57,7 @@
   color: $dec-color-white;
   left: 10px;
   top: 10px;
+  pointer-events: none;
   z-index: 1;
 
   &.client {
