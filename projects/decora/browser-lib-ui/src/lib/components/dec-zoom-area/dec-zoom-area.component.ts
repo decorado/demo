@@ -97,6 +97,7 @@ export class DecZoomAreaComponent implements OnInit {
       renderShot: this.renderZoom.marker,
       referenceShot: this.referenceZoom.marker
     };
+    this.note = '';
     this.save.emit(saveObj);
   }
 
@@ -130,6 +131,7 @@ export class DecZoomAreaComponent implements OnInit {
   }
 
   onCancel() {
+    this.note = '';
     this.cancel.emit();
   }
 }

@@ -143,6 +143,7 @@ export class DecJobRoundComponent {
       if (this.editZoomArea) {
         this.editZoomArea.referenceShot = $event.referenceShot;
         this.editZoomArea.renderShot = $event.renderShot;
+        this.editZoomArea.note = $event.note;
         this.renderGallery.addNewZoomArea(JSON.parse(JSON.stringify(this.editZoomArea)));
         this.zoomAreaOpen = false;
         this.setZoomAreaOpen.emit(this.zoomAreaOpen);
@@ -150,7 +151,6 @@ export class DecJobRoundComponent {
         this.renewGallery();
         return;
       }
-      this.note = null;
       this.renderGallery.addNewZoomArea($event);
       this.zoomAreaOpen = false;
       this.setZoomAreaOpen.emit(this.zoomAreaOpen);
@@ -217,6 +217,7 @@ export class DecJobRoundComponent {
   }
 
   onCancel() {
+    this.note = null;
     this.editZoomArea = null;
     this.zoomAreaOpen = false;
     this.setZoomAreaOpen.emit(this.zoomAreaOpen);
