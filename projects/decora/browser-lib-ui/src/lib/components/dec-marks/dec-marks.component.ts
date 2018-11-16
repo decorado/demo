@@ -262,7 +262,7 @@ export class DecMarksComponent implements AfterViewChecked {
     tag.style.top = `calc(${y}% - 12px)`;
     tag.style.left = `calc(${x}% - 12px)`;
     this.marksWrapperEl.appendChild(tag);
-    if (!this.noComments) {
+    if (!this.noComments && this.qaMode) {
       const link = this.renderer.createElement('div');
       link.classList.add('link-button');
       link.innerHTML = '+';
@@ -292,17 +292,19 @@ export class DecMarksComponent implements AfterViewChecked {
   }
 
   private clickEventPointTag(comment: Tag) {
-    const dialogRef = this.dialog.open(DecRenderCommentComponent, { data: { comment: comment.comment, version: comment.version } });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        comment.comment = result.comment;
-        comment.description = result.description;
-      }
-    });
+    if (this.qaMode) {
+      const dialogRef = this.dialog.open(DecRenderCommentComponent, { data: { comment: comment.comment, version: comment.version } });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          comment.comment = result.comment;
+          comment.description = result.description;
+        }
+      });
 
-    dialogRef.componentInstance.deleteMark.subscribe(() => {
-      this.deleteMark(comment);
-    });
+      dialogRef.componentInstance.deleteMark.subscribe(() => {
+        this.deleteMark(comment);
+      });
+    }
   }
 
   private createSquareTag(coordinates: number[], index: number): void {

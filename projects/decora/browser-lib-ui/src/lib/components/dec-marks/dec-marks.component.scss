@@ -1,6 +1,6 @@
 $color-white: rgb(255, 255, 255);
 $color-black: rgb(0, 0, 0);
-$color-red: rgb(255, 10, 222);
+$color-red: #E94040;
 
 #squareMark {
   position: absolute;
@@ -44,14 +44,14 @@ $color-red: rgb(255, 10, 222);
       }
 
       .link-button {
-        width: 12px;
-        height: 12px;
+        width: 24px;
+        height: 24px;
         background-color: $color-red;
         position: absolute;
         display: flex;
         justify-content: center;
         align-items: center;
-        left: -16px;
+        left: -30px;
         border: 1px solid $color-white;
 
         &:hover {

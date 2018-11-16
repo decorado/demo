@@ -1,6 +1,6 @@
 $color-white: rgb(255, 255, 255);
 $color-black: rgb(0, 0, 0);
-$color-red: rgb(255, 10, 222);
+$color-red: #E94040;
 
 $color-new: rgb(64, 63, 138);
 $color-deleted: rgb(230, 14, 14);
@@ -8,7 +8,7 @@ $color-updated: rgb(109, 100, 100);
 
 #squareMark {
   position: absolute;
-  border: 2px solid $color-red;
+  border: 2px solid #F8C06B;
   pointer-events: none;
 }
 
@@ -29,8 +29,8 @@ $color-updated: rgb(109, 100, 100);
       height: 20%;
       border: 16px solid $color-white;
       border-radius: 50%;
-      border-top: 16px solid $color-red;
-      border-bottom: 16px solid $color-red;
+      border-top: 16px solid #FF7A19;
+      border-bottom: 16px solid #FF7A19;
       animation: spin 2s linear infinite;
     }
   }

@@ -79,9 +79,10 @@ export class DecJobRoundComponent {
 
   @ViewChild('renderGallery') renderGallery: DecZoomMarksGalleryComponent;
 
-  @HostListener('window:keydown', ['$event'])
-  onKeyPress($event: KeyboardEvent) {
-    if ((($event.ctrlKey || $event.metaKey) && $event.shiftKey) && (this.qaMode && !this.zoomAreaOpen)) {
+  @HostListener('window:keydown.control.shift')
+  @HostListener('window:keydown.meta.shift')
+  onKeyPress() {
+    if (this.qaMode && !this.zoomAreaOpen) {
       this.openZoomArea();
     }
   }
