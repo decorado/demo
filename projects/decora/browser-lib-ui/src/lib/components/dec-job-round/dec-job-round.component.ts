@@ -1,5 +1,6 @@
-import { Component, Input, ViewChild, Output, EventEmitter } from '@angular/core';
+import { HostListener, Component, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { DecZoomMarksGalleryComponent } from './../dec-zoom-marks-gallery/dec-zoom-marks-gallery.component';
+import { fromEvent } from 'rxjs';
 
 @Component({
   selector: 'dec-job-round',
@@ -77,6 +78,13 @@ export class DecJobRoundComponent {
   @ViewChild('referenceGallery') referenceGallery: DecZoomMarksGalleryComponent;
 
   @ViewChild('renderGallery') renderGallery: DecZoomMarksGalleryComponent;
+
+  @HostListener('window:keydown', ['$event'])
+  onKeyPress($event: KeyboardEvent) {
+    if ((($event.ctrlKey || $event.metaKey) && $event.shiftKey) && (this.qaMode && !this.zoomAreaOpen)) {
+      this.openZoomArea();
+    }
+  }
 
   constructor() { }
 
