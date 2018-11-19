@@ -115,6 +115,12 @@ export * from './lib/components/page-forbiden/page-forbiden.module';
 // PAGE NOT FOUND
 export * from './lib/components/page-not-found/page-not-found.component';
 export * from './lib/components/page-not-found/page-not-found.module';
+// PRODUCT BRIEFING
+export * from './lib/components/dec-product-briefing/dec-product-briefing.component';
+export * from './lib/components/dec-product-briefing/dec-product-briefing.module';
+// PRODUCT FEATURES
+export * from './lib/components/dec-product-features/dec-product-features.component';
+export * from './lib/components/dec-product-features/dec-product-features.module';
 // PRODUCT MEASURES
 export * from './lib/components/dec-product-measures-comparison/dec-product-measures-comparison.component';
 export * from './lib/components/dec-product-measures-comparison/dec-product-measures-comparison.module';
@@ -124,6 +130,9 @@ export * from './lib/components/product-spin/product-spin.module';
 // STATUS JOB ROUND
 export * from './lib/components/dec-status-job-round/dec-status-job-round.component';
 export * from './lib/components/dec-status-job-round/dec-status-job-round.module';
+// JOB DETAILS
+export * from './lib/components/dec-job-details/dec-job-details.component';
+export * from './lib/components/dec-job-details/dec-job-details.module';
 // JOB ROUND
 export * from './lib/components/dec-job-round/dec-job-round.component';
 export * from './lib/components/dec-job-round/dec-job-round.module';

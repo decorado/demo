@@ -1,0 +1,7 @@
+<div *ngIf="briefingUrl">
+  <img [src]="briefingUrl" style="width:100%;height:100%;" alt="briefing-image" />
+</div>
+
+<div *ngIf="!briefingUrl">
+  <span class="no-briefing-available">{{ 'label.no-briefing' | translate }}</span>
+</div>

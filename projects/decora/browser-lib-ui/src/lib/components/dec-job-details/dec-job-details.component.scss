@@ -1,0 +1,44 @@
+.sub-title-container {
+    display: flex;
+    align-items: center;
+    background-color: #F4F4F4;
+    height: 48px;
+    margin-bottom: 24px;
+}
+
+.container-job-details {
+    flex: 1;
+}
+
+.sub-title-grouped {
+    padding-left: 16px;
+    display: flex;
+    align-items: center;
+}
+
+.sub-title {
+    font-weight: 600;
+    margin-left: 8px;
+}
+
+.item-detail {
+    display: flex;
+    align-items: center;
+    height: 48px;
+    padding-left: 16px;
+
+    .label {
+        flex: 1;
+    }
+
+    .value {
+        flex: 3;
+        padding-right: 16px;
+        margin-left: 8px;
+    }
+}
+
+.item-detail-multiline {
+    height: auto;
+    align-items: end;
+}

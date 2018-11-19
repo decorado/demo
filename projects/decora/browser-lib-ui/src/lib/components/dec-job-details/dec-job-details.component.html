@@ -1,0 +1,83 @@
+<div class="sub-title-container">
+  <div class="container-job-details sub-title-grouped">
+    <mat-icon>description</mat-icon>
+    <span class="sub-title">{{ 'label.job-details' | translate }}</span>
+  </div>
+</div>
+
+<div class="container-job-details">
+
+  <div class="item-detail">
+    <span class="label">
+     {{ 'label.job-id' | translate }}
+    </span>
+    <span class="value">
+      {{ job?.id ? '#' + job?.id : '' }}
+    </span>
+  </div>
+
+  <div class="item-detail">
+    <span class="label">
+      Squad
+    </span>
+    <span class="value">
+      {{ job?.squad }}
+    </span>
+  </div>
+
+  <div class="item-detail">
+    <span class="label">
+      {{ 'label.product' | translate }}
+    </span>
+    <span class="value">
+      {{ product?.name }}
+    </span>
+  </div>
+
+  <div class="item-detail">
+    <span class="label">
+      {{ 'label.brand' | translate }}
+    </span>
+    <span class="value">
+      {{ product?.brand }}
+    </span>
+  </div>
+
+  <div class="item-detail">
+    <span class="label">
+      {{ 'label.category' | translate }}
+    </span>
+    <span class="value">
+      {{ product?.decoraCategory | decCategory | async }}
+    </span>
+  </div>
+
+  <div class="item-detail">
+    <span class="label">
+      {{ 'label.Studio' | translate }}
+    </span>
+    <span class="value">
+      {{ job?.studio.id ? '#' + job?.studio.id : '' }} - {{ job?.studio.name }}
+    </span>
+  </div>
+
+  <div class="item-detail">
+    <span class="label">
+      {{ 'label.creation-date' | translate }}
+    </span>
+    <span class="value">
+      {{ job?.created ? (job?.created | date) : ''}}
+    </span>
+  </div>
+
+  <div class="item-detail item-detail-multiline">
+    <span class="label">
+      {{ 'label.description' | translate }}
+    </span>
+    <span class="value">
+      {{ product?.description }}
+    </span>
+  </div>
+
+
+</div>

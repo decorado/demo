@@ -1,0 +1,20 @@
+<div class="sub-title-container">
+  <div class="container-job-details sub-title-grouped">
+    <mat-icon>list_alt</mat-icon>
+    <span class="sub-title">{{ 'label.features' | translate }}</span>
+  </div>
+</div>
+<div class="container-job-features">
+
+  <div *ngIf="product?.generalSpecifications">
+    <div *ngFor="let key of objectKeys(product?.generalSpecifications)" class="item-detail item-feature">
+      <span class="label">
+        {{key}}
+      </span>
+      <span class="value">
+        {{product.generalSpecifications[key]}}
+      </span>
+    </div>
+  </div>
+
+</div>
