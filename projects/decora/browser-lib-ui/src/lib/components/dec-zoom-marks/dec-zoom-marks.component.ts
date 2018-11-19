@@ -24,7 +24,12 @@ export class DecZoomMarksComponent implements AfterViewChecked {
     if (value !== this._marker) {
       this._marker = value;
       if (this.contentDone) {
+        this.zoomScale = 1;
+        this.zoomPosition = { x: 0, y: 0 };
         this.setupCanvas();
+        this.setupMarksWrapper();
+        this.setupMouseEvents();
+        this.resizeMarker(this.zoomScale);
       }
     }
   }
