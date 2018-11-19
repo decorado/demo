@@ -9,7 +9,8 @@ export enum PRODUCT_INFO_PROPERTIES {
   PROJECT_TITLE = 'PROJECT_TITLE',
   PROJECT_QUOTE = 'PROJECT_QUOTE',
   CATEGORY = 'CATEGORY',
-  MEASURES = 'MEASURES'
+  MEASURES = 'MEASURES',
+  COLOR = 'COLOR'
 }
 
 @Component({
@@ -24,6 +25,8 @@ export class DecProductInfoComponent {
   @Input() product;
 
   @Input() visibleInfo: string[] = [];
+
+  @Input() showOpenInNewTab = true;
 
   @Output() open = new EventEmitter();
 

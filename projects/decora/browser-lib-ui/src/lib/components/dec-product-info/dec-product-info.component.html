@@ -25,7 +25,7 @@
         {{ 'label.sku' | translate }}
       </div>
       <strong fxFlex class="dec-color-black">{{ product.sku }}
-        <dec-icon (click)="onClick()" class="click" font="mat">open_in_new</dec-icon>
+        <dec-icon (click)="onClick()" *ngIf="showOpenInNewTab" class="click" font="mat">open_in_new</dec-icon>
       </strong>
     </div>
   </div>
@@ -64,6 +64,15 @@
         {{ 'label.Project' | translate }}
       </div>
       <strong fxFlex class="dec-color-black">{{ product.project?.quote }}</strong>
+    </div>
+  </div>
+
+  <div fxFlex *ngIf="isVisible(infoTypes.COLOR)">
+    <div fxLayout="row" fxLayoutGap="8px">
+      <div fxFlex="80px" class="dec-color-grey">
+        {{ 'label.color' | translate }}
+      </div>
+      <strong fxFlex class="dec-color-black">{{ product?.color || "-" }}</strong>
     </div>
   </div>
 
