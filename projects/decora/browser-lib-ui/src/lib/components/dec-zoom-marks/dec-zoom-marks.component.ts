@@ -548,8 +548,8 @@ export class DecZoomMarksComponent implements AfterViewChecked {
       this.editZoomArea(newZoomArea);
       return;
     }
-    newZoomArea.coordinates.push(Math.round(Math.round(((this.startX / this.marksWrapperEl.offsetWidth) * 100) * 100) / 100));
-    newZoomArea.coordinates.push(Math.round(Math.round(((this.startY / this.marksWrapperEl.offsetHeight) * 100) * 100) / 100));
+    newZoomArea.coordinates.push(Math.round(this.startX / this.canvasEl.offsetWidth * 100 / this.zoomScale));
+    newZoomArea.coordinates.push(Math.round(this.startY / this.canvasEl.offsetHeight * 100 / this.zoomScale));
     newZoomArea.reference = this.commentsArraySize + 1;
     this.marker.zoomAreas.push(newZoomArea);
     this.commentsArraySize++;
