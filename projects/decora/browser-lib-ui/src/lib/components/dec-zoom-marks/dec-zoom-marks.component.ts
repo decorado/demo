@@ -25,10 +25,8 @@ export class DecZoomMarksComponent implements AfterViewChecked {
       this._marker = value;
       if (this.contentDone) {
         this.zoomScale = 1;
-        this.zoomPosition = { x: 0, y: 0 };
         this.setupCanvas();
         this.setupMarksWrapper();
-        this.setupMouseEvents();
         this.resizeMarker(this.zoomScale);
       }
     }
@@ -517,6 +515,7 @@ export class DecZoomMarksComponent implements AfterViewChecked {
   public zoomIn(amount: number = 1) {
     if (this.zoomScale < parseInt(this.maxZoomLevel, 10)) {
       (this.zoomScale + amount) < this.maxZoomLevel ? this.zoomScale += amount : this.zoomScale = +this.maxZoomLevel;
+      console.log(this.zoomScale);
       this.zoom(this.zoomScale);
     }
   }
@@ -524,6 +523,7 @@ export class DecZoomMarksComponent implements AfterViewChecked {
   public zoomOut(amount: number = 1) {
     if (this.zoomScale > parseInt(this.minZoomLevel, 10)) {
       (this.zoomScale - amount) > this.minZoomLevel ? this.zoomScale -= amount : this.zoomScale = +this.minZoomLevel;
+      console.log(this.zoomScale);
       this.zoom(this.zoomScale);
     }
   }
