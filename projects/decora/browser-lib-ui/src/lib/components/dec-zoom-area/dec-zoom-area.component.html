@@ -14,9 +14,8 @@
           <dec-icon font="mat">description</dec-icon>{{ 'label.Observations' | translate }}
         </h2>
       </div>
-      <textarea [(ngModel)]="note" class="text-area"></textarea>
+      <textarea [(ngModel)]="note" [readonly]="!qaMode" class="text-area"></textarea>
     </div>
-
 
     <div fxFlex="50" fxLayout="column" fxLayoutGap="16px" class="zoom-container">
       <dec-marks #renderZoom [noComments]="false" [marker]="render" [parentId]="parentId" [qaMode]="qaMode" (link)="onLinkTag($event)"
@@ -24,7 +23,8 @@
       </dec-marks>
 
       <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="16px" class="fake-div">
-        <button mat-button *ngIf="editMode && qaMode" mat-flat-button color="warn" (click)="deleteZoomArea()"> {{ 'label.delete' | translate
+        <button mat-button *ngIf="editMode && qaMode" mat-flat-button color="warn" (click)="deleteZoomArea()"> {{
+          'label.delete' | translate
           }} </button>
         <button mat-button color="primary" (click)="onCancel()"> {{ 'label.cancel' | translate }} </button>
         <button *ngIf="qaMode" mat-flat-button color="primary" (click)="onSave()"> {{ 'label.save' | translate }}

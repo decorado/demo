@@ -287,6 +287,9 @@ export class DecMarksComponent implements AfterViewChecked {
       tag.addEventListener('click', () => {
         this.clickEventPointTagReference(this.marker.tags.find(c => c.reference === index));
       });
+    } else {
+      tag.addEventListener('mouseover', () => this.addCommentNode(this.marker.tags.find(c => c.reference === index)));
+      tag.addEventListener('mouseout', this.removeCommentNode);
     }
     return tag;
   }
@@ -312,8 +315,10 @@ export class DecMarksComponent implements AfterViewChecked {
   }
 
   private clickEventPointTagReference(tag: Tag) {
-    this.marker.tags.splice(this.marker.tags.indexOf(tag), 1);
-    this.drawMarks();
+    if (this.qaMode) {
+      this.marker.tags.splice(this.marker.tags.indexOf(tag), 1);
+      this.drawMarks();
+    }
   }
 
   private createSquareTag(coordinates: number[], index: number): void {
