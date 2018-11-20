@@ -95,3 +95,20 @@ a {
   position: relative;
   top: -4px;
 }
+
+.image-container {
+  position: relative;
+}
+
+.has-comment {
+  position: absolute;
+  display: block;
+  right: 4px;
+  top: 4px;
+  width: 15px;
+  height: 15px;
+  background-color: #e94040;
+  border-radius: 100%;
+  text-align: center;
+  color: white;
+}
