@@ -50,6 +50,8 @@ export class DecJobRoundComponent {
     return this._qaMode;
   }
 
+  @Input() userAgent;
+
   @Output() setZoomAreaOpen = new EventEmitter();
 
   round;

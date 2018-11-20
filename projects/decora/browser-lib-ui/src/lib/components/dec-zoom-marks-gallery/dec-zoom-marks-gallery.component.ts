@@ -37,6 +37,19 @@ export class DecZoomMarksGalleryComponent {
     return this._showTags;
   }
 
+  @Input() 
+  set userAgent(v) {
+    if (v) {
+      this._userAgent = v;
+    }
+  }
+
+  get userAgent() {
+    return this._userAgent;
+  }
+
+  _userAgent: any;
+
   imageIndex = 0;
 
   @Input() qaModeActive: boolean;

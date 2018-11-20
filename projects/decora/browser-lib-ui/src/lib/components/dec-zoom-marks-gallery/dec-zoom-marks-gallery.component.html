@@ -25,7 +25,11 @@
     <div>
       <h3>
         <dec-icon class="dec-icon-size dec-color-grey" font="mat">bookmarks</dec-icon>
-        <span class="dec-icon-text-size-zoom-area"> Tags </span>
+        <span class="dec-icon-text-size-zoom-area"> Tags </span> <br /> <br />
+
+        <span class="qa-name" *ngIf="userAgent">
+          {{ userAgent.reviewer ? 'Review' : 'QA' }}: {{ userAgent.date | date:'medium' }} - #{{userAgent.userId}} {{userAgent.userName}}
+        </span>
       </h3>
     </div>
     <dec-markdowns-comment [renders]="markedObjs" [qaMode]="qaModeActive" [decZoomMarksComponent]="zoomMarks"></dec-markdowns-comment>
