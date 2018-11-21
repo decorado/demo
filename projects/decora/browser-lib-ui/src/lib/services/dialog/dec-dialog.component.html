@@ -28,13 +28,13 @@
 <!-- DIALOG TITLE TEMPLATE -->
 <ng-template #dialogTitleTemplate>
   <mat-toolbar [color]="color" [ngStyle]="color === 'basic' ? basicBgStyle : {}">
-    <div fxLayout="row" fxFlexFill fxLayoutAlign="start center">
+    <div fxFlex="grow" fxLayout="row" fxLayoutAlign="start center">
       <div *ngIf="!hideBackButton">
         <button type="button" mat-icon-button mat-dialog-close>
           <mat-icon>arrow_back</mat-icon>
         </button>
       </div>
-      <div [ngSwitch]="title ? true : false">
+      <div fxFlex="grow" [ngSwitch]="title ? true : false">
         <ng-container *ngSwitchCase="true">
           <ng-container [ngTemplateOutlet]="defaultToolbarTemplate"></ng-container>
         </ng-container>
