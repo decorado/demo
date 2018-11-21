@@ -27,18 +27,21 @@ export class DecProductSpinComponent implements OnInit {
   @Input() onlyModal = false;
   @Input() FALLBACK_IMAGE: string = FALLBACK_IMAGE;
   @Input() startInCenter = false;
+  @Input() rotateToIndex: number;
+  @Input() rotateToMiddle: boolean;
   @Input() showOpenDialogButton = true;
 
   @Input()
   set spin(spin: any) {
+
     if (spin && spin !== this._spin) {
       const scenes = this.loadScenes(spin);
-      const scenesChanged = !this.scenes || (scenes && this.scenes.join() !== scenes.join());
-      if (scenesChanged) {
+      const spinChanged = !this.scenes || (scenes && this.scenes.join() !== scenes.join());
+      if (spinChanged) {
+        this._spin = spin;
         this.resetScenesData(scenes);
+        this.detectFrameShown();
       }
-      this._spin = spin;
-      this.detectFrameShown();
     }
   }
 

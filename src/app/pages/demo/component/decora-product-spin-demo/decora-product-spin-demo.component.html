@@ -7,6 +7,12 @@
     <h3>Normal spin</h3>
 
     <dec-product-spin #mainProductSpin [spin]="spin"></dec-product-spin>
+  </div>
+
+  <h2>Without interval</h2>
+  <div class="dec-product-spin-wrapper">
+
+    <dec-product-spin #mainProductSpin [spin]="spin" rotateToMiddle="true"></dec-product-spin>
 
     <h3>Start in center</h3>
 
@@ -14,5 +20,10 @@
 
   </div>
 
-</app-demo-container>
+  <h2>With interval</h2>
+  <div class="dec-product-spin-wrapper">
 
+    <dec-product-spin #intervalProductSpin [spin]="spinWithInterval" rotateToMiddle="true"></dec-product-spin>
+
+  </div>
+</app-demo-container>

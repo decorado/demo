@@ -20,4 +20,5 @@ The images are loaded, parsed, treated and then displayed. So the user can inter
 | fallbackImage        | string  | fallbackImage | Parameter to override fallback image with another url.                        |
 | startInCenter        | boolean | false         | Flag to define whether or not the middle image will be the first displayed.   |
 | showOpenDialogButton | boolean | true          | Flag to display button that swaps between reference and render images.        |
-| spin                 | object  | null          | Object containing spin images. The component will use spin.renderFiles value. |
+| rotateToIndex        | number  | undefined     | Rotates the sequence (reordering the scnes array) to a given index            |
+| rotateToMiddle       | boolean | undefined     | Rotates the sequence (reordering the scnes array) to the center image index   |
