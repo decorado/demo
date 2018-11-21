@@ -27,31 +27,31 @@
   <dec-grid-row>
     <dec-grid-column span="8">
       <dec-status-job-round-item [jobId]="job?.id" [round]="job?.rounds[0]" [roundQnt]="roundsQnt" [roundNumber]="1"
-        [readonly]="readonly" [showQaStatus]="showQaStatus"></dec-status-job-round-item>
+        [readonly]="readonly" [showQaStatus]="showQaStatus" [showReportedError]="!!job?.errorReportedComment && roundsQnt === 1"></dec-status-job-round-item>
     </dec-grid-column>
   </dec-grid-row>
   <dec-grid-row>
     <dec-grid-column span="8">
       <dec-status-job-round-item [jobId]="job?.id" [round]="job?.rounds[1]" [roundQnt]="roundsQnt" [roundNumber]="2"
-        [readonly]="readonly" [showQaStatus]="showQaStatus"></dec-status-job-round-item>
+        [readonly]="readonly" [showQaStatus]="showQaStatus" [showReportedError]="!!job?.errorReportedComment && roundsQnt === 2"></dec-status-job-round-item>
     </dec-grid-column>
   </dec-grid-row>
   <dec-grid-row>
     <dec-grid-column span="8">
       <dec-status-job-round-item [jobId]="job?.id" [round]="job?.rounds[2]" [roundQnt]="roundsQnt" [roundNumber]="3"
-        [readonly]="readonly" [showQaStatus]="showQaStatus"></dec-status-job-round-item>
+        [readonly]="readonly" [showQaStatus]="showQaStatus" [showReportedError]="!!job?.errorReportedComment && roundsQnt === 3"></dec-status-job-round-item>
     </dec-grid-column>
   </dec-grid-row>
   <dec-grid-row>
     <dec-grid-column span="8">
       <dec-status-job-round-item [jobId]="job?.id" *ngIf="job?.rounds[3]" [round]="job?.rounds[3]" [roundQnt]="roundsQnt"
-        [roundNumber]="4" [readonly]="readonly" [showQaStatus]="showQaStatus"></dec-status-job-round-item>
+        [roundNumber]="4" [readonly]="readonly" [showQaStatus]="showQaStatus" [showReportedError]="!!job?.errorReportedComment && roundsQnt === 4"></dec-status-job-round-item>
     </dec-grid-column>
   </dec-grid-row>
   <dec-grid-row>
     <dec-grid-column span="8">
       <dec-status-job-round-item [jobId]="job?.id" *ngIf="job?.rounds[4]" [round]="job?.rounds[4]" [roundQnt]="roundsQnt"
-        [roundNumber]="5" [readonly]="readonly" [showQaStatus]="showQaStatus"></dec-status-job-round-item>
+        [roundNumber]="5" [readonly]="readonly" [showQaStatus]="showQaStatus" [showReportedError]="!!job?.errorReportedComment && roundsQnt === 5"></dec-status-job-round-item>
     </dec-grid-column>
   </dec-grid-row>
 </dec-grid>

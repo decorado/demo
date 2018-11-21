@@ -20,8 +20,11 @@
 
     <div class="position-status" fxFlex="60" fxLayout="column" fxLayoutAlign="end start">
       <span class="smaller-font">Status</span>
-      <dec-label-status [status]="round?.status">
-      </dec-label-status>
+      <div fxLayoutAlign="center center">
+        <dec-label-status [status]="round?.status">
+        </dec-label-status>
+        <mat-icon *ngIf="showReportedError">report</mat-icon>
+      </div>
     </div>
   </div>
 

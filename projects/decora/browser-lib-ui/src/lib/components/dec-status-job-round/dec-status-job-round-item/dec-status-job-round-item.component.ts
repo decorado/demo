@@ -39,6 +39,17 @@ export class DecStatusJobRoundItemComponent {
   private _round;
   negativeQA = false;
 
+
+  private _showReportedError: boolean;
+  public get showReportedError(): boolean {
+    return this._showReportedError;
+  }
+  @Input()
+  public set showReportedError(v: boolean) {
+    this._showReportedError = v;
+  }
+
+
   constructor() { }
 
   toggleNegative() {
