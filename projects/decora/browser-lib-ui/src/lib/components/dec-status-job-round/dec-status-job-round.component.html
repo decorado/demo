@@ -8,7 +8,7 @@
         <div *ngIf="job?.type == 'COLOR'" class="left-triangle texture-color-swap">
           <mat-icon class="icon-position">palette</mat-icon>
         </div>
-        <div *ngIf="job?.type == 'MODELING'" class="left-triangle full-model">
+        <div *ngIf="job?.type == 'MODELING' || job?.type == 'COLOR_FATHER'" class="left-triangle full-model">
           <dec-icon font="fas" class="icon-position icon-modeling">cubes</dec-icon>
         </div>
         <div class="text-header" fxLayout="column" fxLayoutGap="2px">
@@ -17,7 +17,8 @@
             'label.modeling-fix-info' | translate }}</span>
           <span *ngIf="job?.type == 'COLOR'" class="font-text dec-font-500 uppercase">{{ 'label.color-variation-info' |
             translate }}</span>
-          <span *ngIf="job?.type == 'MODELING'" class="font-text dec-font-500 uppercase">{{ 'label.full-model-info' |
+          <span *ngIf="job?.type == 'MODELING' || job?.type == 'COLOR_FATHER'" class="font-text dec-font-500 uppercase">{{
+            'label.full-model-info' |
             translate }}</span>
         </div>
       </div>
