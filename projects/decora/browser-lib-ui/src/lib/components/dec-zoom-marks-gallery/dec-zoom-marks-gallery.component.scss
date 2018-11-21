@@ -12,6 +12,7 @@ a {
 }
 
 .carousel-wrapper {
+  width: 80%;
   margin-top: 8px;
   padding: 0 24px;
 
@@ -88,12 +89,22 @@ a {
 
 .gallery-size {
   width: 100%;
+  max-width: 646px;
+  text-align: center;
 }
 
 .dec-icon-text-size-zoom-area {
   font-size: 18px;
   position: relative;
-  top: -4px;
+  top: 8px;
+  left: 9px;
+}
+
+.dec-icon-text-size-zoom-area-tags {
+  font-size: 18px;
+  position: relative;
+  top: 8px;
+  left: -20px;
 }
 
 .image-container {

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter, AfterViewInit, HostListener } from '@angular/core';
 import { DecMarksComponent } from './../dec-marks/dec-marks.component';
 import { DecConfirmDialogService } from './../../services/confirm-dialog/dec-confirm-dialog.service';
 
@@ -74,6 +74,8 @@ export class DecZoomAreaComponent implements OnInit {
   private _note;
   private _qaMode: boolean;
 
+  init = false;
+
   @Input() parentId: number;
 
   commentIndex;
@@ -88,6 +90,15 @@ export class DecZoomAreaComponent implements OnInit {
   constructor(private confirmDialog: DecConfirmDialogService) { }
 
   ngOnInit() {
+  }
+
+  @HostListener('window:keydown.control.s', ['$event'])
+  @HostListener('window:keydown.meta.s', ['$event'])
+  onKeyPress(event) {
+    if (this.qaMode && this.editMode) {
+      event.preventDefault();
+      this.onSave();
+    }
   }
 
   onSave() {

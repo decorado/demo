@@ -17,6 +17,7 @@ $color-updated: rgb(109, 100, 100);
   flex-direction: column;
   position: relative;
   overflow: hidden;
+  max-width: 646px;
 
   .loading-container {
     position: absolute;
@@ -194,4 +195,8 @@ $color-updated: rgb(109, 100, 100);
   100% {
     transform: rotate(360deg);
   }
+}
+
+.slider-width {
+  width: 60%;
 }

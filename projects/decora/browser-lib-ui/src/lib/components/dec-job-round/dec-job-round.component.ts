@@ -1,6 +1,8 @@
 import { HostListener, Component, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { DecZoomMarksGalleryComponent } from './../dec-zoom-marks-gallery/dec-zoom-marks-gallery.component';
 import { fromEvent } from 'rxjs';
+import { MatDialog } from '@angular/material';
+import { DecZoomAreaComponent } from './../dec-zoom-area/dec-zoom-area.component';
 
 @Component({
   selector: 'dec-job-round',
@@ -89,7 +91,7 @@ export class DecJobRoundComponent {
     }
   }
 
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   formatMarkedReference(v) {
     this.markedReference = v.referenceImages.map(x => {
@@ -136,8 +138,38 @@ export class DecJobRoundComponent {
       this.parentId = this.renderGallery.getImageIndex();
       this.parentId++;
       this.zoomAreaOpen = true;
-      this.setZoomAreaOpen.emit(this.zoomAreaOpen);
+      this.openZoomAreModal();
     }
+  }
+
+  openZoomAreModal() {
+
+    const dialogRef = this.dialog.open(DecZoomAreaComponent, {height: '90vh', width: '71vw'});
+    dialogRef.componentInstance.reference = this.reference;
+    dialogRef.componentInstance.editMode = this.editZoomArea;
+    dialogRef.componentInstance.note = this.note;
+    dialogRef.componentInstance.render = this.render;
+    dialogRef.componentInstance.parentId = this.parentId;
+    dialogRef.componentInstance.qaMode = this.qaMode;
+
+    dialogRef.componentInstance.save.subscribe($event => {
+      this.onSaveZoomArea($event);
+      dialogRef.close();
+    });
+
+    dialogRef.componentInstance.cancel.subscribe($event => {
+      this.onCancel();
+      dialogRef.close();
+    });
+
+    dialogRef.afterClosed().subscribe($event => {
+      this.onCancel();
+    });
+
+    dialogRef.componentInstance.delete.subscribe($event => {
+      this.deleteZoomAreaByParentId($event);
+      dialogRef.close();
+    });
   }
 
   onSaveZoomArea($event) {
@@ -148,20 +180,17 @@ export class DecJobRoundComponent {
         this.editZoomArea.note = $event.note;
         this.renderGallery.addNewZoomArea(JSON.parse(JSON.stringify(this.editZoomArea)));
         this.zoomAreaOpen = false;
-        this.setZoomAreaOpen.emit(this.zoomAreaOpen);
         this.editZoomArea = null;
         this.renewGallery();
         return;
       }
       this.renderGallery.addNewZoomArea($event);
       this.zoomAreaOpen = false;
-      this.setZoomAreaOpen.emit(this.zoomAreaOpen);
       this.renewGallery();
     } else if (this.editZoomArea) {
       this.deleteZoomAreaByParentId(this.parentId - 1);
     } else {
       this.zoomAreaOpen = false;
-      this.setZoomAreaOpen.emit(this.zoomAreaOpen);
       this.renewGallery();
     }
   }
@@ -174,7 +203,7 @@ export class DecJobRoundComponent {
     this.parentId = this.renderGallery.getImageIndex();
     this.parentId++;
     this.zoomAreaOpen = true;
-    this.setZoomAreaOpen.emit(this.zoomAreaOpen);
+    this.openZoomAreModal();
   }
 
   deleteZoomAreaByParentId(id) {
@@ -222,13 +251,6 @@ export class DecJobRoundComponent {
     this.note = null;
     this.editZoomArea = null;
     this.zoomAreaOpen = false;
-    this.setZoomAreaOpen.emit(this.zoomAreaOpen);
   }
 
-  getClass() {
-    if (this.zoomAreaOpen) {
-      return 'fadeClass';
-    }
-    return '';
-  }
 }

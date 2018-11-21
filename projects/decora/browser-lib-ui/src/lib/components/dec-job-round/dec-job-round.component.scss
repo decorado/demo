@@ -31,6 +31,6 @@
   background-color: white;
 }
 
-.fadeClass {
-  color: rgba(0, 0, 0, 0.05);
+/deep/ .dec-grid-column {
+  max-width: 1292px !important;
 }

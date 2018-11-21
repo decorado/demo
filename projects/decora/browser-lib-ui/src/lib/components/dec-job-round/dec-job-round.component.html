@@ -1,4 +1,4 @@
-<div class="container-renders" [ngClass]="getClass()">
+<div class="container-renders">
 
   <dec-grid gap="0">
     <dec-grid-row>
@@ -38,8 +38,9 @@
 
         <ng-template #renderGalleryDone>
           <dec-zoom-marks-gallery 
-            [userAgent]="userAgent" 
-            #renderGallery *ngIf="renderImages" 
+            [userAgent]="userAgent"
+            #renderGallery 
+            *ngIf="renderImages" 
             [showTags]="true" 
             (openZoomArea)="openEditZoomArea($event)"
             [markedObjs]="round?.qualityAssurance?.renders" 
@@ -51,12 +52,12 @@
 
     </dec-grid-row>
   </dec-grid>
-
+  <!-- 
   <div *ngIf="zoomAreaOpen" class="zoom-area-container">
     <div class="render-header" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="32px"></div>
     <dec-zoom-area (save)="onSaveZoomArea($event)" [reference]="reference" [editMode]="editZoomArea" [note]="note"
       (cancel)="onCancel()" [render]="render" [parentId]="parentId" [qaMode]="qaMode" (delete)="deleteZoomAreaByParentId($event)">
     </dec-zoom-area>
-  </div>
+  </div> -->
 
 </div>

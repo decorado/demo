@@ -10,7 +10,7 @@
   <button mat-icon-button color="primary" (click)="zoomOut()" [disabled]="zoomScale == minZoomLevel">
     <mat-icon aria-label="Zoom out">remove</mat-icon>
   </button>
-  <mat-slider fxFlex color="primary" [min]="minZoomLevel" [max]="maxZoomLevel" [step]="stepZoomLevel" [(ngModel)]="zoomScale"
+  <mat-slider class="slider-width" color="primary" [min]="minZoomLevel" [max]="maxZoomLevel" [step]="stepZoomLevel" [(ngModel)]="zoomScale"
     (input)="onZoomSlide($event.value)"></mat-slider>
   <button mat-icon-button color="primary" (click)="zoomIn()" [disabled]="zoomScale == maxZoomLevel">
     <mat-icon aria-label="Zoom in">add</mat-icon>

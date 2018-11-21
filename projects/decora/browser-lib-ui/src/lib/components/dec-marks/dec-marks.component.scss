@@ -13,6 +13,7 @@ $color-red: #E94040;
   flex-direction: column;
   position: relative;
   overflow: hidden;
+  max-width: 646px;
 
   .marks-wrapper {
     position: absolute;

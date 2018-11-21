@@ -28,6 +28,9 @@ import { DecConfirmDialogModule } from './../../services/confirm-dialog/dec-conf
   ],
   exports: [
     DecZoomAreaComponent
+  ],
+  entryComponents: [
+    DecZoomAreaComponent
   ]
 })
 export class DecZoomAreaModule { }
