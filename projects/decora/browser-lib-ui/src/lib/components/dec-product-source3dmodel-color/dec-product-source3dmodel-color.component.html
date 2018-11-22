@@ -1,0 +1,18 @@
+<div fxLayout="column">
+  <div fxLayout="row" fxLayoutAlign="end center" class="download-max">
+    <button mat-flat-button color="primary" class="uppercase" (click)="downloadMax()">download</button>
+  </div>
+
+  <div fxLayout="row" class="container-gallery">
+    <div fxFlex>
+      <dec-gallery [images]="referencesSysFiles">
+      </dec-gallery>
+    </div>
+
+    <div fxFlex>
+      <dec-gallery *ngIf="productColorVariationFather?.renderedImages" [images]="productColorVariationFather?.renderedImages">
+      </dec-gallery>
+    </div>
+  </div>
+  <hr>
+</div>
