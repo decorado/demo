@@ -198,5 +198,19 @@ $color-updated: rgb(109, 100, 100);
 }
 
 .slider-width {
-  width: 60%;
+  width: 40%;
+}
+
+.container-slider {
+  position: relative;
+}
+
+.image-link-position {
+  position: absolute;
+  right: 0px;
+}
+
+.max-link-position {
+  position: absolute;
+  right: 20px;
 }

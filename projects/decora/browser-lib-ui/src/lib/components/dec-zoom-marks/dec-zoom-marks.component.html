@@ -6,7 +6,7 @@
   <canvas #canvas></canvas>
 </div>
 
-<div fxLayoutAlign="center center" fxLayoutGap="8px">
+<div class="container-slider" fxLayoutAlign="center center" fxLayoutGap="8px">
   <button mat-icon-button color="primary" (click)="zoomOut()" [disabled]="zoomScale == minZoomLevel">
     <mat-icon aria-label="Zoom out">remove</mat-icon>
   </button>
@@ -15,4 +15,18 @@
   <button mat-icon-button color="primary" (click)="zoomIn()" [disabled]="zoomScale == maxZoomLevel">
     <mat-icon aria-label="Zoom in">add</mat-icon>
   </button>
+
+
+  <mat-icon *ngIf="maxFile"
+    class="max-link-position click" 
+    matTooltip="{{ 'label.max-file' | translate }}"
+    (click)="openMaxFile()">
+      cloud_download
+  </mat-icon>
+
+  <mat-icon class="image-link-position click" 
+    matTooltip="{{ 'label.Image' | translate }}"
+    (click)="openImageLink()">
+      open_in_new
+  </mat-icon>
 </div>

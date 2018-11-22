@@ -47,9 +47,22 @@ export class DecZoomMarksComponent implements AfterViewChecked {
     return this._qaMode;
   }
 
+  @Input()
+  set maxFile(value) {
+    if (value !== this._maxFile) {
+      this._maxFile = value === 'remove' ? false : value;
+    }
+  }
+
+  get maxFile() {
+    return this._maxFile;
+  }
+
   @Output() openZoomArea = new EventEmitter();
 
   private _qaMode: boolean;
+
+  private _maxFile;
 
   private imageElement: HTMLImageElement = new Image();
 
@@ -598,4 +611,11 @@ export class DecZoomMarksComponent implements AfterViewChecked {
 
   }
 
+  openImageLink() {
+    window.open(this.marker.file.fileUrl, '_blank');
+  }
+
+  openMaxFile() {
+    window.open(this.maxFile, '_blank');
+  }
 }

@@ -30,6 +30,8 @@
     "amount-loaded-of-total": "Carregados {{loaded}} de um total de {{total}}",
     "brand": "Marca",
     "cancel": "Cancelar",
+    "Image": "Imagem",
+    "max-file":"Arquivo max",
     "category": "Categoria",
     "choices": "Escolhas",
     "color-variation-info": "Textura ou Variação de Cor",

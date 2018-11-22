@@ -79,6 +79,10 @@ export class DecJobRoundComponent {
 
   parentId;
 
+  maxFile;
+
+  referenceMax;
+
   @ViewChild('referenceGallery') referenceGallery: DecZoomMarksGalleryComponent;
 
   @ViewChild('renderGallery') renderGallery: DecZoomMarksGalleryComponent;
@@ -144,7 +148,7 @@ export class DecJobRoundComponent {
 
   openZoomAreModal() {
 
-    const dialogRef = this.dialog.open(DecZoomAreaComponent, {height: '90vh', width: '71vw'});
+    const dialogRef = this.dialog.open(DecZoomAreaComponent, { height: '90vh', width: '71vw' });
     dialogRef.componentInstance.reference = this.reference;
     dialogRef.componentInstance.editMode = this.editZoomArea;
     dialogRef.componentInstance.note = this.note;
@@ -227,22 +231,27 @@ export class DecJobRoundComponent {
     });
   }
 
-  setView($event) {
+  setView = ($event) => {
     switch ($event.value) {
       case 'reference':
         this.formatMarkedReference(this.product);
+        this.referenceMax = 'remove';
         break;
       case 'round1':
         this.markedReference = this.formatRenderReference(this.rounds[0]);
+        this.referenceMax = this.rounds[0].max.fileUrl;
         break;
       case 'round2':
         this.markedReference = this.formatRenderReference(this.rounds[1]);
+        this.referenceMax = this.rounds[1].max.fileUrl;
         break;
       case 'round3':
         this.markedReference = this.formatRenderReference(this.rounds[2]);
+        this.referenceMax = this.rounds[2].max.fileUrl;
         break;
       case 'round4':
         this.markedReference = this.formatRenderReference(this.rounds[3]);
+        this.referenceMax = this.rounds[3].max.fileUrl;
         break;
     }
   }

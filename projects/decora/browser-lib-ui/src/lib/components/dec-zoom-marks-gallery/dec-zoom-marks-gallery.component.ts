@@ -48,7 +48,19 @@ export class DecZoomMarksGalleryComponent {
     return this._userAgent;
   }
 
+  @Input() 
+  set maxFile(v) {
+    if (v) {
+      this._maxFile = v;
+    }
+  }
+
+  get maxFile() {
+    return this._maxFile;
+  }
+
   _userAgent: any;
+  _maxFile: any;
 
   imageIndex = 0;
 
