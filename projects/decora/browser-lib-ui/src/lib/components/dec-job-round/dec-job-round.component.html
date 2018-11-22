@@ -4,15 +4,17 @@
     <dec-grid-row>
       <dec-grid-column span="6">
         <div class="reference-header" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="32px">
-          <mat-button-toggle-group (change)="setView($event)" value="reference" *ngIf="roundNumber > 1">
+          <mat-button-toggle-group (change)="setView($event)" value="reference" *ngIf="jobType === 'MODELING_FIX' || roundNumber > 1">
             <mat-button-toggle value="reference">{{ 'label.reference-images' | translate }}</mat-button-toggle>
+            <mat-button-toggle *ngIf="jobType === 'MODELING_FIX'" value="render">{{'label.source-3d-model' |
+              translate}}</mat-button-toggle>
             <mat-button-toggle value="round1">Round 1</mat-button-toggle>
             <mat-button-toggle value="round2" *ngIf="roundNumber > 2">Round 2</mat-button-toggle>
             <mat-button-toggle value="round3" *ngIf="roundNumber > 3">Round 3</mat-button-toggle>
             <mat-button-toggle value="round4" *ngIf="roundNumber > 4">Round 4</mat-button-toggle>
           </mat-button-toggle-group>
         </div>
-        <dec-zoom-marks-gallery [maxFile]="referenceMax" #referenceGallery [markedObjs]="markedReference">
+        <dec-zoom-marks-gallery *ngIf="markedReference" [maxFile]="referenceMax" #referenceGallery [markedObjs]="markedReference">
         </dec-zoom-marks-gallery>
         <div class="measures-container">
           <dec-product-measures-comparison [measures]="measures"></dec-product-measures-comparison>
@@ -37,14 +39,8 @@
         </div>
 
         <ng-template #renderGalleryDone>
-          <dec-zoom-marks-gallery 
-            [userAgent]="userAgent"
-            #renderGallery 
-            *ngIf="renderImages" 
-            [showTags]="true" 
-            (openZoomArea)="openEditZoomArea($event)"
-            [markedObjs]="round?.qualityAssurance?.renders" 
-            [maxFile]="round?.max?.fileUrl"
+          <dec-zoom-marks-gallery [userAgent]="userAgent" #renderGallery *ngIf="renderImages" [showTags]="true"
+            (openZoomArea)="openEditZoomArea($event)" [markedObjs]="round?.qualityAssurance?.renders" [maxFile]="round?.max?.fileUrl"
             [qaModeActive]="qaMode">
           </dec-zoom-marks-gallery>
         </ng-template>

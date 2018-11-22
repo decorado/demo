@@ -1,0 +1,51 @@
+<div class="container-renders">
+
+  <dec-grid gap="0">
+
+    <dec-grid-row>
+
+      <dec-grid-column span="6" *ngIf="contentDone">
+
+        <div class="reference-header" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="32px">
+
+          <mat-button-toggle-group [(ngModel)]="refType">
+
+            <mat-button-toggle value="reference">{{ 'label.reference-images' | translate }}</mat-button-toggle>
+
+            <mat-button-toggle value="render">{{ 'label.Render' | translate }}</mat-button-toggle>
+
+          </mat-button-toggle-group>
+
+        </div>
+
+        <ng-container [ngSwitch]="refType">
+
+          <dec-gallery *ngSwitchCase="'reference'" [images]="skuFix?.product?.referenceImages"></dec-gallery>
+
+          <dec-gallery *ngSwitchCase="'render'" [images]="skuFix?.product?.renderedImages"></dec-gallery>
+
+        </ng-container>
+
+      </dec-grid-column>
+
+      <dec-grid-column span="6" *ngIf="contentDone">
+
+        <div class="render-header" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="32px">
+
+          <h3>
+            <dec-icon class="click" font="mat">flash_on</dec-icon>Render
+          </h3>
+
+          <button mat-flat-button color="primary" class="uppercase" (click)="downloadMax()">download</button>
+
+        </div>
+
+        <dec-gallery-marks *ngIf="contentDone" [images]="skuFix?.requestAdjustment"></dec-gallery-marks>
+
+      </dec-grid-column>
+
+    </dec-grid-row>
+
+  </dec-grid>
+
+</div>

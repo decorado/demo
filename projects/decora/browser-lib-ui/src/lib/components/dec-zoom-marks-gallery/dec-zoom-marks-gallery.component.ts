@@ -37,7 +37,7 @@ export class DecZoomMarksGalleryComponent {
     return this._showTags;
   }
 
-  @Input() 
+  @Input()
   set userAgent(v) {
     if (v) {
       this._userAgent = v;
