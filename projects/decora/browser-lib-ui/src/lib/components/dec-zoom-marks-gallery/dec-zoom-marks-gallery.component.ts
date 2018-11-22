@@ -95,6 +95,9 @@ export class DecZoomMarksGalleryComponent {
   }
 
   onInitDataFn(event: NguCarouselStore) {
+    if(!this.markedObjs || this.markedObjs.length === 0) {
+      return;
+    }
     this.setPrevNextCheckers(event.isFirst, event.items >= this.markedObjs.length);
   }
 
