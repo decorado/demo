@@ -228,9 +228,9 @@ export class DecJobRoundComponent {
 
   openEditZoomArea($event) {
     this.editZoomArea = $event;
-    this.reference = $event.referenceShot;
+    this.reference = JSON.parse(JSON.stringify($event.referenceShot));
     this.note = $event.note;
-    this.render = $event.renderShot;
+    this.render = JSON.parse(JSON.stringify($event.renderShot));
     this.parentId = this.renderGallery.getImageIndex();
     this.parentId++;
     this.zoomAreaOpen = true;

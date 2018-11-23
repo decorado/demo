@@ -552,7 +552,11 @@ export class DecZoomMarksComponent implements AfterViewChecked {
         x: this.zoomPosition.x,
         y: this.zoomPosition.y
       },
-      zoomScale: this.zoomScale
+      zoomScale: this.zoomScale,
+      parentSize : {
+        x : this.canvasEl.width,
+        y : this.canvasEl.height 
+      }
     };
   }
 

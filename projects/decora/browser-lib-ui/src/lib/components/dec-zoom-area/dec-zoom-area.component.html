@@ -2,8 +2,8 @@
   <div fxLayout="row" fxLayoutAlign="start start">
 
     <div fxFlex="50" class="zoom-container" fxLayout="column" fxLayoutGap="16px">
-      <dec-marks class="zoom-container" #referenceZoom [noComments]="true" [marker]="reference" [qaMode]="referenceQaMode"
-        [parentId]="parentId" (referenceQa)="onReferenceQa($event)" [comentIndex]="commentIndex" [zoomScale]="reference?.zoomScale"
+      <dec-marks #referenceZoom [noComments]="true" [marker]="reference" [qaMode]="referenceQaMode"
+        [parentId]="parentId" (referenceQa)="onReferenceQa($event)" [parentSize]="reference?.parentSize" [comentIndex]="commentIndex" [zoomScale]="reference?.zoomScale"
         [zoomPosition]="reference?.position">
       </dec-marks>
       <div class="fake-div">
@@ -19,7 +19,7 @@
 
     <div fxFlex="50" fxLayout="column" fxLayoutGap="16px" class="zoom-container">
       <dec-marks #renderZoom [noComments]="false" [marker]="render" [parentId]="parentId" [qaMode]="qaMode" (link)="onLinkTag($event)"
-        (deleteTag)="deleteTag($event)" [zoomScale]="render?.zoomScale" [zoomPosition]="render?.position">
+        (deleteTag)="deleteTag($event)" [zoomScale]="render?.zoomScale" [zoomPosition]="render?.position" [parentSize]="render?.parentSize">
       </dec-marks>
 
       <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="16px" class="fake-div">

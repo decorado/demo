@@ -25,6 +25,8 @@ export class DecMarksComponent implements AfterViewChecked {
 
   @Input() zoomPosition: ZoomPosition;
 
+  @Input() parentSize: any;
+
   @Input() noComments = true;
 
   @Input() parentId = 1;
@@ -74,7 +76,7 @@ export class DecMarksComponent implements AfterViewChecked {
 
   ngAfterViewChecked(): void {
     if (!this.contentDone && this.canvas.nativeElement.parentElement.offsetWidth !== 0) {
-      console.log(this.zoomPosition);
+      // console.log(this.zoomPosition);
       this.setupCanvas();
       this.setupMarksWrapper();
       this.setupMouseEvents();
@@ -89,6 +91,9 @@ export class DecMarksComponent implements AfterViewChecked {
     this.imageElement.onload = () => {
       this.ctx.clearRect(0, 0, this.canvasEl.width, this.canvasEl.height);
       this.ctx.save();
+      if (this.parentSize) {
+        this.formatZoomPositon();
+      }
       this.ctx.translate(this.zoomPosition.x, this.zoomPosition.y);
       this.ctx.scale(this.zoomScale, this.zoomScale);
       this.ctx.drawImage(this.imageElement, -this.zoomPosition.x, -this.zoomPosition.y, this.canvasEl.width, this.canvasEl.height);
@@ -96,6 +101,16 @@ export class DecMarksComponent implements AfterViewChecked {
       this.drawMarks();
     };
     this.imageElement.src = this.marker.file.fileUrl;
+  }
+
+  formatZoomPositon() {
+    if (this.parentSize.x === this.canvasEl.width) {
+      return;
+    }
+    const proporX = this.canvasEl.width / (this.parentSize ? this.parentSize.x : 646);
+    const proporY = this.canvasEl.height / (this.parentSize ? this.parentSize.y : 646);
+    this.zoomPosition.x = this.zoomPosition.x * proporX;
+    this.zoomPosition.y = this.zoomPosition.y * proporY;
   }
 
   private setupMarksWrapper(): void {

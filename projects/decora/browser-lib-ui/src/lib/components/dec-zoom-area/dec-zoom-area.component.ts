@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, Output, EventEmitter, AfterViewInit, HostListener } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter, HostListener } from '@angular/core';
 import { DecMarksComponent } from './../dec-marks/dec-marks.component';
 import { DecConfirmDialogService } from './../../services/confirm-dialog/dec-confirm-dialog.service';
 
@@ -8,6 +8,7 @@ import { DecConfirmDialogService } from './../../services/confirm-dialog/dec-con
   styleUrls: ['./dec-zoom-area.component.scss']
 })
 export class DecZoomAreaComponent implements OnInit {
+ 
 
   @Input()
   set reference(v) {
