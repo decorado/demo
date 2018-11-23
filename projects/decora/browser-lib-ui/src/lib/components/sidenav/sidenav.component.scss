@@ -39,6 +39,19 @@
   }
 }
 
+@media screen and (max-width: 1366px) {
+  .dec-sidenav-wraper {
+    .mat-sidenav-container {
+      height: calc(100vh - 16px);
+
+      &.with-toolbar {
+        height: calc(100vh - 80px);
+      }
+    }
+  }
+}
+
+
 @media screen and (max-width: 1199px) {
   .dec-sidenav-wraper {
     .mat-sidenav-container {
