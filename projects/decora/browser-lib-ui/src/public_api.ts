@@ -121,6 +121,9 @@ export * from './lib/components/dec-product-briefing/dec-product-briefing.module
 // PRODUCT SOURCE 3D MODEL COLOR
 export * from './lib/components/dec-product-source3dmodel-color/dec-product-source3dmodel-color.component';
 export * from './lib/components/dec-product-source3dmodel-color/dec-product-source3dmodel-color.module';
+// PRODUCT SOURCE 3D MODEL FIX
+export * from './lib/components/dec-product-source3dmodel-fix/dec-product-source3dmodel-fix.component';
+export * from './lib/components/dec-product-source3dmodel-fix/dec-product-source3dmodel-fix.module';
 // PRODUCT FEATURES
 export * from './lib/components/dec-product-features/dec-product-features.component';
 export * from './lib/components/dec-product-features/dec-product-features.module';

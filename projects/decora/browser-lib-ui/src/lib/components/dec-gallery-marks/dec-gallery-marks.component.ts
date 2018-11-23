@@ -121,7 +121,6 @@ export class DecGalleryMarksComponent {
   }
 
   onInitDataFn(event: NguCarouselStore) {
-
     this.setPrevNextCheckers(event.isFirst, event.items >= this.images.length);
 
   }

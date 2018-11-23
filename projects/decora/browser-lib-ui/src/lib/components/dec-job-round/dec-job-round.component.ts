@@ -16,6 +16,7 @@ export class DecJobRoundComponent {
     if (v) {
       this.round = v.round;
       this.roundNumber = v.roundNumber;
+      this.jobType = v.jobType;
       this.formatRenderFiles(v.round);
     }
   }
@@ -58,6 +59,7 @@ export class DecJobRoundComponent {
 
   round;
   roundNumber;
+  jobType;
   private _config;
   private _product;
   private _qaMode;
@@ -101,6 +103,15 @@ export class DecJobRoundComponent {
     this.markedReference = v.referenceImages.map(x => {
       return {
         file: x.sysFile,
+        tags: []
+      };
+    });
+  }
+
+  formatMarkedRender(v) {
+    this.markedReference = v.renderedImages.map(x => {
+      return {
+        file: x,
         tags: []
       };
     });
@@ -233,6 +244,11 @@ export class DecJobRoundComponent {
 
   setView = ($event) => {
     switch ($event.value) {
+      case 'render':
+        console.log('render');
+        this.formatMarkedRender(this.product);
+        this.referenceMax = 'remove';
+        break;
       case 'reference':
         this.formatMarkedReference(this.product);
         this.referenceMax = 'remove';
