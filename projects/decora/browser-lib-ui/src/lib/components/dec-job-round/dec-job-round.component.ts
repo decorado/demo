@@ -1,8 +1,8 @@
 import { HostListener, Component, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { DecZoomMarksGalleryComponent } from './../dec-zoom-marks-gallery/dec-zoom-marks-gallery.component';
-import { fromEvent } from 'rxjs';
 import { MatDialog } from '@angular/material';
 import { DecZoomAreaComponent } from './../dec-zoom-area/dec-zoom-area.component';
+import { DecApiService } from '../../services/api/decora-api.service';
 
 @Component({
   selector: 'dec-job-round',
@@ -17,6 +17,9 @@ export class DecJobRoundComponent {
       this.round = v.round;
       this.roundNumber = v.roundNumber;
       this.jobType = v.jobType;
+      if (v.skuFixId) {
+        this.skuFix = this.populateSkuFix(v.skuFixId);
+      }
       this.formatRenderFiles(v.round);
     }
   }
@@ -60,12 +63,16 @@ export class DecJobRoundComponent {
   round;
   roundNumber;
   jobType;
+  activeTab: string;
   private _config;
   private _product;
   private _qaMode;
 
   reference;
   render;
+
+  contentDone: boolean;
+  skuFix;
 
   zoomAreaOpen = false;
 
@@ -97,7 +104,7 @@ export class DecJobRoundComponent {
     }
   }
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog, private decApiService: DecApiService) { }
 
   formatMarkedReference(v) {
     this.markedReference = v.referenceImages.map(x => {
@@ -109,12 +116,21 @@ export class DecJobRoundComponent {
   }
 
   formatMarkedRender(v) {
-    this.markedReference = v.renderedImages.map(x => {
+    this.markedReference = v.requestAdjustment.map(x => {
+      x.comments.forEach((comment, i) => {
+        comment.reference = i + 1;
+      });
       return {
-        file: x,
-        tags: []
+        file: x.file,
+        tags: x.comments
       };
     });
+  }
+
+  public async populateSkuFix(id: string | number) {
+    const endpoint = `/skufixes/${id}`;
+    this.skuFix = await this.decApiService.get(endpoint).toPromise();
+    this.contentDone = true;
   }
 
   formatRenderFiles(v) {
@@ -245,28 +261,33 @@ export class DecJobRoundComponent {
   setView = ($event) => {
     switch ($event.value) {
       case 'render':
-        console.log('render');
-        this.formatMarkedRender(this.product);
+        this.formatMarkedRender(this.skuFix);
+        this.activeTab = 'render';
         this.referenceMax = 'remove';
         break;
       case 'reference':
         this.formatMarkedReference(this.product);
+        this.activeTab = 'reference';
         this.referenceMax = 'remove';
         break;
       case 'round1':
         this.markedReference = this.formatRenderReference(this.rounds[0]);
+        this.activeTab = 'round1';
         this.referenceMax = this.rounds[0].max.fileUrl;
         break;
       case 'round2':
         this.markedReference = this.formatRenderReference(this.rounds[1]);
+        this.activeTab = 'round2';
         this.referenceMax = this.rounds[1].max.fileUrl;
         break;
       case 'round3':
         this.markedReference = this.formatRenderReference(this.rounds[2]);
+        this.activeTab = 'round3';
         this.referenceMax = this.rounds[2].max.fileUrl;
         break;
       case 'round4':
         this.markedReference = this.formatRenderReference(this.rounds[3]);
+        this.activeTab = 'round4';
         this.referenceMax = this.rounds[3].max.fileUrl;
         break;
     }

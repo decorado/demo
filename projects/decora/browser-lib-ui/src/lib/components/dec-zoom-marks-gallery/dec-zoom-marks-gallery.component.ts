@@ -48,7 +48,7 @@ export class DecZoomMarksGalleryComponent {
     return this._userAgent;
   }
 
-  @Input() 
+  @Input()
   set maxFile(v) {
     if (v) {
       this._maxFile = v;
@@ -95,7 +95,7 @@ export class DecZoomMarksGalleryComponent {
   }
 
   onInitDataFn(event: NguCarouselStore) {
-    if(!this.markedObjs || this.markedObjs.length === 0) {
+    if (!this.markedObjs || this.markedObjs.length === 0) {
       return;
     }
     this.setPrevNextCheckers(event.isFirst, event.items >= this.markedObjs.length);

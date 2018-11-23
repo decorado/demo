@@ -11,7 +11,6 @@ export class DecRenderCommentService {
   constructor(private decApi: DecApiService) { }
 
   public getRenderfeedbacktree(version: number): Promise<any> {
-
     const queryParams = {
       language: this.formatI18n(this.decApi.user.i18n),
     };
@@ -24,16 +23,20 @@ export class DecRenderCommentService {
   }
 
   public getRenderDescriptionsByCode(comments: Tag[]): Tag[] {
+    comments.forEach(comment => {
+      comment.description = comment.comment;
+    });
     const groupedComments = comments.reduce((r, v, i, a, k = v.version) => ((r[k] || (r[k] = [])).push(v), r), {});
-
     Object.keys(groupedComments).forEach(async key => {
-      const resp = await this.getRenderfeedbacktree(+key);
-      this.feedbackTree = resp['sub'];
-
-      groupedComments[key].forEach(comment => {
-        comment.description = this.getDescription(comment.comment);
-      });
-
+      try {
+        const resp = await this.getRenderfeedbacktree(+key);
+        this.feedbackTree = resp['sub'];
+        groupedComments[key].forEach(comment => {
+          comment.description = this.getDescription(comment.comment);
+        });
+      } catch (error) {
+        console.log(error);
+      }
     });
 
     return comments;
