@@ -12,7 +12,7 @@ export class DecoraProductMeasuresComparisonDemoComponent implements OnInit {
     referenceCubeY: 12,
     referenceCubeZ: 23,
     modelCubeX: 22,
-    modelCubeY: 12,
+    modelCubeY: 35,
     modelCubeZ: 23
   }
 

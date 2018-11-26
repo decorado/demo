@@ -34,6 +34,7 @@ export class DecProductMeasuresComparisonComponent implements OnInit {
       label: 'label.cubeX',
       product: this.printMeasure(this.measures.referenceCubeX.toFixed(2)),
       model: this.printMeasure(this.measures.modelCubeX),
+      valid: this.calcMeasureValidity(this.measures.referenceCubeX, this.measures.modelCubeX),
       productIn: this.printMeasureInches(this.measures.referenceCubeX),
       modelIn: this.printMeasureInches(this.measures.modelCubeX)
     };
@@ -42,6 +43,7 @@ export class DecProductMeasuresComparisonComponent implements OnInit {
       label: 'label.cubeY',
       product: this.printMeasure(this.measures.referenceCubeY.toFixed(2)),
       model: this.printMeasure(this.measures.modelCubeY),
+      valid: this.calcMeasureValidity(this.measures.referenceCubeY, this.measures.modelCubeY),
       productIn: this.printMeasureInches(this.measures.referenceCubeY),
       modelIn: this.printMeasureInches(this.measures.modelCubeY)
     };
@@ -50,6 +52,7 @@ export class DecProductMeasuresComparisonComponent implements OnInit {
       label: 'label.cubeZ',
       product: this.printMeasure(this.measures.referenceCubeZ.toFixed(2)),
       model: this.printMeasure(this.measures.modelCubeZ),
+      valid: this.calcMeasureValidity(this.measures.referenceCubeZ, this.measures.modelCubeZ),
       productIn: this.printMeasureInches(this.measures.referenceCubeZ),
       modelIn: this.printMeasureInches(this.measures.modelCubeZ)
     };
@@ -57,6 +60,12 @@ export class DecProductMeasuresComparisonComponent implements OnInit {
     this.formatedMeasures.push(width);
     this.formatedMeasures.push(depth);
     this.formatedMeasures.push(height);
+  }
+
+  private calcMeasureValidity(jobValue, roundValue) {
+    const minValue = jobValue - (jobValue * .05);
+    const maxValue = jobValue + (jobValue * .05);
+    return (roundValue > minValue && roundValue < maxValue);
   }
 
 

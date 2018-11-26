@@ -20,11 +20,6 @@
               <div></div>
             </div>
           </div>
-          <!-- <div fxFlex>
-              <div fxLayout="row" fxLayoutAlign="end center">
-                <div></div>
-              </div>
-            </div> -->
           <div fxFlex>
             <div fxLayout="row" fxLayoutAlign="center center">
               <div class="dec-subhead dec-color-grey">{{ 'label.product' | translate }}</div>
@@ -33,6 +28,11 @@
           <div fxFlex>
             <div fxLayout="row" fxLayoutAlign="center center">
               <div class="dec-subhead dec-color-grey">{{ 'label.model' | translate }}</div>
+            </div>
+          </div>
+          <div fxFlex>
+            <div fxLayout="row" fxLayoutAlign="start center">
+              <div></div>
             </div>
           </div>
         </div>
@@ -64,6 +64,15 @@
                 <div> | </div>
                 <div>
                   {{measure.modelIn}}
+                </div>
+              </div>
+            </div>
+            <div fxFlex>
+              <div fxLayout="row" fxLayoutAlign="end center">
+                <div>
+                  <mat-icon [class.green]="measure.valid" [class.red]="!measure.valid">{{ measure.valid
+                    ? 'done' : 'error_outline' }}
+                  </mat-icon>
                 </div>
               </div>
             </div>
