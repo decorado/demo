@@ -108,6 +108,22 @@ export class DecZoomMarksComponent implements AfterViewChecked {
     }
   }
 
+  private calculateSizeAndDrawImage(zoomPosition?: ZoomPosition) {
+    const wrh = this.imageElement.width / this.imageElement.height;
+    let newWidth = this.canvasEl.width;
+    let newHeight = newWidth / wrh;
+    if (newHeight > this.canvasEl.height) {
+      newHeight = this.canvasEl.height;
+      newWidth = newHeight * wrh;
+    }
+    const heightToCenter = this.canvasEl.height / 2 - newHeight / 2;
+    if (zoomPosition) {
+      this.ctx.drawImage(this.imageElement, -zoomPosition.x, -(zoomPosition.y - heightToCenter), newWidth, newHeight);
+    } else {
+      this.ctx.drawImage(this.imageElement, 0, heightToCenter, newWidth, newHeight);
+    }
+  }
+
   private setupCanvas(): void {
     this.canvasEl = this.canvas.nativeElement;
     this.setCanvasSize(this.canvasEl.offsetWidth);
@@ -116,7 +132,7 @@ export class DecZoomMarksComponent implements AfterViewChecked {
     this.ctx = this.canvasEl.getContext('2d');
     this.imageElement.onload = () => {
       this.loadingContainerEl.style.display = 'none';
-      this.ctx.drawImage(this.imageElement, 0, 0, this.canvasEl.width, this.canvasEl.width);
+      this.calculateSizeAndDrawImage();
       this.drawMarks();
       this.setZoomPosition(this.canvasEl.width * 0.5, this.canvasEl.width * 0.5);
     };
@@ -282,7 +298,7 @@ export class DecZoomMarksComponent implements AfterViewChecked {
         this.ctx.translate(this.zoomPosition.x, this.zoomPosition.y);
         this.ctx.scale(this.zoomScale, this.zoomScale);
         this.ctx.translate(-this.zoomPosition.x, -this.zoomPosition.y);
-        this.ctx.drawImage(this.imageElement, 0, 0, this.canvasEl.width, this.canvasEl.height);
+        this.calculateSizeAndDrawImage();
         this.ctx.restore();
       }
     });
@@ -521,7 +537,7 @@ export class DecZoomMarksComponent implements AfterViewChecked {
     this.ctx.save();
     this.ctx.translate(this.zoomPosition.x, this.zoomPosition.y);
     this.ctx.scale(zoomScale, zoomScale);
-    this.ctx.drawImage(this.imageElement, -this.zoomPosition.x, -this.zoomPosition.y, this.canvasEl.width, this.canvasEl.height);
+    this.calculateSizeAndDrawImage(this.zoomPosition);
     this.ctx.restore();
   }
 
@@ -553,9 +569,9 @@ export class DecZoomMarksComponent implements AfterViewChecked {
         y: this.zoomPosition.y
       },
       zoomScale: this.zoomScale,
-      parentSize : {
-        x : this.canvasEl.width,
-        y : this.canvasEl.height 
+      parentSize: {
+        x: this.canvasEl.width,
+        y: this.canvasEl.height
       }
     };
   }

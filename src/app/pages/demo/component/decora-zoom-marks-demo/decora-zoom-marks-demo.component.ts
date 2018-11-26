@@ -77,7 +77,7 @@ export class DecoraZoomMarksDemoComponent implements OnInit {
           'size': 2741819,
           'originalName': '5bb5201249d9bc0729766e598170125292556642597.jpg',
           'fileBasePath': '2018/10/3/5bb51ff2af4d0b12a262de3c.jpg',
-          'fileUrl': 'http://s3.amazonaws.com/decora-platform-1-nv/2018/10/3/5bb51ff2af4d0b12a262de3c.jpg'
+          'fileUrl': 'http://s3.amazonaws.com/decora-platform-1-nv/2018/10/26/5bd37171e35ccc2b1b73a1ea.jpg'
         },
         tags: [
           {
