@@ -91,9 +91,9 @@
         {{ 'label.measures' | translate }}
       </div>
       <strong fxLayout="column" fxLayoutGap="4px" class="dec-color-black">
-        <div fxFlex>{{ 'label.cubeX' | translate }}: {{ product?.referenceCubeX?.toFixed(2) }} cm</div>
-        <div fxFlex>{{ 'label.cubeY' | translate }}: {{ product?.referenceCubeY?.toFixed(2) }} cm</div>
-        <div fxFlex>{{ 'label.cubeZ' | translate }}: {{ product?.referenceCubeZ?.toFixed(2) }} cm</div>
+        <div *ngIf="product?.referenceCubeX" fxFlex>{{ 'label.cubeX' | translate }}: {{ product?.referenceCubeX?.toFixed(2) }} cm</div>
+        <div *ngIf="product?.referenceCubeY" fxFlex>{{ 'label.cubeY' | translate }}: {{ product?.referenceCubeY?.toFixed(2) }} cm</div>
+        <div *ngIf="product?.referenceCubeZ" fxFlex>{{ 'label.cubeZ' | translate }}: {{ product?.referenceCubeZ?.toFixed(2) }} cm</div>
       </strong>
     </div>
   </div>
