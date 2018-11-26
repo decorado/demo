@@ -9,7 +9,7 @@
 
   <div class="item-detail">
     <span class="label">
-     {{ 'label.job-id' | translate }}
+      {{ 'label.job-id' | translate }}
     </span>
     <span class="value">
       {{ job?.id ? '#' + job?.id : '' }}
@@ -49,6 +49,15 @@
     </span>
     <span class="value">
       {{ product?.decoraCategory | decCategory | async }}
+    </span>
+  </div>
+
+  <div class="item-detail" *ngIf="product?.kitSize">
+    <span class="label">
+      {{ 'label.product-kit-size' | translate }}
+    </span>
+    <span class="value">
+      {{ product?.kitSize }}
     </span>
   </div>
 
