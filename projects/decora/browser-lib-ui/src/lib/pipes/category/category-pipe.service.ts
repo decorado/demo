@@ -17,7 +17,7 @@ export class CategoryPipeService {
         map(data => {
 
           if (data) {
-            let category = '';
+            let category = code+' ';
 
             let map = data.sub;
             for (let i in codes) {
