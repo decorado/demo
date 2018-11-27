@@ -238,8 +238,8 @@ export class DecJobRoundComponent {
   }
 
   deleteZoomAreaByParentId(id) {
+    this.renderGallery.zoomMarks.deleteMark(this.editZoomArea);
     this.onCancel();
-    this.renderGallery.zoomMarks.deleteMark(this.renderGallery.markedObj.zoomAreas[id]);
     this.renewGallery();
   }
 

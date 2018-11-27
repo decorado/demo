@@ -121,7 +121,7 @@ export class DecZoomAreaComponent implements OnInit {
   }
 
   deleteTag(event) {
-    this.referenceZoom.deleteMarkByReference(`${this.parentId}.${event.reference}`);
+    this.renderZoom.deleteMarkByReference(`${this.parentId}.${event.reference}`);
   }
 
   onReferenceQa($event) {
