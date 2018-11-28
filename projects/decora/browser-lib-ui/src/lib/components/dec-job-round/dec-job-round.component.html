@@ -45,7 +45,7 @@
         <ng-template #renderGalleryDone>
           <dec-zoom-marks-gallery [userAgent]="userAgent" #renderGallery *ngIf="renderImages" [showTags]="true"
             (openZoomArea)="openEditZoomArea($event, true)" [markedObjs]="round?.qualityAssurance?.renders" [maxFile]="round?.max?.fileUrl"
-            [qaModeActive]="qaMode">
+            [qaModeActive]="qaMode" [jobType]="jobType">
           </dec-zoom-marks-gallery>
         </ng-template>
 

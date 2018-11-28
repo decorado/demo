@@ -19,12 +19,22 @@ export class DecRenderCommentComponent {
   selectedChoicesDisplay = '';
   stepsChoice: RenderFeedback[] = [];
 
+  commentEdit: RenderComment;
+  onlyColorVariation: boolean;
+
   @Output() deleteMark = new EventEmitter();
 
   constructor(private decRenderCommentService: DecRenderCommentService,
     public dialogRef: MatDialogRef<DecRenderCommentComponent>,
-    @Inject(MAT_DIALOG_DATA) public commentEdit: RenderComment) {
+    @Inject(MAT_DIALOG_DATA) public dialogData: any) {
+
+    if (dialogData) {
+      this.commentEdit = dialogData.commentEdit;
+      this.onlyColorVariation = dialogData.onlyColorVariation;
+    }
+
     this.getRenderfeedbacktree();
+
   }
 
   async getRenderfeedbacktree() {
@@ -34,7 +44,7 @@ export class DecRenderCommentComponent {
 
       this._version = resp.version;
       this.listOptions = this.filloptions(resp.sub);
-      this.listOptionsDisplay = [...this.listOptions];
+      this.listOptionsDisplay = this.getListOptionsDisplay(this.listOptions);
 
       if (this.commentEdit) {
         const { comment } = this.commentEdit;
@@ -47,6 +57,13 @@ export class DecRenderCommentComponent {
     }
   }
 
+  private getListOptionsDisplay(listOptions) {
+    if (this.onlyColorVariation) {
+      return [...listOptions.filter(option => option.colorVariation)];
+    }
+    return [...listOptions];
+  }
+
   backspaceChoice(): void {
     this.selectedChoicesDisplay = this.selectedChoicesDisplay.slice(0, -1);
 
@@ -54,7 +71,7 @@ export class DecRenderCommentComponent {
       this.stepsChoice = this.stepsChoice.slice(0, -1);
       this.listOptionsDisplay = [...this.stepsChoice[this.stepsChoice.length - 1].sub];
     } else {
-      this.listOptionsDisplay = [...this.listOptions];
+      this.listOptionsDisplay = this.getListOptionsDisplay(this.listOptions);
       this.stepsChoice = [];
     }
   }

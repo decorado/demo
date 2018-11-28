@@ -33,6 +33,8 @@ export class DecMarksComponent implements AfterViewChecked {
 
   @Input() comentIndex;
 
+  @Input() jobType;
+
   @Input()
   set qaMode(value: boolean) {
     if (value !== this._qaMode) {
@@ -159,7 +161,9 @@ export class DecMarksComponent implements AfterViewChecked {
             this.referenceQa.emit(false);
             return;
           }
-          const dialogRef = this.dialog.open(DecRenderCommentComponent);
+
+          const onlyColorVariation = this.jobType === 'COLOR';
+          const dialogRef = this.dialog.open(DecRenderCommentComponent, { data: { onlyColorVariation } });
           dialogRef.afterClosed().subscribe(result => {
             if (result) {
               const comment = new Tag({
@@ -185,7 +189,9 @@ export class DecMarksComponent implements AfterViewChecked {
               this.referenceQa.emit(false);
               return;
             }
-            const dialogRef = this.dialog.open(DecRenderCommentComponent);
+
+            const onlyColorVariation = this.jobType === 'COLOR';
+            const dialogRef = this.dialog.open(DecRenderCommentComponent, { data: { onlyColorVariation } });
             dialogRef.afterClosed().subscribe(result => {
               if (result) {
                 const comment = new Tag({
@@ -324,7 +330,10 @@ export class DecMarksComponent implements AfterViewChecked {
 
   private clickEventPointTag(comment: Tag) {
     if (this.qaMode) {
-      const dialogRef = this.dialog.open(DecRenderCommentComponent, { data: { comment: comment.comment, version: comment.version } });
+      const commentEdit = { comment: comment.comment, version: comment.version };
+      const onlyColorVariation = this.jobType === 'COLOR';
+
+      const dialogRef = this.dialog.open(DecRenderCommentComponent, { data: { commentEdit, onlyColorVariation } });
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
           comment.comment = result.comment;

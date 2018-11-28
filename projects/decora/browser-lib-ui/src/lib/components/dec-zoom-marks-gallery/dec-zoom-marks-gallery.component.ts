@@ -13,6 +13,8 @@ export class DecZoomMarksGalleryComponent {
 
   carouselConfig = CarouselZoomConfig;
 
+  @Input() jobType;
+
   @Input()
   set markedObjs(v) {
     if (this._markedObjs !== v) {

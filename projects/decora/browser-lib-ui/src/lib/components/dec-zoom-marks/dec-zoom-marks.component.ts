@@ -18,6 +18,7 @@ export class DecZoomMarksComponent implements AfterViewChecked {
   @Input() minZoomLevel: any;
   @Input() maxZoomLevel: any;
   @Input() stepZoomLevel: any;
+  @Input() jobType;
 
   @Input()
   set marker(value: Marker) {
@@ -212,7 +213,9 @@ export class DecZoomMarksComponent implements AfterViewChecked {
         const y2 = Math.round(((event.offsetY / this.marksWrapperEl.offsetWidth) * 100) * 100) / 100;
         if (this.mouseMoved) {
           this.setMouseMoved(false);
-          const dialogRef = this.dialog.open(DecRenderCommentComponent);
+
+          const onlyColorVariation = this.jobType === 'COLOR';
+          const dialogRef = this.dialog.open(DecRenderCommentComponent, { data: { onlyColorVariation } });
           dialogRef.afterClosed().subscribe(result => {
             if (result) {
               const comment = new Tag({
@@ -228,7 +231,9 @@ export class DecZoomMarksComponent implements AfterViewChecked {
           });
         } else {
           if (!target.classList.contains('point-tag') && !target.classList.contains('zoom-area-tag')) {
-            const dialogRef = this.dialog.open(DecRenderCommentComponent);
+
+            const onlyColorVariation = this.jobType === 'COLOR';
+            const dialogRef = this.dialog.open(DecRenderCommentComponent, { data: { onlyColorVariation } });
             dialogRef.afterClosed().subscribe(result => {
               if (result) {
                 const comment = new Tag({
@@ -456,7 +461,10 @@ export class DecZoomMarksComponent implements AfterViewChecked {
 
   private clickEventPointTag(comment: Tag) {
     if (this.qaMode) {
-      const dialogRef = this.dialog.open(DecRenderCommentComponent, { data: { comment: comment.comment, version: comment.version } });
+      const commentEdit = { comment: comment.comment, version: comment.version };
+      const onlyColorVariation = this.jobType === 'COLOR';
+
+      const dialogRef = this.dialog.open(DecRenderCommentComponent, { data: { commentEdit, onlyColorVariation } });
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
           comment.comment = result.comment;

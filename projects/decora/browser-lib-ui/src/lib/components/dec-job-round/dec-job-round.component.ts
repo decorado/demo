@@ -181,6 +181,7 @@ export class DecJobRoundComponent {
     dialogRef.componentInstance.render = this.render;
     dialogRef.componentInstance.parentId = this.parentId;
     dialogRef.componentInstance.qaMode = qaMode;
+    dialogRef.componentInstance.jobType = this.jobType;
 
     dialogRef.componentInstance.save.subscribe($event => {
       this.onSaveZoomArea($event);

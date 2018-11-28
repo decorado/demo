@@ -6,7 +6,7 @@ import { DecoraRenderCommentComponent } from './decora-render-comment.component'
 import { DemoContainerModule } from '@app/shared/components/demo-container/demo-container.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { DecRenderCommentModule } from '@projects/decora/browser-lib-ui/src/lib/components/dec-render-comment/dec-render-comment.module';
-import { MatButtonModule, MatDialogModule, MatFormFieldModule, MatInputModule } from '@angular/material';
+import { MatButtonModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatCheckboxModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { DecAvatarModule } from '@projects/decora/browser-lib-ui/src/lib/components/dec-avatar/dec-avatar.module';
 
@@ -22,7 +22,8 @@ import { DecAvatarModule } from '@projects/decora/browser-lib-ui/src/lib/compone
     MatDialogModule,
     MatInputModule,
     MatFormFieldModule,
-    DecAvatarModule
+    DecAvatarModule,
+    MatCheckboxModule
   ],
   declarations: [DecoraRenderCommentComponent]
 })

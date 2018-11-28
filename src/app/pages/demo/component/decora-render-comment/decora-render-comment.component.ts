@@ -10,12 +10,15 @@ import RenderComment from '@projects/decora/browser-lib-ui/src/lib/components/de
 })
 export class DecoraRenderCommentComponent {
 
+  onlyColorVariation: boolean;
   commentResult: RenderComment;
 
   constructor(public dialog: MatDialog) { }
 
   openRenderComment(): void {
-    const dialogRef = this.dialog.open(DecRenderCommentComponent);
+    const dialogRef = this.dialog.open(DecRenderCommentComponent, {
+      data: { onlyColorVariation: this.onlyColorVariation }
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       this.commentResult = result;
@@ -24,7 +27,7 @@ export class DecoraRenderCommentComponent {
 
   editRenderComment(commentEdit: RenderComment): void {
     const dialogRef = this.dialog.open(DecRenderCommentComponent, {
-      data: commentEdit
+      data: { commentEdit, onlyColorVariation: this.onlyColorVariation }
     });
 
     dialogRef.afterClosed().subscribe(result => {

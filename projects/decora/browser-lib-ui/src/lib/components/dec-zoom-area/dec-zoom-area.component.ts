@@ -8,7 +8,8 @@ import { DecConfirmDialogService } from './../../services/confirm-dialog/dec-con
   styleUrls: ['./dec-zoom-area.component.scss']
 })
 export class DecZoomAreaComponent implements OnInit {
- 
+
+  @Input() jobType;
 
   @Input()
   set reference(v) {
