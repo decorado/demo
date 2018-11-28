@@ -1,23 +1,18 @@
 <div class="gallery-size" fxLayout="column" fxLayoutGap="32px" fxLayoutAlign="space-between start">
 
-  <dec-zoom-marks fxFlex 
-    class="gallery-size" 
-    [marker]="markedObj" 
-    [qaMode]="qaModeActive" 
-    (openZoomArea)="onOpenZoomArea($event)"
-    minZoomLevel="1" 
-    maxZoomLevel="8" 
-    [maxFile]="maxFile"
-    stepZoomLevel="0.1"></dec-zoom-marks>
+  <dec-zoom-marks fxFlex class="gallery-size" [marker]="markedObj" [qaMode]="qaModeActive" (openZoomArea)="onOpenZoomArea($event)"
+    minZoomLevel="1" maxZoomLevel="8" [maxFile]="maxFile" stepZoomLevel="0.1"></dec-zoom-marks>
 
   <div class="gallery-size" fxLayout="row" fxLayoutAlign="center center">
-    <ngu-carousel class="carousel-wrapper" [inputs]="carouselConfig" (initData)="onInitDataFn($event)" (onMove)="onMoveFn($event)">
+    <ngu-carousel #carouselGallery class="carousel-wrapper" [inputs]="carouselConfig" (initData)="onInitDataFn($event)" (onMove)="onMoveFn($event)">
 
-      <ngu-item NguCarouselItem *ngFor="let image of markedObjs; let i = index;" [class.active]="image == markedObj">
+      <ngu-item (swipe)="onSwipe($event)" NguCarouselItem *ngFor="let image of markedObjs; let i = index;"
+        [class.active]="image == markedObj">
         <div class="image-container">
           <span *ngIf="(image?.tags && image?.tags?.length > 0) || 
-                       (image?.zoomAreas && image?.zoomAreas?.length > 0)" class="has-comment">!</span>
-          <img [decImage]="image.file" [decImageSize]="{width:300, height:300}" (click)="onSelectImage($event,image, i)">
+                       (image?.zoomAreas && image?.zoomAreas?.length > 0)"
+            class="has-comment">!</span>
+          <img [decImage]="image.file" [decImageSize]="{width:300, height:300}" draggable="false" (click)="onSelectImage($event,image, i)">
         </div>
       </ngu-item>
 
@@ -35,8 +30,9 @@
         <span class="dec-icon-text-size-zoom-area-tags"> Tags </span> <br /> <br />
       </h3>
       <span class="qa-name" *ngIf="userAgent">
-          {{ userAgent.reviewer ? 'Review' : 'QA' }}: {{ userAgent.date | date:'medium' }} - #{{userAgent.userId}} {{userAgent.userName}}
-        </span>
+        {{ userAgent.reviewer ? 'Review' : 'QA' }}: {{ userAgent.date | date:'medium' }} - #{{userAgent.userId}}
+        {{userAgent.userName}}
+      </span>
     </div>
     <dec-markdowns-comment [renders]="markedObjs" [qaMode]="qaModeActive" [decZoomMarksComponent]="zoomMarks"></dec-markdowns-comment>
 

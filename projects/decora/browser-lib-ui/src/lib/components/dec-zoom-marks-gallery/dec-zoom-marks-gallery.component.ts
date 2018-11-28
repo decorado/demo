@@ -64,6 +64,8 @@ export class DecZoomMarksGalleryComponent {
 
   imageIndex = 0;
 
+  @ViewChild('carouselGallery') carouselGallery;
+
   @Input() qaModeActive: boolean;
 
   @ViewChild(DecZoomMarksComponent) zoomMarks: DecZoomMarksComponent;
@@ -92,6 +94,32 @@ export class DecZoomMarksGalleryComponent {
       }
 
     });
+  }
+
+  onSwipe(event) {
+    const orientation = Math.abs(event.deltaX) > 40 ? (event.deltaX > 0 ? 'right' : 'left') : '';
+    let direction;
+    if (orientation === 'left') {
+      direction = this.carouselGallery.next.nativeElement;
+    } else if (orientation === 'right') {
+      direction = this.carouselGallery.prev.nativeElement;
+    } else {
+      return false;
+    }
+
+    direction.click();
+    if (Math.abs(event.deltaX) > 100) {
+      direction.click();
+      if (Math.abs(event.deltaX) > 150) {
+        direction.click();
+        if (Math.abs(event.deltaX) > 200) {
+          direction.click();
+          if (Math.abs(event.deltaX) > 250) {
+            direction.click();
+          }
+        }
+      }
+    }
   }
 
   onInitDataFn(event: NguCarouselStore) {
