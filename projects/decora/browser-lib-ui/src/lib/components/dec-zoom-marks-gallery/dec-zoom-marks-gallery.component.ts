@@ -18,6 +18,7 @@ export class DecZoomMarksGalleryComponent {
     if (this._markedObjs !== v) {
       this._markedObjs = v;
       this.markedObj = this.markedObjs[0];
+      this.sortRenders();
       this.bindRenderDescriptions();
     }
   }
@@ -164,5 +165,20 @@ export class DecZoomMarksGalleryComponent {
 
   public getImageIndex() {
     return this.imageIndex;
+  }
+
+  sortRenders() {
+    const aux = [];
+    for (let i = 0; i < this.markedObjs.length; i++) {
+      debugger
+      if ((this.markedObjs[i].tags && this.markedObjs[i].tags.length > 0) || 
+         (this.markedObjs[i].zoomAreas && this.markedObjs[i].zoomAreas.length > 0)) {
+        aux.push(this.markedObjs.splice(i, 1));
+        i = 0;
+      }
+    }
+    for (let i = (aux.length - 1); i >= 0; i--) {
+      this.markedObjs.splice(0, 0, aux[i][0]);
+    }
   }
 }
