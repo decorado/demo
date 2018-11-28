@@ -169,19 +169,18 @@ export class DecJobRoundComponent {
       this.parentId = this.renderGallery.getImageIndex();
       this.parentId++;
       this.zoomAreaOpen = true;
-      this.openZoomAreModal();
+      this.openZoomAreaModal(true);
     }
   }
 
-  openZoomAreModal() {
-
+  private openZoomAreaModal(qaMode: boolean) {
     const dialogRef = this.dialog.open(DecZoomAreaComponent, { height: '90vh', width: '71vw' });
     dialogRef.componentInstance.reference = this.reference;
     dialogRef.componentInstance.editMode = this.editZoomArea;
     dialogRef.componentInstance.note = this.note;
     dialogRef.componentInstance.render = this.render;
     dialogRef.componentInstance.parentId = this.parentId;
-    dialogRef.componentInstance.qaMode = this.qaMode;
+    dialogRef.componentInstance.qaMode = qaMode;
 
     dialogRef.componentInstance.save.subscribe($event => {
       this.onSaveZoomArea($event);
@@ -226,15 +225,16 @@ export class DecJobRoundComponent {
     }
   }
 
-  openEditZoomArea($event) {
-    this.editZoomArea = $event;
+  openEditZoomArea($event, qaMode: boolean) {
+    this.editZoomArea = qaMode ? $event : false;
     this.reference = JSON.parse(JSON.stringify($event.referenceShot));
     this.note = $event.note;
     this.render = JSON.parse(JSON.stringify($event.renderShot));
     this.parentId = this.renderGallery.getImageIndex();
     this.parentId++;
     this.zoomAreaOpen = true;
-    this.openZoomAreModal();
+
+    this.openZoomAreaModal(qaMode);
   }
 
   deleteZoomAreaByParentId(id) {
