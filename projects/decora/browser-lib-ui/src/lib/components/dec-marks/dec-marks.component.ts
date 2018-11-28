@@ -76,7 +76,6 @@ export class DecMarksComponent implements AfterViewChecked {
 
   ngAfterViewChecked(): void {
     if (!this.contentDone && this.canvas.nativeElement.parentElement.offsetWidth !== 0) {
-      // console.log(this.zoomPosition);
       this.setupCanvas();
       this.setupMarksWrapper();
       this.setupMouseEvents();
@@ -96,7 +95,17 @@ export class DecMarksComponent implements AfterViewChecked {
       }
       this.ctx.translate(this.zoomPosition.x, this.zoomPosition.y);
       this.ctx.scale(this.zoomScale, this.zoomScale);
-      this.ctx.drawImage(this.imageElement, -this.zoomPosition.x, -this.zoomPosition.y, this.canvasEl.width, this.canvasEl.height);
+
+      const wrh = this.imageElement.width / this.imageElement.height;
+      let newWidth = this.canvasEl.width;
+      let newHeight = newWidth / wrh;
+      if (newHeight > this.canvasEl.height) {
+        newHeight = this.canvasEl.height;
+        newWidth = newHeight * wrh;
+      }
+      const heightToCenter = this.canvasEl.height / 2 - newHeight / 2;
+      const widthToCenter = this.canvasEl.width / 2 - newWidth / 2;
+      this.ctx.drawImage(this.imageElement, -(this.zoomPosition.x - widthToCenter), -(this.zoomPosition.y - heightToCenter), newWidth, newHeight);
       this.ctx.restore();
       this.drawMarks();
     };

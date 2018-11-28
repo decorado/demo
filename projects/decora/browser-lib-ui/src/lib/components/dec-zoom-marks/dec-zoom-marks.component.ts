@@ -117,10 +117,11 @@ export class DecZoomMarksComponent implements AfterViewChecked {
       newWidth = newHeight * wrh;
     }
     const heightToCenter = this.canvasEl.height / 2 - newHeight / 2;
+    const widthToCenter = this.canvasEl.width / 2 - newWidth / 2;
     if (zoomPosition) {
-      this.ctx.drawImage(this.imageElement, -zoomPosition.x, -(zoomPosition.y - heightToCenter), newWidth, newHeight);
+      this.ctx.drawImage(this.imageElement, -(zoomPosition.x - widthToCenter), -(zoomPosition.y - heightToCenter), newWidth, newHeight);
     } else {
-      this.ctx.drawImage(this.imageElement, 0, heightToCenter, newWidth, newHeight);
+      this.ctx.drawImage(this.imageElement, widthToCenter, heightToCenter, newWidth, newHeight);
     }
   }
 
