@@ -279,8 +279,8 @@ export class DecZoomMarksComponent implements AfterViewChecked {
         square.style.height = `${Math.abs(this.startY - event.offsetY)}px`;
         this.marksWrapperEl.appendChild(square);
       } else {
-        this.zoomPosition.x -= event.movementX;
-        this.zoomPosition.y -= event.movementY;
+        this.zoomPosition.x -= event.movementX / this.zoomScale;
+        this.zoomPosition.y -= event.movementY / this.zoomScale;
         if (this.zoomPosition.x < 0) {
           this.zoomPosition.x = 0;
         }
