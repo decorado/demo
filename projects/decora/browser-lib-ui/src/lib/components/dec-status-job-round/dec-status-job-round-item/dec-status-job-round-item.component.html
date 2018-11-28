@@ -13,9 +13,51 @@
   </div>
 
   <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="space-between center" *ngIf="round?.status; else inactiveStatusLabel">
-    <div fxFlex="40" fxLayout="column" fxLayoutAlign="end start" fxLayoutGap="4px">
+
+    <!-- DELIVERED -->
+    <div fxFlex="40" *ngIf="round?.status === 'DELIVERED'" fxLayout="column" fxLayoutAlign="end start" fxLayoutGap="4px">
       <span class="smaller-font"> {{ 'label.delivered' | translate }}: </span>
       <span class="smaller-font"> {{ round?.delivered | timeAgo }} </span>
+    </div>
+
+    <!-- DEVELOPMENT -->
+    <div fxFlex="40" *ngIf="round?.status === 'IN_DEVELOPMENT'" fxLayout="column" fxLayoutAlign="end start" fxLayoutGap="4px">
+      <span class="smaller-font"> {{ 'label.dead-line' | translate }}: </span>
+      <span id="devCountDown" class="smaller-font"> <dec-countdown [interval]="getDevInterval()"></dec-countdown> </span>
+    </div>
+
+    <!-- RENDERING -->
+    <div fxFlex="40" *ngIf="round?.status === 'RENDERING'" fxLayout="column" fxLayoutAlign="end start" fxLayoutGap="4px">
+      <span class="smaller-font"> {{ 'label.started-in' | translate }}: </span>
+      <span class="smaller-font"> {{ round?.startRender | timeAgo }} </span>
+    </div>
+
+    <!-- APPROVED -->
+    <div fxFlex="40" *ngIf="round?.status === 'APPROVED'" fxLayout="column" fxLayoutAlign="end start" fxLayoutGap="4px">
+      <span class="smaller-font"> {{ 'label.delivered' | translate }}: </span>
+      <span class="smaller-font"> {{ getFinishQA() | timeAgo }} </span>
+    </div>
+
+    <!-- DENIED -->
+    <div fxFlex="40" *ngIf="round?.status === 'DENIED'" fxLayout="column" fxLayoutAlign="end start" fxLayoutGap="4px">
+      <span class="smaller-font"> {{ 'label.delivered' | translate }}: </span>
+      <span class="smaller-font"> {{ getFinishQA() | timeAgo }} </span>
+    </div>
+
+    <!-- RENDER DONE -->
+    <div fxFlex="40" *ngIf="round?.status === 'RENDER_DONE'" fxLayout="column" fxLayoutAlign="end start" fxLayoutGap="4px">
+      <span class="smaller-font"> {{ 'label.delivered' | translate }}: </span>
+      <span class="smaller-font"> {{ round?.endRender | timeAgo }} </span>
+    </div>
+
+    <!-- IN QA -->
+    <div fxFlex="40" *ngIf="round?.status === 'IN_QA'" fxLayout="column" fxLayoutAlign="end start" fxLayoutGap="4px">
+      <span class="smaller-font"> - </span>
+      <span class="smaller-font"> 00:00:00 </span>
+    </div>
+
+    <!-- DELETED,  -->
+    <div fxFlex="40" *ngIf="noShowInfos(round?.status)" fxLayout="column" fxLayoutAlign="end start" fxLayoutGap="4px">
     </div>
 
     <div class="position-status" fxFlex="60" fxLayout="column" fxLayoutAlign="end start">

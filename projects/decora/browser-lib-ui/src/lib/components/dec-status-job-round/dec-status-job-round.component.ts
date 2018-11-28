@@ -28,7 +28,7 @@ export class DecStatusJobRoundComponent implements OnInit {
   @Input()
   set job(v) {
     if (v) {
-      this.roundsQnt = v.rounds.length;
+      this.roundsQnt = v.rounds.length < 3 ? 3 : v.rounds.length;
       this._job = v;
     }
   }

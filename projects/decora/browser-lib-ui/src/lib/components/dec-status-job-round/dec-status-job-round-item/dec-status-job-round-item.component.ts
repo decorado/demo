@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input} from '@angular/core';
 
 @Component({
   selector: 'dec-status-job-round-item',
@@ -39,7 +39,12 @@ export class DecStatusJobRoundItemComponent {
   private _round;
   negativeQA = false;
 
-
+  noInfos = [
+    'CANCEL_BY_PROFESSIONAL',
+    'CANCEL_BY_CORA',
+    'DELETED',
+    'TIME_EXPIRED'
+  ]
   private _showReportedError: boolean;
   public get showReportedError(): boolean {
     return this._showReportedError;
@@ -54,6 +59,32 @@ export class DecStatusJobRoundItemComponent {
 
   toggleNegative() {
     this.negativeQA = true;
+  }
+
+  getDevInterval() {
+    const now = new Date();
+    const roundEnd = new Date(this.round.end);
+    let diff = (roundEnd.getTime() - now.getTime()) / 1000;
+    if (diff < 0) {
+      const div = document.getElementById('devCountDown');
+      div.classList.add('red-qa');
+    }
+    return parseInt(diff.toString().split('.')[0]);
+  }
+
+  getFinishQA() {
+    if (this.round && this.round.qualityAssurance.lastCheck) {
+      return this.round.qualityAssurance.lastCheck.finish;
+    }
+    return this.round.qualityAssurance.finish;
+  }
+
+  noShowInfos(status) {
+    const exists = this.noInfos.find(s => s === status);
+    if (exists) {
+      return true;
+    }
+    return false;
   }
 
 }
