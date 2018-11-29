@@ -38,15 +38,13 @@ export class DecZoomMarksGalleryComponent {
     return this._showTags;
   }
 
-  @Input()
-  set userAgent(v) {
-    if (v) {
-      this._userAgent = v;
-    }
+  private _reviewers: any;
+  public get reviewers(): any {
+    return this._reviewers;
   }
-
-  get userAgent() {
-    return this._userAgent;
+  @Input()
+  public set reviewers(v: any) {
+    this._reviewers = v;
   }
 
   @Input()
@@ -60,7 +58,7 @@ export class DecZoomMarksGalleryComponent {
     return this._maxFile;
   }
 
-  _userAgent: any;
+
   _maxFile: any;
 
   imageIndex = 0;

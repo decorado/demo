@@ -21,6 +21,7 @@ export class DecJobRoundComponent {
         this.skuFix = this.populateSkuFix(v.skuFixId);
       }
       this.formatRenderFiles(v.round);
+      this.populateReviewers(v.round);
     }
   }
 
@@ -56,7 +57,7 @@ export class DecJobRoundComponent {
     return this._qaMode;
   }
 
-  @Input() userAgent;
+  public reviewers: any = {};
 
   @Output() setZoomAreaOpen = new EventEmitter();
 
@@ -131,6 +132,16 @@ export class DecJobRoundComponent {
     const endpoint = `/skufixes/${id}`;
     this.skuFix = await this.decApiService.get(endpoint).toPromise();
     this.contentDone = true;
+  }
+
+  private populateReviewers(round: any) {
+    const { qualityAssurance } = round;
+    const { lastCheck } = qualityAssurance;
+
+    this.reviewers = {
+      qualityAgent: { ...qualityAssurance.qualityAgent, date: qualityAssurance.start },
+      lastChecker: lastCheck ? { ...lastCheck.reviewer, date: lastCheck.start } : undefined
+    };
   }
 
   formatRenderFiles(v) {
