@@ -31,7 +31,7 @@ export class DecZoomMarksGalleryComponent {
 
   @Input()
   set showTags(v) {
-      this._showTags = v;
+    this._showTags = v;
   }
 
   get showTags() {
@@ -170,9 +170,8 @@ export class DecZoomMarksGalleryComponent {
   sortRenders() {
     const aux = [];
     for (let i = 0; i < this.markedObjs.length; i++) {
-      debugger
-      if ((this.markedObjs[i].tags && this.markedObjs[i].tags.length > 0) || 
-         (this.markedObjs[i].zoomAreas && this.markedObjs[i].zoomAreas.length > 0)) {
+      if ((this.markedObjs[i].tags && this.markedObjs[i].tags.length > 0) ||
+        (this.markedObjs[i].zoomAreas && this.markedObjs[i].zoomAreas.length > 0)) {
         aux.push(this.markedObjs.splice(i, 1));
         i = 0;
       }

@@ -15,8 +15,8 @@
             <mat-button-toggle value="round4" *ngIf="roundNumber > 4">Round 4</mat-button-toggle>
           </mat-button-toggle-group>
         </div>
-        <dec-zoom-marks-gallery *ngIf="markedReference" (openZoomArea)="openEditZoomArea($event, false)" [maxFile]="referenceMax"
-          #referenceGallery [markedObjs]="markedReference" [qaModeActive]="false" [showTags]="activeTab !== 'reference'">
+        <dec-zoom-marks-gallery *ngIf="markedReference" (openZoomArea)="openEditZoomArea($event, true)" [maxFile]="referenceMax"
+          #referenceGallery [markedObjs]="markedReference" [showTags]="activeTab !== 'reference'">
         </dec-zoom-marks-gallery>
 
         <div class="measures-container">
@@ -43,7 +43,7 @@
 
         <ng-template #renderGalleryDone>
           <dec-zoom-marks-gallery [userAgent]="userAgent" #renderGallery *ngIf="renderImages" [showTags]="true"
-            (openZoomArea)="openEditZoomArea($event, true)" [markedObjs]="round?.qualityAssurance?.renders" [maxFile]="round?.max?.fileUrl"
+            (openZoomArea)="openEditZoomArea($event)" [markedObjs]="round?.qualityAssurance?.renders" [maxFile]="round?.max?.fileUrl"
             [qaModeActive]="qaMode" [jobType]="jobType">
           </dec-zoom-marks-gallery>
         </ng-template>

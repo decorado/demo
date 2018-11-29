@@ -63,7 +63,7 @@ export class DecJobRoundComponent {
   round;
   roundNumber;
   jobType;
-  activeTab: string = 'reference';
+  activeTab = 'reference';
   private _config;
   private _product;
   private _qaMode;
@@ -169,18 +169,30 @@ export class DecJobRoundComponent {
       this.parentId = this.renderGallery.getImageIndex();
       this.parentId++;
       this.zoomAreaOpen = true;
-      this.openZoomAreaModal(true);
+      this.openZoomAreaModal();
     }
   }
 
-  private openZoomAreaModal(qaMode: boolean) {
+  openEditZoomArea($event, cantEdit = false) {
+    this.editZoomArea = $event;
+    this.reference = JSON.parse(JSON.stringify($event.referenceShot));
+    this.note = $event.note;
+    this.render = JSON.parse(JSON.stringify($event.renderShot));
+    this.parentId = this.renderGallery.getImageIndex();
+    this.parentId++;
+    this.zoomAreaOpen = true;
+
+    this.openZoomAreaModal(cantEdit);
+  }
+
+  private openZoomAreaModal(cantEdit = false) {
     const dialogRef = this.dialog.open(DecZoomAreaComponent, { height: '90vh', width: '71vw' });
     dialogRef.componentInstance.reference = this.reference;
     dialogRef.componentInstance.editMode = this.editZoomArea;
     dialogRef.componentInstance.note = this.note;
     dialogRef.componentInstance.render = this.render;
     dialogRef.componentInstance.parentId = this.parentId;
-    dialogRef.componentInstance.qaMode = qaMode;
+    dialogRef.componentInstance.qaMode = cantEdit ? false : this.qaMode;
     dialogRef.componentInstance.jobType = this.jobType;
 
     dialogRef.componentInstance.save.subscribe($event => {
@@ -224,18 +236,6 @@ export class DecJobRoundComponent {
       this.zoomAreaOpen = false;
       this.renewGallery();
     }
-  }
-
-  openEditZoomArea($event, qaMode: boolean) {
-    this.editZoomArea = qaMode ? $event : false;
-    this.reference = JSON.parse(JSON.stringify($event.referenceShot));
-    this.note = $event.note;
-    this.render = JSON.parse(JSON.stringify($event.renderShot));
-    this.parentId = this.renderGallery.getImageIndex();
-    this.parentId++;
-    this.zoomAreaOpen = true;
-
-    this.openZoomAreaModal(qaMode);
   }
 
   deleteZoomAreaByParentId(id) {
