@@ -31,9 +31,7 @@ export class DecZoomMarksGalleryComponent {
 
   @Input()
   set showTags(v) {
-    if (v) {
       this._showTags = v;
-    }
   }
 
   get showTags() {

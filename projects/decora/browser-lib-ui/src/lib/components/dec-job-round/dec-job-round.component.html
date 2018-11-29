@@ -15,9 +15,8 @@
             <mat-button-toggle value="round4" *ngIf="roundNumber > 4">Round 4</mat-button-toggle>
           </mat-button-toggle-group>
         </div>
-
         <dec-zoom-marks-gallery *ngIf="markedReference" (openZoomArea)="openEditZoomArea($event, false)" [maxFile]="referenceMax"
-          #referenceGallery [markedObjs]="markedReference" [qaModeActive]="false">
+          #referenceGallery [markedObjs]="markedReference" [qaModeActive]="false" [showTags]="activeTab !== 'reference'">
         </dec-zoom-marks-gallery>
 
         <div class="measures-container">
@@ -53,12 +52,4 @@
 
     </dec-grid-row>
   </dec-grid>
-  <!--
-  <div *ngIf="zoomAreaOpen" class="zoom-area-container">
-    <div class="render-header" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="32px"></div>
-    <dec-zoom-area (save)="onSaveZoomArea($event)" [reference]="reference" [editMode]="editZoomArea" [note]="note"
-      (cancel)="onCancel()" [render]="render" [parentId]="parentId" [qaMode]="qaMode" (delete)="deleteZoomAreaByParentId($event)">
-    </dec-zoom-area>
-  </div> -->
-
 </div>

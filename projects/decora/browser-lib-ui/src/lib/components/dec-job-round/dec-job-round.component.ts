@@ -63,7 +63,7 @@ export class DecJobRoundComponent {
   round;
   roundNumber;
   jobType;
-  activeTab: string;
+  activeTab: string = 'reference';
   private _config;
   private _product;
   private _qaMode;
