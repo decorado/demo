@@ -138,7 +138,7 @@ export class DecZoomMarksComponent implements AfterViewChecked {
       this.drawMarks();
       this.setZoomPosition(this.canvasEl.width * 0.5, this.canvasEl.width * 0.5);
     };
-    this.imageElement.src = this.marker.file.fileUrl;
+    this.imageElement.src = this.marker && this.marker.file? this.marker.file.fileUrl : undefined;
   }
 
   private setupLoadingContainer(): void {

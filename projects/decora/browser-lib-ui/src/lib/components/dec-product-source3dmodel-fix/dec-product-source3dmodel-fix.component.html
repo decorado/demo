@@ -20,10 +20,11 @@
 
         <ng-container [ngSwitch]="refType">
 
-          <dec-gallery *ngSwitchCase="'reference'" [images]="skuFix?.product?.referenceImages"></dec-gallery>
+          <dec-zoom-marks-gallery *ngSwitchCase="'reference'" [markedObjs]="references"></dec-zoom-marks-gallery>
 
-          <dec-gallery *ngSwitchCase="'render'" [images]="skuFix?.product?.renderedImages"></dec-gallery>
-
+          <dec-zoom-marks-gallery *ngSwitchCase="'render'" [markedObjs]="renders"></dec-zoom-marks-gallery>
+          
+          <dec-product-measures-comparison style="margin-top: 32px;" [measures]="measures"></dec-product-measures-comparison>
         </ng-container>
 
       </dec-grid-column>

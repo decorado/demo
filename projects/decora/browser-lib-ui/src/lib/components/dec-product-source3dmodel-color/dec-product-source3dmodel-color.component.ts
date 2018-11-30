@@ -8,10 +8,6 @@ import { Component, Input } from '@angular/core';
 })
 export class DecProductSource3dmodelColorComponent {
 
-  private _product: any;
-  public get product(): any {
-    return this._product;
-  }
   @Input()
   public set product(v: any) {
     if (this._product !== v) {
@@ -20,22 +16,63 @@ export class DecProductSource3dmodelColorComponent {
     }
   }
 
-  private _productColorVariationFather: any;
-  public get productColorVariationFather(): any {
-    return this._productColorVariationFather;
+  public get product(): any {
+    return this._product;
   }
+
   public set productColorVariationFather(v: any) {
     this._productColorVariationFather = v;
   }
+
+  public get productColorVariationFather(): any {
+    return this._productColorVariationFather;
+  }
+
+  measures;
+  references;
+  rendersColorVariationFather;
+
+  private _product: any;
+  private _productColorVariationFather: any;
 
   constructor(private decApi: DecApiService) { }
 
   private async getProductColorVariationFather(productIdColorVariationFather: string) {
     this.productColorVariationFather = await this.decApi.get(`/legacy/product/${productIdColorVariationFather}`).toPromise();
+    this.referencesSysFiles();
+    this.getRendersColorVariationFather();
+    this.measures = this.formatMeasures();
   }
 
-  get referencesSysFiles() {
-    return this.productColorVariationFather ? this.productColorVariationFather.referenceImages.map(images => images.sysFile) : undefined;
+  referencesSysFiles() {
+    this.references = this.productColorVariationFather ? this.productColorVariationFather.referenceImages.map(images => {
+      return {
+        file: images.sysFile,
+        tags: [],
+        zoomAreas: []
+      }
+    }) : undefined;
+  }
+
+  getRendersColorVariationFather() {
+    this.rendersColorVariationFather = this.productColorVariationFather ? this.productColorVariationFather.renderedImages.map(images => {
+      return {
+        file: images,
+        tags: [],
+        zoomAreas: []
+      }
+    }) : undefined;
+  }
+
+  formatMeasures() {
+    return {
+      referenceCubeX: this.productColorVariationFather.referenceCubeX,
+      referenceCubeY: this.productColorVariationFather.referenceCubeY,
+      referenceCubeZ: this.productColorVariationFather.referenceCubeZ,
+      modelCubeX: this.productColorVariationFather.modelCubeX,
+      modelCubeY: this.productColorVariationFather.modelCubeY,
+      modelCubeZ: this.productColorVariationFather.modelCubeZ,
+    }
   }
 
   public downloadMax(): void {

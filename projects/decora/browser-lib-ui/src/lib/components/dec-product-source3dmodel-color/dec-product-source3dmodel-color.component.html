@@ -1,18 +1,29 @@
-<div fxLayout="column">
-  <div fxLayout="row" fxLayoutAlign="end center" class="download-max">
-    <button mat-flat-button color="primary" class="uppercase" (click)="downloadMax()">download</button>
-  </div>
+<div class="container-renders">
 
-  <div fxLayout="row" class="container-gallery">
-    <div fxFlex>
-      <dec-gallery [images]="referencesSysFiles">
-      </dec-gallery>
-    </div>
+  <dec-grid gap="0">
+    <dec-grid-row>
+      <dec-grid-column span="6">
+        <div fxLayout="row" fxLayoutAlign="end center" class="download-max fake-download-max">
+        </div>
+        <div fxLayout="column" fxLayoutAlign="start start">
+          <div class="gallery-size">
+            <dec-zoom-marks-gallery *ngIf="references" [markedObjs]="references"></dec-zoom-marks-gallery>
+          </div>
+          <div class="measures-size">
+            <dec-product-measures-comparison [measures]="measures"></dec-product-measures-comparison>
+          </div>
 
-    <div fxFlex>
-      <dec-gallery *ngIf="productColorVariationFather?.renderedImages" [images]="productColorVariationFather?.renderedImages">
-      </dec-gallery>
-    </div>
-  </div>
-  <hr>
+        </div>
+
+      </dec-grid-column>
+
+      <dec-grid-column span="6">
+        <div fxLayout="row" fxLayoutAlign="end center" class="download-max">
+          <button mat-flat-button color="primary" class="uppercase" (click)="downloadMax()">download</button>
+        </div>
+        <dec-zoom-marks-gallery *ngIf="rendersColorVariationFather" [markedObjs]="rendersColorVariationFather"></dec-zoom-marks-gallery>
+      </dec-grid-column>
+
+    </dec-grid-row>
+  </dec-grid>
 </div>

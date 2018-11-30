@@ -9,6 +9,8 @@ import { DecProductSource3dmodelFixComponent } from './dec-product-source3dmodel
 import { DecGalleryMarksModule } from '../dec-gallery-marks/dec-gallery-marks.module';
 import { DecGalleryModule } from '../gallery/dec-gallery.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { DecZoomMarksGalleryModule } from './../dec-zoom-marks-gallery/dec-zoom-marks-gallery.module';
+import { DecProductMeasuresComparisonModule } from './../dec-product-measures-comparison/dec-product-measures-comparison.module';
 
 
 @NgModule({
@@ -25,7 +27,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     FlexLayoutModule,
     DecGridModule,
     DecIconModule,
-    MatButtonModule
+    MatButtonModule,
+    DecZoomMarksGalleryModule,
+    DecProductMeasuresComparisonModule
   ],
   exports: [
     DecProductSource3dmodelFixComponent

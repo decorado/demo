@@ -33,6 +33,12 @@ export class DecProductSource3dmodelFixComponent {
 
   public contentDone: boolean;
 
+  public renders: any;
+
+  public references: any;
+
+  public measures: any;
+
   constructor(private decApiService: DecApiService) {
     this.refType = 'reference';
   }
@@ -41,10 +47,45 @@ export class DecProductSource3dmodelFixComponent {
     const endpoint = `/skufixes/${id}`;
     this.skuFix = await this.decApiService.get(endpoint).toPromise();
     this.contentDone = true;
+    this.getReferences();
+    this.getRenders();
+    this.measures = this.formatMeasures();
   }
 
   public downloadMax(): void {
     window.open(this.product.max.fileUrl, '_blank');
   }
 
+
+  private getReferences() {
+    this.references = this.skuFix ? this.skuFix.product.referenceImages.map(images => {
+      return {
+        file: images,
+        tags: [],
+        zoomAreas: []
+      }
+    }) : undefined;
+  }
+
+  private getRenders() {
+    this.renders = this.skuFix ? this.skuFix.product.renderedImages.map(images => {
+      return {
+        file: images,
+        tags: [],
+        zoomAreas: []
+      }
+    }) : undefined;
+  }
+
+
+  formatMeasures() {
+    return {
+      referenceCubeX: this.skuFix.product.referenceCubeX,
+      referenceCubeY: this.skuFix.product.referenceCubeY,
+      referenceCubeZ: this.skuFix.product.referenceCubeZ,
+      modelCubeX: this.skuFix.product.modelCubeX,
+      modelCubeY: this.skuFix.product.modelCubeY,
+      modelCubeZ: this.skuFix.product.modelCubeZ,
+    }
+  }
 }

@@ -5,6 +5,9 @@ import { DecProductSource3dmodelColorComponent } from './dec-product-source3dmod
 import { TranslateModule } from '@ngx-translate/core';
 import { DecGalleryModule } from '../gallery/dec-gallery.module';
 import { MatButtonModule } from '@angular/material';
+import { DecZoomMarksGalleryModule } from './../dec-zoom-marks-gallery/dec-zoom-marks-gallery.module';
+import { DecGridModule } from './../dec-grid/dec-grid.module';
+import { DecProductMeasuresComparisonModule } from './../dec-product-measures-comparison/dec-product-measures-comparison.module';
 
 @NgModule({
   declarations: [DecProductSource3dmodelColorComponent],
@@ -13,7 +16,10 @@ import { MatButtonModule } from '@angular/material';
     TranslateModule,
     FlexLayoutModule,
     MatButtonModule,
-    DecGalleryModule
+    DecGalleryModule,
+    DecZoomMarksGalleryModule,
+    DecGridModule,
+    DecProductMeasuresComparisonModule
   ],
   exports: [DecProductSource3dmodelColorComponent]
 })
