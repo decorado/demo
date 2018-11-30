@@ -38,7 +38,7 @@
         </div>
 
         <div *ngIf="round.renderStatus !== 'RENDER_DONE'; else renderGalleryDone">
-          <dec-render-not-available [renderStatus]="round.renderStatus"></dec-render-not-available>
+          <dec-render-not-available [renderStatus]="round.renderStatus" [maxFileUrl]="round?.max ? round?.max.fileUrl : ''"></dec-render-not-available>
         </div>
 
         <ng-template #renderGalleryDone>

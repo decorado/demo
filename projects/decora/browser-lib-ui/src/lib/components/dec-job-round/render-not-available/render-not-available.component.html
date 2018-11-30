@@ -65,6 +65,9 @@
       <span class="description">
         This render has exceeded the limit time. You need to optimize your model for faster rendering.
       </span>
+      <br>
+      <br>
+      <a *ngIf="!!maxFileUrl" [href]="maxFileUrl" target="_blank">Max link</a>
     </div>
   </div>
 

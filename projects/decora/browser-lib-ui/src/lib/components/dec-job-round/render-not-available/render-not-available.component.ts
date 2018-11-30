@@ -17,7 +17,16 @@ export class RenderNotAvailableComponent {
     this._renderStatus = v;
   }
 
-  isProfessional = false;
+  private _maxFileUrl: string;
+  public get maxFileUrl(): string {
+    return this._maxFileUrl;
+  }
+  @Input()
+  public set maxFileUrl(v: string) {
+    this._maxFileUrl = v;
+  }
+
+  public isProfessional = false;
 
   constructor(private decApiService: DecApiService) {
     this.isProfessional = this.decApiService.user.role === 'professional';
