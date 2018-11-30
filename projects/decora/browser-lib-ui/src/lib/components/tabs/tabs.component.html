@@ -9,6 +9,9 @@
       <!-- TAB LABEL -->
       <ng-template mat-tab-label>
         {{ tab.label }}
+        <span *ngIf="tab.feedback" class="badge badge-pill badge-small dec-color-warn">
+          <mat-icon>info</mat-icon>
+        </span>
         <span class="badge badge-pill badge-small" *ngIf="tab.total >= 0">{{ parseTotal(tab.total) }}</span>
       </ng-template>
 

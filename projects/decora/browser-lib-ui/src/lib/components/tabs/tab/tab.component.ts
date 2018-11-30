@@ -13,6 +13,8 @@ export class DecTabComponent implements AfterViewInit {
 
   @Input() total: string;
 
+  @Input() feedback: boolean;
+
   @ContentChild(TemplateRef) content: TemplateRef<DecTabComponent>;
 
   @Input() disabled: boolean;
