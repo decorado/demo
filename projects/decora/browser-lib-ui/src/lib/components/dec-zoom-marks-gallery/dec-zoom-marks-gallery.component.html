@@ -31,12 +31,12 @@
         <span class="dec-icon-text-size-zoom-area-tags"> Tags </span> <br /> <br />
       </h3>
 
-      <span class="qa-name" *ngIf="reviewers?.qualityAgent">
+      <span class="qa-name" *ngIf="!isProfessional && reviewers?.qualityAgent">
         QA: {{ reviewers.qualityAgent.date | date:'medium' }} - #{{reviewers.qualityAgent.userId}}
         {{reviewers.qualityAgent.name}}
       </span>
       <br>
-      <span class="qa-name" *ngIf="reviewers?.lastChecker">
+      <span class="qa-name" *ngIf="!isProfessional && reviewers?.lastChecker">
         Review: {{ reviewers.lastChecker.date | date:'medium' }} - #{{reviewers.lastChecker.userId}}
         {{reviewers.lastChecker.name}}
       </span>

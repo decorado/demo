@@ -57,6 +57,9 @@ export class DecJobRoundComponent {
     return this._qaMode;
   }
 
+  @Input()
+  public isProfessional: boolean;
+
   public reviewers: any = {};
 
   @Output() setZoomAreaOpen = new EventEmitter();

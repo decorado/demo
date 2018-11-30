@@ -59,6 +59,9 @@ export class DecZoomMarksGalleryComponent {
     return this._maxFile;
   }
 
+  @Input()
+  public isProfessional: boolean;
+
 
   _maxFile: any;
 
