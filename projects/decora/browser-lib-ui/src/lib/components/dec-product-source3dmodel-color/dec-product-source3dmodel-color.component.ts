@@ -13,6 +13,7 @@ export class DecProductSource3dmodelColorComponent {
     if (this._product !== v) {
       this._product = v;
       this.getProductColorVariationFather(v.productIdColorVariationFather);
+      this.getSimilarProducts(v.productIdColorVariationFather);
     }
   }
 
@@ -34,6 +35,14 @@ export class DecProductSource3dmodelColorComponent {
 
   private _product: any;
   private _productColorVariationFather: any;
+  private _similarProducts: any[];
+
+  public get similarProducts(): any[] {
+    return this._similarProducts;
+  }
+  public set similarProducts(v: any[]) {
+    this._similarProducts = v;
+  }
 
   constructor(private decApi: DecApiService) { }
 
@@ -44,13 +53,17 @@ export class DecProductSource3dmodelColorComponent {
     this.measures = this.formatMeasures();
   }
 
+  private async getSimilarProducts(productIdColorVariationFather: string) {
+    this.similarProducts = await this.decApi.get(`/legacy/product/${productIdColorVariationFather}/colorVariation`).toPromise();
+  }
+
   referencesSysFiles() {
     this.references = this.productColorVariationFather ? this.productColorVariationFather.referenceImages.map(images => {
       return {
         file: images.sysFile,
         tags: [],
         zoomAreas: []
-      }
+      };
     }) : undefined;
   }
 
@@ -60,7 +73,7 @@ export class DecProductSource3dmodelColorComponent {
         file: images,
         tags: [],
         zoomAreas: []
-      }
+      };
     }) : undefined;
   }
 
@@ -72,7 +85,7 @@ export class DecProductSource3dmodelColorComponent {
       modelCubeX: this.productColorVariationFather.modelCubeX,
       modelCubeY: this.productColorVariationFather.modelCubeY,
       modelCubeZ: this.productColorVariationFather.modelCubeZ,
-    }
+    };
   }
 
   public downloadMax(): void {

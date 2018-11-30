@@ -27,3 +27,7 @@
     </dec-grid-row>
   </dec-grid>
 </div>
+
+<div class="container-similar-products">
+  <dec-card-similar-product *ngFor="let product of similarProducts" [product]="product"></dec-card-similar-product>
+</div>

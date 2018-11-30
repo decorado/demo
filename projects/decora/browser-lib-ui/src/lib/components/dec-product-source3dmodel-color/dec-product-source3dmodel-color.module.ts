@@ -1,3 +1,4 @@
+import { DecCardSimilarProductModule } from './../dec-card-similar-product/dec-card-similar-product.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -19,7 +20,8 @@ import { DecProductMeasuresComparisonModule } from './../dec-product-measures-co
     DecGalleryModule,
     DecZoomMarksGalleryModule,
     DecGridModule,
-    DecProductMeasuresComparisonModule
+    DecProductMeasuresComparisonModule,
+    DecCardSimilarProductModule
   ],
   exports: [DecProductSource3dmodelColorComponent]
 })

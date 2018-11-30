@@ -45,6 +45,7 @@ const routes: Routes = [
   { path: 'tabs', loadChildren: './decora-tabs-demo/decora-tabs-demo.module#DecoraTabsDemoModule' },
   { path: 'upload', loadChildren: './decora-upload-demo/decora-upload-demo.module#DecoraUploadDemoModule' },
   { path: 'render-comment', loadChildren: './decora-render-comment/decora-render-comment.module#DecoraRenderCommentModule' },
+  { path: 'card-similar-product', loadChildren: './decora-card-similar-product/decora-card-similar-product.module#DecoraCardSimilarProductModule' },
 ];
 
 @NgModule({

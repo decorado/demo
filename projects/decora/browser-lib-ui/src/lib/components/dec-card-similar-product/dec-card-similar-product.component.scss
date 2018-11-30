@@ -1,0 +1,39 @@
+.card-container {
+  display: flex;
+  flex-direction: column;
+  width: 230px;
+  height: 330px;
+  padding: 24px;
+  margin: 24px 12px;
+}
+
+.container-image {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 8px;
+
+  .image-product {
+    max-width: 236px;
+    max-height: 236px;
+  }
+}
+
+.sku-product {
+  color: #232e38;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.name-product {
+  color: #929292;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.container-downlaod {
+  display: flex;
+  margin-top: 32px;
+  margin-left: -16px;
+}

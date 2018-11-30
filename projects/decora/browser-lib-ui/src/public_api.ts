@@ -199,6 +199,12 @@ export * from './lib/components/dec-countdown/dec-countdown.module';
 // PRODUCT-INFO
 export * from './lib/components/dec-product-info/dec-product-info.component';
 export * from './lib/components/dec-product-info/dec-product-info.module';
+// CARD-SIMILAR-PRODUCT
+export * from './lib/components/dec-card-similar-product/dec-card-similar-product.component';
+export * from './lib/components/dec-card-similar-product/dec-card-similar-product.module';
+// CARD-SIMILAR-PRODUCT
+export * from './lib/components/dec-product-similar-models/dec-product-similar-models.component';
+export * from './lib/components/dec-product-similar-models/dec-product-similar-models.module';
 
 /*********************************************************
 *

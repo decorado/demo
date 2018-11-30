@@ -2,7 +2,7 @@
   margin-bottom: 32px;
 }
 
-.fake-download-max { 
+.fake-download-max {
   height: 30px;
 }
 
@@ -18,4 +18,11 @@
 
 .measures-size {
   width: 100%;
+}
+
+.container-similar-products {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 32px;
 }

@@ -6,7 +6,8 @@
 
     </dec-sidenav-toolbar>
 
-    <dec-sidenav-menu-left [open]="leftMenuVisible" [mode]="leftMenuMode" (openedChange)="leftMenuVisible = $event;" [persistVisibilityMode]="true">
+    <dec-sidenav-menu-left [open]="leftMenuVisible" [mode]="leftMenuMode" (openedChange)="leftMenuVisible = $event;"
+      [persistVisibilityMode]="true">
 
       <dec-sidenav-menu-item routerLink="/">
         <dec-icon [font]="'mat'">home</dec-icon>
@@ -72,7 +73,7 @@
         <dec-sidenav-menu-item prefix="TB" routerLink="/demo/component/tabs">Tabs</dec-sidenav-menu-item>
         <dec-sidenav-menu-item prefix="UP" routerLink="/demo/component/upload">Upload</dec-sidenav-menu-item>
         <dec-sidenav-menu-item prefix="RC" routerLink="/demo/component/render-comment">Render Comment</dec-sidenav-menu-item>
-
+        <dec-sidenav-menu-item prefix="SP" routerLink="/demo/component/card-similar-product">Card Similar Products</dec-sidenav-menu-item>
       </dec-sidenav-menu-item>
 
       <dec-sidenav-menu-item>
