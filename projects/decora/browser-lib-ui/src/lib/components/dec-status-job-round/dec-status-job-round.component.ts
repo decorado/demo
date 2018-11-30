@@ -33,6 +33,10 @@ export class DecStatusJobRoundComponent implements OnInit {
     }
   }
 
+  public get numberOfActualRound() {
+    return this._job.rounds[this._job.rounds.length - 1].number;
+  }
+
   get job() {
     return this._job;
   }
