@@ -19,6 +19,7 @@ export class DecZoomMarksGalleryComponent {
   set markedObjs(v) {
     if (this._markedObjs !== v) {
       this._markedObjs = v;
+      this.generateCacheForImages(v);
       this.markedObj = this.markedObjs[0];
       this.sortRenders();
       this.bindRenderDescriptions();
@@ -92,6 +93,13 @@ export class DecZoomMarksGalleryComponent {
         });
       }
 
+    });
+  }
+
+  private generateCacheForImages(renders) {
+    renders.forEach(mark => {
+      const image = new Image();
+      image.src = mark.file.fileUrl;
     });
   }
 
