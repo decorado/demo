@@ -38,6 +38,10 @@ export class DecJobRoundComponent {
       this._product = v;
       this.formatMarkedReference(v);
       this.formatMeasures(v);
+
+      if (v.productIdColorVariationFather) {
+        this.populateProductColorVariationFather(v.productIdColorVariationFather);
+      }
     }
   }
 
@@ -77,6 +81,7 @@ export class DecJobRoundComponent {
 
   contentDone: boolean;
   skuFix;
+  public productColorVariationFather: any;
 
   zoomAreaOpen = false;
 
@@ -119,11 +124,12 @@ export class DecJobRoundComponent {
     });
   }
 
-  formatMarkedRender(v) {
-    this.markedReference = v.requestAdjustment.map(x => {
+  formatMarkedRenderSkuFix(skuFix: any) {
+    this.markedReference = skuFix.requestAdjustment.map(x => {
       x.comments.forEach((comment, i) => {
         comment.reference = i + 1;
       });
+
       return {
         file: x.file,
         tags: x.comments
@@ -131,9 +137,19 @@ export class DecJobRoundComponent {
     });
   }
 
+  private formatMarkedRenderColorVariation(): void {
+    this.markedReference = this.productColorVariationFather.renderedImages.map(file => ({ file, tags: [] }));
+  }
+
   public async populateSkuFix(id: string | number) {
     const endpoint = `/skufixes/${id}`;
     this.skuFix = await this.decApiService.get(endpoint).toPromise();
+    this.contentDone = true;
+  }
+
+  public async populateProductColorVariationFather(productIdColorVariationFather: string) {
+    const endpoint = `/legacy/product/${productIdColorVariationFather}`;
+    this.productColorVariationFather = await this.decApiService.get(endpoint).toPromise();
     this.contentDone = true;
   }
 
@@ -276,36 +292,35 @@ export class DecJobRoundComponent {
   setView = ($event) => {
     switch ($event.value) {
       case 'render':
-        this.formatMarkedRender(this.skuFix);
-        this.activeTab = 'render';
+        if (this.skuFix) {
+          this.formatMarkedRenderSkuFix(this.skuFix);
+        } else if (this.productColorVariationFather) {
+          this.formatMarkedRenderColorVariation();
+        }
         this.referenceMax = 'remove';
         break;
       case 'reference':
         this.formatMarkedReference(this.product);
-        this.activeTab = 'reference';
         this.referenceMax = 'remove';
         break;
       case 'round1':
         this.markedReference = this.formatRenderReference(this.rounds[0]);
-        this.activeTab = 'round1';
         this.referenceMax = this.rounds[0].max.fileUrl;
         break;
       case 'round2':
         this.markedReference = this.formatRenderReference(this.rounds[1]);
-        this.activeTab = 'round2';
         this.referenceMax = this.rounds[1].max.fileUrl;
         break;
       case 'round3':
         this.markedReference = this.formatRenderReference(this.rounds[2]);
-        this.activeTab = 'round3';
         this.referenceMax = this.rounds[2].max.fileUrl;
         break;
       case 'round4':
         this.markedReference = this.formatRenderReference(this.rounds[3]);
-        this.activeTab = 'round4';
         this.referenceMax = this.rounds[3].max.fileUrl;
         break;
     }
+    this.activeTab = $event.value;
   }
 
   onCancel() {

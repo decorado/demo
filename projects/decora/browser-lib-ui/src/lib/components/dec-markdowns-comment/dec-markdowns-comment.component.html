@@ -7,7 +7,7 @@
       <span [class]="getClass(tag)">
         {{ parentId ? parentId+'.'+(indexTag + 1) : tag.reference }}
       </span>
-      <span *ngIf="tag.comment" class="text-markdown">
+      <span *ngIf="tag?.comment" class="text-markdown">
         {{tag.comment}} - {{tag.description}}
       </span>
       <div class="container-delete" *ngIf="qaMode">

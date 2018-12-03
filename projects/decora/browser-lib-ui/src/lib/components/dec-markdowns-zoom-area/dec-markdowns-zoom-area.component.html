@@ -6,7 +6,7 @@
       </h4>
       <div fxLayoutAlign="space-between center" fxLayoutGap="16px" class="markdown-item" *ngFor="let tag of zoomArea?.renderShot?.tags; let i = index">
         <span class="{{getClass(tag)}}">{{ (zoomArea.reference)+'.' + (tag.reference) }}</span>
-        <span *ngIf="tag.comment" class="text-markdown">
+        <span *ngIf="tag?.comment" class="text-markdown">
           {{tag.comment}} - {{tag.description}}
         </span>
       </div>
