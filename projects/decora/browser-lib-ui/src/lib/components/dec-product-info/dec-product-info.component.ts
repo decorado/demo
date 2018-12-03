@@ -24,6 +24,15 @@ export class DecProductInfoComponent {
 
   @Input() product;
 
+  @Input()
+  public set measures(v: any) {
+    this._measures = v;
+  }
+  public get measures(): any {
+    return this._measures;
+  }
+  private _measures: any;
+
   @Input() visibleInfo: string[] = [];
 
   @Input() showOpenInNewTab = true;
