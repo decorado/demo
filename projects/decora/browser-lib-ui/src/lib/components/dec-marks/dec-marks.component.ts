@@ -47,6 +47,15 @@ export class DecMarksComponent implements AfterViewChecked {
   }
   private _qaMode: boolean;
 
+  @Input()
+  public set enableDeleteLinkedtag(v: any) {
+    this._enableDeleteLinkedtag = v;
+  }
+  public get enableDeleteLinkedtag(): any {
+    return this._enableDeleteLinkedtag;
+  }
+  private _enableDeleteLinkedtag: any;
+
   @Output() link = new EventEmitter();
   @Output() referenceQa = new EventEmitter();
   @Output() deleteTag = new EventEmitter();
@@ -314,8 +323,9 @@ export class DecMarksComponent implements AfterViewChecked {
       tag.addEventListener('mouseover', () => this.addCommentNode(comment));
       tag.addEventListener('mouseout', this.removeCommentNode);
     } else if (this.noComments) {
-      tag.addEventListener('click', () => {
-        this.clickEventPointTagReference(this.marker.tags.find(c => c.reference === index));
+      tag.addEventListener('click', event => {
+        const tags = Array.from(this.marksWrapperEl.querySelectorAll('.point-tag')).filter(el => el.textContent === event.target.innerText);
+        this.clickEventPointTagReference(this.marker.tags.filter(c => c.reference === event.target.innerText)[tags.indexOf(event.target)]);
       });
     } else {
       tag.addEventListener('mouseover', () => this.addCommentNode(this.marker.tags.find(c => c.reference === index)));
@@ -348,7 +358,7 @@ export class DecMarksComponent implements AfterViewChecked {
   }
 
   private clickEventPointTagReference(tag: Tag) {
-    if (this.qaMode) {
+    if (this.enableDeleteLinkedtag) {
       this.marker.tags.splice(this.marker.tags.indexOf(tag), 1);
       this.drawMarks();
     }
