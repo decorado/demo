@@ -19,7 +19,7 @@
 
       <dec-grid-column span="6">
         <div fxLayout="row" fxLayoutAlign="end center" class="download-max">
-          <button mat-flat-button color="primary" class="uppercase" (click)="downloadMax()">download</button>
+          <button mat-flat-button color="primary" class="uppercase" (click)="downloadMax()" [disabled]="!productColorVariationFather?.max">download</button>
         </div>
         <dec-zoom-marks-gallery *ngIf="rendersColorVariationFather" [markedObjs]="rendersColorVariationFather"></dec-zoom-marks-gallery>
       </dec-grid-column>
