@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DecJobRoundComponent } from './dec-job-round.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { MatButtonToggleModule, MatDialogModule } from '@angular/material';
+import { MatButtonToggleModule, MatDialogModule, MatButtonModule } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
 import { DecZoomMarksGalleryModule } from './../dec-zoom-marks-gallery/dec-zoom-marks-gallery.module';
 import { DecGridModule } from './../dec-grid/dec-grid.module';
@@ -14,6 +14,7 @@ import { RenderNotAvailableComponent } from './render-not-available/render-not-a
 @NgModule({
   imports: [
     CommonModule,
+    MatButtonModule,
     MatButtonToggleModule,
     DecZoomMarksGalleryModule,
     DecGridModule,
