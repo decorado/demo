@@ -4,13 +4,15 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { DecMarksComponent } from './dec-marks.component';
 import { MatDialogModule } from '@angular/material';
 import { DecRenderCommentModule } from './../dec-render-comment/dec-render-comment.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
     CommonModule,
     FlexLayoutModule,
     MatDialogModule,
-    DecRenderCommentModule
+    DecRenderCommentModule,
+    TranslateModule
   ],
   declarations: [
     DecMarksComponent

@@ -214,3 +214,14 @@ $color-updated: rgb(109, 100, 100);
   position: absolute;
   right: 20px;
 }
+
+/deep/ .icon-label {
+  position: relative;
+  top: -5px;
+}
+
+/deep/ .icon-delete-label {
+  position: relative;
+  top: -5px;
+  left: 3px;
+}

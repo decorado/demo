@@ -6,6 +6,7 @@ import { switchMap, takeUntil } from 'rxjs/operators';
 import { DecRenderCommentService } from './../dec-render-comment/dec-render-comment.service';
 import { MatDialog } from '@angular/material';
 import { DecRenderCommentComponent } from './../dec-render-comment/dec-render-comment.component';
+import { TranslateService } from '@ngx-translate/core';
 
 export interface ZoomPosition {
   x: number;
@@ -76,6 +77,9 @@ export class DecMarksComponent implements AfterViewChecked {
   private startY: number;
   private mouseMoved: boolean;
 
+  deleteLabel = this.translate.instant('label.delete');
+  editLabel = this.translate.instant('label.edit');
+
   @HostListener('window:resize')
   onResize() {
     this.setCanvasSize(this.canvasEl.offsetWidth);
@@ -83,7 +87,11 @@ export class DecMarksComponent implements AfterViewChecked {
     this.setupCanvas();
   }
 
-  constructor(private renderer: Renderer2, private dialog: MatDialog, private decRenderCommentService: DecRenderCommentService) { }
+  constructor(
+    private renderer: Renderer2, 
+    private dialog: MatDialog, 
+    private decRenderCommentService: 
+    DecRenderCommentService, public translate: TranslateService) { }
 
   ngAfterViewChecked(): void {
     if (!this.contentDone && this.canvas.nativeElement.parentElement.offsetWidth !== 0) {
@@ -148,7 +156,20 @@ export class DecMarksComponent implements AfterViewChecked {
 
   private setupMouseEvents(): void {
     const mouseup = fromEvent(this.marksWrapperEl, 'mouseup');
-    mouseup.subscribe((event: MouseEvent) => {
+    mouseup.subscribe((event: any) => {
+      if (this.verifyMenu(event.target)) {
+        const parent = event.target.parentElement.id === 'tagMenu' ? event.target.parentElement : event.target.parentElement.parentElement;
+        const comment = parent.getAttribute('comment');
+        const type = event.target.getAttribute('type') ? event.target.getAttribute('type') : event.target.parentElement.getAttribute('type');
+        if (type === 'edit') {
+          this.editTags(JSON.parse(comment));
+        } else {
+          this.removeTag(JSON.parse(comment));
+        }
+        this.removeMenu();
+        return;
+      }
+      this.removeMenu();
       const target = event.target as HTMLDivElement;
       if (this.qaMode) {
         const x = Math.round(((this.startX / this.marksWrapperEl.offsetHeight) * 100) * 100) / 100;
@@ -340,20 +361,8 @@ export class DecMarksComponent implements AfterViewChecked {
 
   private clickEventPointTag(comment: Tag) {
     if (this.qaMode) {
-      const commentEdit = { comment: comment.comment, version: comment.version };
-      const onlyColorVariation = this.jobType === 'COLOR';
-
-      const dialogRef = this.dialog.open(DecRenderCommentComponent, { data: { commentEdit, onlyColorVariation } });
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          comment.comment = result.comment;
-          comment.description = result.description;
-        }
-      });
-
-      dialogRef.componentInstance.deleteMark.subscribe(() => {
-        this.deleteMark(comment);
-      });
+      const menu = this.createDivMenu(comment.coordinates, comment);
+      this.marksWrapperEl.appendChild(menu);
     }
   }
 
@@ -431,7 +440,7 @@ export class DecMarksComponent implements AfterViewChecked {
   }
 
   private deleteMark(comment) {
-    this.marker.tags.splice(this.marker.tags.indexOf(comment), 1);
+    this.marker.tags.splice(this.getTagIndex(comment), 1);
     this.deleteTag.emit(comment);
     this.marker.tags.forEach(c => {
       if (c.reference > comment.reference) {
@@ -463,4 +472,84 @@ export class DecMarksComponent implements AfterViewChecked {
     }
   }
 
+  private createDivMenu(coordinates, comment) {
+    const [x, y] = coordinates;
+    const menu = document.createElement('div');
+    menu.id = 'tagMenu';
+    menu.style.top = `calc(${y}% - 50px)`;
+    menu.style.left = `calc(${x}% + 18px)`;
+    menu.style.position = 'absolute';
+    menu.style.width = '100px';
+    menu.style.height = '100px';
+    menu.style.backgroundColor = 'white';
+    menu.style.zIndex = '99';
+    menu.style.border = '1px solid rgba(0,0,0,0.15)';
+    menu.setAttribute('comment', JSON.stringify(comment));
+
+    const edit = document.createElement('div');
+    edit.style.cursor = 'pointer';
+    edit.setAttribute('type', 'edit');
+    edit.style.marginTop = '15px';
+    edit.style.textAlign = 'center';
+    edit.innerHTML = '<img class="img-menu" width="24" height="24" src="/assets/img/edit-icon.svg"> <span class="icon-label">'+this.editLabel+'</span>';
+
+
+    const deleteDiv = document.createElement('div');
+    deleteDiv.style.cursor = 'pointer';
+    deleteDiv.setAttribute('type', 'delete');
+    deleteDiv.style.marginTop = '15px';
+    deleteDiv.style.textAlign = 'center';
+    deleteDiv.innerHTML = '<img class="img-menu" width="24" height="24" src="/assets/img/delete-icon.svg"> <span class="icon-delete-label">'+this.deleteLabel+' </span>';
+
+    menu.appendChild(edit);
+    menu.appendChild(deleteDiv);
+    return menu;
+  }
+
+  verifyMenu(target) {
+    return target.parentElement.id === 'tagMenu' || target.parentElement.parentElement.id === 'tagMenu';
+  }
+
+  removeMenu() {
+    const menu = document.getElementById('tagMenu');
+    if (menu) {
+      this.marksWrapperEl.removeChild(menu);
+    }
+  }
+
+  private editTags(comment) {
+    const commentEdit = { comment: comment.comment, version: comment.version };
+    const onlyColorVariation = this.jobType === 'COLOR';
+
+    const dialogRef = this.dialog.open(DecRenderCommentComponent, { data: { commentEdit, onlyColorVariation } });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        comment = this.getComment(comment);
+        comment.comment = result.comment;
+        comment.description = result.description;
+      }
+    });
+
+  }
+
+  getComment(tag) {
+    for (let i = 0; i < this.marker.tags.length; i++) {
+      if (JSON.stringify(tag.coordinates) === JSON.stringify(this.marker.tags[i].coordinates)) {
+        return this.marker.tags[i];
+      }
+    }
+  }
+
+  private removeTag(comment) {
+    this.deleteMark(comment);
+  }
+
+  public getTagIndex(tag) {
+    for (let i = 0; i < this.marker.tags.length; i++) {
+      if (JSON.stringify(tag.coordinates) === JSON.stringify(this.marker.tags[i].coordinates)) {
+        return i;
+      }
+    }
+    return -1;
+  }
 }

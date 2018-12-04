@@ -48,9 +48,9 @@
 
 <mat-dialog-actions style="justify-content: flex-end;">
   <button mat-button mat-dialog-close>{{ 'label.cancel' | translate | uppercase }}</button>
-  <button mat-flat-button color="warn" *ngIf="commentEdit !== null" (click)="delete()">
+  <!-- <button mat-flat-button color="warn" *ngIf="commentEdit !== null" (click)="delete()">
     {{ 'label.delete' | translate | uppercase }}
-  </button>
+  </button> -->
   <button mat-flat-button color="primary" type="submit" [disabled]="!descriptionLastLevel()" (click)="confirm()">
     {{ 'label.confirm' | translate | uppercase }}
   </button>

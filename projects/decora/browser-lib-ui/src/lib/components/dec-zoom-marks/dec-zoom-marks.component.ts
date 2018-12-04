@@ -7,6 +7,7 @@ import { fromEvent, Observable } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { ZoomArea } from './models/zoom-area.model';
 import { DecRenderCommentComponent } from './../dec-render-comment/dec-render-comment.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'dec-zoom-marks',
@@ -95,7 +96,10 @@ export class DecZoomMarksComponent implements AfterViewChecked {
     this.zoom(this.zoomScale);
   }
 
-  constructor(private renderer: Renderer2, private dialog: MatDialog) {
+  deleteLabel = this.translate.instant('label.delete');
+  editLabel = this.translate.instant('label.edit');
+
+  constructor(private renderer: Renderer2, private dialog: MatDialog, public translate: TranslateService) {
     this.zoomPosition = { x: 0, y: 0 };
     this.zoomScale = 1;
   }
@@ -138,7 +142,7 @@ export class DecZoomMarksComponent implements AfterViewChecked {
       this.drawMarks();
       this.setZoomPosition(this.canvasEl.width * 0.5, this.canvasEl.width * 0.5);
     };
-    this.imageElement.src = this.marker && this.marker.file? this.marker.file.fileUrl : undefined;
+    this.imageElement.src = this.marker && this.marker.file ? this.marker.file.fileUrl : undefined;
   }
 
   private setupLoadingContainer(): void {
@@ -200,9 +204,33 @@ export class DecZoomMarksComponent implements AfterViewChecked {
     this.commentsArraySize++;
   }
 
+  verifyMenu(target) {
+    return target.parentElement.id === 'tagMenu' || target.parentElement.parentElement.id === 'tagMenu';
+  }
+
+  removeMenu() {
+    const menu = document.getElementById('tagMenu');
+    if (menu) {
+      this.marksWrapperEl.removeChild(menu);
+    }
+  }
+
   private mousedownEvent(): void {
     const mouseup = this.mouseupEvent();
-    mouseup.subscribe((event: MouseEvent) => {
+    mouseup.subscribe((event: any) => {
+      if (this.verifyMenu(event.target)) {
+        const parent = event.target.parentElement.id === 'tagMenu' ? event.target.parentElement : event.target.parentElement.parentElement;
+        const comment = parent.getAttribute('comment');
+        const type = event.target.getAttribute('type') ? event.target.getAttribute('type') : event.target.parentElement.getAttribute('type');
+        if (type === 'edit') {
+          this.editTags(JSON.parse(comment));
+        } else {
+          this.removeTag(JSON.parse(comment));
+        }
+        this.removeMenu();
+        return;
+      }
+      this.removeMenu();
       this.setWrapperCursor();
       const target = event.target as HTMLDivElement;
       this.enablePointEvents(this.marksWrapperEl.querySelectorAll('.point-tag'));
@@ -461,21 +489,67 @@ export class DecZoomMarksComponent implements AfterViewChecked {
 
   private clickEventPointTag(comment: Tag) {
     if (this.qaMode) {
-      const commentEdit = { comment: comment.comment, version: comment.version };
-      const onlyColorVariation = this.jobType === 'COLOR';
-
-      const dialogRef = this.dialog.open(DecRenderCommentComponent, { data: { commentEdit, onlyColorVariation } });
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          comment.comment = result.comment;
-          comment.description = result.description;
-        }
-      });
-
-      dialogRef.componentInstance.deleteMark.subscribe(() => {
-        this.deleteMark(comment);
-      });
+      const menu = this.createDivMenu(comment.coordinates, comment);
+      this.marksWrapperEl.appendChild(menu);
     }
+  }
+
+  private editTags(comment) {
+    const commentEdit = { comment: comment.comment, version: comment.version };
+    const onlyColorVariation = this.jobType === 'COLOR';
+
+    const dialogRef = this.dialog.open(DecRenderCommentComponent, { data: { commentEdit, onlyColorVariation } });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        comment = this.getComment(comment);
+        comment.comment = result.comment;
+        comment.description = result.description;
+      }
+    });
+
+  }
+
+  getComment(tag) {
+    for (let i = 0; i < this.marker.tags.length; i++) {
+      if (JSON.stringify(tag.coordinates) === JSON.stringify(this.marker.tags[i].coordinates)) {
+        return this.marker.tags[i];
+      }
+    }
+  }
+
+  private removeTag(comment) {
+    this.deleteMark(comment);
+  }
+
+  private createDivMenu(coordinates, comment) {
+    const [x, y] = coordinates;
+    const menu = document.createElement('div');
+    menu.id = 'tagMenu';
+    menu.style.top = `calc(${y}% - 50px)`;
+    menu.style.left = `calc(${x}% + 18px)`;
+    menu.style.position = 'absolute';
+    menu.style.width = '100px';
+    menu.style.height = '100px';
+    menu.style.backgroundColor = 'white';
+    menu.style.border = '1px solid rgba(0,0,0,0.15)';
+    menu.setAttribute('comment', JSON.stringify(comment));
+
+    const edit = document.createElement('div');
+    edit.style.cursor = 'pointer';
+    edit.setAttribute('type', 'edit');
+    edit.style.marginTop = '15px';
+    edit.innerHTML = '<img width="24" height="24" src="/assets/img/edit-icon.svg"> <span class="icon-label">' + this.editLabel + '</span>';
+
+
+    const deleteDiv = document.createElement('div');
+    deleteDiv.style.cursor = 'pointer';
+    deleteDiv.setAttribute('type', 'delete');
+    deleteDiv.style.marginTop = '15px';
+    deleteDiv.innerHTML = '<img width="24" height="24" src="/assets/img/delete-icon.svg"> <span class="icon-delete-label">' + this.deleteLabel + ' </span>';
+
+    menu.appendChild(edit);
+    menu.appendChild(deleteDiv);
+    return menu;
   }
 
   private clickEventZoomTag(zoomArea: ZoomArea) {
@@ -610,11 +684,20 @@ export class DecZoomMarksComponent implements AfterViewChecked {
     if (tag.referenceShot && tag.renderShot) {
       this.marker.zoomAreas.splice(this.marker.zoomAreas.indexOf(tag), 1);
     } else {
-      this.marker.tags.splice(this.marker.tags.indexOf(tag), 1);
+      this.marker.tags.splice(this.getTagIndex(tag), 1);
     }
     this.recalculateReferences(tag);
     this.removeCommentNode();
     this.renewZoom();
+  }
+
+  public getTagIndex(tag) {
+    for (let i = 0; i < this.marker.tags.length; i++) {
+      if (JSON.stringify(tag.coordinates) === JSON.stringify(this.marker.tags[i].coordinates)) {
+        return i;
+      }
+    }
+    return -1;
   }
 
   public renewZoom() {

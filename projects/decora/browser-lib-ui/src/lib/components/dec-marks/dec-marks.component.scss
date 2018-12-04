@@ -93,3 +93,19 @@ $color-red: #E94040;
     z-index: 1;
   }
 }
+
+
+/deep/ .icon-label {
+  position: relative;
+  top: -5px;
+}
+
+/deep/ .icon-delete-label {
+  position: relative;
+  top: -5px;
+  left: 3px;
+}
+
+/deep/ .img-menu {
+  display: inline !important;
+}
