@@ -268,8 +268,9 @@ export class DecJobRoundComponent {
     }
   }
 
-  deleteZoomAreaByParentId(id) {
-    this.renderGallery.zoomMarks.deleteMark(this.editZoomArea);
+  deleteZoomAreaByParentId(zoomArea) {
+    const area = this.editZoomArea ? this.editZoomArea : zoomArea;
+    this.renderGallery.zoomMarks.deleteMark(area);
     this.onCancel();
     this.renewGallery();
   }

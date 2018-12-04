@@ -44,9 +44,17 @@
         </div>
 
         <ng-template #renderGalleryDone>
-          <dec-zoom-marks-gallery [isProfessional]="isProfessional" [reviewers]="reviewers" #renderGallery *ngIf="renderImages"
-            [showTags]="true" (openZoomArea)="openEditZoomArea($event)" [markedObjs]="round?.qualityAssurance?.renders"
-            [maxFile]="round?.max?.fileUrl" [qaModeActive]="qaMode" [jobType]="jobType">
+          <dec-zoom-marks-gallery [isProfessional]="isProfessional" 
+            (deleteZoomArea)="deleteZoomAreaByParentId($event)"
+            [reviewers]="reviewers" 
+            #renderGallery 
+            *ngIf="renderImages"
+            [showTags]="true" 
+            (openZoomArea)="openEditZoomArea($event)" 
+            [markedObjs]="round?.qualityAssurance?.renders"
+            [maxFile]="round?.max?.fileUrl"
+            [qaModeActive]="qaMode" 
+            [jobType]="jobType">
           </dec-zoom-marks-gallery>
         </ng-template>
 

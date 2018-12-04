@@ -63,6 +63,8 @@ export class DecZoomMarksGalleryComponent {
   public isProfessional: boolean;
 
 
+  @Output() deleteZoomArea = new EventEmitter();
+
   _maxFile: any;
 
   imageIndex = 0;
@@ -188,5 +190,9 @@ export class DecZoomMarksGalleryComponent {
     for (let i = (aux.length - 1); i >= 0; i--) {
       this.markedObjs.splice(0, 0, aux[i][0]);
     }
+  }
+
+  deleteArea($event) {
+    this.deleteZoomArea.emit($event);
   }
 }

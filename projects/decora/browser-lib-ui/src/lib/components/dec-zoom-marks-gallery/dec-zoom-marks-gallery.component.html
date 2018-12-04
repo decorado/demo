@@ -50,6 +50,6 @@
         <span class="dec-icon-text-size-zoom-area"> Zoom areas </span>
       </h3>
     </div>
-    <dec-markdowns-zoom-area [renders]="markedObjs"></dec-markdowns-zoom-area>
+    <dec-markdowns-zoom-area [renders]="markedObjs" (deleteArea)="deleteArea($event)" [decZoomMarksComponent]="zoomMarks"></dec-markdowns-zoom-area>
   </div>
 </div>

@@ -3,14 +3,16 @@ import { CommonModule } from '@angular/common';
 import { DecMarkdownsCommentComponent } from './dec-markdowns-comment.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
-import { MatIconModule } from '@angular/material';
+import { MatIconModule, MatMenuModule, MatButtonModule } from '@angular/material';
 
 @NgModule({
   imports: [
     CommonModule,
     FlexLayoutModule,
     TranslateModule,
-    MatIconModule
+    MatIconModule,
+    MatButtonModule,
+    MatMenuModule
   ],
   declarations: [
     DecMarkdownsCommentComponent

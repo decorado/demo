@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { DecZoomMarksComponent } from './../dec-zoom-marks/dec-zoom-marks.component';
 
 @Component({
   selector: 'dec-markdowns-zoom-area',
@@ -8,6 +9,8 @@ import { Component, OnInit, Input } from '@angular/core';
 export class DecMarkdownsZoomAreaComponent implements OnInit {
 
   @Input() zoomAreas;
+
+  @Output() deleteArea = new EventEmitter();
 
   @Input()
   set renders(v) {
@@ -21,6 +24,9 @@ export class DecMarkdownsZoomAreaComponent implements OnInit {
   }
 
   private _renders;
+
+  @Input()
+  decZoomMarksComponent: DecZoomMarksComponent;
 
   constructor() { }
 
@@ -44,4 +50,11 @@ export class DecMarkdownsZoomAreaComponent implements OnInit {
     return cssClass;
   }
 
+  editZoomArea(zoomArea) {
+    this.decZoomMarksComponent.openZoomAreaFuncion(zoomArea);
+  }
+
+  deleteZoomArea(zoomArea) {
+    this.deleteArea.emit(zoomArea);
+  }
 }

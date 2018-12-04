@@ -1,14 +1,44 @@
 <div *ngFor="let render of renders; let indexRender = index">
+  <div fxLayout="row">
+    <h4 class="title-render" *ngIf="render?.zoomAreas?.length">
+      {{ 'label.Render' | translate }} {{ indexRender + 1 }}
+    </h4>
+  </div>
   <div fxLayout="row" fxLayoutAlign="space-between center" *ngFor="let zoomArea of render.zoomAreas;">
     <div fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="space-between start">
-      <h4 class="title-render">
-        {{ 'label.Render' | translate }} {{ indexRender + 1 }}
-      </h4>
+      <div class="markdown-item" fxFill fxLayout="row" fxLayoutAlign="space-between center">
+        <div class="tags-item type-square">
+          {{ zoomArea.reference }}
+        </div>
+
+        <div>
+          <button class="zoom-area-menu" mat-button [matMenuTriggerFor]="tagMenu" matPrefix>
+            <mat-icon>more_vert</mat-icon>
+          </button>
+
+          <mat-menu #tagMenu="matMenu">
+            <button mat-menu-item (click)="editZoomArea(zoomArea)">
+              <mat-icon>edit</mat-icon> {{ 'label.edit' | translate }}
+            </button>
+            <button mat-menu-item (click)="deleteZoomArea(zoomArea)">
+              <mat-icon>delete</mat-icon> {{ 'label.delete' | translate }}
+            </button>
+          </mat-menu>
+        </div>
+
+      </div>
+
       <div fxLayoutAlign="space-between center" fxLayoutGap="16px" class="markdown-item" *ngFor="let tag of zoomArea?.renderShot?.tags; let i = index">
         <span class="{{getClass(tag)}}">{{ (zoomArea.reference)+'.' + (tag.reference) }}</span>
         <span *ngIf="tag?.comment" class="text-markdown">
           {{tag.comment}} - {{tag.description}}
         </span>
+      </div>
+      <div fxLayout="column" fxLayoutGap="16px" fxLayoutAlign="space-between start">
+        <h4 class="dec-color-grey-dark">
+          {{ 'label.observations' | translate }}
+        </h4>
+        <span class="margin-note dec-color-grey">{{ zoomArea?.note }}</span>
       </div>
     </div>
   </div>

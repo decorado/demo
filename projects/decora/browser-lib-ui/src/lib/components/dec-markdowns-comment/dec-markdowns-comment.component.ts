@@ -74,4 +74,8 @@ export class DecMarkdownsCommentComponent {
     }
   }
 
+
+  editTag(indexRender, tag) {
+    this.decZoomMarksComponent.editTags(tag);
+  }
 }

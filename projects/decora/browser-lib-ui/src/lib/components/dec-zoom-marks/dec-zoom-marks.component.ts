@@ -494,7 +494,7 @@ export class DecZoomMarksComponent implements AfterViewChecked {
     }
   }
 
-  private editTags(comment) {
+  public editTags(comment) {
     const commentEdit = { comment: comment.comment, version: comment.version };
     const onlyColorVariation = this.jobType === 'COLOR';
 
@@ -553,6 +553,10 @@ export class DecZoomMarksComponent implements AfterViewChecked {
   }
 
   private clickEventZoomTag(zoomArea: ZoomArea) {
+    this.openZoomArea.emit(zoomArea);
+  }
+
+  public openZoomAreaFuncion(zoomArea) {
     this.openZoomArea.emit(zoomArea);
   }
 
