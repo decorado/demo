@@ -58,9 +58,7 @@ export class DecMarksComponent implements AfterViewChecked {
   private _enableDeleteLinkedtag: any;
 
   @Output() link = new EventEmitter();
-  @Output() referenceQa = new EventEmitter();
   @Output() deleteTag = new EventEmitter();
-
 
   @ViewChild('canvas') canvas: ElementRef;
   public canvasEl: HTMLCanvasElement;
@@ -88,10 +86,10 @@ export class DecMarksComponent implements AfterViewChecked {
   }
 
   constructor(
-    private renderer: Renderer2, 
-    private dialog: MatDialog, 
-    private decRenderCommentService: 
-    DecRenderCommentService, public translate: TranslateService) { }
+    private renderer: Renderer2,
+    private dialog: MatDialog,
+    private decRenderCommentService:
+      DecRenderCommentService, public translate: TranslateService) { }
 
   ngAfterViewChecked(): void {
     if (!this.contentDone && this.canvas.nativeElement.parentElement.offsetWidth !== 0) {
@@ -188,7 +186,6 @@ export class DecMarksComponent implements AfterViewChecked {
             this.addInCommentsArray(comment);
             this.createSquareTag([x, y, x2, y2], comment.reference);
             this.clearSquare();
-            this.referenceQa.emit(false);
             return;
           }
 
@@ -216,7 +213,6 @@ export class DecMarksComponent implements AfterViewChecked {
               });
               this.addInCommentsArray(comment);
               this.createPointTag([x, y], comment.reference);
-              this.referenceQa.emit(false);
               return;
             }
 
@@ -333,6 +329,7 @@ export class DecMarksComponent implements AfterViewChecked {
       }
       tag.appendChild(link);
       const comment = this.marker.tags.find(c => c.reference === index);
+      this.linkTag(comment);
       tag.addEventListener('click', (event: MouseEvent) => {
         const target = event.target as HTMLDivElement;
         if (target.classList.contains('link-button')) {
@@ -491,7 +488,7 @@ export class DecMarksComponent implements AfterViewChecked {
     edit.setAttribute('type', 'edit');
     edit.style.marginTop = '15px';
     edit.style.textAlign = 'center';
-    edit.innerHTML = '<img class="img-menu" width="24" height="24" src="/assets/img/edit-icon.svg"> <span class="icon-label">'+this.editLabel+'</span>';
+    edit.innerHTML = '<img class="img-menu" width="24" height="24" src="/assets/img/edit-icon.svg"> <span class="icon-label">' + this.editLabel + '</span>';
 
 
     const deleteDiv = document.createElement('div');
@@ -499,7 +496,7 @@ export class DecMarksComponent implements AfterViewChecked {
     deleteDiv.setAttribute('type', 'delete');
     deleteDiv.style.marginTop = '15px';
     deleteDiv.style.textAlign = 'center';
-    deleteDiv.innerHTML = '<img class="img-menu" width="24" height="24" src="/assets/img/delete-icon.svg"> <span class="icon-delete-label">'+this.deleteLabel+' </span>';
+    deleteDiv.innerHTML = '<img class="img-menu" width="24" height="24" src="/assets/img/delete-icon.svg"> <span class="icon-delete-label">' + this.deleteLabel + ' </span>';
 
     menu.appendChild(edit);
     menu.appendChild(deleteDiv);

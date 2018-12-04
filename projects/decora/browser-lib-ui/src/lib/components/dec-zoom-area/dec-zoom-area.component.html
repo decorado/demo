@@ -2,8 +2,8 @@
   <div fxLayout="row" fxLayoutAlign="start start">
 
     <div fxFlex="50" class="zoom-container" fxLayout="column" fxLayoutGap="16px">
-      <dec-marks #referenceZoom [noComments]="true" [marker]="reference" [qaMode]="referenceQaMode" [enableDeleteLinkedtag]="qaMode" [parentId]="parentId"
-        (referenceQa)="onReferenceQa($event)" [parentSize]="reference?.parentSize" [comentIndex]="commentIndex"
+      <dec-marks #referenceZoom [noComments]="true" [marker]="reference" [qaMode]="referenceQaMode"
+        [enableDeleteLinkedtag]="qaMode" [parentId]="parentId" [parentSize]="reference?.parentSize" [comentIndex]="commentIndex"
         [zoomScale]="reference?.zoomScale" [zoomPosition]="reference?.position" [jobType]="jobType">
       </dec-marks>
       <div class="fake-div">
