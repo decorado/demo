@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  basePath: '//localhost:4200',
+  basePath: '//192.168.5.184:4200',
 };
