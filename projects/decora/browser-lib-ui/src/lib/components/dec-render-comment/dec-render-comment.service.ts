@@ -23,9 +23,6 @@ export class DecRenderCommentService {
   }
 
   public getRenderDescriptionsByCode(comments: Tag[]): Tag[] {
-    comments.forEach(comment => {
-      comment.description = comment.comment;
-    });
     const groupedComments = comments.reduce((r, v, i, a, k = v.version) => ((r[k] || (r[k] = [])).push(v), r), {});
     Object.keys(groupedComments).forEach(async key => {
       try {
@@ -50,14 +47,17 @@ export class DecRenderCommentService {
 
     let temp = this.feedbackTree;
     let result = '';
+    const arrComment = comment.split('');
 
-    comment.split('').forEach(char => {
-      if (temp[char].sub) {
+    for (const char of arrComment) {
+      if (temp[char] && temp[char].sub) {
         temp = temp[char].sub;
-      } else {
+      } else if (temp[char] && temp[char].description) {
         result = temp[char].description;
+      } else {
+        break;
       }
-    });
+    }
 
     return result;
   }

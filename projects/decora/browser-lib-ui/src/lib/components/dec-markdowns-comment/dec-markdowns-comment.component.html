@@ -13,7 +13,7 @@
         {{ parentId ? parentId+'.'+(indexTag + 1) : tag.reference }}
       </span>
       <span *ngIf="tag?.comment" class="text-markdown">
-        {{tag.comment}} - {{tag.description}}
+        {{getDescription(tag)}}
       </span>
       <div class="container-delete">
         <button mat-button [matMenuTriggerFor]="tagMenu" matPrefix>

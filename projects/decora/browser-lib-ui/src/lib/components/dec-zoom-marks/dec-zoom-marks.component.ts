@@ -79,6 +79,9 @@ export class DecZoomMarksComponent implements AfterViewChecked {
 
   public zoomScale: number;
 
+  public deleteLabel: string = this.translate.instant('label.delete');
+  public editLabel: string = this.translate.instant('label.edit');
+
   @ViewChild('canvas') canvas: ElementRef;
   public canvasEl: HTMLCanvasElement;
   private ctx: CanvasRenderingContext2D;
@@ -95,9 +98,6 @@ export class DecZoomMarksComponent implements AfterViewChecked {
     this.setWrapperSize(this.canvasEl.width);
     this.zoom(this.zoomScale);
   }
-
-  deleteLabel = this.translate.instant('label.delete');
-  editLabel = this.translate.instant('label.edit');
 
   constructor(private renderer: Renderer2, private dialog: MatDialog, public translate: TranslateService) {
     this.zoomPosition = { x: 0, y: 0 };
@@ -569,7 +569,13 @@ export class DecZoomMarksComponent implements AfterViewChecked {
   private addCommentNode = (comment: Tag): void => {
     const span = this.renderer.createElement('span');
 
-    span.innerHTML = `${comment.comment} - ${comment.description}`;
+    const arrCompleteComment = [
+      comment.comment
+    ];
+
+    if (comment.description) { arrCompleteComment.push(comment.description); }
+
+    span.innerHTML = arrCompleteComment.join(' - ');
 
     const commentDiv = this.renderer.createElement('div');
     commentDiv.className = 'comment-hover';

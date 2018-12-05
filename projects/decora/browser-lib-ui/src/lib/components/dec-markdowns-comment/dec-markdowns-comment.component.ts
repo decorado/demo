@@ -63,6 +63,15 @@ export class DecMarkdownsCommentComponent {
     return cssClass;
   }
 
+  getDescription(tag) {
+    const arrCompleteTag = [
+      tag.comment
+    ];
+    if (tag.description) { arrCompleteTag.push(tag.description); }
+
+    return arrCompleteTag.join(' - ');
+  }
+
   deleteTag(indexRender: number, tag: Tag): void {
     if (this.parentId) {
 
@@ -73,7 +82,6 @@ export class DecMarkdownsCommentComponent {
       this.decZoomMarksComponent.drawMarks();
     }
   }
-
 
   editTag(indexRender, tag) {
     this.decZoomMarksComponent.editTags(tag);
