@@ -1,5 +1,7 @@
 {
   "label": {
+    "RENDER_DONE": "Renderizado",
+    "RENDERING": "Renderizando",
     "Advanced_options": "Opções avançadas",
     "Apply": "Aplicar",
     "Cancel": "Cancelar",
@@ -32,7 +34,7 @@
     "brand": "Marca",
     "cancel": "Cancelar",
     "Image": "Imagem",
-    "max-file":"Arquivo max",
+    "max-file": "Arquivo max",
     "category": "Categoria",
     "choices": "Escolhas",
     "color-variation-info": "Textura ou Variação de Cor",

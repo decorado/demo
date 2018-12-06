@@ -1,5 +1,7 @@
 {
   "label": {
+    "RENDER_DONE": "Render done",
+    "RENDERING": "Rendering",
     "Advanced_options": "Advanced_options",
     "Apply": "Apply",
     "Cancel": "Cancel",
@@ -51,7 +53,7 @@
     "height": "Height",
     "image-link": "Image link",
     "Image": "Image",
-    "max-file":"Max file",
+    "max-file": "Max file",
     "info": "Info",
     "job-details": "Job details",
     "job-id": "Job id",
