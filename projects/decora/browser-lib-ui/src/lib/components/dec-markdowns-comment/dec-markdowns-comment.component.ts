@@ -35,13 +35,13 @@ export class DecMarkdownsCommentComponent {
 
 
   @Input()
-  public get qaMode(): string {
+  public get qaMode(): boolean {
     return this._qaMode;
   }
-  public set qaMode(v: string) {
+  public set qaMode(v: boolean) {
     this._qaMode = v;
   }
-  private _qaMode: string;
+  private _qaMode: boolean;
 
 
   @Input()

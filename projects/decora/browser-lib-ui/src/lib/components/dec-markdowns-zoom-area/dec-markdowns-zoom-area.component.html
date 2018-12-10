@@ -11,7 +11,7 @@
           {{ zoomArea.reference }}
         </div>
 
-        <div>
+        <div *ngIf="qaMode">
           <button class="zoom-area-menu" mat-button [matMenuTriggerFor]="tagMenu" matPrefix>
             <mat-icon>more_vert</mat-icon>
           </button>

@@ -26,6 +26,15 @@ export class DecMarkdownsZoomAreaComponent {
   private _renders;
 
   @Input()
+  public get qaMode(): boolean {
+    return this._qaMode;
+  }
+  public set qaMode(v: boolean) {
+    this._qaMode = v;
+  }
+  private _qaMode: boolean;
+
+  @Input()
   decZoomMarksComponent: DecZoomMarksComponent;
 
   constructor() { }
