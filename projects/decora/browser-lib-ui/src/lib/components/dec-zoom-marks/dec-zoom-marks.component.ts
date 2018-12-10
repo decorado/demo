@@ -20,6 +20,7 @@ export class DecZoomMarksComponent implements AfterViewChecked {
   @Input() maxZoomLevel: any;
   @Input() stepZoomLevel: any;
   @Input() jobType;
+  @Input() dontShowTags: boolean;
 
   @Input()
   set marker(value: Marker) {
@@ -339,26 +340,28 @@ export class DecZoomMarksComponent implements AfterViewChecked {
   }
 
   public drawMarks() {
-    this.cleanMarks();
+    if (!this.dontShowTags) {
+      this.cleanMarks();
 
-    this.commentsArraySize = 0;
+      this.commentsArraySize = 0;
 
-    if (this.marker.tags && this.marker.tags.length > 0) {
-      this.marker.tags.forEach((tag: Tag) => {
-        if (tag.coordinates.length > 2) {
-          this.createSquareTag(tag.coordinates, tag.reference, tag.status);
-        } else {
-          this.createPointTag(tag.coordinates, tag.reference, tag.status);
-        }
-      });
-      this.commentsArraySize += this.marker.tags.length;
-    }
+      if (this.marker.tags && this.marker.tags.length > 0) {
+        this.marker.tags.forEach((tag: Tag) => {
+          if (tag.coordinates.length > 2) {
+            this.createSquareTag(tag.coordinates, tag.reference, tag.status);
+          } else {
+            this.createPointTag(tag.coordinates, tag.reference, tag.status);
+          }
+        });
+        this.commentsArraySize += this.marker.tags.length;
+      }
 
-    if (this.marker.zoomAreas && this.marker.zoomAreas.length > 0) {
-      this.marker.zoomAreas.forEach((zoomArea: ZoomArea) => {
-        this.createZoomAreaTag(zoomArea.coordinates, zoomArea.reference, zoomArea.status);
-      });
-      this.commentsArraySize += this.marker.zoomAreas.length;
+      if (this.marker.zoomAreas && this.marker.zoomAreas.length > 0) {
+        this.marker.zoomAreas.forEach((zoomArea: ZoomArea) => {
+          this.createZoomAreaTag(zoomArea.coordinates, zoomArea.reference, zoomArea.status);
+        });
+        this.commentsArraySize += this.marker.zoomAreas.length;
+      }
     }
   }
 

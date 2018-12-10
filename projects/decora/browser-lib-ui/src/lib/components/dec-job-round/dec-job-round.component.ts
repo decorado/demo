@@ -12,6 +12,9 @@ import { DecApiService } from '../../services/api/decora-api.service';
 export class DecJobRoundComponent {
 
   @Input()
+  public isProfessional: boolean;
+
+  @Input()
   set config(v) {
     if (v) {
       this.round = v.round;
@@ -19,6 +22,9 @@ export class DecJobRoundComponent {
       this.jobType = v.jobType;
       if (v.skuFixId) {
         this.skuFix = this.populateSkuFix(v.skuFixId);
+      }
+      if (this.isProfessional && this.round.status !== 'DENIED') {
+        this.showTags = false;
       }
       this.formatRenderFiles(v.round);
       this.populateReviewers(v.round);
@@ -31,6 +37,8 @@ export class DecJobRoundComponent {
   get config() {
     return this._config;
   }
+
+  showTags: boolean;
 
   @Input()
   set product(v) {
@@ -60,9 +68,6 @@ export class DecJobRoundComponent {
   get qaMode() {
     return this._qaMode;
   }
-
-  @Input()
-  public isProfessional: boolean;
 
   public reviewers: any = {};
 
@@ -113,7 +118,9 @@ export class DecJobRoundComponent {
     }
   }
 
-  constructor(private dialog: MatDialog, private decApiService: DecApiService) { }
+  constructor(private dialog: MatDialog, private decApiService: DecApiService) {
+    this.showTags = true;
+  }
 
   formatMarkedReference(v) {
     this.markedReference = v.referenceImages.map(x => {

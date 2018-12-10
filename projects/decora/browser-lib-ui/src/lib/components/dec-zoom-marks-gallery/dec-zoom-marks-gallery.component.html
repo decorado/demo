@@ -1,7 +1,7 @@
 <div class="gallery-size" fxLayout="column" fxLayoutGap="32px" fxLayoutAlign="space-between start">
 
   <dec-zoom-marks fxFlex class="gallery-size" [marker]="markedObj" [qaMode]="qaModeActive" (openZoomArea)="onOpenZoomArea($event)"
-    minZoomLevel="1" maxZoomLevel="8" [maxFile]="maxFile" stepZoomLevel="0.1" [jobType]="jobType"></dec-zoom-marks>
+    minZoomLevel="1" maxZoomLevel="8" [maxFile]="maxFile" stepZoomLevel="0.1" [jobType]="jobType" [dontShowTags]="!showTags"></dec-zoom-marks>
 
   <div class="gallery-size" fxLayout="row" fxLayoutAlign="center center">
     <ngu-carousel #carouselGallery class="carousel-wrapper" [inputs]="carouselConfig" (initData)="onInitDataFn($event)"
@@ -10,8 +10,8 @@
       <ngu-item (swipe)="onSwipe($event)" NguCarouselItem *ngFor="let image of markedObjs; let i = index;"
         [class.active]="image == markedObj">
         <div class="image-container">
-          <span *ngIf="(image?.tags && image?.tags?.length > 0) ||
-                       (image?.zoomAreas && image?.zoomAreas?.length > 0)"
+          <span *ngIf="showTags && (image?.tags && image?.tags?.length > 0) ||
+            showTags && (image?.zoomAreas && image?.zoomAreas?.length > 0)"
             class="has-comment">!</span>
           <img [decImage]="image.file" [decImageSize]="{width:300, height:300}" draggable="false" (click)="onSelectImage($event,image, i)">
         </div>

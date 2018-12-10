@@ -49,7 +49,7 @@
             [reviewers]="reviewers" 
             #renderGallery 
             *ngIf="renderImages"
-            [showTags]="true" 
+            [showTags]="showTags" 
             (openZoomArea)="openEditZoomArea($event)" 
             [markedObjs]="round?.qualityAssurance?.renders"
             [maxFile]="round?.max?.fileUrl"
