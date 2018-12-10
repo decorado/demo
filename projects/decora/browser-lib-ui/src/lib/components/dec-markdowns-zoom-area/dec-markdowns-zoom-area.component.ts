@@ -42,12 +42,6 @@ export class DecMarkdownsZoomAreaComponent {
   getClass(comment) {
     let cssClass = 'tags-item';
 
-    if (comment.coordinates.length === 2) {
-      cssClass += ' type-point';
-    } else {
-      cssClass += ' type-square';
-    }
-
     if (comment.requestByClient) {
       cssClass += ' client';
     }
