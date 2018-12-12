@@ -73,14 +73,10 @@ export class DecMarkdownsCommentComponent {
   }
 
   deleteTag(indexRender: number, tag: Tag): void {
-    if (this.parentId) {
-
-    } else {
-      const indexTag = this.renders[indexRender].tags.indexOf(tag);
-      this.renders[indexRender].tags.splice(indexTag, 1);
-      this.decZoomMarksComponent.recalculateReferences(tag);
-      this.decZoomMarksComponent.drawMarks();
-    }
+    const indexTag = this.renders[indexRender].tags.indexOf(tag);
+    this.renders[indexRender].tags.splice(indexTag, 1);
+    this.decZoomMarksComponent.recalculateReferences(tag);
+    this.decZoomMarksComponent.drawMarks();
   }
 
   editTag(indexRender, tag) {

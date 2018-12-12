@@ -529,6 +529,23 @@ export class DecMarksComponent implements AfterViewChecked {
 
   }
 
+  public recalculateReferences(tag: Tag): void {
+    this.marker.tags.forEach(tagItem => {
+      if (tagItem.reference > tag.reference) {
+        tagItem.reference--;
+      }
+    });
+
+    if (this.marker.zoomAreas) {
+      this.marker.zoomAreas.forEach(zoomArea => {
+        if (zoomArea.reference > tag.reference) {
+          zoomArea.reference--;
+        }
+      });
+    }
+
+  }
+
   getComment(tag) {
     for (let i = 0; i < this.marker.tags.length; i++) {
       if (JSON.stringify(tag.coordinates) === JSON.stringify(this.marker.tags[i].coordinates)) {
