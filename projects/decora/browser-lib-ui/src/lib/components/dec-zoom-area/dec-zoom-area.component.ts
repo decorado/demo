@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, Output, EventEmitter, HostListener } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter, HostListener, AfterViewInit } from '@angular/core';
 import { DecMarksComponent } from './../dec-marks/dec-marks.component';
 import { DecConfirmDialogService } from './../../services/confirm-dialog/dec-confirm-dialog.service';
 
@@ -7,7 +7,7 @@ import { DecConfirmDialogService } from './../../services/confirm-dialog/dec-con
   templateUrl: './dec-zoom-area.component.html',
   styleUrls: ['./dec-zoom-area.component.scss']
 })
-export class DecZoomAreaComponent implements OnInit {
+export class DecZoomAreaComponent implements OnInit, AfterViewInit {
 
   @Input() jobType;
 
@@ -94,6 +94,12 @@ export class DecZoomAreaComponent implements OnInit {
   ngOnInit() {
   }
 
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.init = true;
+    }, 0)
+  }
+
   @HostListener('window:keydown.control.s', ['$event'])
   @HostListener('window:keydown.meta.s', ['$event'])
   onKeyPress(event) {
@@ -110,6 +116,8 @@ export class DecZoomAreaComponent implements OnInit {
       renderShot: this.renderZoom.marker,
       referenceShot: this.referenceZoom.marker
     };
+    saveObj.renderShot.parentSize = this.renderZoom.getParentSize();
+    saveObj.referenceShot.parentSize = this.referenceZoom.getParentSize();
     this.note = '';
     this.save.emit(saveObj);
   }

@@ -20,7 +20,7 @@ export interface ZoomPosition {
 })
 export class DecMarksComponent implements AfterViewChecked {
 
-  @Input() marker: Marker = new Marker();
+  @Input() marker: any;
 
   @Input() zoomScale: number;
 
@@ -565,5 +565,12 @@ export class DecMarksComponent implements AfterViewChecked {
       }
     }
     return -1;
+  }
+
+  getParentSize() {
+    return {
+      x: this.canvasEl.width,
+      y: this.canvasEl.height
+    }
   }
 }
