@@ -59,20 +59,16 @@
         <span class="dec-icon-text-size-zoom-area"> Zoom areas </span>
       </h3>
     </div>
-    <<<<<<< HEAD <dec-markdowns-zoom-area [renders]="markedObjs" (deleteArea)="deleteArea($event)"
-      [decZoomMarksComponent]="zoomMarks">
-      </dec-markdowns-zoom-area>
+    <dec-markdowns-zoom-area [renders]="markedObjs" [qaMode]="qaModeActive" (deleteArea)="deleteArea($event)"
+      [decZoomMarksComponent]="zoomMarks"></dec-markdowns-zoom-area>
 
-      <div fxLayout="row" fxLayoutAlign="start start">
-        <h3 fxLayout="row" fxLayoutAlign="start start">
-          <dec-icon class="dec-icon-size dec-color-grey" font="mat">3d_rotation</dec-icon>
-          <span class="dec-icon-text-size-zoom-area"> Mesh </span>
-        </h3>
-      </div>
-      <dec-markdowns-mesh-qa [tagStructure]="tagStructure"></dec-markdowns-mesh-qa>
-      =======
-      <dec-markdowns-zoom-area [renders]="markedObjs" [qaMode]="qaModeActive" (deleteArea)="deleteArea($event)"
-        [decZoomMarksComponent]="zoomMarks"></dec-markdowns-zoom-area>
-      >>>>>>> origin/master
+    <div fxLayout="row" fxLayoutAlign="start start">
+      <h3 fxLayout="row" fxLayoutAlign="start start">
+        <dec-icon class="dec-icon-size dec-color-grey" font="mat">3d_rotation</dec-icon>
+        <span class="dec-icon-text-size-zoom-area"> Mesh </span>
+      </h3>
+    </div>
+    <dec-markdowns-mesh-qa [tagStructure]="tagStructure"></dec-markdowns-mesh-qa>
+
   </div>
 </div>
