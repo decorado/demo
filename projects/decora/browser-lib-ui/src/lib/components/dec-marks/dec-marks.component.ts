@@ -407,7 +407,7 @@ export class DecMarksComponent implements AfterViewChecked {
     }
   }
 
-  private drawMarks() {
+  public drawMarks() {
     this.cleanMarks();
     if (this.marker.tags && this.marker.tags.length > 0) {
       this.decRenderCommentService.getRenderDescriptionsByCode(this.marker.tags);
@@ -488,7 +488,7 @@ export class DecMarksComponent implements AfterViewChecked {
     edit.setAttribute('type', 'edit');
     edit.style.marginTop = '15px';
     edit.style.textAlign = 'center';
-    edit.innerHTML = '<img class="img-menu" width="24" height="24" src="/assets/img/edit-icon.svg"> <span class="icon-label">' + this.editLabel + '</span>';
+    edit.innerHTML = '<img class="img-menu" width="24" height="24" src="/d/assets/img/edit-icon.svg"> <span class="icon-label">' + this.editLabel + '</span>';
 
 
     const deleteDiv = document.createElement('div');
@@ -496,7 +496,7 @@ export class DecMarksComponent implements AfterViewChecked {
     deleteDiv.setAttribute('type', 'delete');
     deleteDiv.style.marginTop = '15px';
     deleteDiv.style.textAlign = 'center';
-    deleteDiv.innerHTML = '<img class="img-menu" width="24" height="24" src="/assets/img/delete-icon.svg"> <span class="icon-delete-label">' + this.deleteLabel + ' </span>';
+    deleteDiv.innerHTML = '<img class="img-menu" width="24" height="24" src="/d/assets/img/delete-icon.svg"> <span class="icon-delete-label">' + this.deleteLabel + ' </span>';
 
     menu.appendChild(edit);
     menu.appendChild(deleteDiv);
@@ -514,7 +514,7 @@ export class DecMarksComponent implements AfterViewChecked {
     }
   }
 
-  private editTags(comment) {
+  public editTags(comment) {
     const commentEdit = { comment: comment.comment, version: comment.version };
     const onlyColorVariation = this.jobType === 'COLOR';
 
@@ -554,7 +554,7 @@ export class DecMarksComponent implements AfterViewChecked {
     }
   }
 
-  private removeTag(comment) {
+  public removeTag(comment) {
     this.deleteMark(comment);
   }
 
