@@ -79,7 +79,7 @@ export class DecZoomMarksComponent implements AfterViewChecked {
 
   public zoomScale: number;
 
-  @ViewChild('canvas') canvas: ElementRef;
+  @ViewChild('canvasZoomMarks') canvas: ElementRef;
   public canvasEl: HTMLCanvasElement;
   private ctx: CanvasRenderingContext2D;
 

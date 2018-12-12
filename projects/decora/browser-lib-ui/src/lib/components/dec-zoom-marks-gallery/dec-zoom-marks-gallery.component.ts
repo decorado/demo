@@ -86,11 +86,22 @@ export class DecZoomMarksGalleryComponent {
 
   isLast: boolean;
 
+  @Input()
+  public meshQa: any;
+  public meshQaSelected: boolean;
+
+  public tagStructure: any = {};
+  updateTagStructure(tagStructure) {
+    this.tagStructure = tagStructure;
+  }
+
   constructor(private decRenderCommentService: DecRenderCommentService) { }
 
   private bindRenderDescriptions(): void {
     this.markedObjs.forEach(item => {
-      this.decRenderCommentService.getRenderDescriptionsByCode(item.tags);
+      if (item.tags) {
+        this.decRenderCommentService.getRenderDescriptionsByCode(item.tags);
+      }
 
       if (item.zoomAreas) {
         item.zoomAreas.forEach(zoomArea => {
@@ -148,6 +159,16 @@ export class DecZoomMarksGalleryComponent {
   onSelectImage = ($event, sysFile, i) => {
     this.markedObj = this.markedObjs[i];
     this.imageIndex = i;
+
+    if (this.meshQaSelected) {
+      this.meshQaSelected = false;
+      this.onSelectImage(null, null, i);
+    }
+  }
+
+  onSelectMesh = () => {
+    this.markedObj = {};
+    this.meshQaSelected = true;
   }
 
   setPrevNextCheckers(first: boolean, last: boolean) {

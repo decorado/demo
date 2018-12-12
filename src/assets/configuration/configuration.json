@@ -1,9 +1,9 @@
 {
   "profile": "_PROFILE_ACTIVE_",
   "local": {
-    "host": "//192.168.5.184:4200",
+    "host": "//localhost:4200",
     "api": "//qa-k8s.decora/api",
-    "authHost": "//192.168.5.184:4200/demo/service/api?DemoContainer-tab=examples",
+    "authHost": "//localhost:4200/demo/service/api?DemoContainer-tab=examples",
     "useMockApi": false,
     "mockApiHost": "//localhost:3000",
     "defaultLang": "en",
