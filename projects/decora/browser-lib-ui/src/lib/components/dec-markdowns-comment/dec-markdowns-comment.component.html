@@ -3,19 +3,14 @@
     <h4 class="title-render">
       {{ 'label.Render' | translate }} {{ parentId ? parentId : (indexRender + 1) }}
     </h4>
-    <div fxLayout="row" 
-      fxLayoutAlign="space-between center" 
-      fxFill
-      fxLayoutGap="16px" 
-      class="markdown-item" 
-      *ngFor="let tag of render?.tags; let indexTag = index">
+    <div fxLayout="row" fxLayoutAlign="space-between center" fxFill fxLayoutGap="16px" class="markdown-item" *ngFor="let tag of render?.tags; let indexTag = index">
       <span [class]="getClass(tag)">
         {{ parentId ? parentId+'.'+(indexTag + 1) : tag.reference }}
       </span>
       <span *ngIf="tag?.comment" class="text-markdown">
-        {{tag.comment}} - {{tag.description}}
+        {{getDescription(tag)}}
       </span>
-      <div class="container-delete">
+      <div class="container-delete" *ngIf="qaMode">
         <button mat-button [matMenuTriggerFor]="tagMenu" matPrefix>
           <mat-icon>more_vert</mat-icon>
         </button>

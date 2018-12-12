@@ -40,8 +40,8 @@ export class DecStatusJobRoundItemComponent {
   negativeQA = false;
 
   noInfos = [
-    'CANCEL_BY_PROFESSIONAL',
-    'CANCEL_BY_CORA',
+    'PROFESSIONAL_CANCELED',
+    'CORA_CANCELED',
     'DELETED',
     'TIME_EXPIRED'
   ]

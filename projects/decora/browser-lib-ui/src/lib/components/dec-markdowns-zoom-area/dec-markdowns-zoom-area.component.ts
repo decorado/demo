@@ -6,7 +6,7 @@ import { DecZoomMarksComponent } from './../dec-zoom-marks/dec-zoom-marks.compon
   templateUrl: './dec-markdowns-zoom-area.component.html',
   styleUrls: ['./dec-markdowns-zoom-area.component.scss']
 })
-export class DecMarkdownsZoomAreaComponent implements OnInit {
+export class DecMarkdownsZoomAreaComponent {
 
   @Input() zoomAreas;
 
@@ -26,28 +26,36 @@ export class DecMarkdownsZoomAreaComponent implements OnInit {
   private _renders;
 
   @Input()
+  public get qaMode(): boolean {
+    return this._qaMode;
+  }
+  public set qaMode(v: boolean) {
+    this._qaMode = v;
+  }
+  private _qaMode: boolean;
+
+  @Input()
   decZoomMarksComponent: DecZoomMarksComponent;
 
   constructor() { }
 
-  ngOnInit() {
-  }
-
-
   getClass(comment) {
     let cssClass = 'tags-item';
-
-    if (comment.coordinates.length === 2) {
-      cssClass += ' type-point';
-    } else {
-      cssClass += ' type-square';
-    }
 
     if (comment.requestByClient) {
       cssClass += ' client';
     }
 
     return cssClass;
+  }
+
+  getDescription(tag) {
+    const arrCompleteTag = [
+      tag.comment
+    ];
+    if (tag.description) { arrCompleteTag.push(tag.description); }
+
+    return arrCompleteTag.join(' - ');
   }
 
   editZoomArea(zoomArea) {

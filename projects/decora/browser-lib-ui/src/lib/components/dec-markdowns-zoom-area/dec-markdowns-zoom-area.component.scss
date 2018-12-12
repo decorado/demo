@@ -13,9 +13,8 @@
 }
 
 .tags-item {
-    background-color: #f44336;
     text-align: center;
-    color: white;
+    color: $dec-color-yellow;
     font-weight: 500;
     border: 2px solid transparent;
     padding: 5px;
@@ -43,9 +42,4 @@
 
 .margin-note {
     margin-bottom: 16px;
-}
-
-.zoom-area-menu {
-    position: relative;
-    left: 38px;
 }

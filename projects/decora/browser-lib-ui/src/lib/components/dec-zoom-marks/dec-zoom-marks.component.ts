@@ -20,6 +20,7 @@ export class DecZoomMarksComponent implements AfterViewChecked {
   @Input() maxZoomLevel: any;
   @Input() stepZoomLevel: any;
   @Input() jobType;
+  @Input() dontShowTags: boolean;
 
   @Input()
   set marker(value: Marker) {
@@ -79,7 +80,10 @@ export class DecZoomMarksComponent implements AfterViewChecked {
 
   public zoomScale: number;
 
-  @ViewChild('canvasZoomMarks') canvas: ElementRef;
+  public deleteLabel: string = this.translate.instant('label.delete');
+  public editLabel: string = this.translate.instant('label.edit');
+
+  @ViewChild('canvas') canvas: ElementRef;
   public canvasEl: HTMLCanvasElement;
   private ctx: CanvasRenderingContext2D;
 
@@ -95,9 +99,6 @@ export class DecZoomMarksComponent implements AfterViewChecked {
     this.setWrapperSize(this.canvasEl.width);
     this.zoom(this.zoomScale);
   }
-
-  deleteLabel = this.translate.instant('label.delete');
-  editLabel = this.translate.instant('label.edit');
 
   constructor(private renderer: Renderer2, private dialog: MatDialog, public translate: TranslateService) {
     this.zoomPosition = { x: 0, y: 0 };
@@ -339,26 +340,28 @@ export class DecZoomMarksComponent implements AfterViewChecked {
   }
 
   public drawMarks() {
-    this.cleanMarks();
+    if (!this.dontShowTags) {
+      this.cleanMarks();
 
-    this.commentsArraySize = 0;
+      this.commentsArraySize = 0;
 
-    if (this.marker.tags && this.marker.tags.length > 0) {
-      this.marker.tags.forEach((tag: Tag) => {
-        if (tag.coordinates.length > 2) {
-          this.createSquareTag(tag.coordinates, tag.reference, tag.status);
-        } else {
-          this.createPointTag(tag.coordinates, tag.reference, tag.status);
-        }
-      });
-      this.commentsArraySize += this.marker.tags.length;
-    }
+      if (this.marker.tags && this.marker.tags.length > 0) {
+        this.marker.tags.forEach((tag: Tag) => {
+          if (tag.coordinates.length > 2) {
+            this.createSquareTag(tag.coordinates, tag.reference, tag.status);
+          } else {
+            this.createPointTag(tag.coordinates, tag.reference, tag.status);
+          }
+        });
+        this.commentsArraySize += this.marker.tags.length;
+      }
 
-    if (this.marker.zoomAreas && this.marker.zoomAreas.length > 0) {
-      this.marker.zoomAreas.forEach((zoomArea: ZoomArea) => {
-        this.createZoomAreaTag(zoomArea.coordinates, zoomArea.reference, zoomArea.status);
-      });
-      this.commentsArraySize += this.marker.zoomAreas.length;
+      if (this.marker.zoomAreas && this.marker.zoomAreas.length > 0) {
+        this.marker.zoomAreas.forEach((zoomArea: ZoomArea) => {
+          this.createZoomAreaTag(zoomArea.coordinates, zoomArea.reference, zoomArea.status);
+        });
+        this.commentsArraySize += this.marker.zoomAreas.length;
+      }
     }
   }
 
@@ -569,7 +572,13 @@ export class DecZoomMarksComponent implements AfterViewChecked {
   private addCommentNode = (comment: Tag): void => {
     const span = this.renderer.createElement('span');
 
-    span.innerHTML = `${comment.comment} - ${comment.description}`;
+    const arrCompleteComment = [
+      comment.comment
+    ];
+
+    if (comment.description) { arrCompleteComment.push(comment.description); }
+
+    span.innerHTML = arrCompleteComment.join(' - ');
 
     const commentDiv = this.renderer.createElement('div');
     commentDiv.className = 'comment-hover';

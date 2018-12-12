@@ -35,13 +35,13 @@ export class DecMarkdownsCommentComponent {
 
 
   @Input()
-  public get qaMode(): string {
+  public get qaMode(): boolean {
     return this._qaMode;
   }
-  public set qaMode(v: string) {
+  public set qaMode(v: boolean) {
     this._qaMode = v;
   }
-  private _qaMode: string;
+  private _qaMode: boolean;
 
 
   @Input()
@@ -63,6 +63,15 @@ export class DecMarkdownsCommentComponent {
     return cssClass;
   }
 
+  getDescription(tag) {
+    const arrCompleteTag = [
+      tag.comment
+    ];
+    if (tag.description) { arrCompleteTag.push(tag.description); }
+
+    return arrCompleteTag.join(' - ');
+  }
+
   deleteTag(indexRender: number, tag: Tag): void {
     if (this.parentId) {
 
@@ -73,7 +82,6 @@ export class DecMarkdownsCommentComponent {
       this.decZoomMarksComponent.drawMarks();
     }
   }
-
 
   editTag(indexRender, tag) {
     this.decZoomMarksComponent.editTags(tag);

@@ -2,7 +2,7 @@
 
   <dec-zoom-marks *ngIf="!meshQaSelected" fxFlex class="gallery-size" [marker]="markedObj" [qaMode]="qaModeActive"
     (openZoomArea)="onOpenZoomArea($event)" minZoomLevel="1" maxZoomLevel="8" [maxFile]="maxFile" stepZoomLevel="0.1"
-    [jobType]="jobType"></dec-zoom-marks>
+    [jobType]="jobType" [dontShowTags]="!showTags"></dec-zoom-marks>
 
   <div style="width:620px;height:620px;padding-bottom: 48px;" *ngIf="meshQa" [hidden]="!meshQaSelected">
     <dec-mesh-qa [tagStructure]="tagStructure" (updateTagStructure)="updateTagStructure($event)"></dec-mesh-qa>
@@ -19,8 +19,8 @@
       <ngu-item (swipe)="onSwipe($event)" NguCarouselItem *ngFor="let image of markedObjs; let i = index;"
         [class.active]="image == markedObj">
         <div class="image-container">
-          <span *ngIf="(image?.tags && image?.tags?.length > 0) ||
-                       (image?.zoomAreas && image?.zoomAreas?.length > 0)"
+          <span *ngIf="showTags && (image?.tags && image?.tags?.length > 0) ||
+            showTags && (image?.zoomAreas && image?.zoomAreas?.length > 0)"
             class="has-comment">!</span>
           <img [decImage]="image.file" [decImageSize]="{width:300, height:300}" draggable="false" (click)="onSelectImage($event,image, i)">
         </div>
@@ -59,14 +59,20 @@
         <span class="dec-icon-text-size-zoom-area"> Zoom areas </span>
       </h3>
     </div>
-    <dec-markdowns-zoom-area [renders]="markedObjs" (deleteArea)="deleteArea($event)" [decZoomMarksComponent]="zoomMarks"></dec-markdowns-zoom-area>
+    <<<<<<< HEAD <dec-markdowns-zoom-area [renders]="markedObjs" (deleteArea)="deleteArea($event)"
+      [decZoomMarksComponent]="zoomMarks">
+      </dec-markdowns-zoom-area>
 
-    <div fxLayout="row" fxLayoutAlign="start start">
-      <h3 fxLayout="row" fxLayoutAlign="start start">
-        <dec-icon class="dec-icon-size dec-color-grey" font="mat">3d_rotation</dec-icon>
-        <span class="dec-icon-text-size-zoom-area"> Mesh </span>
-      </h3>
-    </div>
-    <dec-markdowns-mesh-qa [tagStructure]="tagStructure"></dec-markdowns-mesh-qa>
+      <div fxLayout="row" fxLayoutAlign="start start">
+        <h3 fxLayout="row" fxLayoutAlign="start start">
+          <dec-icon class="dec-icon-size dec-color-grey" font="mat">3d_rotation</dec-icon>
+          <span class="dec-icon-text-size-zoom-area"> Mesh </span>
+        </h3>
+      </div>
+      <dec-markdowns-mesh-qa [tagStructure]="tagStructure"></dec-markdowns-mesh-qa>
+      =======
+      <dec-markdowns-zoom-area [renders]="markedObjs" [qaMode]="qaModeActive" (deleteArea)="deleteArea($event)"
+        [decZoomMarksComponent]="zoomMarks"></dec-markdowns-zoom-area>
+      >>>>>>> origin/master
   </div>
 </div>
