@@ -53,21 +53,29 @@ export class DecWsClientService {
 
     }
 
+    this.configureConnectionEvents(url, connection);
+
+    return connection;
+
+  }
+
+  private configureConnectionEvents(url, connection) {
+
     connection.channel.onclose = () => this.openConnection(url, connection);
 
     connection.channel.onerror = () => this.openConnection(url, connection);
 
-    connection.channel.onmessage = (a) => {
+    connection.channel.onmessage = (a) => this.handleMessage(a, connection);
 
-      const currentMessages = connection.messages.getValue();
+  }
 
-      currentMessages.unshift(a.data);
+  private handleMessage(a, connection) {
 
-      connection.messages.next(currentMessages);
+    const currentMessages = connection.messages.getValue();
 
-    };
+    currentMessages.unshift(a.data);
 
-    return connection;
+    connection.messages.next(currentMessages);
 
   }
 

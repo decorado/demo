@@ -38,3 +38,21 @@
 mat-toolbar {
   overflow: hidden;
 }
+
+.mat-button, button[class*="mat-"] {
+  min-width: 40px !important;
+  // line-height: 30px !important;
+}
+
+.mat-form-field-infix {
+  width: 100% !important;
+}
+
+.mat-radio-container {
+  background-color: white;
+  border-radius: 50%;
+}
+
+.mat-checkbox {
+  background-color: white;
+}

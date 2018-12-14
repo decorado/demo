@@ -13,6 +13,6 @@ export class CategoryPipe implements PipeTransform {
   }
 
   transform(value: string): Observable<string> {
-    return this.categoryPipeService.get(value);
+    return this.categoryPipeService.getNameByCode(value);
   }
 }

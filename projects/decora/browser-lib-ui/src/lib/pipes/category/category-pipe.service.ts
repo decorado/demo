@@ -1,73 +1,97 @@
 import { Injectable } from '@angular/core';
 import { DecApiService } from './../../services/api/decora-api.service';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { DecLanguageService } from '../../services/language/dec-language.service';
+import { of, Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 
 const CATEGORY_ENDPOINT = '/legacy/product/category?language={i18n}';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class CategoryPipeService {
 
-  constructor(private decApi: DecApiService) { }
+  constructor(
+    private decApi: DecApiService,
+    private langService: DecLanguageService,
+  ) { }
 
-  get = (code) => {
+  getNameByCode(code): Observable<string> {
+
     if (code && code.length > 0) {
-      const codes = code.toUpperCase().split('');
-      return this.getData().pipe(
-        map(data => {
 
-          if (data) {
-            let category = code+' ';
+      return this.getCategoryNameByCode(code);
 
-            let map = data.sub;
-            for (let i in codes) {
-              if (category.length > 0) {
-                category += ' > ';
-              }
+    } else {
 
-              if (map[codes[i]]) {
+      return of('');
 
-                category += map[codes[i]].name;
-                if (map[codes[i]].sub) {
-                  map = map[codes[i]].sub;
-                }
-
-              } else {
-                category += 'INVALID';
-              }
-
-            }
-            return category;
-
-          }
-
-          return '';
-        })
-      );
     }
 
-    return this.getData()
-      .pipe(
-        map(data => {
-
-          const category = '';
-          return category;
-        })
-      );
   }
 
-  formatI18n(i18n) {
-    switch (i18n) {
-      case 'PT_BR':
-        return 'pt-br';
-      case 'EN_US':
-        return 'en';
-    }
+  private getCategoryNameByCode(code) {
+
+    return this.langService.lang$.pipe(
+
+      switchMap(lang => {
+
+        const endpoint = CATEGORY_ENDPOINT.replace('{i18n}', lang.decoraLanguageCode);
+
+        return this.decApi.get(endpoint).pipe(
+
+          map(response => {
+
+            const categories = response.sub;
+
+            const name = this.mountCategorieNameByCode(categories, code);
+
+            return name;
+
+          })
+
+        );
+
+      })
+
+    );
+
   }
 
-  private getData() {
-    const user = this.decApi.user;
-    const endpoint = CATEGORY_ENDPOINT.replace('{i18n}', this.formatI18n(user.i18n));
-    return this.decApi.get(endpoint);
+  private mountCategorieNameByCode(categories, code) {
+
+    const codeAsArray = code.toUpperCase().split('');
+
+    let category = '';
+
+    codeAsArray.forEach(codeSlice => {
+
+      if (category.length > 0) {
+
+        category += ' > ';
+
+      }
+
+      if (categories[codeSlice]) {
+
+        category += categories[codeSlice].name;
+
+        if (categories[codeSlice].sub) {
+
+          categories = categories[codeSlice].sub;
+
+        }
+
+      } else {
+
+        category += `UNKNOW CATEGORY #${code}`;
+
+      }
+
+    });
+
+    return category;
+
   }
+
 }

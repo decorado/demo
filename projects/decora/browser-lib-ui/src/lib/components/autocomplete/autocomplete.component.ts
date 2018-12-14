@@ -3,13 +3,15 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { FormControl, NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { DecApiService } from './../../services/api/decora-api.service';
 import { Observable, of, BehaviorSubject, Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap, startWith, tap, filter, map } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, switchMap, tap, map } from 'rxjs/operators';
 import { LabelFunction, ValueFunction, SelectionEvent, CustomFetchFunction } from './autocomplete.models';
-import { MatAutocompleteTrigger, MatChipInputEvent } from '@angular/material';
+import { MatAutocompleteTrigger } from '@angular/material';
 
 //  Return an empty function to be used as default trigger functions
 const noop = () => {
 };
+
+const extractResOptions = (res) => res;
 
 //  Used to extend ngForms functions
 const AUTOCOMPLETE_CONTROL_VALUE_ACCESSOR: any = {
@@ -21,7 +23,7 @@ const AUTOCOMPLETE_CONTROL_VALUE_ACCESSOR: any = {
 @Component({
   selector: 'dec-autocomplete',
   templateUrl: './autocomplete.component.html',
-  styles: [],
+  styles: [`.option-value-pre { white-space: pre }`],
   providers: [AUTOCOMPLETE_CONTROL_VALUE_ACCESSOR]
 })
 export class DecAutocompleteComponent implements ControlValueAccessor, AfterViewInit, OnDestroy {
@@ -53,6 +55,8 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
 
   // Params
   @Input() customFetchFunction: CustomFetchFunction;
+
+  @Input() extractRowsFn = extractResOptions;
 
   @Input() endpoint;
 
@@ -263,6 +267,11 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
     return label;
   }
 
+  extractTrimmedLabel = (item: any) => {
+    const label = this.extractLabel(item) || '';
+    return label.trim();
+  }
+
   remove(option: string): void {
 
     const index = this.optionsSelected.indexOf(option);
@@ -279,26 +288,33 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
 
     const isArray = options ? Array.isArray(options) : false;
 
-    let selectableOptions = options;
+    let selectableOptions = [];
 
     if (isArray && !this.repeat) {
 
-      selectableOptions = options.filter(option => {
-        if (!this.repeat) {
-          const optionValue = this.extractValue(option);
-          let alreadySelected: boolean;
-          if (this.multi) {
-            alreadySelected = this.optionsSelected && this.optionsSelected.find(selected => {
-              const selectedValue = this.extractValue(selected);
-              return this.compareAsString(selectedValue, optionValue);
-            }) ? true : false;
-          } else {
-            alreadySelected = this.compareAsString(this.value, optionValue);
-          }
-          return !alreadySelected;
+      selectableOptions = [...options].filter(option => {
+
+        const optionValue = this.extractValue(option);
+
+        let alreadySelected: boolean;
+
+        if (this.multi) {
+
+          alreadySelected = this.optionsSelected && this.optionsSelected.find(selected => {
+
+            const selectedValue = this.extractValue(selected);
+
+            return this.compareAsString(selectedValue, optionValue);
+
+          }) ? true : false;
+
         } else {
-          return true;
+
+          alreadySelected = this.compareAsString(this.value, optionValue);
         }
+
+        return !alreadySelected;
+
       });
 
     }
@@ -374,29 +390,32 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
 
         } else {
 
-          return this.service.get<any[]>(this.endpoint, body)
-            .pipe(
-              tap((options: any[]) => {
-                this.responses[textSearch] = options;
-                this.innerOptions = options;
-              })
-            );
+          return this.getRemoteData(textSearch, body, rememberResponse);
 
         }
 
       } else {
 
-        return this.service.get<any[]>(this.endpoint, body)
-          .pipe(
-            tap((options: any[]) => {
-              this.innerOptions = options;
-            })
-          );
+        return this.getRemoteData(textSearch, body, rememberResponse);
 
       }
 
-
     }
+  }
+
+  private getRemoteData(textSearch: string, body: any, rememberResponse = false) {
+
+    return this.service.get<any[]>(this.endpoint, body)
+      .pipe(
+        map(res => this.extractRowsFn(res)),
+        tap((options: any[]) => {
+          this.innerOptions = options;
+          if (rememberResponse) {
+            this.responses[textSearch] = options;
+          }
+        })
+      );
+
   }
 
   private searchInLocalOptions(term: string) {
@@ -633,12 +652,11 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
 
         })
       );
+
   }
 
   private unsubscribeFromSearchAndSetOptionsObservable() {
-
     this.searchInputSubscription.unsubscribe();
-
   }
 
 }

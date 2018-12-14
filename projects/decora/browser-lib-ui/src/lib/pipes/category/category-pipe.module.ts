@@ -10,7 +10,7 @@ import { CategoryPipeService } from './category-pipe.service';
   declarations: [
     CategoryPipe
   ],
-  exports:[ 
+  exports: [
     CategoryPipe
   ],
   providers: [
