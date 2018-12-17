@@ -98,6 +98,8 @@ export class DecZoomMarksGalleryComponent {
 
   isLast: boolean;
 
+  public imageMeshUrl = `/d/assets/img/mesh-qa.png`;
+
   @Input()
   public glb: any;
 

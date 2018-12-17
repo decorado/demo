@@ -12,6 +12,7 @@ export interface TagWrapper {
 }
 
 export interface Tag {
+  type: 'PointTag' | 'AreaTag' | 'RulerTag' | 'PolygonTag';
   ErrorCode?: string;
   MeshPoint?: MeshPoint;
   Id: string;
@@ -23,6 +24,7 @@ export interface Tag {
   Distance?: number;
   RightDistance?: string;
   Size?: Size;
+  PolygonNumber?: number;
 }
 
 export interface Size {

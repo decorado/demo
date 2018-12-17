@@ -3,7 +3,6 @@ import { TagWrapper, enumTagWrapperContext } from './dec-mesh-qa.models';
 import { DecConfigurationService } from '../../services/configuration/configuration.service';
 
 const meshBase = {
-  'editMode': true,
   'ErrorCode': {
     'language': 'en',
     'sub': {
@@ -3065,6 +3064,9 @@ const meshBase = {
 export class DecMeshQaComponent {
 
   @Input()
+  public isProfessional: boolean;
+
+  @Input()
   public glb: any;
 
   @Input()
@@ -3164,7 +3166,11 @@ export class DecMeshQaComponent {
 
   //// Unity Functions
   SetData = (): void => {
-    const fullMesh = { Model: this.glb.fileUrl.replace('http://', 'https://'), Tags: this.mesh || null, ...meshBase };
+    const model = this.glb.fileUrl.replace('http://', 'https://')
+    const tags = this.mesh || null;
+    const editMode = !this.isProfessional;
+
+    const fullMesh = { editMode, model, tags, ...meshBase };
     this.iframeUnity.nativeElement.contentWindow.postMessage({ type: 'SetData', payload: fullMesh }, '*');
   }
   EnableEdit = (enable: boolean): void => {
