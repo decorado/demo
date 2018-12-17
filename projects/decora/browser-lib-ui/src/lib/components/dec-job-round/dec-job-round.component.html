@@ -33,14 +33,14 @@
             <dec-icon class="click" font="mat">flash_on</dec-icon>Render
           </h3>
           <span class="click" (click)="openZoomArea()" title="Ctrl + Shift">
-            <span *ngIf="qaMode">
+            <span *ngIf="qaMode && !renderGallery.meshQaSelected">
               <button mat-stroked-button>Open zoom area</button>
             </span>
           </span>
         </div>
 
-        <div *ngIf="(round.renderStatus !== 'RENDER_DONE' || 
-                    (round.renderStatus === 'RENDER_DONE' && round.status === 'RENDER_DONE' && !isProfessional)); 
+        <div *ngIf="(round.renderStatus !== 'RENDER_DONE' ||
+                    (round.renderStatus === 'RENDER_DONE' && round.status === 'RENDER_DONE' && !isProfessional));
                     else renderGalleryDone">
           <dec-render-not-available [renderStatus]="round.renderStatus" [maxFileUrl]="round?.max ? round?.max.fileUrl : ''"></dec-render-not-available>
         </div>

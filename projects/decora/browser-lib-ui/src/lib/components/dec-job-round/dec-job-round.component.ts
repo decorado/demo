@@ -116,7 +116,7 @@ export class DecJobRoundComponent {
   @HostListener('window:keydown.control.shift')
   @HostListener('window:keydown.meta.shift')
   onKeyPress() {
-    if (this.qaMode && !this.zoomAreaOpen) {
+    if (this.qaMode && !this.zoomAreaOpen && !this.renderGallery.meshQaSelected) {
       this.openZoomArea();
     }
   }

@@ -1,6 +1,7 @@
 import { Component, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 import { TagWrapper, enumTagWrapperContext } from './dec-mesh-qa.models';
 import { DecConfigurationService } from '../../services/configuration/configuration.service';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 const meshBase = {
   'ErrorCode': {
@@ -3076,9 +3077,11 @@ export class DecMeshQaComponent {
 
   @Output() updateTagStructure: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(public decConfig: DecConfigurationService) {
+  constructor(public decConfig: DecConfigurationService, private domSanitizer: DomSanitizer) {
     window.addEventListener('message', this.ReceiveMessage, false);
   }
+
+  public meshUrl = (): SafeResourceUrl => this.domSanitizer.bypassSecurityTrustResourceUrl(this.decConfig.config.meshUrl);
 
   ReceiveMessage = (event: any) => {
     const { data } = event;
