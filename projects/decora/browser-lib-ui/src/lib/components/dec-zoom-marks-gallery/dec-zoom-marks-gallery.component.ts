@@ -3,6 +3,7 @@ import { Component, Input, ViewChild, Output, EventEmitter } from '@angular/core
 import { NguCarouselStore } from '@ngu/carousel';
 import { CarouselZoomConfig } from './../gallery/carousel-config';
 import { DecZoomMarksComponent } from './../dec-zoom-marks/dec-zoom-marks.component';
+import { DecMeshQaComponent } from '../dec-mesh-qa/dec-mesh-qa.component';
 
 @Component({
   selector: 'dec-zoom-marks-gallery',
@@ -12,6 +13,15 @@ import { DecZoomMarksComponent } from './../dec-zoom-marks/dec-zoom-marks.compon
 export class DecZoomMarksGalleryComponent {
 
   carouselConfig = CarouselZoomConfig;
+
+  private _qualityAssurance: any;
+  public get qualityAssurance(): any {
+    return this._qualityAssurance;
+  }
+  @Input()
+  public set qualityAssurance(v: any) {
+    this._qualityAssurance = v;
+  }
 
   @Input() jobType;
 
@@ -71,6 +81,8 @@ export class DecZoomMarksGalleryComponent {
 
   @ViewChild('carouselGallery') carouselGallery;
 
+  @ViewChild(DecMeshQaComponent) meshQa: DecMeshQaComponent;
+
   @Input() qaModeActive: boolean;
 
   @ViewChild(DecZoomMarksComponent) zoomMarks: DecZoomMarksComponent;
@@ -87,12 +99,12 @@ export class DecZoomMarksGalleryComponent {
   isLast: boolean;
 
   @Input()
-  public meshQa: any;
+  public glb: any;
+
   public meshQaSelected: boolean;
 
-  public tagStructure: any = {};
   updateTagStructure(tagStructure) {
-    this.tagStructure = tagStructure;
+    this.qualityAssurance.mesh = { ...tagStructure };
   }
 
   constructor(private decRenderCommentService: DecRenderCommentService) { }

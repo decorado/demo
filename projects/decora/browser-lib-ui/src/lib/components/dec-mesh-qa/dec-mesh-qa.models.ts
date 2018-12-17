@@ -16,6 +16,7 @@ export interface Tag {
   MeshPoint?: MeshPoint;
   Id: string;
   Reference: string;
+  Description: string;
   CameraAngle: CameraAngle;
   Start?: MeshPoint;
   End?: MeshPoint;

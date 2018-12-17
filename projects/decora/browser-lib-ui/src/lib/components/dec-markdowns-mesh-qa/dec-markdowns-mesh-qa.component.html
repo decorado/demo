@@ -1,61 +1,7 @@
 <div class="markdowns-mesh">
-  <span class="title">Wireframe Tags</span>
-  <div *ngFor="let kit of tagStructure.WireframeTags; let i=index">
-    <div *ngIf="kit.length > 0" class="tags-container">
-      <span class="subtitle" *ngIf="i == 0">All</span>
-      <span class="subtitle" *ngIf="i > 0">Kit {{i}}</span>
-
-      <div *ngFor="let tag of kit" class="tag-item">
-        <div class="tag-point">{{tag.Reference}}</div>
-        <span>{{tag.Description}}</span>
-      </div>
-    </div>
-  </div>
-
-  <span class="title">Matcap Tags</span>
-  <div *ngFor="let kit of tagStructure.MatcapTags; let i=index">
-    <div *ngIf="kit.length > 0" class="tags-container">
-      <span class="subtitle" *ngIf="i == 0">All</span>
-      <span class="subtitle" *ngIf="i > 0">Kit {{i}}</span>
-
-      <div *ngFor="let tag of kit" class="tag-item">
-        <div class="tag-point">{{tag.Reference}}</div>
-        <span>{{tag.Description}}</span>
-      </div>
-    </div>
-  </div>
-
-  <span class="title">Map Tags</span>
-  <div *ngFor="let kit of tagStructure.MapTags; let i=index">
-    <div *ngIf="kit.length > 0" class="tags-container">
-      <span class="subtitle" *ngIf="i == 0">All</span>
-      <span class="subtitle" *ngIf="i > 0">Kit {{i}}</span>
-
-      <div *ngFor="let tag of kit" class="tag-item">
-        <div class="tag-point">{{tag.Reference}}</div>
-        <span>{{tag.Description}}</span>
-      </div>
-    </div>
-  </div>
-
-  <span class="title">Materials Tags</span>
-  <div *ngFor="let kit of tagStructure.MaterialsTags; let i=index">
-    <div *ngIf="showKitMaterials(kit)" class="tags-container">
-      <span class="subtitle" *ngIf="i == 0">All</span>
-      <span class="subtitle" *ngIf="i > 0">Kit {{i}}</span>
-
-      <div *ngFor="let material of kit; let i=index">
-
-        <div *ngIf="material.length > 0" class="tags-container">
-          <span class="subtitle"> Material {{i + 1}}</span>
-
-          <div *ngFor="let tag of material" class="tag-item">
-            <div class="tag-point">{{tag.Reference}}</div>
-            <span>{{tag.Description}}</span>
-          </div>
-        </div>
-
-      </div>
-    </div>
+  <div *ngFor="let tag of tags" class="tag-item">
+    <div class="tag-point">{{tag.Reference || tag.reference}}</div>
+    <span class="truncate">{{tag.ErrorCode ? tag.ErrorCode + ' - ' : '' }}{{tag.Description}}</span>
+    <span class="truncate">{{tag.errorCode ? tag.errorCode + ' - ' : '' }}{{tag.description}}</span>
   </div>
 </div>

@@ -63,6 +63,9 @@ export class DecJobRoundComponent {
     if (!v) {
       this.zoomAreaOpen = false;
     }
+    if (this.renderGallery) {
+      this.renderGallery.meshQa.EnableEdit(!!v);
+    }
   }
 
   get qaMode() {

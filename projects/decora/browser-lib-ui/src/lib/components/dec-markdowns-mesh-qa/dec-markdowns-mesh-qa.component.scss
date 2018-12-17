@@ -4,39 +4,31 @@
   align-items: flex-start;
 }
 
-.title {
-  font-size: 16px;
-  font-weight: 500;
-  margin-bottom: 8px;
-}
-
-.subtitle {
-  font-size: 16px;
-  margin-bottom: 8px;
-}
-
-.tags-container {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-left: 8px;
-}
-
 .tag-item {
   display: flex;
+  width: 100%;
   align-items: center;
   margin-bottom: 8px;
 }
 
 .tag-point {
-  width: 24px;
-  height: 24px;
+  min-width: 24px;
+  min-height: 24px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f44336;
-  border-radius: 50%;
-  color: white;
+  font-weight: 500;
+  color: #f44336;
   user-select: none;
+  cursor: pointer;
   margin-right: 8px;
+  border-width: 1px;
+  border-color: #f44336;
+  border-style: solid dotted dotted solid;
+}
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

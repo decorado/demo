@@ -1,11 +1,10 @@
+<button (click)="enableEdit()">{{ editEnable ?'Disable' : 'Enable' }} Edit</button>
+
 <div style="display: flex;justify-content: center;">
   <div style="width: 600px;height: 600px;">
-    <dec-mesh-qa [tagStructure]="tagStructure" (updateTagStructure)="updateTagStructure($event)"></dec-mesh-qa>
+    <dec-mesh-qa [glb]="glb" [mesh]="mesh" (updateTagStructure)="updateTagStructure($event)"></dec-mesh-qa>
+    <br>
+    <br>
+    <dec-markdowns-mesh-qa *ngIf="mesh" [mesh]="mesh"> </dec-markdowns-mesh-qa>
   </div>
 </div>
-
-<!-- <pre style="background-color: #f1f1f1;padding:24px;">
-  {{ tagStructure | json }}
-</pre> -->
-
-<dec-markdowns-mesh-qa *ngIf="tagStructure" [tagStructure]="tagStructure"> </dec-markdowns-mesh-qa>
