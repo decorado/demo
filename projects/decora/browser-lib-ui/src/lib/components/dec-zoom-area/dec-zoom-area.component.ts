@@ -122,7 +122,23 @@ export class DecZoomAreaComponent implements OnInit, AfterViewInit {
     this.save.emit(saveObj);
   }
 
-  onLinkTag(event) {
+  private formatTagID(tagReference) {
+    return `${this.parentId}.${tagReference}`;
+  }
+
+  onLinkTag(event): void {
+    if (!event) {
+      this.referenceQaMode = false;
+      this.commentIndex = null;
+      return;
+    }
+    let tagID = this.formatTagID(event.reference);
+    const existingTag = this.reference.tags.find(tag => tag.reference === tagID);
+    if (existingTag) {
+      this.referenceQaMode = false;
+      this.commentIndex = null;
+      return;
+    }
     if (this.qaMode) {
       this.referenceQaMode = true;
       this.commentIndex = event.reference;
