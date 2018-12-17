@@ -1,6 +1,7 @@
 import { DecZoomMarksComponent } from './../dec-zoom-marks/dec-zoom-marks.component';
 import { Component, Input } from '@angular/core';
 import { Tag } from '../dec-zoom-marks/models/tag.model';
+import { DecMarksComponent } from './../dec-marks/dec-marks.component';
 
 @Component({
   selector: 'dec-markdowns-comment',
@@ -47,6 +48,9 @@ export class DecMarkdownsCommentComponent {
   @Input()
   decZoomMarksComponent: DecZoomMarksComponent;
 
+  @Input()
+  decMarksComponent: DecMarksComponent;
+
   getClass(comment) {
     let cssClass = 'tags-item';
 
@@ -74,7 +78,8 @@ export class DecMarkdownsCommentComponent {
 
   deleteTag(indexRender: number, tag: Tag): void {
     if (this.parentId) {
-
+      this.decMarksComponent.removeTag(tag);
+      this.decMarksComponent.drawMarks();
     } else {
       const indexTag = this.renders[indexRender].tags.indexOf(tag);
       this.renders[indexRender].tags.splice(indexTag, 1);
@@ -84,6 +89,10 @@ export class DecMarkdownsCommentComponent {
   }
 
   editTag(indexRender, tag) {
-    this.decZoomMarksComponent.editTags(tag);
+    if (this.parentId) {
+      this.decMarksComponent.editTags(tag);
+    } else {
+      this.decZoomMarksComponent.editTags(tag);
+    }
   }
 }

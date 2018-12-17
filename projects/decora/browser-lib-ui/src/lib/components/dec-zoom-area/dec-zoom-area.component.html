@@ -1,4 +1,4 @@
-<div class="main-container" fxLayout="column" fxLayoutGap="16px">
+<div class="main-container" fxLayout="column" fxLayoutGap="16px" *ngIf="init">
   <div fxLayout="row" fxLayoutAlign="start start">
 
     <div fxFlex="50" class="zoom-container" fxLayout="column" fxLayoutGap="16px">
@@ -38,7 +38,11 @@
             <dec-icon font="mat">bookmarks</dec-icon>Tags
           </h2>
         </div>
-        <dec-markdowns-comment [parentId]="parentId" [qaMode]="qaMode" [renders]="renderMarkdons"></dec-markdowns-comment>
+        <dec-markdowns-comment 
+          [parentId]="parentId" 
+          [qaMode]="qaMode" 
+          [decMarksComponent]="renderZoom"
+          [renders]="renderMarkdons"></dec-markdowns-comment>
       </div>
     </div>
   </div>

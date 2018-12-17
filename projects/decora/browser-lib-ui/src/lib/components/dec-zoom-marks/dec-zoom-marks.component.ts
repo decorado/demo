@@ -541,18 +541,22 @@ export class DecZoomMarksComponent implements AfterViewChecked {
     edit.style.cursor = 'pointer';
     edit.setAttribute('type', 'edit');
     edit.style.marginTop = '15px';
-    edit.innerHTML = '<img width="24" height="24" src="/assets/img/edit-icon.svg"> <span class="icon-label">' + this.editLabel + '</span>';
+    edit.innerHTML = '<img width="24" height="24" src="'+this.getBasePath()+'edit-icon.svg"> <span class="icon-label">' + this.editLabel + '</span>';
 
 
     const deleteDiv = document.createElement('div');
     deleteDiv.style.cursor = 'pointer';
     deleteDiv.setAttribute('type', 'delete');
     deleteDiv.style.marginTop = '15px';
-    deleteDiv.innerHTML = '<img width="24" height="24" src="/assets/img/delete-icon.svg"> <span class="icon-delete-label">' + this.deleteLabel + ' </span>';
+    deleteDiv.innerHTML = '<img width="24" height="24" src="'+this.getBasePath()+'delete-icon.svg"> <span class="icon-delete-label">' + this.deleteLabel + ' </span>';
 
     menu.appendChild(edit);
     menu.appendChild(deleteDiv);
     return menu;
+  }
+
+  getBasePath() {
+    return '/d/assets/img/';
   }
 
   private clickEventZoomTag(zoomArea: ZoomArea) {
@@ -664,11 +668,7 @@ export class DecZoomMarksComponent implements AfterViewChecked {
         x: this.zoomPosition.x,
         y: this.zoomPosition.y
       },
-      zoomScale: this.zoomScale,
-      parentSize: {
-        x: this.canvasEl.width,
-        y: this.canvasEl.height
-      }
+      zoomScale: this.zoomScale
     };
   }
 

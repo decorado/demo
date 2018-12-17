@@ -39,7 +39,9 @@
           </span>
         </div>
 
-        <div *ngIf="round.renderStatus !== 'RENDER_DONE'; else renderGalleryDone">
+        <div *ngIf="(round.renderStatus !== 'RENDER_DONE' || 
+                    (round.renderStatus === 'RENDER_DONE' && round.status === 'RENDER_DONE' && !isProfessional)); 
+                    else renderGalleryDone">
           <dec-render-not-available [renderStatus]="round.renderStatus" [maxFileUrl]="round?.max ? round?.max.fileUrl : ''"></dec-render-not-available>
         </div>
 

@@ -14,7 +14,9 @@
         {{ 'module.professional.job.info.model-not-send-message' | translate }}
       </span>
     </div>
+  </div>
 
+  <div *ngIf="renderStatus === 'RENDER_DONE'">
     <div *ngIf="!isProfessional">
       <span class="title">No model submitted</span>
       <br>
@@ -24,6 +26,7 @@
       </span>
     </div>
   </div>
+
 
   <div *ngIf="renderStatus === 'RENDERING'">
     <div *ngIf="isProfessional">
