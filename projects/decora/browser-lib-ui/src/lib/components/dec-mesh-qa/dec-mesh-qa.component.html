@@ -1,3 +1,5 @@
 <div class="container-iframe">
-  <iframe #iframeUnity allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" class="unity-iframe" src="https://s3.amazonaws.com/decora-quality-assurance-mesh/dev/index.html"></iframe>
+  <iframe #iframeUnity allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" class="unity-iframe"
+    [src]="decConfig?.config?.meshUrl | safe">
+  </iframe>
 </div>

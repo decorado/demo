@@ -1,7 +1,6 @@
 import { Component, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 import { TagWrapper, enumTagWrapperContext } from './dec-mesh-qa.models';
 import { DecConfigurationService } from '../../services/configuration/configuration.service';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 const meshBase = {
   'ErrorCode': {
@@ -3077,11 +3076,9 @@ export class DecMeshQaComponent {
 
   @Output() updateTagStructure: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(public decConfig: DecConfigurationService, private domSanitizer: DomSanitizer) {
+  constructor(public decConfig: DecConfigurationService) {
     window.addEventListener('message', this.ReceiveMessage, false);
   }
-
-  public meshUrl = (): SafeResourceUrl => this.domSanitizer.bypassSecurityTrustResourceUrl(this.decConfig.config.meshUrl);
 
   ReceiveMessage = (event: any) => {
     const { data } = event;
@@ -3169,15 +3166,19 @@ export class DecMeshQaComponent {
 
   //// Unity Functions
   SetData = (): void => {
-    const model = this.glb.fileUrl.replace('http://', 'https://')
-    const tags = this.mesh || null;
-    const editMode = !this.isProfessional;
+    if (this.iframeUnity.nativeElement.contentWindow) {
+      const model = this.glb.fileUrl.replace('http://', 'https://');
+      const tags = this.mesh || null;
+      const editMode = !this.isProfessional;
 
-    const fullMesh = { editMode, model, tags, ...meshBase };
-    this.iframeUnity.nativeElement.contentWindow.postMessage({ type: 'SetData', payload: fullMesh }, '*');
+      const fullMesh = { editMode, model, tags, ...meshBase };
+      this.iframeUnity.nativeElement.contentWindow.postMessage({ type: 'SetData', payload: fullMesh }, '*');
+    }
   }
   EnableEdit = (enable: boolean): void => {
-    this.iframeUnity.nativeElement.contentWindow.postMessage({ type: 'EnableEdit', payload: enable }, '*');
+    if (this.iframeUnity.nativeElement.contentWindow) {
+      this.iframeUnity.nativeElement.contentWindow.postMessage({ type: 'EnableEdit', payload: enable }, '*');
+    }
   }
   //// Unity Functions
 }
