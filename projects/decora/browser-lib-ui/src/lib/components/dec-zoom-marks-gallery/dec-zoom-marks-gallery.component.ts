@@ -103,7 +103,7 @@ export class DecZoomMarksGalleryComponent {
   @Input()
   public glb: any;
 
-  public meshQaSelected: boolean;
+  public meshQaSelected = false;
 
   updateTagStructure(tagStructure) {
     this.qualityAssurance.mesh = { ...tagStructure };
@@ -173,11 +173,7 @@ export class DecZoomMarksGalleryComponent {
   onSelectImage = ($event, sysFile, i) => {
     this.markedObj = this.markedObjs[i];
     this.imageIndex = i;
-
-    if (this.meshQaSelected) {
-      this.meshQaSelected = false;
-      this.onSelectImage(null, null, i);
-    }
+    this.meshQaSelected = false;
   }
 
   onSelectMesh = () => {

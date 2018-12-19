@@ -2,6 +2,7 @@ export enum enumTagWrapperContext {
   Wireframe = 'Wireframe',
   Matcap = 'Matcap',
   Map = 'Map',
+  Material = 'Material'
 }
 
 export interface TagWrapper {
