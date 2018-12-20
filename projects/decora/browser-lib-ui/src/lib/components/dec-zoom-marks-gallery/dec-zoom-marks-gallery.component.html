@@ -5,7 +5,8 @@
     [jobType]="jobType" [dontShowTags]="!showTags"></dec-zoom-marks>
 
   <div class="container-mesh-qa" *ngIf="glb" [hidden]="!meshQaSelected">
-    <dec-mesh-qa [isProfessional]="isProfessional" [glb]="glb" [mesh]="qualityAssurance?.mesh" (updateTagStructure)="updateTagStructure($event)"></dec-mesh-qa>
+    <dec-mesh-qa [isProfessional]="isProfessional" [glbReadonly]="glbReadonly" [glb]="glb" [mesh]="qualityAssurance?.mesh"
+      (updateTagStructure)="updateTagStructure($event)"></dec-mesh-qa>
   </div>
 
   <div class="gallery-size" fxLayout="row" fxLayoutAlign="center center">

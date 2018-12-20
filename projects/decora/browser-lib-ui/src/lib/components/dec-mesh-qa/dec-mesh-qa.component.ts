@@ -1,6 +1,7 @@
-import { Component, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
+import { Component, ViewChild, ElementRef, Input, Output, EventEmitter, HostListener } from '@angular/core';
 import { TagWrapper, enumTagWrapperContext } from './dec-mesh-qa.models';
 import { DecConfigurationService } from '../../services/configuration/configuration.service';
+import { Guid } from '../../utilities/guid';
 
 const meshBase = {
   'ErrorCode': {
@@ -3063,11 +3064,16 @@ const meshBase = {
 })
 export class DecMeshQaComponent {
 
+  public uId = Guid.create();
+
   @Input()
   public isProfessional: boolean;
 
   @Input()
   public glb: any;
+
+  @Input()
+  public glbReadonly: boolean;
 
   @Input()
   public mesh: any;
@@ -3076,12 +3082,25 @@ export class DecMeshQaComponent {
 
   @Output() updateTagStructure: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(public decConfig: DecConfigurationService) {
-    window.addEventListener('message', this.ReceiveMessage, false);
+  public get meshUrl(): string {
+    return `${this.decConfig.config.meshUrl}?uId=${this.uId}`;
+  }
+
+  constructor(public decConfig: DecConfigurationService) { }
+
+  @HostListener('window:message', ['$event'])
+  onMessage(event) {
+    console.log('DecMeshQaComponent - onMessage: ', event);
+
+    if (event.data.uId === this.iframeUnity.nativeElement.id) {
+      this.ReceiveMessage(event);
+    }
   }
 
   ReceiveMessage = (event: any) => {
     const { data } = event;
+
+    console.log('DecMeshQaComponent - ReceiveMessage: ', event);
 
     switch (data.type) {
       case 'Ready':
@@ -3168,8 +3187,10 @@ export class DecMeshQaComponent {
   SetData = (): void => {
     if (this.iframeUnity.nativeElement.contentWindow) {
       const model = this.glb.fileUrl.replace('http://', 'https://');
+      // model = model.replace('https://s3.amazonaws.com/', 'https://sysfilecache.decoracontent.com:8081/');
+
       const tags = this.mesh || null;
-      const editMode = !this.isProfessional;
+      const editMode = this.glbReadonly ? false : !this.isProfessional;
 
       const fullMesh = { editMode, model, tags, ...meshBase };
       this.iframeUnity.nativeElement.contentWindow.postMessage({ type: 'SetData', payload: fullMesh }, '*');

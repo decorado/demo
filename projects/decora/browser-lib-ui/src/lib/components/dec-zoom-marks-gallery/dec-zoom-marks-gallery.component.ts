@@ -103,6 +103,9 @@ export class DecZoomMarksGalleryComponent {
   @Input()
   public glb: any;
 
+  @Input()
+  public glbReadonly: boolean;
+
   public meshQaSelected = false;
 
   updateTagStructure(tagStructure) {

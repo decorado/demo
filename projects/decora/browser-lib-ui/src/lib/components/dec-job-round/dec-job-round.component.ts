@@ -97,6 +97,9 @@ export class DecJobRoundComponent {
 
   markedReference;
 
+  public glbReference: any;
+  public qualityAssuranceReference: any;
+
   renderImages;
 
   note;
@@ -291,6 +294,7 @@ export class DecJobRoundComponent {
   }
 
   formatRenderReference(round) {
+    console.log('formatRenderReference: ', round);
     return round.qualityAssurance.renders.map(x => {
       return {
         file: x.file,
@@ -317,18 +321,26 @@ export class DecJobRoundComponent {
       case 'round1':
         this.markedReference = this.formatRenderReference(this.rounds[0]);
         this.referenceMax = this.rounds[0].max.fileUrl;
+        this.glbReference = this.rounds[0].glb;
+        this.qualityAssuranceReference = this.rounds[0].qualityAssurance;
         break;
       case 'round2':
         this.markedReference = this.formatRenderReference(this.rounds[1]);
         this.referenceMax = this.rounds[1].max.fileUrl;
+        this.glbReference = this.rounds[1].glb;
+        this.qualityAssuranceReference = this.rounds[1].qualityAssurance;
         break;
       case 'round3':
         this.markedReference = this.formatRenderReference(this.rounds[2]);
         this.referenceMax = this.rounds[2].max.fileUrl;
+        this.glbReference = this.rounds[2].glb;
+        this.qualityAssuranceReference = this.rounds[2].qualityAssurance;
         break;
       case 'round4':
         this.markedReference = this.formatRenderReference(this.rounds[3]);
         this.referenceMax = this.rounds[3].max.fileUrl;
+        this.glbReference = this.rounds[3].glb;
+        this.qualityAssuranceReference = this.rounds[3].qualityAssurance;
         break;
     }
     this.activeTab = $event.value;

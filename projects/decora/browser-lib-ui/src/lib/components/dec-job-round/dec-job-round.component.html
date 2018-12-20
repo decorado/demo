@@ -18,7 +18,8 @@
           </mat-button-toggle-group>
         </div>
         <dec-zoom-marks-gallery *ngIf="markedReference" [isProfessional]="isProfessional" (openZoomArea)="openEditZoomArea($event, true)"
-          [maxFile]="referenceMax" #referenceGallery [markedObjs]="markedReference" [showTags]="activeTab !== 'reference'">
+          [maxFile]="referenceMax" #referenceGallery [markedObjs]="markedReference" [showTags]="activeTab !== 'reference'"
+          [glb]="glbReference" [glbReadonly]="true" [qualityAssurance]="qualityAssuranceReference">
         </dec-zoom-marks-gallery>
 
         <div class="measures-container">
