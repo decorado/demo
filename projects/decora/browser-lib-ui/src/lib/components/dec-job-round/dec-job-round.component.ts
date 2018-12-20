@@ -313,10 +313,15 @@ export class DecJobRoundComponent {
           this.formatMarkedRenderColorVariation();
         }
         this.referenceMax = 'remove';
+        this.glbReference = null;
+        this.qualityAssuranceReference = null;
+
         break;
       case 'reference':
         this.formatMarkedReference(this.product);
         this.referenceMax = 'remove';
+        this.glbReference = null;
+        this.qualityAssuranceReference = null;
         break;
       case 'round1':
         this.markedReference = this.formatRenderReference(this.rounds[0]);

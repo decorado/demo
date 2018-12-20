@@ -3186,8 +3186,8 @@ export class DecMeshQaComponent {
   //// Unity Functions
   SetData = (): void => {
     if (this.iframeUnity.nativeElement.contentWindow) {
-      const model = this.glb.fileUrl.replace('http://', 'https://');
-      // model = model.replace('https://s3.amazonaws.com/', 'https://sysfilecache.decoracontent.com:8081/');
+      let model = this.glb.fileUrl.replace('http://', 'https://');
+      model = model.replace('https://s3.amazonaws.com/', 'http://sysfilecache.decoracontent.com:8081/');
 
       const tags = this.mesh || null;
       const editMode = this.glbReadonly ? false : !this.isProfessional;

@@ -100,8 +100,20 @@ export class DecZoomMarksGalleryComponent {
 
   public imageMeshUrl = `/d/assets/img/mesh-qa.png`;
 
+  private _glb: any;
+  public get glb(): any {
+    return this._glb;
+  }
   @Input()
-  public glb: any;
+  public set glb(v: any) {
+    if (this._glb !== v) {
+      this._glb = v;
+
+      if (!this._glb) {
+        this.onSelectImage(null, null, 0);
+      }
+    }
+  }
 
   @Input()
   public glbReadonly: boolean;

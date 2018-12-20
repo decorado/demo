@@ -14,7 +14,9 @@
       (onMove)="onMoveFn($event)">
 
       <ngu-item *ngIf="glb" (swipe)="onSwipe($event)" NguCarouselItem (click)="onSelectMesh()" [class.active]="meshQaSelected">
-        <img [src]="imageMeshUrl" style="width: 100%;height: 100%;" />
+        <div class="image-container">
+          <img [src]="imageMeshUrl" style="width: 100%;height: 100%;" />
+        </div>
       </ngu-item>
 
       <ngu-item (swipe)="onSwipe($event)" NguCarouselItem *ngFor="let image of markedObjs; let i = index;"
