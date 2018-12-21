@@ -1,7 +1,12 @@
 .container-iframe {
-  width: 100%;
-  padding-top: 100%;
   position: relative;
+  width: 100%;
+}
+
+.container-iframe:before {
+  content: "";
+  display: block;
+  padding-top: 100%;
 }
 
 .unity-iframe {

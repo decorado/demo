@@ -40,18 +40,15 @@
           </span>
         </div>
 
-        <div *ngIf="round.renderStatus !== 'RENDER_DONE'; else renderGalleryDone">
+        <div *ngIf="round.renderStatus !== 'RENDER_DONE'">
           <dec-render-not-available [renderStatus]="round.renderStatus" [maxFileUrl]="round?.max ? round?.max.fileUrl : ''"></dec-render-not-available>
         </div>
 
-        <ng-template #renderGalleryDone>
-          <dec-zoom-marks-gallery [isProfessional]="isProfessional" (deleteZoomArea)="deleteZoomAreaByParentId($event)"
-            [reviewers]="reviewers" #renderGallery *ngIf="renderImages" [showTags]="showTags" (openZoomArea)="openEditZoomArea($event)"
-            [markedObjs]="round?.qualityAssurance?.renders" [qualityAssurance]="round?.qualityAssurance" [maxFile]="round?.max?.fileUrl"
-            [qaModeActive]="qaMode" [jobType]="jobType" [glb]="round?.glb">
-
-          </dec-zoom-marks-gallery>
-        </ng-template>
+        <dec-zoom-marks-gallery *ngIf="renderImages && round.renderStatus === 'RENDER_DONE'" [isProfessional]="isProfessional"
+          (deleteZoomArea)="deleteZoomAreaByParentId($event)" [reviewers]="reviewers" #renderGallery [showTags]="showTags"
+          (openZoomArea)="openEditZoomArea($event)" [markedObjs]="round?.qualityAssurance?.renders" [qualityAssurance]="round?.qualityAssurance"
+          [maxFile]="round?.max?.fileUrl" [qaModeActive]="qaMode" [jobType]="jobType" [glb]="round?.glb">
+        </dec-zoom-marks-gallery>
 
       </dec-grid-column>
 
