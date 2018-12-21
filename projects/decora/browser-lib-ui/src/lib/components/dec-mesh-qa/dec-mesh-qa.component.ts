@@ -3090,8 +3090,6 @@ export class DecMeshQaComponent {
 
   @HostListener('window:message', ['$event'])
   onMessage(event) {
-    console.log('DecMeshQaComponent - onMessage: ', event);
-
     if (event.data.uId === this.iframeUnity.nativeElement.id) {
       this.ReceiveMessage(event);
     }
@@ -3099,8 +3097,6 @@ export class DecMeshQaComponent {
 
   ReceiveMessage = (event: any) => {
     const { data } = event;
-
-    console.log('DecMeshQaComponent - ReceiveMessage: ', event);
 
     switch (data.type) {
       case 'Ready':
@@ -3186,8 +3182,8 @@ export class DecMeshQaComponent {
   //// Unity Functions
   SetData = (): void => {
     if (this.iframeUnity.nativeElement.contentWindow) {
-      let model = this.glb.fileUrl.replace('http://', 'https://');
-      model = model.replace('https://s3.amazonaws.com/', 'http://sysfilecache.decoracontent.com:8081/');
+      const model = this.glb.fileUrl.replace('http://', 'https://');
+      // model = model.replace('https://s3.amazonaws.com/', 'http://sysfilecache.decoracontent.com:8081/');
 
       const tags = this.mesh || null;
       const editMode = this.glbReadonly ? false : !this.isProfessional;

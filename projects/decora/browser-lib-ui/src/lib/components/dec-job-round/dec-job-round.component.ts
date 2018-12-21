@@ -294,7 +294,6 @@ export class DecJobRoundComponent {
   }
 
   formatRenderReference(round) {
-    console.log('formatRenderReference: ', round);
     return round.qualityAssurance.renders.map(x => {
       return {
         file: x.file,
