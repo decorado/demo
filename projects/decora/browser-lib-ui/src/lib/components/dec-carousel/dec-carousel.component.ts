@@ -30,12 +30,10 @@ export class DecCarouselComponent {
 
   @ContentChildren(DecCarouselItemComponent)
   set items(v: QueryList<DecCarouselItemComponent>) {
-    if (this._items !== v) {
-      this._items = v;
-      this.mountSelectedItem();
-      this.detectVisibleItems();
-      this.mountAndEmitSelected();
-    }
+    this._items = v;
+    this.mountSelectedItem();
+    this.detectVisibleItems();
+    this.mountAndEmitSelected();
   }
 
   get items() {
@@ -111,11 +109,13 @@ export class DecCarouselComponent {
   }
 
   private mountSelectedItem() {
-    const item = this.items.toArray()[this.selectedIndex];
-    this.selectedItem = {
-      index: this.selectedIndex,
-      value: item.value
-    };
+    if (this.items.length) {
+      const item = this.items.toArray()[this.selectedIndex];
+      this.selectedItem = {
+        index: this.selectedIndex,
+        value: item.value
+      };
+    }
   }
 
   private emitSelectedItem() {
