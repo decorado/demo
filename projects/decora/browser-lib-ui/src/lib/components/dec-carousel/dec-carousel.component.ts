@@ -9,20 +9,32 @@ import { DecCarouselItemComponent } from './dec-carousel-item/dec-carousel-item.
 export class DecCarouselComponent {
 
   @Input()
-  set selectedIndex(v) {
+  set selectedIndex(v: number) {
     if (v !== this._selectedIndex) {
-      this._selectedIndex = v;
+      this._selectedIndex = v * 1;
       if (this.items) {
         this.mountAndEmitSelected();
       }
     }
   }
 
-  get selectedIndex() {
+  get selectedIndex(): number {
     return this._selectedIndex;
   }
 
-  @Input() itemsPerPage = 4;
+  @Input()
+  set itemsPerPage(v: number) {
+    if (v !== this._itemsPerPage) {
+      this._itemsPerPage = v * 1;
+      if (this.items) {
+        this.mountAndEmitSelected();
+      }
+    }
+  }
+
+  get itemsPerPage(): number {
+    return this._itemsPerPage;
+  }
 
   @Input() highlightSelected = true;
 
@@ -32,6 +44,7 @@ export class DecCarouselComponent {
   set items(v: QueryList<DecCarouselItemComponent>) {
     this._items = v;
     this.mountSelectedItem();
+    this.detectInitialIndexBasedOnPageSizeAndItemsLength();
     this.detectVisibleItems();
     this.mountAndEmitSelected();
   }
@@ -51,11 +64,13 @@ export class DecCarouselComponent {
 
   private initialIndex = 0;
 
-  private finalIndex;
+  private finalIndex: number;
 
   private _items;
 
   private _selectedIndex = 0;
+
+  private _itemsPerPage = 4;
 
   constructor() { }
 
@@ -77,15 +92,20 @@ export class DecCarouselComponent {
   }
 
   detectVisibleItems() {
+
     const itemsArray = this.items.toArray();
+
     this.finalIndex = this.initialIndex + this.itemsPerPage;
+
     const itemsObjects = itemsArray.map((item, index) => {
       return {
         index: index,
         component: item
       };
     });
+
     this.visibleItems = itemsObjects.slice(this.initialIndex, this.finalIndex);
+
   }
 
   goPrev() {
@@ -101,6 +121,36 @@ export class DecCarouselComponent {
   selectItem(index) {
     this.selectedIndex = index;
     this.mountAndEmitSelected();
+  }
+
+  private detectInitialIndexBasedOnPageSizeAndItemsLength() {
+
+    const itemsArray = this.items.toArray();
+
+    const totalItems = itemsArray.length;
+
+    const totalToRight = totalItems - this.initialIndex;
+
+    const doNotFullfillPage = totalToRight < this.itemsPerPage;
+
+    if (doNotFullfillPage) {
+
+      const suggestedInitialIndex = totalItems - this.itemsPerPage;
+
+      const suggestedInitialIndexIsInsideOfRange = suggestedInitialIndex >= 0;
+
+      if (suggestedInitialIndexIsInsideOfRange) {
+
+        this.initialIndex = suggestedInitialIndex;
+
+      } else {
+
+        this.initialIndex = 0;
+
+      }
+
+    }
+
   }
 
   private mountAndEmitSelected() {
