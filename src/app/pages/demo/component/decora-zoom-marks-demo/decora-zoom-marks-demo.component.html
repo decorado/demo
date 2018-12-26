@@ -1,19 +1,16 @@
 <app-demo-container readmeSrc="/assets/docs/browser-lib-ui/components/dec-zoom-marks/README.md">
 
-  <div fxLayout="row" fxLayoutGap="32px">
+  <div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="32px">
     <dec-zoom-marks-gallery fxFlex="620px" [showTags]="true" [markedObjs]="markedObjs" [qaModeActive]="qaMode"></dec-zoom-marks-gallery>
 
     <dec-zoom-marks-gallery fxFlex="620px" [showTags]="true" [markedObjs]="feedbackObjs" [qaModeActive]="qaMode"></dec-zoom-marks-gallery>
 
-    <dec-marks [marker]="markedObj" [qaMode]="qaMode" [noComments]="true" [zoomPosition]="{x:150,y:200}"
-      [zoomScale]="1.2"></dec-marks>
-
-    <dec-marks [marker]="markedObj" [qaMode]="qaMode" [noComments]="false" [zoomPosition]="{x:300,y:200}"
-      [zoomScale]="3.2"></dec-marks>
+    <!-- <dec-marks [marker]="markedObj" [qaMode]="qaMode" [noComments]="true" [zoomPosition]="{x:150,y:200}" [zoomScale]="1.2"></dec-marks>
+    <dec-marks [marker]="markedObj" [qaMode]="qaMode" [noComments]="false" [zoomPosition]="{x:300,y:200}" [zoomScale]="3.2"></dec-marks> -->
   </div>
 
   <button mat-icon-button color="primary" (click)="qaMode = !qaMode">
     <mat-icon aria-label="QA Mode">{{qaMode ? 'check_box' : 'check_box_outline_blank'}}</mat-icon>
+    Qa Mode
   </button>
-
 </app-demo-container>

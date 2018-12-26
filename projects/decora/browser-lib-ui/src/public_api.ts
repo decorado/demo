@@ -211,6 +211,9 @@ export * from './lib/components/dec-card-similar-product/dec-card-similar-produc
 // CARD-SIMILAR-PRODUCT
 export * from './lib/components/dec-product-similar-models/dec-product-similar-models.component';
 export * from './lib/components/dec-product-similar-models/dec-product-similar-models.module';
+// CARD-SIMILAR-PRODUCT
+export * from './lib/components/dec-mesh-qa/dec-mesh-qa.component';
+export * from './lib/components/dec-mesh-qa/dec-mesh-qa.module';
 
 /*********************************************************
 *
@@ -244,6 +247,9 @@ export * from './lib/guard/auth-guard.service';
 **********************************************************/
 export * from './lib/pipes/category/category-pipe.module';
 export * from './lib/pipes/category/category-pipe.service';
+
+// SAFE
+export * from './lib/pipes/safe/safe.module';
 
 /*********************************************************
 *

@@ -84,6 +84,7 @@ a {
 }
 
 .container-comments {
+  width: 100%;
   padding-left: 20px;
 }
 
@@ -128,4 +129,10 @@ a {
   font-size: 12px;
   font-weight: 400;
   color: #909294;
+}
+
+.container-mesh-qa {
+  width: 100%;
+  max-width: 646px;
+  padding-bottom: 48px;
 }

@@ -48,6 +48,7 @@ const routes: Routes = [
   { path: 'upload', loadChildren: './decora-upload-demo/decora-upload-demo.module#DecoraUploadDemoModule' },
   { path: 'render-comment', loadChildren: './decora-render-comment/decora-render-comment.module#DecoraRenderCommentModule' },
   { path: 'card-similar-product', loadChildren: './decora-card-similar-product/decora-card-similar-product.module#DecoraCardSimilarProductModule' },
+  { path: 'decora-fbx-qa', loadChildren: './decora-fbx-qa/decora-fbx-qa.module#DecoraFbxQaModule' },
 ];
 
 @NgModule({

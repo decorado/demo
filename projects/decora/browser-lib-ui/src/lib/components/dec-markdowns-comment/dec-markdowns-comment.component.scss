@@ -1,5 +1,10 @@
 @import './../../../../bootstrap/constants/_colors';
 
+:host {
+  --tag-size: 30px;
+  --tag-line-height: calc(var(--tag-size) - 3px);
+}
+
 .markdown-item:last-child {
   margin-bottom: 32px;
 }
@@ -10,38 +15,25 @@
 
 .text-markdown {
   font-size: 13px;
-  line-height: 16px;
+  line-height: var(--tag-line-height);
   color: #656d74;
   min-width: 496px;
   text-align: justify;
+  justify-content: left;
 }
 
 .tags-item {
-  background-color: #f44336;
   text-align: center;
-  color: white;
+  color: $dec-color-red;
   font-weight: 500;
-  border: 2px solid transparent;
-  padding: 5px;
-}
-
-.type-point {
-  border-radius: 50%;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
+  height: var(--tag-size);
+  line-height: var(--tag-line-height);
 }
 
 .type-square {
-  background-color: transparent;
-  border-color: #f44336;
-  color: #f44336;
-  border-top: 2px solid;
-  border-left: 2px solid;
-  border-bottom: 2px dotted;
-  border-right: 2px dotted;
+  border-color: $dec-color-red;
+  border-width: 2px;
+  border-style: solid dotted dotted solid;
 }
 
 .icon-delete {

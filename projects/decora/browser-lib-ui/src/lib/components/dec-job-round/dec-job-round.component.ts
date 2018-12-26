@@ -63,6 +63,9 @@ export class DecJobRoundComponent {
     if (!v) {
       this.zoomAreaOpen = false;
     }
+    if (this.renderGallery) {
+      this.renderGallery.meshQa.EnableEdit(!!v);
+    }
   }
 
   get qaMode() {
@@ -94,6 +97,9 @@ export class DecJobRoundComponent {
 
   markedReference;
 
+  public glbReference: any;
+  public qualityAssuranceReference: any;
+
   renderImages;
 
   note;
@@ -113,7 +119,7 @@ export class DecJobRoundComponent {
   @HostListener('window:keydown.control.shift')
   @HostListener('window:keydown.meta.shift')
   onKeyPress() {
-    if (this.qaMode && !this.zoomAreaOpen) {
+    if (this.qaMode && !this.zoomAreaOpen && !this.renderGallery.meshQaSelected) {
       this.openZoomArea();
     }
   }
@@ -306,26 +312,39 @@ export class DecJobRoundComponent {
           this.formatMarkedRenderColorVariation();
         }
         this.referenceMax = 'remove';
+        this.glbReference = null;
+        this.qualityAssuranceReference = null;
+
         break;
       case 'reference':
         this.formatMarkedReference(this.product);
         this.referenceMax = 'remove';
+        this.glbReference = null;
+        this.qualityAssuranceReference = null;
         break;
       case 'round1':
         this.markedReference = this.formatRenderReference(this.rounds[0]);
         this.referenceMax = this.rounds[0].max.fileUrl;
+        this.glbReference = this.rounds[0].glb;
+        this.qualityAssuranceReference = this.rounds[0].qualityAssurance;
         break;
       case 'round2':
         this.markedReference = this.formatRenderReference(this.rounds[1]);
         this.referenceMax = this.rounds[1].max.fileUrl;
+        this.glbReference = this.rounds[1].glb;
+        this.qualityAssuranceReference = this.rounds[1].qualityAssurance;
         break;
       case 'round3':
         this.markedReference = this.formatRenderReference(this.rounds[2]);
         this.referenceMax = this.rounds[2].max.fileUrl;
+        this.glbReference = this.rounds[2].glb;
+        this.qualityAssuranceReference = this.rounds[2].qualityAssurance;
         break;
       case 'round4':
         this.markedReference = this.formatRenderReference(this.rounds[3]);
         this.referenceMax = this.rounds[3].max.fileUrl;
+        this.glbReference = this.rounds[3].glb;
+        this.qualityAssuranceReference = this.rounds[3].qualityAssurance;
         break;
     }
     this.activeTab = $event.value;
