@@ -9,6 +9,8 @@ export class DecCountdownComponent implements OnInit {
 
   @Input() interval: number;
 
+  @Input() ommitZeroes: boolean;
+
   @Output() finished = new EventEmitter();
 
   private completed: boolean;
@@ -36,7 +38,28 @@ export class DecCountdownComponent implements OnInit {
     const hours = Math.floor(this.interval / 3600);
     const minutes = Math.floor((this.interval - (hours * 3600)) / 60);
     const seconds = (this.interval - (hours * 3600) - (minutes * 60));
-    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+    let timeAsString;
+
+    if (!this.ommitZeroes) {
+
+      timeAsString = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+    } else {
+
+      timeAsString = `${seconds.toString().padStart(2, '0')}`;
+
+      if (minutes > 0) {
+        timeAsString = `${minutes.toString().padStart(2, '0')}:${ timeAsString }`;
+      }
+
+      if (hours > 0) {
+        timeAsString = `${hours.toString().padStart(2, '0')}:${timeAsString}`;
+      }
+
+    }
+
+    return timeAsString;
   }
 
   private manipulateInterval() {
