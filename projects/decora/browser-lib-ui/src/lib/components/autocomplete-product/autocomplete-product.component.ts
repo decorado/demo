@@ -146,8 +146,8 @@ export class DecAutocompleteProductComponent implements ControlValueAccessor, Af
 
   setEndpointBasedOnInputs() {
     this.indentifyParams();
-    const endpoint = BASE_AUTOCOMPLETE_PRODUCT_ENDPOINT;
-/*     if (this.params.length > 0) {
+    let endpoint = BASE_AUTOCOMPLETE_PRODUCT_ENDPOINT;
+    if (this.params.length > 0) {
       this.params.forEach((param, index) => {
         const paramName = Object.keys(param)[0];
         const paramValue = param[paramName];
@@ -156,7 +156,7 @@ export class DecAutocompleteProductComponent implements ControlValueAccessor, Af
         endpoint += '=';
         endpoint += paramValue;
       });
-    } */
+    }
     this.endpoint = endpoint;
   }
 
