@@ -6,6 +6,8 @@
 // AUTOCOMPLETE
 export * from './lib/components/autocomplete/autocomplete.component';
 export * from './lib/components/autocomplete/autocomplete.module';
+export * from './lib/components/autocomplete/dec-autocomplete-option-template/dec-autocomplete-option-template.component';
+export * from './lib/components/autocomplete/dec-autocomplete-option-template/dec-autocomplete-option-template.module';
 // AUTOCOMPLETE ACCOUNT
 export * from './lib/components/autocomplete-account/autocomplete-account.component';
 export * from './lib/components/autocomplete-account/autocomplete-account.module';
