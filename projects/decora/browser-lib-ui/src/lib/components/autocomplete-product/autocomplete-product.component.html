@@ -17,7 +17,7 @@
   <dec-autocomplete-option-template>
     <ng-template let-row="row">
       <div *ngIf="row" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" class="option-wrapper">
-        <img [decImage]="row.referenceImages[0].sysFile" [decImageSize]="{width:100, height:100}">
+        <img [decImage]="row.referenceImages[0].sysFile" [decImageSize]="{width:50, height:50}">
         <div>{{labelFn(row)}}</div>
       </div>
     </ng-template>

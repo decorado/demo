@@ -314,6 +314,7 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
         } else {
 
           alreadySelected = this.compareAsString(this.value, optionValue);
+
         }
 
         return !alreadySelected;

@@ -25,7 +25,7 @@ export class DecAutocompleteProductComponent implements ControlValueAccessor, Af
 
   endpoint;
 
-  @Input() valueAttr = 'key';
+  @Input() valueAttr = 'id';
 
   @Input()
   set companyId(v: string) {
