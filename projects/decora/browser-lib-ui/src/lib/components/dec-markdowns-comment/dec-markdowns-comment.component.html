@@ -3,12 +3,13 @@
     <h4 class="title-render">
       {{ 'label.Render' | translate }} {{ parentId ? parentId : (indexRender + 1) }}
     </h4>
+
     <div fxLayout="row" fxFill fxLayoutGap="16px" class="markdown-item" *ngFor="let tag of render?.tags; let indexTag = index">
       <span [class]="getClass(tag)" fxFlex="30px">
         {{ parentId ? parentId+'.'+(indexTag + 1) : tag.reference }}
       </span>
       <span *ngIf="tag?.comment" class="text-markdown" fxFlex="calc(100% - 46px)">
-        {{getDescription(tag)}}
+        {{ getDescription(tag) }}
       </span>
       <div class="container-delete" *ngIf="qaMode">
         <button mat-button [matMenuTriggerFor]="tagMenu" matPrefix>

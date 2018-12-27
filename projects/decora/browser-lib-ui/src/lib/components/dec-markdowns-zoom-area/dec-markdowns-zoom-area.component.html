@@ -6,8 +6,8 @@
   </div>
   <div fxLayout="row" fxLayoutAlign="space-between center" *ngFor="let zoomArea of render.zoomAreas;">
     <div fxLayout="column" fxFill fxLayoutGap="10px" fxLayoutAlign="space-between start">
-      <div class="markdown-item" fxFill fxLayout="row" fxLayoutAlign="space-between center">
-        <div class="tags-item type-square">
+      <div fxLayout="row" fxFill class="markdown-item">
+        <div class="tags-item type-square" fxFlex="30px">
           {{ zoomArea.reference }}
         </div>
 
@@ -27,11 +27,12 @@
         </div>
 
       </div>
-
-      <div fxLayoutAlign="space-between center" fxLayoutGap="16px" class="markdown-item" *ngFor="let tag of zoomArea?.renderShot?.tags; let i = index">
-        <span class="{{getClass(tag)}}">{{ (zoomArea.reference)+'.' + (tag.reference) }}</span>
-        <span *ngIf="tag?.comment" class="text-markdown">
-          {{getDescription(tag)}}
+      <div fxLayout="row" fxFill fxLayoutGap="16px" class="markdown-item" *ngFor="let tag of zoomArea?.renderShot?.tags; let i = index">
+        <span [class]="getClass(tag)" fxFlex="30px">
+          {{ (zoomArea.reference)+'.' + (tag.reference) }}
+        </span>
+        <span *ngIf="tag?.comment" class="text-markdown" fxFlex="calc(100% - 46px)">
+          {{ getDescription(tag) }}
         </span>
       </div>
       <div fxLayout="column" fxLayoutGap="16px" fxLayoutAlign="space-between start">

@@ -9,10 +9,6 @@
   margin-bottom: 32px;
 }
 
-.markdown-item:hover .icon-delete {
-  display: block;
-}
-
 .text-markdown {
   font-size: 13px;
   line-height: var(--tag-line-height);
@@ -34,6 +30,10 @@
   border-color: $dec-color-red;
   border-width: 2px;
   border-style: solid dotted dotted solid;
+}
+
+.markdown-item:hover .icon-delete {
+  display: block;
 }
 
 .icon-delete {
