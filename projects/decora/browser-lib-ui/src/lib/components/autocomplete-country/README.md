@@ -7,6 +7,6 @@
 ```html
   <dec-autocomplete-country
   [(ngModel)]="country"
-  (selected)="optionSelected($event)">
+  (optionSelected)="optionSelected($event)">
   </dec-autocomplete-country>
 ```

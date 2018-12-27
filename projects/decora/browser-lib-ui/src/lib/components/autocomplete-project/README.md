@@ -10,7 +10,7 @@
   <dec-autocomplete-project
   [(ngModel)]="project"
   [companyId]="companyId"
-  (selected)="optionSelected($event)">
+  (optionSelected)="optionSelected($event)">
   </dec-autocomplete-project>
 ```
 
@@ -19,12 +19,12 @@
 ```html
   <dec-autocomplete-company
   [(ngModel)]="companyId"
-  (selected)="optionSelected($event)">
+  (optionSelected)="optionSelected($event)">
   </dec-autocomplete-company>
 
   <dec-autocomplete-project
   [(ngModel)]="project"
   [companyId]="companyId"
-  (selected)="optionSelected($event)">
+  (optionSelected)="optionSelected($event)">
   </dec-autocomplete-project>
 ```

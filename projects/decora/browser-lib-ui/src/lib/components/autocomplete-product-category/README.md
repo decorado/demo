@@ -9,6 +9,6 @@
 ```html
   <dec-autocomplete-product-category
   [(ngModel)]="category"
-  (selected)="optionSelected($event)">
+  (optionSelected)="optionSelected($event)">
   </dec-autocomplete-product-category>
 ```

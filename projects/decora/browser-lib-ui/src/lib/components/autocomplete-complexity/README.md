@@ -8,7 +8,7 @@
    <dec-autocomplete-complexity
   [(ngModel)]="complexity"
   [type]="'fix'"
-  (selected)="optionSelected($event)">
+  (optionSelected)="optionSelected($event)">
   </dec-autocomplete-complexity>
 
   <button type="button" mat-stroked-button (click)="complexity = undefined">Clear</button>
@@ -22,7 +22,7 @@
   <dec-autocomplete-complexity
   [(ngModel)]="complexities"
   [multi]="true"
-  (selected)="optionSelected($event)">
+  (optionSelected)="optionSelected($event)">
   </dec-autocomplete-complexity>
 
   <button type="button" mat-stroked-button (click)="complexities = undefined">Clear</button>
