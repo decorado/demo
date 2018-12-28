@@ -1,0 +1,6 @@
+<div class="markdowns-mesh">
+  <div *ngFor="let tag of tags" class="tag-item">
+    <div class="tag-point">{{tag.reference}}</div>
+    <span class="truncate">{{tag.errorCode ? tag.errorCode + ' - ' : '' }}{{tag.description}}</span>
+  </div>
+</div>

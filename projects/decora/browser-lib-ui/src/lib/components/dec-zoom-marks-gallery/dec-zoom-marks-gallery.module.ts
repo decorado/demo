@@ -1,3 +1,5 @@
+import { DecMarkdownsMeshQaModule } from './../dec-markdowns-mesh-qa/dec-markdowns-mesh-qa.module';
+import { DecMeshQaModule } from './../dec-mesh-qa/dec-mesh-qa.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DecZoomMarksGalleryComponent } from './dec-zoom-marks-gallery.component';
@@ -20,7 +22,9 @@ import { DecMarkdownsZoomAreaModule } from './../dec-markdowns-zoom-area/dec-mar
     DecMarkdownsCommentModule,
     DecIconModule,
     FlexLayoutModule,
-    DecMarkdownsZoomAreaModule
+    DecMarkdownsZoomAreaModule,
+    DecMeshQaModule,
+    DecMarkdownsMeshQaModule
   ],
   declarations: [DecZoomMarksGalleryComponent],
   exports: [DecZoomMarksGalleryComponent]

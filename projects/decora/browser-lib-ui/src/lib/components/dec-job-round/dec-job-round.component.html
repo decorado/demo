@@ -3,6 +3,7 @@
   <dec-grid gap="0">
     <dec-grid-row>
       <dec-grid-column span="6">
+        <!--REFERENCE-->
         <div class="reference-header" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="32px">
           <mat-button-toggle-group (change)="setView($event)" value="reference" *ngIf="['MODELING_FIX', 'COLOR'].includes(jobType)  || roundNumber > 1">
             <mat-button-toggle value="reference">{{ 'label.reference-images' | translate }}</mat-button-toggle>
@@ -17,8 +18,10 @@
             <mat-button-toggle value="round4" *ngIf="roundNumber > 4">Round 4</mat-button-toggle>
           </mat-button-toggle-group>
         </div>
+
         <dec-zoom-marks-gallery *ngIf="markedReference" [isProfessional]="isProfessional" (openZoomArea)="openEditZoomArea($event, true)"
-          [maxFile]="referenceMax" #referenceGallery [markedObjs]="markedReference" [showTags]="activeTab !== 'reference'">
+          [maxFile]="referenceMax" #referenceGallery [markedObjs]="markedReference" [showTags]="activeTab !== 'reference'"
+          [glb]="glbReference" [glbReadonly]="true" [qualityAssurance]="qualityAssuranceReference">
         </dec-zoom-marks-gallery>
 
         <div class="measures-container">
@@ -26,6 +29,7 @@
         </div>
       </dec-grid-column>
 
+      <!--RENDER-->
       <dec-grid-column span="6">
 
         <div class="render-header" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="32px">
@@ -33,32 +37,21 @@
             <dec-icon class="click" font="mat">flash_on</dec-icon>Render
           </h3>
           <span class="click" (click)="openZoomArea()" title="Ctrl + Shift">
-            <span *ngIf="qaMode">
+            <span *ngIf="qaMode && !renderGallery.meshQaSelected">
               <button mat-stroked-button>Open zoom area</button>
             </span>
           </span>
         </div>
 
-        <div *ngIf="(round.renderStatus !== 'RENDER_DONE' || 
-                    (round.renderStatus === 'RENDER_DONE' && round.status === 'RENDER_DONE' && !isProfessional)); 
-                    else renderGalleryDone">
+        <div *ngIf="round.renderStatus !== 'RENDER_DONE'">
           <dec-render-not-available [renderStatus]="round.renderStatus" [maxFileUrl]="round?.max ? round?.max.fileUrl : ''"></dec-render-not-available>
         </div>
 
-        <ng-template #renderGalleryDone>
-          <dec-zoom-marks-gallery [isProfessional]="isProfessional" 
-            (deleteZoomArea)="deleteZoomAreaByParentId($event)"
-            [reviewers]="reviewers" 
-            #renderGallery 
-            *ngIf="renderImages"
-            [showTags]="showTags" 
-            (openZoomArea)="openEditZoomArea($event)" 
-            [markedObjs]="round?.qualityAssurance?.renders"
-            [maxFile]="round?.max?.fileUrl"
-            [qaModeActive]="qaMode" 
-            [jobType]="jobType">
-          </dec-zoom-marks-gallery>
-        </ng-template>
+        <dec-zoom-marks-gallery *ngIf="round.renderStatus === 'RENDER_DONE' && renderImages" [isProfessional]="isProfessional" (deleteZoomArea)="deleteZoomAreaByParentId($event)"
+          [reviewers]="reviewers" #renderGallery [showTags]="showTags" (openZoomArea)="openEditZoomArea($event)"
+          [markedObjs]="round?.qualityAssurance?.renders" [qualityAssurance]="round?.qualityAssurance" [maxFile]="round?.max?.fileUrl"
+          [qaModeActive]="qaMode" [jobType]="jobType" [glb]="round?.glb">
+        </dec-zoom-marks-gallery>
 
       </dec-grid-column>
 

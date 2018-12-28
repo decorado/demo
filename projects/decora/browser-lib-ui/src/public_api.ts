@@ -27,6 +27,9 @@ export * from './lib/components/autocomplete-role/autocomplete-role.module';
 // AUTOCOMPLETE SQUADS
 export * from './lib/components/autocomplete-squads/autocomplete-squads.component';
 export * from './lib/components/autocomplete-squads/autocomplete-squads.module';
+// AUTOCOMPLETE STUDIO
+export * from './lib/components/autocomplete-studio/autocomplete-studio.component';
+export * from './lib/components/autocomplete-studio/autocomplete-studio.module';
 // AUTOCOMPLETE PRODUCT
 export * from './lib/components/autocomplete-product/autocomplete-product.component';
 export * from './lib/components/autocomplete-product/autocomplete-product.module';
@@ -211,6 +214,9 @@ export * from './lib/components/dec-card-similar-product/dec-card-similar-produc
 // CARD-SIMILAR-PRODUCT
 export * from './lib/components/dec-product-similar-models/dec-product-similar-models.component';
 export * from './lib/components/dec-product-similar-models/dec-product-similar-models.module';
+// CARD-SIMILAR-PRODUCT
+export * from './lib/components/dec-mesh-qa/dec-mesh-qa.component';
+export * from './lib/components/dec-mesh-qa/dec-mesh-qa.module';
 
 /*********************************************************
 *

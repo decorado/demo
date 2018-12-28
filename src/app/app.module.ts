@@ -3,10 +3,20 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { DecApiModule, DecAppInitializer, DecGuardModule, DecSnackBarModule, DecConfigurationModule, DecConfigurationService, DecApiService, DecLanguageModule } from '@projects/decora/browser-lib-ui/src/public_api';
+import {
+  DecApiModule,
+  DecAppInitializer,
+  DecGuardModule,
+  DecSnackBarModule,
+  DecConfigurationModule,
+  DecConfigurationService,
+  DecApiService,
+  DecLanguageModule,
+} from '@projects/decora/browser-lib-ui/src/public_api';
 import { DecoraTranslateModule } from '@app/shared/services/decora-translate/decora-translate.module';
 import { environment } from '@env/environment';
-import {GestureConfig} from '@angular/material';
+import { GestureConfig } from '@angular/material';
+import { DecoraFbxQaModule } from './pages/demo/component/decora-fbx-qa/decora-fbx-qa.module';
 
 @NgModule({
   declarations: [
@@ -26,6 +36,7 @@ import {GestureConfig} from '@angular/material';
     DecoraTranslateModule,
     DecSnackBarModule,
     DecGuardModule,
+    DecoraFbxQaModule,
   ],
   bootstrap: [AppComponent]
 })

@@ -32,7 +32,7 @@ export class DecMarksComponent implements AfterViewChecked {
 
   @Input() parentId = 1;
 
-  @Input() comentIndex;
+  @Input() commentIndex;
 
   @Input() jobType;
 
@@ -152,6 +152,16 @@ export class DecMarksComponent implements AfterViewChecked {
     this.marker.tags.push(comment);
   }
 
+  private createElement(comment): void {
+    switch (comment.coordinates.length) {
+      case 2:
+        this.createPointTag(comment.coordinates, comment.reference);
+        break;
+      case 4:
+        this.createSquareTag(comment.coordinates, comment.reference);
+    }
+  }
+
   private setupMouseEvents(): void {
     const mouseup = fromEvent(this.marksWrapperEl, 'mouseup');
     mouseup.subscribe((event: any) => {
@@ -175,16 +185,18 @@ export class DecMarksComponent implements AfterViewChecked {
         const x2 = Math.round(((event.offsetX / this.marksWrapperEl.offsetHeight) * 100) * 100) / 100;
         const y2 = Math.round(((event.offsetY / this.marksWrapperEl.offsetWidth) * 100) * 100) / 100;
         const index = this.marker.tags.length + 1;
+        this.unlinkTag();
         if (this.mouseMoved) {
           this.enablePointEvents(this.marksWrapperEl.querySelectorAll('.point-tag'));
           this.setMouseMoved(false);
           if (this.noComments) {
+            const commentTagID = this.formatTagId();
             const comment = new Tag({
               coordinates: [x, y, x2, y2],
-              reference: this.noComments ? this.formatTagId() : index
+              reference: this.noComments ? commentTagID : index
             });
             this.addInCommentsArray(comment);
-            this.createSquareTag([x, y, x2, y2], comment.reference);
+            this.createElement(comment);
             this.clearSquare();
             return;
           }
@@ -200,19 +212,20 @@ export class DecMarksComponent implements AfterViewChecked {
                 reference: index
               });
               this.addInCommentsArray(comment);
-              this.createSquareTag([x, y, x2, y2], comment.reference);
+              this.createElement(comment);
               this.clearSquare();
             }
           });
         } else {
           if (!target.classList.contains('point-tag') && !target.classList.contains('link-button')) {
             if (this.noComments) {
+              const commentTagID = this.formatTagId();
               const comment = new Tag({
                 coordinates: [x, y],
-                reference: this.noComments ? this.formatTagId() : index
+                reference: this.noComments ? commentTagID : index
               });
               this.addInCommentsArray(comment);
-              this.createPointTag([x, y], comment.reference);
+              this.createElement(comment);
               return;
             }
 
@@ -227,7 +240,7 @@ export class DecMarksComponent implements AfterViewChecked {
                   reference: index
                 });
                 this.addInCommentsArray(comment);
-                this.createPointTag([x, y], comment.reference);
+                this.createElement(comment);
               }
             });
           }
@@ -271,7 +284,7 @@ export class DecMarksComponent implements AfterViewChecked {
   }
 
   private formatTagId() {
-    return `${this.parentId}.${this.comentIndex}`;
+    return `${this.parentId}.${this.commentIndex}`;
   }
 
   private setCanvasSize(size: number): void {
@@ -310,6 +323,20 @@ export class DecMarksComponent implements AfterViewChecked {
     });
   }
 
+  private createSquareTag(coordinates: number[], index: number): void {
+    const [x, y, x2, y2] = coordinates;
+    const square = this.renderer.createElement('div');
+    square.className = 'square-tag';
+    this.configureNoComments(square);
+    square.style.width = `${Math.abs(x - x2)}%`;
+    square.style.height = `${Math.abs(y - y2)}%`;
+    square.style.top = `${y2 > y ? y : y2}%`;
+    square.style.left = `${x2 > x ? x : x2}%`;
+    const point = this.createPointTag([0, 0], index, x);
+    square.appendChild(point);
+    this.marksWrapperEl.appendChild(square);
+  }
+
   private createPointTag(coordinates: number[], index: number, parentX?: number): HTMLDivElement {
     const [x, y] = coordinates;
     const tag = this.renderer.createElement('div');
@@ -329,7 +356,6 @@ export class DecMarksComponent implements AfterViewChecked {
       }
       tag.appendChild(link);
       const comment = this.marker.tags.find(c => c.reference === index);
-      this.linkTag(comment);
       tag.addEventListener('click', (event: MouseEvent) => {
         const target = event.target as HTMLDivElement;
         if (target.classList.contains('link-button')) {
@@ -352,8 +378,12 @@ export class DecMarksComponent implements AfterViewChecked {
     return tag;
   }
 
-  linkTag(comment) {
+  private linkTag(comment) {
     this.link.emit(comment);
+  }
+
+  private unlinkTag() {
+    this.link.emit(null);
   }
 
   private clickEventPointTag(comment: Tag) {
@@ -368,20 +398,6 @@ export class DecMarksComponent implements AfterViewChecked {
       this.marker.tags.splice(this.marker.tags.indexOf(tag), 1);
       this.drawMarks();
     }
-  }
-
-  private createSquareTag(coordinates: number[], index: number): void {
-    const [x, y, x2, y2] = coordinates;
-    const square = this.renderer.createElement('div');
-    square.className = 'square-tag';
-    this.configureNoComments(square);
-    square.style.width = `${Math.abs(x - x2)}%`;
-    square.style.height = `${Math.abs(y - y2)}%`;
-    square.style.top = `${y2 > y ? y : y2}%`;
-    square.style.left = `${x2 > x ? x : x2}%`;
-    const point = this.createPointTag([0, 0], index, x);
-    square.appendChild(point);
-    this.marksWrapperEl.appendChild(square);
   }
 
   private clearSquare(): void {
@@ -411,13 +427,8 @@ export class DecMarksComponent implements AfterViewChecked {
     this.cleanMarks();
     if (this.marker.tags && this.marker.tags.length > 0) {
       this.decRenderCommentService.getRenderDescriptionsByCode(this.marker.tags);
-      this.marker.tags.forEach((comment: Tag) => {
-        if (comment.coordinates.length > 2) {
-          this.createSquareTag(comment.coordinates, comment.reference);
-        } else {
-          this.createPointTag(comment.coordinates, comment.reference);
-        }
-      });
+      for (let comment of this.marker.tags)
+        this.createElement(comment);
     }
   }
 

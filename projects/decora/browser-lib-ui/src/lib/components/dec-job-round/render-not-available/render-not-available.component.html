@@ -8,27 +8,38 @@
       <span class="title">
         {{ 'module.professional.job.info.model-not-send-title-2' | translate }}
       </span>
-      <br>
-      <br>
+      <br><br>
       <span class="description">
         {{ 'module.professional.job.info.model-not-send-message' | translate }}
       </span>
     </div>
+
+    <div *ngIf="!isProfessional">
+      <span class="title">
+        {{ 'module.qa.info.render-waiting-title' | translate }}
+      </span>
+      <br><br>
+      <span class="description">
+        {{ 'module.qa.info.render-waiting-description' | translate }}
+      </span>
+    </div>
+
   </div>
 
   <div *ngIf="renderStatus === 'RENDER_DONE'">
     <div *ngIf="!isProfessional">
-      <span class="title">No model submitted</span>
-      <br>
-      <br>
+      <span class="title">
+        {{ 'module.decora.qa.info.render-waiting-title' }}
+      </span>
+      <br><br>
       <span class="description">
-        The professional has not yet sent this model through Decora App.
+        {{ 'module.decora.qa.info.render-waiting-description' }}
       </span>
     </div>
   </div>
 
 
-  <div *ngIf="renderStatus === 'RENDERING'">
+  <div *ngIf="renderStatus === 'RENDERING' || renderStatus === 'QA_RENDERING'">
     <div *ngIf="isProfessional">
       <span class="title">
         {{ 'module.professional.job.info.model-rendering-title' | translate }}
@@ -40,11 +51,12 @@
     </div>
 
     <div *ngIf="!isProfessional">
-      <span class="title">The model is rendering.</span>
-      <br>
-      <br>
+      <span class="title">
+        {{ 'module.qa.job.info.model-rendering-title' | translate }}
+      </span>
+      <br><br>
       <span class="description">
-        The model was submitted by the professional and is rendering.
+        {{ 'module.qa.job.info.model-rendering-message' | translate }}
       </span>
     </div>
   </div>

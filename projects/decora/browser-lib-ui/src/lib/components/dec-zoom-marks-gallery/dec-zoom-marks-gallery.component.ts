@@ -3,6 +3,7 @@ import { Component, Input, ViewChild, Output, EventEmitter } from '@angular/core
 import { NguCarouselStore } from '@ngu/carousel';
 import { CarouselZoomConfig } from './../gallery/carousel-config';
 import { DecZoomMarksComponent } from './../dec-zoom-marks/dec-zoom-marks.component';
+import { DecMeshQaComponent } from '../dec-mesh-qa/dec-mesh-qa.component';
 
 @Component({
   selector: 'dec-zoom-marks-gallery',
@@ -12,6 +13,15 @@ import { DecZoomMarksComponent } from './../dec-zoom-marks/dec-zoom-marks.compon
 export class DecZoomMarksGalleryComponent {
 
   carouselConfig = CarouselZoomConfig;
+
+  private _qualityAssurance: any;
+  public get qualityAssurance(): any {
+    return this._qualityAssurance;
+  }
+  @Input()
+  public set qualityAssurance(v: any) {
+    this._qualityAssurance = v;
+  }
 
   @Input() jobType;
 
@@ -71,6 +81,8 @@ export class DecZoomMarksGalleryComponent {
 
   @ViewChild('carouselGallery') carouselGallery;
 
+  @ViewChild(DecMeshQaComponent) meshQa: DecMeshQaComponent;
+
   @Input() qaModeActive: boolean;
 
   @ViewChild(DecZoomMarksComponent) zoomMarks: DecZoomMarksComponent;
@@ -86,11 +98,39 @@ export class DecZoomMarksGalleryComponent {
 
   isLast: boolean;
 
+  public imageMeshUrl = `/d/assets/img/mesh-qa.png`;
+
+  private _glb: any;
+  public get glb(): any {
+    return this._glb;
+  }
+  @Input()
+  public set glb(v: any) {
+    if (this._glb !== v) {
+      this._glb = v;
+
+      if (!this._glb) {
+        this.onSelectImage(null, null, 0);
+      }
+    }
+  }
+
+  @Input()
+  public glbReadonly: boolean;
+
+  public meshQaSelected = false;
+
+  updateTagStructure(tagStructure) {
+    this.qualityAssurance.mesh = { ...tagStructure };
+  }
+
   constructor(private decRenderCommentService: DecRenderCommentService) { }
 
   private bindRenderDescriptions(): void {
     this.markedObjs.forEach(item => {
-      this.decRenderCommentService.getRenderDescriptionsByCode(item.tags);
+      if (item.tags) {
+        this.decRenderCommentService.getRenderDescriptionsByCode(item.tags);
+      }
 
       if (item.zoomAreas) {
         item.zoomAreas.forEach(zoomArea => {
@@ -148,6 +188,12 @@ export class DecZoomMarksGalleryComponent {
   onSelectImage = ($event, sysFile, i) => {
     this.markedObj = this.markedObjs[i];
     this.imageIndex = i;
+    this.meshQaSelected = false;
+  }
+
+  onSelectMesh = () => {
+    this.markedObj = {};
+    this.meshQaSelected = true;
   }
 
   setPrevNextCheckers(first: boolean, last: boolean) {

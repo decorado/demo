@@ -1,0 +1,12 @@
+<dec-autocomplete
+[endpoint]="endpoint"
+[labelAttr]="labelAttr"
+[valueAttr]="valueAttr"
+[disabled]="disabled"
+[required]="required"
+[name]="name"
+[placeholder]="placeholder"
+(blur)="blur.emit($event)"
+(optionSelected)="optionSelected.emit($event)"
+(enterButton)="enterButton.emit($event)"
+[(ngModel)]="value"></dec-autocomplete>

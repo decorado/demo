@@ -53,16 +53,12 @@ export class DecMarkdownsCommentComponent {
 
   getClass(comment) {
     let cssClass = 'tags-item';
-
-    if (comment.coordinates.length === 2) {
-      cssClass += ' type-point';
-    } else {
+    
+    if (comment.coordinates.length)
       cssClass += ' type-square';
-    }
 
-    if (comment.requestByClient) {
+    if (comment.requestByClient)
       cssClass += ' client';
-    }
 
     return cssClass;
   }
