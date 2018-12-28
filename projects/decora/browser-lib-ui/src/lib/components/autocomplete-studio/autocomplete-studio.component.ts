@@ -20,7 +20,7 @@ const AUTOCOMPLETE_ROLES_CONTROL_VALUE_ACCESSOR: any = {
 })
 export class AutocompleteStudioComponent implements ControlValueAccessor {
 
-  endpoint = '/legacy/product/modeling/studio';
+  endpoint = '/legacy/product/modeling/studio/search';
   valueAttr = 'id';
   labelAttr = 'name';
 
