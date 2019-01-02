@@ -29,6 +29,9 @@ Reset the input and reopen the selection if defined to;
 
 ### Input
 
+#### `extractRowsFn`: (res) => res
+Function used to extract the list from the API response. The default is to return the entire response but with this function you can extract the list from the response before populate the autocomplete.
+
 #### `customFetchFunction: CustomFetchFunction`
 Function that returns an `Observable<any[]>` to be used as options. This functions enables the usage of custom methods that are not covered by DecoraApi;
 

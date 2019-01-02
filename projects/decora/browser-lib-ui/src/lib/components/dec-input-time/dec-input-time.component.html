@@ -1,0 +1,11 @@
+<form *ngIf="timeForm" [formGroup]="timeForm">
+
+  <mat-form-field>
+
+    <input matInput [placeholder]="placeholder" formControlName="time" [name]="name" type="text">
+
+    <mat-icon matSuffix>alarm</mat-icon>
+
+  </mat-form-field>
+
+</form>

@@ -4,12 +4,13 @@
 Text without decoration
 
 ```html
-  <a href="#">A</a>
+  <a href="#" color="primary">A</a>
 ```
 
 ```css
   a {
     text-decoration: none;
+    color: inherit;
   }
 ```
 

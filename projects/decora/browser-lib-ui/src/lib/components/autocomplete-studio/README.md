@@ -6,6 +6,7 @@
 
 ```html
   <dec-autocomplete-studio
-  (selected)="optionSelected($event)">
+      formControlName="studio"
+      (optionSelected)="optionSelected($event)">
   </dec-autocomplete-studio>
 ```
