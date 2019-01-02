@@ -29,6 +29,9 @@ export * from './lib/components/autocomplete-role/autocomplete-role.module';
 // AUTOCOMPLETE SQUADS
 export * from './lib/components/autocomplete-squads/autocomplete-squads.component';
 export * from './lib/components/autocomplete-squads/autocomplete-squads.module';
+// AUTOCOMPLETE STUDIO
+export * from './lib/components/autocomplete-studio/autocomplete-studio.component';
+export * from './lib/components/autocomplete-studio/autocomplete-studio.module';
 // AUTOCOMPLETE PRODUCT
 export * from './lib/components/autocomplete-product/autocomplete-product.component';
 export * from './lib/components/autocomplete-product/autocomplete-product.module';

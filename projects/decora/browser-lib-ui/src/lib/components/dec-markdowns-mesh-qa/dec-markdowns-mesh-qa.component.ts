@@ -1,4 +1,6 @@
 import { Component, Input } from '@angular/core';
+import { objectKeysToCamelCase } from '../../utilities/object';
+import { sortBy } from '../../utilities/array';
 
 @Component({
   selector: 'dec-markdowns-mesh-qa',
@@ -7,6 +9,8 @@ import { Component, Input } from '@angular/core';
 })
 export class DecMarkdownsMeshQaComponent {
 
+  public tags: any[] = [];
+
   private _mesh: any;
   public get mesh(): any {
     return this._mesh;
@@ -14,16 +18,13 @@ export class DecMarkdownsMeshQaComponent {
   @Input()
   public set mesh(v: any) {
     if (this._mesh !== v) {
-      this._mesh = v;
+      this._mesh = objectKeysToCamelCase(v);
 
       this.tags = [];
       this.bindTags(this._mesh);
-      this.tags = this.tags.sort(this.sortBy('Reference'));
-      this.tags = this.tags.sort(this.sortBy('reference'));
+      this.orderTags();
     }
   }
-
-  public tags: any[] = [];
 
   private bindTags(data): void {
     Object.keys(data).forEach(key => {
@@ -35,7 +36,12 @@ export class DecMarkdownsMeshQaComponent {
     });
   }
 
-  private sortBy = (key) => {
-    return (a, b) => (a[key] > b[key]) ? 1 : ((b[key] > a[key]) ? -1 : 0);
+  private orderTags() {
+    let tagsWithoutP = this.tags.filter(tag => tag.reference !== 'P');
+    tagsWithoutP = tagsWithoutP.map(tag => ({ ...tag, reference: +tag.reference })).sort(sortBy('reference'));
+
+    const tagP = this.tags.filter(tag => tag.reference === 'P');
+
+    this.tags = [...tagP, ...tagsWithoutP];
   }
 }
