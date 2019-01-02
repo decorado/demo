@@ -153,7 +153,6 @@ export class DecAutocompleteQuoteComponent implements ControlValueAccessor, Afte
     value = value === null ? undefined : value; // v7 bug. remove it when the issue is closed: https://github.com/angular/angular/issues/14988
     if (`${value}` !== `${this.value}`) { // convert to string to avoid problems comparing values
       this.value = value;
-      console.log('QUOTE VALUE 2', this.value);
     }
   }
 
