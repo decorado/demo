@@ -15,6 +15,7 @@ const routes: Routes = [
   { path: 'autocomplete-quote', loadChildren: './decora-autocomplete-quote-demo/decora-autocomplete-quote-demo.module#DecoraAutocompleteQuoteDemoModule' },
   { path: 'autocomplete-role', canActivate: [DecAuthGuard], loadChildren: './decora-autocomplete-role-demo/decora-autocomplete-role-demo.module#DecoraAutocompleteRoleDemoModule' },
   { path: 'autocomplete-squads', loadChildren: './decora-autocomplete-squads-demo/decora-autocomplete-squads-demo.module#DecoraAutocompleteSquadsDemoModule' },
+  { path: 'autocomplete-studio', loadChildren: './decora-autocomplete-studio-demo/decora-autocomplete-studio-demo.module#DecoraAutocompleteStudioDemoModule' },
   { path: 'autocomplete-tags', loadChildren: './decora-autocomplete-tags-demo/decora-autocomplete-tags-demo.module#DecoraAutocompleteTagsDemoModule' },
   { path: 'breadcrumb', loadChildren: './decora-breadcrumb-demo/decora-breadcrumb-demo.module#DecoraBreadcrumbDemoModule' },
   { path: 'carousel', loadChildren: './decora-carousel-demo/decora-carousel-demo.module#DecoraCarouselDemoModule' },
