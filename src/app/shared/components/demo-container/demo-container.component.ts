@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { DecConfigurationService } from '@projects/decora/browser-lib-ui/src/public_api';
 
 export const TABS = {
   overview: 0,
@@ -23,9 +22,7 @@ export class DemoContainerComponent implements OnInit {
 
   @Input() activeTab;
 
-  constructor(private decConfig: DecConfigurationService) {
-    this.baseHref = this.decConfig.config.host;
-  }
+  constructor() {}
 
   ngOnInit() {}
 
