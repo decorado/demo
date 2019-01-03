@@ -1,0 +1,194 @@
+###########
+# Aliases #
+###########
+
+aliases:
+
+  # Cache Management
+
+  - &run-checksum
+    name: Generate checksum
+    command: |
+      shasum package.json | awk '{ print $1 }' > checksum.sha
+      sort checksum.sha -o checksum.sha
+
+  - &restore-node-cache
+    keys:
+      - v{{ .Environment.CIRCLE_CACHE_VERSION }}-dependencies-{{ checksum "checksum.sha" }}
+      # fallback to using the latest cache if no exact match is found
+      - v{{ .Environment.CIRCLE_CACHE_VERSION }}-dependencies
+
+  - &save-node-cache
+    key: v{{ .Environment.CIRCLE_CACHE_VERSION }}-dependencies-{{ checksum "checksum.sha" }}
+    paths:
+      - ~/.npm
+
+  # Dependency Management
+
+  - &download-node-dependencies
+    name: Download Node dependencies
+    command: npm ci
+
+  # Build & Test Definitions
+
+  - &run-unit-test
+    name: Running unit tests
+    command: |
+      echo "TODO configure to run tests"
+      npm run build.lib
+
+  - &run-build-release-and-publish
+    name: Build, release and publish
+    command: |
+      sudo npm install -g semantic-release@16.0.0-beta.13 @semantic-release/git@7.1.0-beta.2 @semantic-release/exec@3.4.0-beta.1 @semantic-release/npm@5.2.0-beta.5
+      npx semantic-release
+
+  #
+
+  - &add-ssh-known-hosts
+    name: Adding ssh known hosts
+    command:  |
+      mkdir -p ~/.ssh
+      ssh-keyscan bitbucket.org >> ~/.ssh/known_hosts
+
+  - &setup-git
+    name: Setup Git
+    command:  |
+      git config --global user.email "circleci@creativedrive.com"
+      git config --global user.name "CircleCI"
+      git push --set-upstream origin ${CIRCLE_BRANCH}
+
+  # Branch Filtering
+
+  - &filter-only-feature-and-bugfix
+    branches:
+      only:
+        - /^feature.*/
+        - /^bugfix.*/
+
+  - &filter-only-master-next-beta-and-alpha
+    branches:
+      only:
+        - master
+        - next
+        - beta
+        - alpha
+
+defaults: &defaults
+  working_directory: ~/application
+
+########
+# Jobs #
+########
+
+version: 2
+jobs:
+
+  checkout_code:
+    <<: *defaults
+    docker:
+      - image: circleci/node:10
+    environment:
+      TERM: dumb
+    steps:
+      - checkout
+
+      - run: *add-ssh-known-hosts
+
+      # Using for allow access to bitbucket.org and push files to maven repository
+      - add_ssh_keys:
+          fingerprints:
+            - "7f:a2:9d:ac:fc:9c:e8:e2:36:e7:7c:b9:de:f6:5e:7a"
+
+      - run: *run-checksum
+
+      - restore-cache: *restore-node-cache
+
+      - run: *download-node-dependencies
+
+      - save-cache: *save-node-cache
+
+      # Remove node_modules before save workspace
+      - run:
+          name: Remove node_modules
+          command: |
+            rm -rf node_modules
+
+      - persist_to_workspace:
+          root: ~/application
+          paths: ./
+
+  test:
+    <<: *defaults
+    docker:
+      - image: circleci/node:10-browsers
+    environment:
+      TERM: dumb
+    steps:
+      - attach_workspace:
+          at: ~/application
+
+      - restore-cache: *restore-node-cache
+
+      - run: *download-node-dependencies
+
+      - run: *run-unit-test
+
+  release_and_publish:
+    <<: *defaults
+    docker:
+      - image: circleci/node:10-browsers
+    environment:
+      TERM: dumb
+    steps:
+      - attach_workspace:
+          at: ~/application
+
+      - restore-cache: *restore-node-cache
+
+      - run: *download-node-dependencies
+
+      - run: *add-ssh-known-hosts
+
+      # Using for allow access to bitbucket.org and push files to maven repository
+      - add_ssh_keys:
+          fingerprints:
+            - "7f:a2:9d:ac:fc:9c:e8:e2:36:e7:7c:b9:de:f6:5e:7a"
+
+      - run: *setup-git
+
+      - run: *run-build-release-and-publish
+
+#############
+# Workflows #
+#############
+
+workflows:
+  version: 2
+
+  test:
+    jobs:
+      - checkout_code:
+          context: global
+          filters: *filter-only-feature-and-bugfix
+      - test:
+          context: global
+          requires:
+            - checkout_code
+          filters: *filter-only-feature-and-bugfix
+
+  test_release_and_publish:
+    jobs:
+      - checkout_code:
+          context: global
+          filters: *filter-only-master-next-beta-and-alpha
+      - test:
+          context: global
+          requires:
+            - checkout_code
+          filters: *filter-only-master-next-beta-and-alpha
+      - release_and_publish:
+          context: global
+          requires:
+            - test
+          filters: *filter-only-master-next-beta-and-alpha

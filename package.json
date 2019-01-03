@@ -8,7 +8,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build.lib": "ng build @decora/browser-lib-ui && npm run copy-bootstrap && npm run copy-themes && npm run copy-lib-readmes && npm run copy-bootstrap-readmes",
+    "build.lib": "ng build @decora/browser-lib-ui && npm run copy-bootstrap && npm run copy-themes && npm run copy-lib-readmes && npm run copy-bootstrap-readmes && npm run copy-npmrc",
+    "copy-npmrc": "cpx \".npmrc\" \"./dist/decora/browser-lib-ui\"",
     "copy-bootstrap": "cpx \"./projects/decora/browser-lib-ui/bootstrap/**/*\" \"./dist/decora/browser-lib-ui/bootstrap/\"",
     "copy-themes": "cpx \"./projects/decora/browser-lib-ui/src/lib/**/*theming.scss\" \"./dist/decora/browser-lib-ui/bootstrap/theming/\"",
     "copy-lib-readmes": "cpx \"./projects/decora/browser-lib-ui/src/lib/**/*.md\" \"./dist/decora/browser-lib-ui/lib/\"",
@@ -17,7 +18,6 @@
     "start.mock": "concurrently --kill-others \"npm run mock.server\" \"npm run start\"",
     "start.mock-aot": "concurrently --kill-others \"npm run mock.server\" \"ng s --aot\""
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "^7.0.2",
     "@angular/cdk": "^7.0.0-rc.2",
