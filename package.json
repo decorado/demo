@@ -16,9 +16,8 @@
     "mock.server": "nodemon ./../decora-mock-server/mock-server.js",
     "start.mock": "concurrently --kill-others \"npm run mock.server\" \"npm run start\"",
     "start.mock-aot": "concurrently --kill-others \"npm run mock.server\" \"ng s --aot\"",
-    "build.gh": "npm run build.lib && ng build --prod --base-href=https://decorado.github.io --output-path=docs && npm run create-404 && npm run copy-cname",
-    "create-404": "cp docs/index.html docs/404.html",
-    "copy-cname": "cp CNAME docs/CNAME"
+    "build.gh": "npm run build.lib && ng build --prod --base-href=https://decorado.github.io --output-path=docs && npm run create-404",
+    "create-404": "cp docs/index.html docs/404.html"
   },
   "private": true,
   "dependencies": {
