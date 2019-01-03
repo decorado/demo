@@ -98,14 +98,21 @@ export class DecTabsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   shouldTabBeDisplayed(tab) {
-    const isSelected = this._activeTabObject === tab;
+
+    const isSelected = this.activeTab === tab.name;
+
     const wasAlreadyOpenned = this.activatedTabs[tab.name];
+
     return isSelected || (!this.destroyOnBlur && wasAlreadyOpenned);
+
   }
 
   onChangeTab($event) {
+
     const activeTabObject = this.tabs.toArray()[$event.index];
-    this.activeTab = activeTabObject.name;
+
+    this.selectTab(activeTabObject.name);
+
   }
 
   parseTotal(total) {
@@ -169,9 +176,9 @@ export class DecTabsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private selectTab = (tabName) => {
+    this.activeTab = tabName;
+    this.activatedTabs[tabName] = true;
     if (this.tabs) {
-      this.activeTab = tabName;
-      this.activatedTabs[tabName] = true;
       this._activeTabObject = this.tabs.toArray().filter(tab => tab.name === tabName)[0];
       this._activeTabIndex = this.tabs.toArray().indexOf(this._activeTabObject);
       this.activeTabChange.emit(tabName);

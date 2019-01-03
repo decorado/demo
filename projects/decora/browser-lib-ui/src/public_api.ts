@@ -6,6 +6,8 @@
 // AUTOCOMPLETE
 export * from './lib/components/autocomplete/autocomplete.component';
 export * from './lib/components/autocomplete/autocomplete.module';
+export * from './lib/components/autocomplete/dec-autocomplete-option-template/dec-autocomplete-option-template.component';
+export * from './lib/components/autocomplete/dec-autocomplete-option-template/dec-autocomplete-option-template.module';
 // AUTOCOMPLETE ACCOUNT
 export * from './lib/components/autocomplete-account/autocomplete-account.component';
 export * from './lib/components/autocomplete-account/autocomplete-account.module';
@@ -27,9 +29,15 @@ export * from './lib/components/autocomplete-role/autocomplete-role.module';
 // AUTOCOMPLETE SQUADS
 export * from './lib/components/autocomplete-squads/autocomplete-squads.component';
 export * from './lib/components/autocomplete-squads/autocomplete-squads.module';
+// AUTOCOMPLETE STUDIO
+export * from './lib/components/autocomplete-studio/autocomplete-studio.component';
+export * from './lib/components/autocomplete-studio/autocomplete-studio.module';
 // AUTOCOMPLETE PRODUCT
 export * from './lib/components/autocomplete-product/autocomplete-product.component';
 export * from './lib/components/autocomplete-product/autocomplete-product.module';
+// AUTOCOMPLETE PRODUCT
+export * from './lib/components/autocomplete-product-category/autocomplete-product-category.component';
+export * from './lib/components/autocomplete-product-category/autocomplete-product-category.module';
 // AUTOCOMPLETE PROJECT
 export * from './lib/components/autocomplete-project/autocomplete-project.component';
 export * from './lib/components/autocomplete-project/autocomplete-project.module';
@@ -74,6 +82,9 @@ export * from './lib/components/dec-grid/dec-grid-row/dec-grid-row.component';
 // ICON
 export * from './lib/components/dec-icon/dec-icon.module';
 export * from './lib/components/dec-icon/dec-icon.component';
+// INPUT TIME
+export * from './lib/components/dec-input-time/dec-input-time.module';
+export * from './lib/components/dec-input-time/dec-input-time.component';
 // IMAGE ZOOM
 export * from './lib/components/dec-image-zoom/dec-image-zoom.module';
 export * from './lib/components/dec-image-zoom/dec-image-zoom.component';
@@ -242,6 +253,9 @@ export * from './lib/guard/auth-guard.service';
 export * from './lib/pipes/category/category-pipe.module';
 export * from './lib/pipes/category/category-pipe.service';
 
+// SAFE
+export * from './lib/pipes/safe/safe.module';
+
 /*********************************************************
 *
 * SERVICES
@@ -249,11 +263,17 @@ export * from './lib/pipes/category/category-pipe.service';
 **********************************************************/
 // DECORA INITIALIZE
 export * from './lib/services/initializer/dec-app-initializer';
-// DECORA API
+// API
 export * from './lib/services/api/decora-api.service';
 export * from './lib/services/api/decora-api.module';
 export * from './lib/services/api/decora-api.model';
-// DECORA CONFIGURATION
+// COLOR
+export * from './lib/services/color/dec-color.service';
+export * from './lib/services/color/dec-color-service.module';
+// COLOR PICKER
+export * from './lib/services/color-picker/color-picker.service';
+export * from './lib/services/color-picker/color-picker.module';
+// CONFIGURATION
 export * from './lib/services/configuration/configuration.service';
 export * from './lib/services/configuration/configuration-service.module';
 // DIALOG
@@ -265,28 +285,26 @@ export * from './lib/services/dialog/dec-dialog.service';
 export * from './lib/services/confirm-dialog/dec-confirm-dialog.component';
 export * from './lib/services/confirm-dialog/dec-confirm-dialog.module';
 export * from './lib/services/confirm-dialog/dec-confirm-dialog.service';
+// LOADER
+export * from './lib/services/loader/dec-loader.service';
+export * from './lib/services/loader/dec-loader.module';
+// LANGUAGE
+export * from './lib/services/language/dec-language.service';
+export * from './lib/services/language/dec-language.models';
+export * from './lib/services/language/dec-language.module';
+// PERMISSION GUARD
+export * from './lib/services/permission-guard/dec-permission-guard.service';
+export * from './lib/services/permission-guard/dec-permission-guard.module';
 // SNACKBAR
 export * from './lib/services/snack-bar/dec-snack-bar.service';
 export * from './lib/services/snack-bar/dec-snack-bar.module';
-// Permission guard
-export * from './lib/services/permission-guard/dec-permission-guard.service';
-export * from './lib/services/permission-guard/dec-permission-guard.module';
-// Permission guard
-export * from './lib/services/loader/dec-loader.service';
-export * from './lib/services/loader/dec-loader.module';
-// Spinner
+// SCRIPT LOADER
+export * from './lib/services/script-loader/dec-script-loader.service';
+export * from './lib/services/script-loader/dec-script-loader.module';
+// SPINNER
 export * from './lib/components/dec-spinner/dec-spinner.component';
 export * from './lib/components/dec-spinner/dec-spinner.module';
 // WEBSOCKET
 export * from './lib/services/ws-client/ws-client.service';
 export * from './lib/services/ws-client/ws-client.module';
 export * from './lib/services/ws-client/ws-client.models';
-// Script Loader
-export * from './lib/services/script-loader/dec-script-loader.service';
-export * from './lib/services/script-loader/dec-script-loader.module';
-// DEC COLOR
-export * from './lib/services/color/dec-color.service';
-export * from './lib/services/color/dec-color-service.module';
-// COLOR PICKER
-export * from './lib/services/color-picker/color-picker.service';
-export * from './lib/services/color-picker/color-picker.module';

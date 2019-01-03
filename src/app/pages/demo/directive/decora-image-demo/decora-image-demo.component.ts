@@ -17,6 +17,14 @@ export class DecoraImageDemoComponent implements OnInit {
     size: 325983,
   };
 
+  image2 = {
+    extension: 'png',
+    fileBasePath: '/2017/8/28/59a44d1ad13e7d14439b0ce8.png',
+    fileUrl: 'https://s3.amazonaws.com/decora-platform-1-nv/2017/8/28/59a44d1ad13e7d14439b0ce8.png',
+    id: '59a44d1ad13e7d14439b0ce8',
+    originalName: 'DECORA_PROP_BATH_44.png',
+  };
+
   constructor() { }
 
   ngOnInit() {

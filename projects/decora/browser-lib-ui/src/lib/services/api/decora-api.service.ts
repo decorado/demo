@@ -1,9 +1,10 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpRequest } from '@angular/common/http';
 import { Observable, throwError, BehaviorSubject, Subscription } from 'rxjs';
-import { catchError, share, tap, finalize, debounceTime } from 'rxjs/operators';
+import { catchError, share, tap, finalize, debounceTime, switchMap, map } from 'rxjs/operators';
 import { UserAuthData, LoginData, FacebookLoginData, DecFilter, SerializedDecFilter, QueryParams } from './decora-api.model';
 import { DecConfigurationService } from './../configuration/configuration.service';
+import { DecLanguageService } from './../language/dec-language.service';
 
 export type CallOptions = {
   headers?: HttpHeaders;
@@ -38,6 +39,7 @@ export class DecApiService implements OnDestroy {
   constructor(
     private http: HttpClient,
     private decConfig: DecConfigurationService,
+    private decLanguage: DecLanguageService
   ) {
     this.subscribeToUser();
     this.subscribeToLoading();
@@ -168,7 +170,7 @@ export class DecApiService implements OnDestroy {
     return this.tryToLoadSignedInUser();
   }
 
-  getResourceUrl(path) {
+  getResourceUrl(path = '') {
 
     const basePath = this.decConfig.config.useMockApi ? this.decConfig.config.mockApiHost : this.decConfig.config.api;
 
@@ -326,13 +328,30 @@ export class DecApiService implements OnDestroy {
     const options = { headers: this.newHeaderWithSessionToken() };
     return this.getMethod<UserAuthData>(endpoint, {}, options)
       .pipe(
-        tap((res) => {
-          this.extratSessionToken(res),
-            this.user$.next(res);
-          return res;
+        tap(this.extratSessionToken),
+        switchMap(this.fetchUserProfile),
+      );
+  }
+
+  private fetchUserProfile = (account) => {
+    const endpoint = this.getResourceUrl(`accounts/${account.id}/profile`);
+    const options = { headers: this.newHeaderWithSessionToken() };
+    return this.getMethod<UserAuthData>(endpoint, {}, options)
+      .pipe(
+        map(profile => {
+          const user = {
+            ...account,
+            ... profile,
+          };
+          return user;
+        }),
+        tap(user => {
+          this.user$.next(user);
         })
       );
   }
+
+  //
 
   private transformDecFilterInParams(filter: DecFilter): SerializedDecFilter {
 
@@ -440,7 +459,9 @@ export class DecApiService implements OnDestroy {
   }
 
   private tryToLoadSignedInUser() {
+
     const call = this.fetchCurrentLoggedUser().toPromise();
+
     call.then(account => {
       console.log(`DecoraApiService:: Initialized as ${account.name}`);
     }, err => {
@@ -465,13 +486,15 @@ export class DecApiService implements OnDestroy {
     return headers;
   }
 
-  private extratSessionToken(res) {
-    this.sessionToken = res && res.session ? res.session.id : undefined;
-    return res;
+  private extratSessionToken = (account) => {
+    this.sessionToken = account && account.session ? account.session.id : undefined;
   }
 
   private subscribeToUser() {
     this.userSubscripion = this.user$.subscribe(user => {
+      if (user) {
+        this.decLanguage.setLanguage(user.i18n);
+      }
       this.user = user;
     });
   }

@@ -30,7 +30,7 @@ export class DecUploadComponent implements ControlValueAccessor {
 
   @Input() disabled: boolean;
 
-  @Input() endpoint: string;
+  @Input() endpoint = UPLOAD_ENDPOINT;
 
   @Input() multiple: boolean;
 

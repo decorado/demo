@@ -1,0 +1,35 @@
+<app-demo-container readmeSrc="/assets/docs/browser-lib-ui/components/autocomplete-product-category/README.md">
+
+  Category Selected: {{ categoryId }}<br>
+
+  <dec-autocomplete-product-category
+  [(ngModel)]="categoryId"
+  (selected)="optionSelected($event)">
+  </dec-autocomplete-product-category>
+
+  <button type="button" mat-stroked-button (click)="categoryId = undefined">Clear</button>
+
+  <h2>Single</h2>
+
+  Category Selected: {{ category }}
+
+  <dec-autocomplete-product-category
+  [(ngModel)]="category"
+  (selected)="optionSelected($event)">
+  </dec-autocomplete-product-category>
+
+  <button type="button" mat-stroked-button (click)="category = undefined">Clear</button>
+
+  <h2>Multi</h2>
+
+  Categories Selected: {{ categories | json }}
+
+  <dec-autocomplete-product-category
+  [(ngModel)]="categories"
+  [multi]="true"
+  (selected)="optionSelected($event)">
+  </dec-autocomplete-product-category>
+
+  <button type="button" mat-stroked-button (click)="categories = undefined">Clear</button>
+
+</app-demo-container>

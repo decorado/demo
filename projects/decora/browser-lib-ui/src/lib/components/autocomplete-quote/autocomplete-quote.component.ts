@@ -169,8 +169,6 @@ export class DecAutocompleteQuoteComponent implements ControlValueAccessor, Afte
 
     let endpoint;
 
-    this.value = undefined;
-
     if (this.projectId) {
 
       endpoint = QUOTE_ENDPOINT.replace('${projectId}', this.projectId);
