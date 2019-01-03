@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { environment } from '@env/environment';
 
 export const TABS = {
   overview: 0,
@@ -25,5 +26,11 @@ export class DemoContainerComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
+
+  get readmePath() {
+
+    return `${environment.basePath}${this.readmeSrc}`;
+
+  }
 
 }
