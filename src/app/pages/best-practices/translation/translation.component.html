@@ -1,4 +1,4 @@
-<h1>How to create translation keys</h1>
+<h1>How to create and maintain translation keys</h1>
 
 Translation keys should be created using the following rules:
 
@@ -22,7 +22,7 @@ The key should have the same case as the phrase:
 Use underline to represent spaces (as there is no word that uses underline)
 
 <ul>
-  <li>Best_Regards = Best_Regards</li>
+  <li>Best_Regards = Best Regards</li>
   <li>Welcome_to_Decora = Welcome to Decora</li>
 </ul>
 
@@ -38,14 +38,24 @@ Hiphen should be use for represent hiphen only and never to represent spaces
 Regular words are not written in uppercase and than should be the keys. The only exceptions are for those keys returned by the back-end that should have a reference in the translation files.
 
 <ul>
-  <li>Best_Regards = Best_Regards</li>
-  <li>Welcome_to_Decora = Welcome to Decora</li>
+  <li>DONE = Done</li>
+  <li>WAITING_QA = Waiting qa</li>
 </ul>
 
-<h3>Button should use UPPERCASEd values</h3>
+<h3>Button should use UPPERCASED values</h3>
 
 For buttons we can use the regular version and apply the pipe/class uppercase to transform it to the uppercase version
 
 <ul>
   <li>Send_e-mail = Send e-mail would become SEND E-MAIL when used with the uppercase pipe/class</li>
 </ul>
+
+
+<h3>Always modify both files</h3>
+Always create/remove the keys in all language files to avoid differences and remove garbage.
+<br>
+It is a best practice to edit all language files even in development. This way you avoid missing some file and ensure the files have the same keys of each other.
+
+<h3>Use the Object Sort</h3>
+Always use the <a routerLink="/tools/object-sort" class="dec-color-accent">Object Sort</a> function to sort the keys to make it easy for everyone to find the needed key.
+
