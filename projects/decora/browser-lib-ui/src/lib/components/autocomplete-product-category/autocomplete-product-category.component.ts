@@ -28,7 +28,7 @@ export class DecAutocompleteProductCategoryComponent implements ControlValueAcce
 
   endpoint;
 
-  @Input() valueAttr = 'id';
+  @Input() valueAttr = 'key';
 
   @Input() leafOnly = true;
 
