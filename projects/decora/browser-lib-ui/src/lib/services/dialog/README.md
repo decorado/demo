@@ -51,6 +51,16 @@ Subscribe to `child` to get access to know when the child component is ready. Th
   dialogRef.componentInstance.childComponentInstance
 ```
 
+## Access the dialog from the child component
+You can acess the decDialog instance from the constructor.
+
+
+```javascript
+  constructor(
+    private decDialogRef: DecDialogComponent,
+  ) { }
+```
+
 ## Models
 
 ```javascript
