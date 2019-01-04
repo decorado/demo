@@ -63,6 +63,10 @@ export class DecDialogComponent implements AfterContentInit {
 
   }
 
+  close() {
+    this.dialogRef.close();
+  }
+
   private factoryTheComponent = () => {
 
     if (this.childComponentType) {

@@ -61,6 +61,20 @@ You can acess the decDialog instance from the constructor.
   ) { }
 ```
 
+## Methods
+
+### Close
+
+Closes the dialog
+
+```javascript
+  constructor(
+    private decDialogRef: DecDialogComponent,
+  ) {
+    this.decDialogRef.close();
+  }
+```
+
 ## Models
 
 ```javascript
