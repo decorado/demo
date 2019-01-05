@@ -1,0 +1,27 @@
+tagFormat: ${version}
+
+branches:
+  - master
+  - next:
+    name: next
+    prerelease: 'rc'
+  - beta:
+    name: beta
+    prerelease: 'beta'
+  - alpha:
+    name: alpha
+    prerelease: 'alpha'
+
+verifyConditions:
+  - "@semantic-release/git"
+generateNotes: []
+prepare:
+  - path: "@semantic-release/npm"
+    pkgRoot: "projects/decora/browser-lib-ui"
+  - path: "@semantic-release/exec"
+    cmd: npm run build.lib
+publish:
+  - path: "@semantic-release/npm"
+    pkgRoot: "dist/decora/browser-lib-ui"
+success: []
+fail: []
