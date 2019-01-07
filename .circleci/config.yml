@@ -60,19 +60,20 @@ aliases:
 
   # Branch Filtering
 
-  - &filter-only-feature-and-bugfix
+  - &filter-only-test-branches
     branches:
       only:
         - /^feature.*/
         - /^bugfix.*/
+        - alpha
 
-  - &filter-only-master-next-beta-and-alpha
+  - &filter-test-and-publish
     branches:
       only:
         - master
         - next
         - beta
-        - alpha
+#        - alpha
 
 defaults: &defaults
   working_directory: ~/application
@@ -170,25 +171,25 @@ workflows:
     jobs:
       - checkout_code:
           context: global
-          filters: *filter-only-feature-and-bugfix
+          filters: *filter-only-test-branches
       - test:
           context: global
           requires:
             - checkout_code
-          filters: *filter-only-feature-and-bugfix
+          filters: *filter-only-test-branches
 
   test_release_and_publish:
     jobs:
       - checkout_code:
           context: global
-          filters: *filter-only-master-next-beta-and-alpha
+          filters: *filter-test-and-publish
       - test:
           context: global
           requires:
             - checkout_code
-          filters: *filter-only-master-next-beta-and-alpha
+          filters: *filter-test-and-publish
       - release_and_publish:
           context: global
           requires:
             - test
-          filters: *filter-only-master-next-beta-and-alpha
+          filters: *filter-test-and-publish
