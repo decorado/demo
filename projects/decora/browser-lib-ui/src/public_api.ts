@@ -308,3 +308,12 @@ export * from './lib/components/dec-spinner/dec-spinner.module';
 export * from './lib/services/ws-client/ws-client.service';
 export * from './lib/services/ws-client/ws-client.module';
 export * from './lib/services/ws-client/ws-client.models';
+
+
+/*********************************************************
+*
+* HELPERS
+*
+**********************************************************/
+export * from './helpers/comparison';
+export * from './helpers/uid';
