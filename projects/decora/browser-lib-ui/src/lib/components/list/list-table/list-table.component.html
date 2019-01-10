@@ -23,6 +23,8 @@
   <ngx-datatable-column *ngFor="let column of columns;"
                          name="{{column.title | translate}}"
                          [flexGrow]="column.colSpan"
+                         [minWidth]="column.minWidth"
+                         [maxWidth]="column.maxWidth"
                          [prop]="column.prop"
                          [sortable]="column.prop ? true : false">
 
