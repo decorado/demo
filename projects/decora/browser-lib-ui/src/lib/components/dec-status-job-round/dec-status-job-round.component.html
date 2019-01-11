@@ -20,6 +20,8 @@
           <span *ngIf="job?.type == 'MODELING' || job?.type == 'COLOR_FATHER'" class="font-text dec-font-500 uppercase">{{
             'label.full-model-info' |
             translate }}</span>
+          <span *ngIf="job?.type == 'MESH_ONLY'" class="font-text dec-font-500 uppercase">{{
+            'label.mesh-only' | translate }}</span>
         </div>
       </div>
     </dec-grid-column>
