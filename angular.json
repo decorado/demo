@@ -46,6 +46,11 @@
                 "output": "assets/docs/browser-lib-ui/bootstrap"
               },
               {
+                "glob": "**/*",
+                "input": "dist/decora/browser-lib-ui/bootstrap/assets",
+                "output": "assets/browser-lib-ui"
+              },
+              {
                 "glob": "**/*.md",
                 "input": "src",
                 "output": "assets/docs/src/"
@@ -149,6 +154,11 @@
                 "glob": "**/*.md",
                 "input": "dist/decora/browser-lib-ui/bootstrap",
                 "output": "assets/docs/browser-lib-ui/bootstrap"
+              },
+              {
+                "glob": "**/*",
+                "input": "dist/decora/browser-lib-ui/bootstrap/assets",
+                "output": "assets/browser-lib-ui"
               },
               {
                 "glob": "**/*.md",

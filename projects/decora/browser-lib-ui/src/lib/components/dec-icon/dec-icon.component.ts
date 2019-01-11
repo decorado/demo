@@ -9,7 +9,9 @@ export class DecIconComponent implements AfterViewInit {
 
   icon: string;
 
-  @Input() font: 'mat' | 'fas';
+  dinamicHeight: string = 'inherit';
+
+  @Input() font: 'dec' | 'mat' | 'fas';
 
   @ViewChild('text') textElement: ElementRef;
 
@@ -17,10 +19,23 @@ export class DecIconComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     setTimeout(() => {
-      try {
-        this.icon = this.textElement.nativeElement.textContent;
-      } catch (error) { }
+      const element = this.textElement.nativeElement;
+      this.extractIconName(element);
+      this.extractIconHeight(element);
     }, 0);
+  }
+
+  private extractIconName(element) {
+    try {
+      this.icon = element.textContent;
+    } catch (error) { }
+  }
+
+  private extractIconHeight(element) {
+    if (this.font === 'dec') {
+      const elementStyles = getComputedStyle(element);
+      this.dinamicHeight = elementStyles.fontSize;
+    }
   }
 
 }
