@@ -40,6 +40,20 @@ export class AutocompleteSquadsComponent implements ControlValueAccessor {
 
   @Output() enterButton: EventEmitter<any> = new EventEmitter<any>();
 
+
+  private _type: string;
+  public get type(): string {
+    return this._type;
+  }
+  @Input()
+  public set type(v: string) {
+    if (this._type !== v) {
+      this._type = v;
+
+      this.setEndpointBasedOnInputs()
+    }
+  }
+
   /*
   ** ngModel propertie
   ** Used to two way data bind using [(ngModel)]
@@ -99,6 +113,21 @@ export class AutocompleteSquadsComponent implements ControlValueAccessor {
   onAutocompleteBlur($event) {
     this.onTouchedCallback();
     this.blur.emit(this.value);
+  }
+
+  setEndpointBasedOnInputs() {
+    const params = [];
+    let endpoint = `${this.endpoint}`;
+
+    if (this.type) {
+      params.push(`type=${this.type}`);
+    }
+
+    if (params.length) {
+      endpoint += `?${params.join('&')}`;
+    }
+
+    this.endpoint = endpoint;
   }
 
 }

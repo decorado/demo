@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
-import { MatButtonToggleModule, MatButtonModule } from '@angular/material';
+import { MatButtonToggleModule, MatButtonModule, MatDialogModule } from '@angular/material';
 import { DecGridModule } from './../dec-grid/dec-grid.module';
 import { DecIconModule } from './../dec-icon/dec-icon.module';
 import { DecProductSource3dmodelFixComponent } from './dec-product-source3dmodel-fix.component';
@@ -29,7 +29,8 @@ import { DecProductMeasuresComparisonModule } from './../dec-product-measures-co
     DecIconModule,
     MatButtonModule,
     DecZoomMarksGalleryModule,
-    DecProductMeasuresComparisonModule
+    DecProductMeasuresComparisonModule,
+    MatDialogModule
   ],
   exports: [
     DecProductSource3dmodelFixComponent
