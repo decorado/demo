@@ -1,12 +1,13 @@
-import { Component, Input, ViewChild, ElementRef, EventEmitter, OnChanges, AfterViewInit } from '@angular/core';
+import { Component, Input, ViewChild, ElementRef, OnChanges, OnDestroy } from '@angular/core';
 import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'dec-icon',
   templateUrl: './dec-icon.component.html',
   styleUrls: ['./dec-icon.component.scss']
 })
-export class DecIconComponent implements OnChanges, AfterViewInit {
+export class DecIconComponent implements OnChanges, OnDestroy {
 
   icon: string;
 
@@ -16,7 +17,9 @@ export class DecIconComponent implements OnChanges, AfterViewInit {
 
   @ViewChild('text') textElement: ElementRef;
 
-  private elementChanges = new EventEmitter<number>();
+  private elementChanges = new BehaviorSubject<number>(0);
+
+  private changesSubscription: Subscription;
 
   constructor(
     private elementRef: ElementRef
@@ -24,12 +27,12 @@ export class DecIconComponent implements OnChanges, AfterViewInit {
     this.subscribeToChanges();
   }
 
-  ngAfterViewInit() {
-    this.elementChanges.emit(Date.now());
+  ngOnChanges() {
+    this.elementChanges.next(Date.now());
   }
 
-  ngOnChanges() {
-    this.elementChanges.emit(Date.now());
+  ngOnDestroy() {
+    this.changesSubscription.unsubscribe();
   }
 
   private detectChanges = () => {
@@ -38,7 +41,7 @@ export class DecIconComponent implements OnChanges, AfterViewInit {
   }
 
   private subscribeToChanges() {
-    this.elementChanges.pipe(
+    this.changesSubscription = this.elementChanges.pipe(
       distinctUntilChanged(),
       debounceTime(300),
     ).subscribe(this.detectChanges);
