@@ -31,7 +31,8 @@ export class DecIconModule {
   }
 
   private registerDecoraIcon = (icon) => {
-    const meshIconBlackUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(icon.path);
+    const baseHref = document.getElementsByTagName('base')[0].href;
+    const meshIconBlackUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(`${baseHref}/${icon.path}`);
     this.matIconRegistry.addSvgIcon(icon.name, meshIconBlackUrl);
   }
 }
