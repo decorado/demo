@@ -15,15 +15,15 @@ export class DecSnackBarService {
     private translate: TranslateService
   ) { }
 
-  open(message: string, type: MessageType, duration = 4e3, action: string = '', interpolateParams: any = {}): MatSnackBarRef<SimpleSnackBar> {
+  open(translatableMessage: string, type: MessageType, duration = 4e3, action: string = '', interpolateParams: any = {}): MatSnackBarRef<SimpleSnackBar> {
 
-    if (!message) {
+    if (!translatableMessage) {
 
       return;
 
     } else {
 
-      const translatedMessage = this.translate.instant(message, interpolateParams);
+      const translatedMessage = this.translate.instant(translatableMessage, interpolateParams);
 
       const translatedAction = this.translate.instant(action);
 
