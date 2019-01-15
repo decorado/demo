@@ -19,7 +19,7 @@
           </mat-button-toggle-group>
         </div>
 
-        <dec-zoom-marks-gallery *ngIf="markedReference" [isProfessional]="isProfessional" (openZoomArea)="openEditZoomArea($event, true)"
+        <dec-zoom-marks-gallery *ngIf="markedReference" [isProfessional]="isProfessional" (openZoomArea)="openEditZoomArea($event, false)"
           [maxFile]="referenceMax" #referenceGallery [markedObjs]="markedReference" [showTags]="activeTab !== 'reference'"
           [glb]="glbReference" [glbReadonly]="true" [qualityAssurance]="qualityAssuranceReference">
         </dec-zoom-marks-gallery>
@@ -47,10 +47,11 @@
           <dec-render-not-available [renderStatus]="round.renderStatus" [maxFileUrl]="round?.max ? round?.max.fileUrl : ''"></dec-render-not-available>
         </div>
 
-        <dec-zoom-marks-gallery *ngIf="round.renderStatus === 'RENDER_DONE' && renderImages" [isProfessional]="isProfessional" (deleteZoomArea)="deleteZoomAreaByParentId($event)"
-          [reviewers]="reviewers" #renderGallery [showTags]="showTags" (openZoomArea)="openEditZoomArea($event)"
-          [markedObjs]="round?.qualityAssurance?.renders" [qualityAssurance]="round?.qualityAssurance" [maxFile]="round?.max?.fileUrl"
-          [qaModeActive]="qaMode" [jobType]="jobType" [glb]="round?.glb">
+        <dec-zoom-marks-gallery *ngIf="round.renderStatus === 'RENDER_DONE' && renderImages" [isProfessional]="isProfessional"
+          (deleteZoomArea)="deleteZoomAreaByParentId($event)" [reviewers]="reviewers" #renderGallery [showTags]="showTags"
+          (openZoomArea)="openEditZoomArea($event, true)" [markedObjs]="round?.qualityAssurance?.renders"
+          [qualityAssurance]="round?.qualityAssurance" [maxFile]="round?.max?.fileUrl" [qaModeActive]="qaMode"
+          [jobType]="jobType" [glb]="round?.glb">
         </dec-zoom-marks-gallery>
 
       </dec-grid-column>
