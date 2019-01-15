@@ -43,9 +43,11 @@ export class DecSnackBarService {
 
       const translatedMessage = this.translate.instant(message, interpolateParams);
 
+      const translatedAction = this.translate.instant(action);
+
       const snackClass = this.getClass(type);
 
-      return this.snackBarService.open(translatedMessage, action, {
+      return this.snackBarService.open(translatedMessage, translatedAction, {
         duration: duration,
         panelClass: snackClass
       });
