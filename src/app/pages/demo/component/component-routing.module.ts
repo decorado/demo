@@ -50,6 +50,7 @@ const routes: Routes = [
   { path: 'render-comment', loadChildren: './decora-render-comment/decora-render-comment.module#DecoraRenderCommentModule' },
   { path: 'card-similar-product', loadChildren: './decora-card-similar-product/decora-card-similar-product.module#DecoraCardSimilarProductModule' },
   { path: 'decora-fbx-qa', loadChildren: './decora-fbx-qa/decora-fbx-qa.module#DecoraFbxQaModule' },
+  { path: 'download-button', loadChildren: './decora-download-button-demo/decora-download-button-demo.module#DecoraDownloadButtonDemoModule' },
 ];
 
 @NgModule({

@@ -48,6 +48,9 @@ export * from './lib/components/autocomplete-tags/autocomplete-tags.module';
 // BREADCRUMB
 export * from './lib/components/breadcrumb/breadcrumb.component';
 export * from './lib/components/breadcrumb/breadcrumb.module';
+// BUTTON > DOWNLOAD BUTTON
+export * from './lib/components/button/download-button/dec-download-button.component';
+export * from './lib/components/button/download-button/dec-download-button.module';
 // CAROUSEL
 export * from './lib/components/dec-carousel/dec-carousel.component';
 export * from './lib/components/dec-carousel/dec-carousel.module';
