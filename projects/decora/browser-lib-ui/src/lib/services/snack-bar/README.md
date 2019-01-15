@@ -4,26 +4,18 @@
 
 This component was designed to help presenting alert messages.
 
-## Example using regular strings
+## Example
 
 ```javascript
 constructor(private snackBarService: DecSnackBarService) { }
 
-const s = this.snackBarService.open(message, type, duration, action);
-```
-
-## Example using translatable strings
-
-```javascript
-constructor(private snackBarService: DecSnackBarService) { }
-
-const s = openI18n(message: string, type: MessageType, duration = 4e3, action: string = '', interpolateParams: any = {})
+const s = this.snackBarService.open(translatableMessage, type, duration, action);
 ```
 
 ## Parameters
 
-#### message: string
-Can be any text
+#### translatableMessage: string
+The key of the translation file to be used parsed and translated to the current lanuage.
 
 #### type: string
 You can choose between one of the following types. There i no default type.

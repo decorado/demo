@@ -15,25 +15,7 @@ export class DecSnackBarService {
     private translate: TranslateService
   ) { }
 
-  open(message: string, type: MessageType, duration = 4e3, action: string = ''): MatSnackBarRef<SimpleSnackBar> {
-
-    if (!message) {
-
-      return;
-
-    } else {
-
-      const snackClass = this.getClass(type);
-
-      return this.snackBarService.open(message, action, {
-        duration: duration,
-        panelClass: snackClass
-      });
-
-    }
-  }
-
-  openI18n(message: string, type: MessageType, duration = 4e3, action: string = '', interpolateParams: any = {}): MatSnackBarRef<SimpleSnackBar> {
+  open(message: string, type: MessageType, duration = 4e3, action: string = '', interpolateParams: any = {}): MatSnackBarRef<SimpleSnackBar> {
 
     if (!message) {
 
