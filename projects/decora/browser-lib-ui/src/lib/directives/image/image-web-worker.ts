@@ -2,7 +2,7 @@ import { DecImagewebWorkerBackEnd } from './image-web-worker-back-end';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { skipWhile, distinctUntilChanged } from 'rxjs/operators';
 import { ErrorImage } from './image.directive.constants';
-import { UID } from '../../../helpers/uid';
+import { DecUID } from '../../../helpers/uid';
 
 const blob = new Blob([DecImagewebWorkerBackEnd], { type: 'application/javascript' });
 
@@ -31,7 +31,7 @@ export class DecImageWebWorker {
 
   detectImageUrlFromImageType(image, thumborize, size, containerWidth, fitIn, trim): Observable<string> {
 
-    const id = UID();
+    const id = DecUID();
 
     return this.getProcessByTypeAndId('detectUrl', id, { image, thumborize, size, containerWidth, fitIn, trim });
 

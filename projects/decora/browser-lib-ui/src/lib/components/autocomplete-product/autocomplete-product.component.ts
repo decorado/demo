@@ -2,7 +2,7 @@ import { Component, Input, forwardRef, Output, EventEmitter, AfterViewInit } fro
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { DecApiService } from './../../services/api/decora-api.service';
 
-const BASE_AUTOCOMPLETE_PRODUCT_ENDPOINT = '/products/options';
+const BASE_AUTOCOMPLETE_PRODUCT_ENDPOINT = '/legacy/product/search';
 
 //  Return an empty function to be used as default trigger functions
 const noop = () => {
@@ -18,14 +18,14 @@ const AUTOCOMPLETE_PRODUCT_CONTROL_VALUE_ACCESSOR: any = {
 @Component({
   selector: 'dec-autocomplete-product',
   templateUrl: './autocomplete-product.component.html',
-  styles: [],
+  styleUrls: ['./autocomplete-product.component.scss'],
   providers: [AUTOCOMPLETE_PRODUCT_CONTROL_VALUE_ACCESSOR]
 })
 export class DecAutocompleteProductComponent implements ControlValueAccessor, AfterViewInit {
 
   endpoint;
 
-  @Input() valueAttr = 'key';
+  @Input() valueAttr = 'id';
 
   @Input()
   set companyId(v: string) {
@@ -121,7 +121,7 @@ export class DecAutocompleteProductComponent implements ControlValueAccessor, Af
   }
 
   labelFn(company) {
-    return `${company.value} #${company.key}`;
+    return `#${company.sku} - ${company.name}`;
   }
 
   // From ControlValueAccessor interface
@@ -146,17 +146,18 @@ export class DecAutocompleteProductComponent implements ControlValueAccessor, Af
 
   setEndpointBasedOnInputs() {
     this.indentifyParams();
-    this.endpoint = BASE_AUTOCOMPLETE_PRODUCT_ENDPOINT;
+    let endpoint = BASE_AUTOCOMPLETE_PRODUCT_ENDPOINT;
     if (this.params.length > 0) {
-      this.params.forEach(function(param, index) {
+      this.params.forEach((param, index) => {
         const paramName = Object.keys(param)[0];
         const paramValue = param[paramName];
-        this.endpoint += index === 0 ? '?' : '&';
-        this.endpoint += paramName;
-        this.endpoint += '=';
-        this.endpoint += paramValue;
-      }, this);
+        endpoint += index === 0 ? '?' : '&';
+        endpoint += paramName;
+        endpoint += '=';
+        endpoint += paramValue;
+      });
     }
+    this.endpoint = endpoint;
   }
 
   onAutocompleteBlur($event) {

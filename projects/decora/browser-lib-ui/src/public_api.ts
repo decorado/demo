@@ -6,6 +6,8 @@
 // AUTOCOMPLETE
 export * from './lib/components/autocomplete/autocomplete.component';
 export * from './lib/components/autocomplete/autocomplete.module';
+export * from './lib/components/autocomplete/dec-autocomplete-option-template/dec-autocomplete-option-template.component';
+export * from './lib/components/autocomplete/dec-autocomplete-option-template/dec-autocomplete-option-template.module';
 // AUTOCOMPLETE ACCOUNT
 export * from './lib/components/autocomplete-account/autocomplete-account.component';
 export * from './lib/components/autocomplete-account/autocomplete-account.module';
@@ -251,6 +253,9 @@ export * from './lib/guard/auth-guard.service';
 export * from './lib/pipes/category/category-pipe.module';
 export * from './lib/pipes/category/category-pipe.service';
 
+// SAFE
+export * from './lib/pipes/safe/safe.module';
+
 /*********************************************************
 *
 * SERVICES
@@ -303,3 +308,12 @@ export * from './lib/components/dec-spinner/dec-spinner.module';
 export * from './lib/services/ws-client/ws-client.service';
 export * from './lib/services/ws-client/ws-client.module';
 export * from './lib/services/ws-client/ws-client.models';
+
+
+/*********************************************************
+*
+* HELPERS
+*
+**********************************************************/
+export * from './helpers/comparison';
+export * from './helpers/uid';

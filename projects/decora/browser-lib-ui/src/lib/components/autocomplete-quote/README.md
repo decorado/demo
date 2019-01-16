@@ -12,7 +12,7 @@
     [projectId]="projectId"
     decoraProduct="RENDERING"
     decoraProductVariant="RENDERING_MODEL"
-    (selected)="optionSelected($event)"
+    (optionSelected)="optionSelected($event)"
   ></dec-autocomplete-quote>
 ```
 
@@ -21,13 +21,13 @@
 ```html
   <dec-autocomplete-project
     [(ngModel)]="projectId"
-    (selected)="optionSelected($event)"
+    (optionSelected)="optionSelected($event)"
   ></dec-autocomplete-project>
 
   <dec-autocomplete-quote
     [(ngModel)]="quote"
     [projectId]="projectId"
-    (selected)="optionSelected($event)"
+    (optionSelected)="optionSelected($event)"
   ></dec-autocomplete-quote>
 ```
 

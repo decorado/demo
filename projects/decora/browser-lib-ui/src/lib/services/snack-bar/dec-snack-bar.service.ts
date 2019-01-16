@@ -10,20 +10,32 @@ export type MessageType = 'success' | 'primary' | 'info' | 'warn' | 'error';
 })
 export class DecSnackBarService {
 
-  constructor(public snackBarService: MatSnackBar,
-    private translate: TranslateService) { }
+  constructor(
+    public snackBarService: MatSnackBar,
+    private translate: TranslateService
+  ) { }
 
-  open(message: string, type: MessageType, duration = 4e3, translate: any = {}): MatSnackBarRef<SimpleSnackBar> {
-    if (!message) {
+  open(translatableMessage: string, type: MessageType, duration = 4e3, action: string = '', interpolateParams: any = {}): MatSnackBarRef<SimpleSnackBar> {
+
+    if (!translatableMessage) {
+
       return;
-    }
-    const msg = translate ? this.translate.instant(message, translate) : message;
-    const snackClass = this.getClass(type);
 
-    return this.snackBarService.open(msg, '', {
-      duration: duration,
-      panelClass: snackClass
-    });
+    } else {
+
+      const translatedMessage = translatableMessage ? this.translate.instant(translatableMessage, interpolateParams) : '';
+
+      const translatedAction = action ? this.translate.instant(action) : '';
+
+      const snackClass = this.getClass(type);
+
+      return this.snackBarService.open(translatedMessage, translatedAction, {
+        duration: duration,
+        panelClass: snackClass
+      });
+
+    }
+
   }
 
   getClass(type: MessageType) {

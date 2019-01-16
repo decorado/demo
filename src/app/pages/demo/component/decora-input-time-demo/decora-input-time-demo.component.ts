@@ -11,9 +11,7 @@ export class DecoraInputTimeDemoComponent implements OnInit {
 
   modelValue2 = 63;
 
-  modelValue3 = 59;
-
-  modelValue4 = 9;
+  modelValue3;
 
   constructor() { }
 

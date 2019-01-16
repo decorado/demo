@@ -6,6 +6,6 @@
 
 ```html
   <dec-autocomplete-squads
-  (selected)="optionSelected($event)">
+  (optionSelected)="optionSelected($event)">
   </dec-autocomplete-squads>
 ```

@@ -1,5 +1,5 @@
 import { Component, AfterViewInit, Input, forwardRef } from '@angular/core';
-import { Validators, FormGroup, FormBuilder, NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { Validators, FormGroup, FormBuilder, NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 const noop = () => {
@@ -26,7 +26,27 @@ export class DecInputTimeComponent implements ControlValueAccessor, AfterViewIni
 
   @Input() name = 'time';
 
-  @Input() required: boolean;
+  @Input() set required(v: boolean) {
+    this._required = v;
+    this.bindRequiredAndDisabled();
+  }
+
+  get required() {
+    return this._required;
+  }
+
+  @Input() set disabled(v: boolean) {
+    this._disabled = v;
+    this.bindRequiredAndDisabled();
+  }
+
+  get disabled() {
+    return this._disabled;
+  }
+
+  private _required;
+
+  private _disabled;
 
   //  The internal data model
   private innerValue: number;
@@ -37,7 +57,7 @@ export class DecInputTimeComponent implements ControlValueAccessor, AfterViewIni
 
   constructor(
     private fb: FormBuilder,
-  ) { }
+  ) {}
 
   ngAfterViewInit() {
     setTimeout(() => {
@@ -70,16 +90,46 @@ export class DecInputTimeComponent implements ControlValueAccessor, AfterViewIni
   }
 
   writeValue(value: any) {
-    value = value === null ? undefined : value; // v7 bug. remove it when the issue is closed: https://github.com/angular/angular/issues/14988
+    value = value === null ? '' : value; // v7 bug. remove it when the issue is closed: https://github.com/angular/angular/issues/14988
     if (`${value}` !== `${this.value}`) { // convert to string to avoid problems comparing values
       this.value = value;
     }
   }
 
+  private bindRequiredAndDisabled() {
+
+    if (this.timeForm) {
+
+      if (this.disabled) {
+
+        this.timeForm.disable();
+
+      } else {
+
+        this.timeForm.enable();
+
+      }
+
+      if (this.required) {
+
+        this.timeForm.setValidators([Validators.required]);
+
+      } else {
+
+        this.timeForm.clearValidators();
+
+      }
+
+      this.timeForm.updateValueAndValidity();
+
+    }
+
+  }
+
   private initInputControl() {
     if (!this.timeForm) {
       this.timeForm = this.fb.group({
-        time: ['', this.required ? [Validators.required] : []],
+        time: new FormControl({ value: this.value, disabled: this.disabled }, this.required ? [Validators.required] : []),
       });
       this.setInputBasedOnValue();
       this.subscribeToInputchanges();
@@ -158,7 +208,7 @@ export class DecInputTimeComponent implements ControlValueAccessor, AfterViewIni
 
     const totalMinutes = (hours * 60) + minutes;
 
-    return totalMinutes;
+    return totalMinutes || '';
   }
 
 }

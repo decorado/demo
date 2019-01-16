@@ -7,6 +7,6 @@
 ```html
   <dec-autocomplete-tags
   (enterButton)="enterButton($event)"
-  (selected)="optionSelected($event)">
+  (optionSelected)="optionSelected($event)">
 </dec-autocomplete-tags>
 ```

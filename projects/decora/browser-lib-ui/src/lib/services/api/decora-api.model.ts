@@ -92,7 +92,7 @@ export interface SerializedDecFilter {
   */
 export class Filter {
   property: string;
-  value: string | string[];
+  value: number | boolean | string | number[] | boolean[] | string[];
 
   constructor(data: any = {}) {
     this.property = data.property;
