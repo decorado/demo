@@ -52,4 +52,18 @@
 
   </dec-carousel>
 
+  <h2>Drag and drop Carousel</h2>
+
+  <p>Index selected = {{ carousel3?.selectedItem.index }}</p>
+
+  <dec-carousel (itemSelected)="onItemSelected($event)"
+    #carousel3
+    [enableDrag]="true"
+    [arrayToSort]="dragAndDropArray"
+    [highlightSelected]="false">
+
+    <dec-carousel-item value="1" *ngFor="let item of dragAndDropArray">item {{ item }}</dec-carousel-item>
+
+  </dec-carousel>
+
 </app-demo-container>

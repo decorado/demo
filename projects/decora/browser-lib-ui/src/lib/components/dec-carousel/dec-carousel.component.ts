@@ -1,5 +1,6 @@
 import { Component, ContentChildren, QueryList, Input, Output, EventEmitter } from '@angular/core';
 import { DecCarouselItemComponent } from './dec-carousel-item/dec-carousel-item.component';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'dec-carousel',
@@ -40,6 +41,26 @@ export class DecCarouselComponent {
 
   @Input() gap = '8px';
 
+  @Input()
+  set enableDrag(v) {
+      this._enableDrag = v;
+  }
+
+  get enableDrag() {
+    return this._enableDrag;
+  }
+
+  @Input()
+  set arrayToSort(v) {
+    if (v !== this._arrayToSort) {
+      this._arrayToSort = v;
+    }
+  }
+
+  get arrayToSort() {
+    return this._arrayToSort;
+  }
+
   @ContentChildren(DecCarouselItemComponent)
   set items(v: QueryList<DecCarouselItemComponent>) {
     this._items = v;
@@ -54,6 +75,8 @@ export class DecCarouselComponent {
   }
 
   @Output() itemSelected = new EventEmitter<any>();
+
+  @Output() sortedArray = new EventEmitter<any>();
 
   visibleItems = [];
 
@@ -71,6 +94,10 @@ export class DecCarouselComponent {
   private _selectedIndex = 0;
 
   private _itemsPerPage = 4;
+
+  private _arrayToSort;
+
+  private _enableDrag = false;
 
   constructor() { }
 
@@ -170,6 +197,18 @@ export class DecCarouselComponent {
 
   private emitSelectedItem() {
     this.itemSelected.emit(this.selectedItem);
+  }
+
+  drop(event: CdkDragDrop<any[]>) {
+    const previous = this.initialIndex + event.previousIndex;
+    const current = this.initialIndex + event.currentIndex;
+    if (this.arrayToSort) {
+      moveItemInArray(this.arrayToSort, previous, current);
+    }
+    this.sortedArray.emit({
+      previousIndex: previous,
+      currentIndex: current
+    });
   }
 
 }
