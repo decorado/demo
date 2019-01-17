@@ -137,16 +137,20 @@ export class DecJobRoundComponent {
   }
 
   formatMarkedRenderSkuFix(skuFix: any) {
-    this.markedReference = skuFix.requestAdjustment.map(x => {
-      x.comments.forEach((comment, i) => {
-        comment.reference = i + 1;
-      });
+    if (skuFix.requestAdjustment.some((request: any) => (request.tags && request.tags.length) || (request.zoomAreas && request.zoomAreas.length))) {
+      this.markedReference = skuFix.requestAdjustment;
+    } else {
+      this.markedReference = skuFix.requestAdjustment.map(x => {
+        x.comments.forEach((comment: any, i: number) => {
+          comment.reference = i + 1;
+        });
 
-      return {
-        file: x.file,
-        tags: x.comments
-      };
-    });
+        return {
+          file: x.file,
+          tags: x.comments
+        };
+      });
+    }
   }
 
   private formatMarkedRenderColorVariation(): void {
@@ -211,30 +215,30 @@ export class DecJobRoundComponent {
       this.parentId = this.renderGallery.getImageIndex();
       this.parentId++;
       this.zoomAreaOpen = true;
-      this.openZoomAreaModal();
+      this.openZoomAreaModal(true);
     }
   }
 
-  openEditZoomArea($event, cantEdit = false) {
+  openEditZoomArea($event, canEdit: boolean) {
     this.editZoomArea = $event;
     this.reference = JSON.parse(JSON.stringify($event.referenceShot));
     this.note = $event.note;
     this.render = JSON.parse(JSON.stringify($event.renderShot));
-    this.parentId = this.renderGallery.getImageIndex();
+    this.parentId = canEdit ? this.renderGallery.getImageIndex() : this.referenceGallery.getImageIndex();
     this.parentId++;
     this.zoomAreaOpen = true;
 
-    this.openZoomAreaModal(cantEdit);
+    this.openZoomAreaModal(canEdit);
   }
 
-  private openZoomAreaModal(cantEdit = false) {
+  private openZoomAreaModal(canEdit: boolean) {
     const dialogRef = this.dialog.open(DecZoomAreaComponent, { height: '90vh', width: '71vw' });
     dialogRef.componentInstance.reference = this.reference;
     dialogRef.componentInstance.editMode = this.editZoomArea;
     dialogRef.componentInstance.note = this.note;
     dialogRef.componentInstance.render = this.render;
     dialogRef.componentInstance.parentId = this.parentId;
-    dialogRef.componentInstance.qaMode = cantEdit ? false : this.qaMode;
+    dialogRef.componentInstance.qaMode = canEdit ? this.qaMode : false;
     dialogRef.componentInstance.jobType = this.jobType;
 
     dialogRef.componentInstance.save.subscribe($event => {

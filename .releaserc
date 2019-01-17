@@ -2,15 +2,10 @@ tagFormat: ${version}
 
 branches:
   - master
-  - next:
-    name: next
-    prerelease: 'rc'
-  - beta:
-    name: beta
+  - name: beta
     prerelease: 'beta'
-  - alpha:
-    name: alpha
-    prerelease: 'alpha'
+#  - name: alpha
+#    prerelease: 'alpha'
 
 verifyConditions:
   - "@semantic-release/git"

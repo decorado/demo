@@ -23,9 +23,9 @@ export class DecSnackBarService {
 
     } else {
 
-      const translatedMessage = this.translate.instant(translatableMessage, interpolateParams);
+      const translatedMessage = translatableMessage ? this.translate.instant(translatableMessage, interpolateParams) : '';
 
-      const translatedAction = this.translate.instant(action);
+      const translatedAction = action ? this.translate.instant(action) : '';
 
       const snackClass = this.getClass(type);
 
