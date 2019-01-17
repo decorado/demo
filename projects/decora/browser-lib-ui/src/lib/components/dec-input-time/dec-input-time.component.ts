@@ -89,6 +89,12 @@ export class DecInputTimeComponent implements ControlValueAccessor, AfterViewIni
     this.onTouchedCallback = fn;
   }
 
+  // From ControlValueAccessor interface
+  setDisabledState(disabled = false) {
+    this.disabled = disabled;
+  }
+
+  // From ControlValueAccessor interface
   writeValue(value: any) {
     value = value === null ? '' : value; // v7 bug. remove it when the issue is closed: https://github.com/angular/angular/issues/14988
     if (`${value}` !== `${this.value}`) { // convert to string to avoid problems comparing values
@@ -119,8 +125,6 @@ export class DecInputTimeComponent implements ControlValueAccessor, AfterViewIni
         this.timeForm.clearValidators();
 
       }
-
-      this.timeForm.updateValueAndValidity();
 
     }
 

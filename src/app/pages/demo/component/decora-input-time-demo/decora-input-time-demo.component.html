@@ -13,4 +13,23 @@
   <p><strong>Model value: {{ modelValue3 }}</strong></p>
   <dec-input-time [required]="true" [(ngModel)]="modelValue3"></dec-input-time>
 
+  <h3>Template Form Reactively disabled</h3>
+
+  <p><strong>Model value: {{ modelValue4 }}</strong></p>
+  <dec-input-time [required]="true" [(ngModel)]="modelValue4" [disabled]="disabled"></dec-input-time>
+
+  <button (click)="disabled = !!!disabled;">Disabled {{ disabled | json }}</button>
+
+  <h3>Reactive Form Reactively disabled</h3>
+
+  <p><strong>Model value: {{ modelValue5 }}</strong></p>
+
+  <form role="form" [formGroup]="demoForm">
+
+    <dec-input-time name="textareaInput" formControlName="textareaInput"></dec-input-time>
+
+  </form>
+
+  <button (click)="disabled = !!!disabled;">Disabled {{ disabled | json }}</button>
+
 </app-demo-container>

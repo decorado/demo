@@ -50,7 +50,7 @@ export class AutocompleteSquadsComponent implements ControlValueAccessor {
     if (this._type !== v) {
       this._type = v;
 
-      this.setEndpointBasedOnInputs()
+      this.setEndpointBasedOnInputs();
     }
   }
 
@@ -96,6 +96,11 @@ export class AutocompleteSquadsComponent implements ControlValueAccessor {
   // From ControlValueAccessor interface
   registerOnTouched(fn: any) {
     this.onTouchedCallback = fn;
+  }
+
+  // From ControlValueAccessor interface
+  setDisabledState(disabled = false) {
+    this.disabled = disabled;
   }
 
   onValueChanged(event: any) {

@@ -73,6 +73,11 @@ export class AutocompleteStudioComponent implements ControlValueAccessor {
     this.onTouchedCallback = fn;
   }
 
+  // From ControlValueAccessor interface
+  setDisabledState(disabled = false) {
+    this.disabled = disabled;
+  }
+
   onValueChanged(event: any) {
     this.value = event.toString();
   }

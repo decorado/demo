@@ -77,6 +77,11 @@ export class DecColorPickerComponent implements ControlValueAccessor {
     this.onTouchedCallback = fn;
   }
 
+  // From ControlValueAccessor interface
+  setDisabledState(disabled = false) {
+    this.disabled = disabled;
+  }
+
   startColorPicker() {
     this.colorPickerService.start.subscribe((color) => {
       this.hexValue = color;
