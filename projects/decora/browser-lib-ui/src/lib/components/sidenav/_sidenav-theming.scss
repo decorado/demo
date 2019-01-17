@@ -1,5 +1,6 @@
 @import '~@angular/material/theming';
 @import './../../../../bootstrap/constants/colors';
+@import './../../../../bootstrap/constants/positioning';
 
 // Sidenav custom style
 @mixin dec-sidenav-theming($theme) {
@@ -41,7 +42,7 @@
 
         &:hover {
           color: $dec-color-accent !important;
-          
+
           &>::before {
             height: 100%;
           }
@@ -79,6 +80,8 @@
   }
 
   .ribbon {
+
+
     &.ribbon-blue {
       background: $dec-color-blue;
 

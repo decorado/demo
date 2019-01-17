@@ -1,8 +1,18 @@
 @import './../constants/colors';
+@import './../constants/positioning';
 
 body {
-  margin: 0;
-  padding: 0;
+  // FONT COLOR
   color: $dec-color-grey-dark;
+  // REMOVES ANY BROWSER RELATIVE PADDING
+  padding: 0;
+  // ADJUST THE WIDTH ACCORDING TO THE VIEWPORT
+  width: 100%;
+  // MINIMUM WIDTH
+  min-width: $min-body-width;
+  // MAXIMUM WIDTH
+  max-width: $max-body-width;
+  // REMOVE ANY MARGIM FROM TOP AND BOTTOM AND CENTER HORIZONTALY
+  margin: 0 auto;
 }
 
