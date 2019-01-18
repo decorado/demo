@@ -49,6 +49,14 @@ Number of items per page.
 
 Space between items.
 
+## enabelDrag
+
+Allow drag and drop items.
+
+## arrayToSort
+
+Array to sort.
+
 # dec-carousel-item  Inputs
 
 ## value
