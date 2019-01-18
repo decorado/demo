@@ -128,9 +128,9 @@ export class DecJobRoundComponent {
   }
 
   formatMarkedReference(v) {
-    this.markedReference = v.referenceImages.map(x => {
+    this.markedReference = v.referenceImages.map(referenceImage => {
       return {
-        file: x.sysFile,
+        file: referenceImage.sysFile || referenceImage,
         tags: []
       };
     });
