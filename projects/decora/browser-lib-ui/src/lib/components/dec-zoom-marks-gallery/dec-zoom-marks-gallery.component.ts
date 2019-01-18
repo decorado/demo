@@ -13,6 +13,7 @@ import { DecMeshQaComponent } from '../dec-mesh-qa/dec-mesh-qa.component';
 export class DecZoomMarksGalleryComponent {
 
   carouselConfig = CarouselZoomConfig;
+  isThereAnyMeshTag: boolean;
 
   private _qualityAssurance: any;
   public get qualityAssurance(): any {
@@ -240,5 +241,9 @@ export class DecZoomMarksGalleryComponent {
 
   deleteArea($event) {
     this.deleteZoomArea.emit($event);
+  }
+
+  thereIsAMeshTag() {
+    this.isThereAnyMeshTag = true;
   }
 }

@@ -15,6 +15,7 @@
 
       <ngu-item *ngIf="glb" (swipe)="onSwipe($event)" NguCarouselItem (click)="onSelectMesh()" [class.active]="meshQaSelected">
         <div class="image-container">
+          <span *ngIf="isThereAnyMeshTag" class="has-comment">!</span>
           <img [src]="imageMeshUrl" style="width: 100%;height: 100%;" />
         </div>
       </ngu-item>
@@ -72,7 +73,7 @@
           <span class="dec-icon-text-size-zoom-area"> Mesh </span>
         </h3>
       </div>
-      <dec-markdowns-mesh-qa [mesh]="qualityAssurance?.mesh"></dec-markdowns-mesh-qa>
+      <dec-markdowns-mesh-qa [mesh]="qualityAssurance?.mesh" (isThereAnyMeshTag)="thereIsAMeshTag()"></dec-markdowns-mesh-qa>
     </div>
 
   </div>
