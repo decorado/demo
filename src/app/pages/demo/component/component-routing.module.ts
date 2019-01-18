@@ -41,6 +41,7 @@ const routes: Routes = [
   { path: 'product-features', loadChildren: './decora-products-features-demo/decora-products-features-demo.module#DecoraProductsFeaturesDemoModule' },
   { path: 'product-measures', loadChildren: './decora-product-measures-comparison-demo/decora-product-measures-comparison-demo.module#DecoraProductMeasuresComparisonDemoModule' },
   { path: 'product-spin', loadChildren: './decora-product-spin-demo/decora-product-spin-demo.module#DecoraProductSpinDemoModule' },
+  { path: 'section', loadChildren: './decora-section-demo/decora-section-demo.module#DecoraSectionDemoModule' },
   { path: 'sidenav', loadChildren: './decora-sidenav-demo/sidenav-demo.module#SidenavDemoModule' },
   { path: 'sketchfab', loadChildren: './decora-dec-sketchfab-demo/dec-sketchfab-demo.module#DecSketchfabDemoModule' },
   { path: 'sketchfab-view', loadChildren: './decora-sketchfab-view-demo/decora-sketchfab-view-demo.module#DecoraSketchfabViewDemoModule' },

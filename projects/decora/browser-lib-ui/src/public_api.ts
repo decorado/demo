@@ -153,6 +153,9 @@ export * from './lib/components/dec-job-details/dec-job-details.module';
 // JOB ROUND
 export * from './lib/components/dec-job-round/dec-job-round.component';
 export * from './lib/components/dec-job-round/dec-job-round.module';
+// SECTION
+export * from './lib/components/dec-section/dec-section.module';
+export * from './lib/components/dec-section/dec-section.component';
 // SIDENAV
 export * from './lib/components/sidenav/sidenav.module';
 export * from './lib/components/sidenav/sidenav.component';
