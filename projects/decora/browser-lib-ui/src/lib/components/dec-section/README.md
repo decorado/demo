@@ -14,6 +14,10 @@ This component is used to facilitate scrolling into sections of the view.
 
 ## Properties
 
+### @Input() data: any
+
+Property to be used to passa data along the view (like is the section content is valid so the navigator can point out this info)
+
 ### @Input() name: string
 
 The name of the section to be use when getting the sections using QueryList. This is commonly use to create dynamic navigation panels to allow the user to scroll to the section dynamically created.

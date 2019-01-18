@@ -14,6 +14,7 @@ export class DecSectionScrollingStyle {
 }
 
 /** @description Dec List Table Column.
+ *  @param data Property to be used to passa data along the view (like is the section content is valid so the navigator can point out this info)
  *  @param name: The name of the section.
  *  @event navigated: Event emitted when navigated to the section
  *  @method scrollIntoView Scrolls the view to the element based on https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
@@ -24,6 +25,8 @@ export class DecSectionScrollingStyle {
   styleUrls: ['./dec-section.component.scss']
 })
 export class DecSectionComponent {
+
+  @Input() data: any;
 
   @Input() scrollingStyle = new DecSectionScrollingStyle();
 
