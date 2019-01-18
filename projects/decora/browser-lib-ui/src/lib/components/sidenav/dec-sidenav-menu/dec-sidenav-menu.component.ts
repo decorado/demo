@@ -46,7 +46,7 @@ export class DecSidenavMenuComponent {
     'right',
     'down',
     'arrows-container'
-  ]
+  ];
 
   classesIn = [
     'menuClass',
@@ -62,37 +62,35 @@ export class DecSidenavMenuComponent {
     'right',
     'down',
     'arrows-container'
-  ]
+  ];
 
   constructor() { }
 
 
   @HostListener('document:mouseover', ['$event'])
   onHover($event) {
-    if (!$event) {
-      return;
-    }
-    const el = $event.target;
-    if (this.verifyItemContent(el, this.classesIn)&& !this.opened) {
-      this.leftMenuVisible = true;
+    if ($event) {
+      const el = $event.target;
+      if (this.verifyItemContent(el, this.classesIn) && !this.opened) {
+        this.leftMenuVisible = true;
+      }
     }
   }
 
   @HostListener('document:mousemove', ['$event'])
   onOut($event) {
-    if (!$event) {
-      return;
-    }
-    const el = $event.target;
-    // console.log(el.classList);
-    if (!this.verifyItemContent(el, this.classesOut) && !this.opened) {
-      this.leftMenuVisible = false;
+    if ($event) {
+      const el = $event.target;
+      // console.log(el.classList);
+      if (!this.verifyItemContent(el, this.classesOut) && !this.opened) {
+        this.leftMenuVisible = false;
+      }
     }
   }
 
   verifyItemContent(div, array) {
     let exists = false;
-    for (let i=0;i<array.length;i++) {
+    for (let i = 0; i < array.length; i++) {
       if (div.classList.contains(array[i])) {
         exists = true;
       }
