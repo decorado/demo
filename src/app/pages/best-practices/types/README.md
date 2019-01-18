@@ -50,13 +50,15 @@ Lets use the interface example and fix its problem of `MALE` having pregnancy st
 
 `person.models.ts`
 ````javascript
-  export interface Person {
+  export class Person {
+
     name: string;
+
     pregnancy: PersonPregnancyStatus;
 
     set gender(v: PersonGenders) {
       this._gender = v;
-      this.removePregnancyIfNotFemale();
+      this.removePregnancyIfNotFemale();  // every gender change triggers the pregnance verification
     }
 
     get gender() {
@@ -64,6 +66,16 @@ Lets use the interface example and fix its problem of `MALE` having pregnancy st
     }
 
     private _gender: PersonGenders;
+
+    constructor(data: any = {}) {
+
+      this.name = data.name;
+
+      this.pregnancy = data.pregnancy; // pregnance is set before gender to avoid overriding the removePregnancyIfNotFemale result
+
+      this.gender = data.gender;
+
+    }
 
     private removePregnancyIfNotFemale() {
       if (this.gender !== 'FEMALE') {

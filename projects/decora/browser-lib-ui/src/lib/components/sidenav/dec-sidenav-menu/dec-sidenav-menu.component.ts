@@ -14,7 +14,7 @@ export class DecSidenavMenuComponent {
   set opened(v) {
     if (v !== this._opened) {
       this._opened = v;
-      this.openedPass = JSON.parse(JSON.stringify(v));
+      this.leftMenuVisible = JSON.parse(JSON.stringify(v));
     }
   }
 
@@ -24,11 +24,11 @@ export class DecSidenavMenuComponent {
 
   _opened = true;
 
-  openedPass = true;
+  leftMenuVisible = true;
 
   @Input() treeLevel = -1;
 
-  // 
+  //
   classesOut = [
     'mat-list-item-content',
     'dec-icon',
@@ -74,7 +74,7 @@ export class DecSidenavMenuComponent {
     }
     const el = $event.target;
     if (this.verifyItemContent(el, this.classesIn)&& !this.opened) {
-      this.openedPass = true;
+      this.leftMenuVisible = true;
     }
   }
 
@@ -86,7 +86,7 @@ export class DecSidenavMenuComponent {
     const el = $event.target;
     // console.log(el.classList);
     if (!this.verifyItemContent(el, this.classesOut) && !this.opened) {
-      this.openedPass = false;
+      this.leftMenuVisible = false;
     }
   }
 
@@ -99,5 +99,5 @@ export class DecSidenavMenuComponent {
     }
     return exists;
   }
-  
+
 }
