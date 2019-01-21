@@ -6,10 +6,10 @@
 
   <div fxFlex>
 
-  <div *ngIf="enableDrag"
-      cdkDropList
+  <div cdkDropList
       cdkDropListOrientation="horizontal"
       (cdkDropListDropped)="drop($event)"
+      [cdkDropListDisabled]="!enableDrag"
       fxLayout="row"
       class="dec-carousel-container"
       [fxLayoutGap]="gap"
@@ -38,30 +38,6 @@
 
   </div>
 
-
-  <div *ngIf="!enableDrag" fxLayout="row"
-      class="dec-carousel-container"
-      [fxLayoutGap]="gap"
-      cdkDragHandle>
-
-      <div *ngFor="let item of visibleItems;"
-        class="dec-carousel-item"
-        [ngClass]="{'highlight-selected': highlightSelected}"
-        [fxFlex]="itemWidth">
-
-        <div class="dec-carousel-item-content-wrapper" [ngClass]="{'dec-carousel-item-content-wrapper-selected': selectedIndex === item.index}" (click)="selectItem(item.index)">
-
-          <div class="dec-carousel-item-content">
-
-            <ng-template [ngTemplateOutlet]="item.component.template"></ng-template>
-
-          </div>
-
-        </div>
-
-      </div>
-
-  </div>
 
   </div>
 
