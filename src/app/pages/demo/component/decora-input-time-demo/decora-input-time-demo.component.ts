@@ -10,7 +10,7 @@ export class DecoraInputTimeDemoComponent {
 
   demoForm: FormGroup;
 
-  modelValue = 225;
+  modelValue = 43200;
 
   modelValue2 = 63;
 

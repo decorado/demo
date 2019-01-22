@@ -312,7 +312,12 @@ export * from './lib/services/ws-client/ws-client.service';
 export * from './lib/services/ws-client/ws-client.module';
 export * from './lib/services/ws-client/ws-client.models';
 
-
+/*********************************************************
+*
+* VALIDATORS
+*
+**********************************************************/
+export * from './lib/validators/validators';
 /*********************************************************
 *
 * HELPERS

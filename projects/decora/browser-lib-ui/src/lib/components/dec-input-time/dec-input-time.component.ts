@@ -103,31 +103,18 @@ export class DecInputTimeComponent implements ControlValueAccessor, AfterViewIni
   }
 
   private bindRequiredAndDisabled() {
-
     if (this.timeForm) {
-
       if (this.disabled) {
-
         this.timeForm.disable();
-
       } else {
-
         this.timeForm.enable();
-
       }
-
       if (this.required) {
-
         this.timeForm.setValidators([Validators.required]);
-
       } else {
-
         this.timeForm.clearValidators();
-
       }
-
     }
-
   }
 
   private initInputControl() {
@@ -178,13 +165,21 @@ export class DecInputTimeComponent implements ControlValueAccessor, AfterViewIni
 
   private getMaskedInnerValue() {
     if (this.innerValue > 0) {
+
       const minutes = (this.innerValue % 60);
+
       const hours = (this.innerValue - minutes) / 60;
+
       const minutesString = `${minutes}`.length === 2 ? `${minutes}` : `${minutes}`.length === 1 ? `0${minutes}` : '';
-      const hoursString = `${hours}`.length === 2 ? `${hours}` : `${hours}`.length === 1 ? `0${hours}` : '';
+
+      const hoursString = `${hours}`.length >= 2 ? `${hours}` : `${hours}`.length === 1 ? `0${hours}` : '';
+
       return `${hoursString}h${minutesString}m`;
+
     } else {
+
       return '';
+
     }
   }
 
