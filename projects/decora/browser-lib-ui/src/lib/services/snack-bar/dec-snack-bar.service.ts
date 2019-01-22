@@ -15,7 +15,7 @@ export class DecSnackBarService {
     private translate: TranslateService
   ) { }
 
-  open(translatableMessage: string, type: MessageType, duration = 4e3, action: string = '', interpolateParams: any = {}): MatSnackBarRef<SimpleSnackBar> {
+  open(translatableMessage: string, type: MessageType, duration = 4e3, action: string = 'label.Close', interpolateParams: any = {}): MatSnackBarRef<SimpleSnackBar> {
 
     if (!translatableMessage) {
 
@@ -25,11 +25,11 @@ export class DecSnackBarService {
 
       const translatedMessage = translatableMessage ? this.translate.instant(translatableMessage, interpolateParams) : '';
 
-      const translatedAction = action ? this.translate.instant(action) : '';
+      const translatedAction: string = this.translate.instant(action);
 
       const snackClass = this.getClass(type);
 
-      return this.snackBarService.open(translatedMessage, translatedAction, {
+      return this.snackBarService.open(translatedMessage, translatedAction.toUpperCase(), {
         duration: duration,
         panelClass: snackClass
       });
