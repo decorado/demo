@@ -1,8 +1,7 @@
-import { Component, Input, forwardRef, Output, EventEmitter, AfterViewInit } from '@angular/core';
+import { Component, Input, forwardRef, Output, EventEmitter, AfterViewInit, ViewChild } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { DecApiService } from './../../services/api/decora-api.service';
-import { Observable } from 'rxjs';
-import { HttpUrlEncodingCodec } from '@angular/common/http';
+import { DecAutocompleteComponent } from './../autocomplete/autocomplete.component';
 
 //  Return an empty function to be used as default trigger functions
 const noop = () => {
@@ -63,6 +62,8 @@ export class DecAutocompleteAccountComponent implements ControlValueAccessor, Af
   @Output() blur: EventEmitter<any> = new EventEmitter<any>();
 
   @Output() optionSelected: EventEmitter<any> = new EventEmitter<any>();
+
+  @ViewChild(DecAutocompleteComponent) autocompleteComponent: DecAutocompleteComponent;
 
   /*
   ** ngModel propertie

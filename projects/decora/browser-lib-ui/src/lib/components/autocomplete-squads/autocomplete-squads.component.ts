@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter, forwardRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter, forwardRef, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { DecAutocompleteComponent } from './../autocomplete/autocomplete.component';
 
 //  Return an empty function to be used as default trigger functions
 const noop = () => {
@@ -40,6 +41,7 @@ export class AutocompleteSquadsComponent implements ControlValueAccessor {
 
   @Output() enterButton: EventEmitter<any> = new EventEmitter<any>();
 
+  @ViewChild(DecAutocompleteComponent) autocompleteComponent: DecAutocompleteComponent;
 
   private _type: string;
   public get type(): string {

@@ -1,9 +1,10 @@
-import { Component, Input, forwardRef, Output, EventEmitter } from '@angular/core';
+import { Component, Input, forwardRef, Output, EventEmitter, ViewChild } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { DecApiService } from './../../services/api/decora-api.service';
 import { DecLanguageService } from '../../services/language/dec-language.service';
 import { of, Observable } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
+import { DecAutocompleteComponent } from './../autocomplete/autocomplete.component';
 
 const BASE_AUTOCOMPLETE_PRODUCT_CATEGORY_ENDPOINT = `/legacy/product/category`;
 
@@ -47,6 +48,8 @@ export class DecAutocompleteProductCategoryComponent implements ControlValueAcce
   @Output() blur: EventEmitter<any> = new EventEmitter<any>();
 
   @Output() optionSelected: EventEmitter<any> = new EventEmitter<any>();
+
+  @ViewChild(DecAutocompleteComponent) autocompleteComponent: DecAutocompleteComponent;
 
   private categories;
 

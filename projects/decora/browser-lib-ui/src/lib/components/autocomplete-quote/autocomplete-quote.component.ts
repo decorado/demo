@@ -1,8 +1,7 @@
-import { Component, Input, forwardRef, Output, EventEmitter, AfterViewInit } from '@angular/core';
+import { Component, Input, forwardRef, Output, EventEmitter, AfterViewInit, ViewChild } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { Observable } from 'rxjs';
 import { DecApiService } from './../../services/api/decora-api.service';
-import { map } from 'rxjs/operators';
+import { DecAutocompleteComponent } from './../autocomplete/autocomplete.component';
 
 //  Return an empty function to be used as default trigger functions
 const noop = () => {
@@ -91,6 +90,8 @@ export class DecAutocompleteQuoteComponent implements ControlValueAccessor, Afte
   get decoraProductVariant() {
     return this._decoraProductVariant;
   }
+
+  @ViewChild(DecAutocompleteComponent) autocompleteComponent: DecAutocompleteComponent;
 
   private _projectId: string;
 
