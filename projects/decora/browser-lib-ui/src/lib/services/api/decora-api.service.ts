@@ -277,18 +277,17 @@ export class DecApiService implements OnDestroy {
 
   }
 
-  private handleError = (error: any) => {
+  private handleError = (err: any) => {
+    const message = err.message;
+    const bodyMessage = (err && err.error) ? err.error.message : '';
+    const bodyError = err.error;
+    const status = err.status;
+    const timestamp = err.timestamp;
+    const statusText = err.statusText;
+    const parsedError = (err.error && err.error.errors) ? err.error.errors : [{ status, timestamp, error: statusText, message }];
+    const errors: DecApiGenericError[] = status === 207 ? err.operations : parsedError;
 
-    const message = error.message;
-    const bodyMessage = (error && error.error) ? error.error.message : '';
-    const bodyError = error.error;
-    const status = error.status;
-    const timestamp = error.timestamp;
-    const statusText = error.statusText;
-    const parsedError = { status, timestamp, error: statusText, message };
-    const errors: DecApiGenericError[] = status === 207 ? error.operations : [parsedError];
-
-    switch (error.status) {
+    switch (err.status) {
       case 401:
         if (this.decConfig.config.authHost) {
           this.goToLoginPage();
