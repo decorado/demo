@@ -52,13 +52,13 @@ export class DecAutocompleteTagsComponent implements ControlValueAccessor {
 
   @Input() multi: boolean;
 
+  @Input() notFoundMessage: string;
+
   @Input() repeat: boolean;
 
   @Output() blur: EventEmitter<any> = new EventEmitter<any>();
 
   @Output() optionSelected: EventEmitter<any> = new EventEmitter<any>();
-
-  @Output() enterButton: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild(DecAutocompleteComponent) autocompleteComponent: DecAutocompleteComponent;
 

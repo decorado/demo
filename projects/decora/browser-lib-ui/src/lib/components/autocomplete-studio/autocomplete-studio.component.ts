@@ -26,13 +26,21 @@ export class AutocompleteStudioComponent implements ControlValueAccessor {
   labelAttr = 'name';
 
   @Input() disabled: boolean;
+
   @Input() required: boolean;
+
+
   @Input() name = 'Studio autocomplete';
+
   @Input() placeholder = 'Studio autocomplete';
 
+  @Input() multi: boolean;
+
+  @Input() notFoundMessage: string;
+
   @Output() blur: EventEmitter<any> = new EventEmitter<any>();
+
   @Output() optionSelected: EventEmitter<any> = new EventEmitter<any>();
-  @Output() enterButton: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild(DecAutocompleteComponent) autocompleteComponent: DecAutocompleteComponent;
 

@@ -55,6 +55,8 @@ export class AutocompleteComplexityComponent implements ControlValueAccessor {
 
   @Input() multi: boolean;
 
+  @Input() notFoundMessage: string;
+
   @Input() repeat: boolean;
 
   @Input() placeholder = 'Complexity autocomplete';
@@ -62,8 +64,6 @@ export class AutocompleteComplexityComponent implements ControlValueAccessor {
   @Output() blur: EventEmitter<any> = new EventEmitter<any>();
 
   @Output() optionSelected: EventEmitter<any> = new EventEmitter<any>();
-
-  @Output() enterButton: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild(DecAutocompleteComponent) autocompleteComponent: DecAutocompleteComponent;
 

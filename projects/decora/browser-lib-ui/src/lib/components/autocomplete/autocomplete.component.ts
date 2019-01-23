@@ -102,12 +102,12 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
 
   @Input() valueAttr: string;
 
+  @Input() notFoundMessage: string;
+
   // Events
   @Output() blur: EventEmitter<any> = new EventEmitter<any>();
 
   @Output() optionSelected: EventEmitter<SelectionEvent> = new EventEmitter<SelectionEvent>();
-
-  @Output() enterButton: EventEmitter<SelectionEvent> = new EventEmitter<SelectionEvent>();
 
   // View elements
   @ViewChild('termInput') termInput;
@@ -220,10 +220,6 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
 
     }
 
-  }
-
-  onEnterButton($event) {
-    this.enterButton.emit($event);
   }
 
   setFocus() {

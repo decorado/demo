@@ -8,7 +8,7 @@
           <mat-icon matChipRemove>cancel</mat-icon>
         </mat-chip>
         <input matInput [attr.aria-label]="name" #termInput [matAutocomplete]="decAutocomplete" [formControl]="autocompleteInput"
-          [name]="name" [required]="required" [placeholder]="placeholder" (keyup.enter)="onEnterButton($event)" (blur)="onBlur($event)"
+          [name]="name" [required]="required" [placeholder]="placeholder" (blur)="onBlur($event)"
           autocomplete="off" readonly onfocus="this.removeAttribute('readonly');"
           [matChipInputFor]="decAutocompleteChipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
         <button mat-icon-button matSuffix (click)="clear(true)" *ngIf="showClearButton()">
@@ -37,7 +37,7 @@
   <ng-container *ngSwitchCase="false">
     <mat-form-field>
       <input matInput [attr.aria-label]="name" #termInput [matAutocomplete]="decAutocomplete" [formControl]="autocompleteInput"
-        [name]="name" [required]="required" [placeholder]="placeholder" (keyup.enter)="onEnterButton($event)" (blur)="onBlur($event)"
+        [name]="name" [required]="required" [placeholder]="placeholder" (blur)="onBlur($event)"
         autocomplete="off" readonly onfocus="this.removeAttribute('readonly');">
       <button mat-icon-button matSuffix (click)="clear(true)" *ngIf="showClearButton()">
         <mat-icon>close</mat-icon>
@@ -63,3 +63,5 @@
   </ng-container>
 
 </ng-container>
+
+<p *ngIf="notFoundMessage && options?.length === 0">{{ notFoundMessage }}</p>

@@ -35,11 +35,13 @@ export class AutocompleteSquadsComponent implements ControlValueAccessor {
 
   @Input() placeholder = 'Squads autocomplete';
 
+  @Input() multi: boolean;
+
+  @Input() notFoundMessage: string;
+
   @Output() blur: EventEmitter<any> = new EventEmitter<any>();
 
   @Output() optionSelected: EventEmitter<any> = new EventEmitter<any>();
-
-  @Output() enterButton: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild(DecAutocompleteComponent) autocompleteComponent: DecAutocompleteComponent;
 

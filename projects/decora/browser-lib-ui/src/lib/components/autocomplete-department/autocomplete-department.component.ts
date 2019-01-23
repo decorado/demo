@@ -53,6 +53,8 @@ export class DecAutocompleteDepartmentComponent implements ControlValueAccessor 
 
   @Input() multi: boolean;
 
+  @Input() notFoundMessage: string;
+
   @Input() repeat: boolean;
 
   @Output() blur: EventEmitter<any> = new EventEmitter<any>();

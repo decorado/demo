@@ -55,6 +55,9 @@ Enable multiple options selection;
 #### `name: string`
 The input element name;
 
+#### `notFoundMessage: string`
+Message to be displayed if no option is found;
+
 #### `options: any[]`
 An array of options to be used as autocomplete options;
 
