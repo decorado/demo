@@ -43,8 +43,10 @@
       Option Selected:
       <span class="highlight-text">{{ models.disabled }}</span>
 
-      <dec-autocomplete name="models.disabled" placeholder="models.disabled" [(ngModel)]="models.disabled" (optionSelected)="optionSelected($event)" [options]="fakeStringOptions"
+      <dec-autocomplete #disabledAutoc name="models.disabled" placeholder="models.disabled" [(ngModel)]="models.disabled" (optionSelected)="optionSelected($event)" [options]="fakeStringOptions"
         [disabled]="true"></dec-autocomplete>
+
+      <strong>Options:</strong> {{ disabledAutoc.options }}
     </div>
 
     <div fxFlex>
@@ -53,8 +55,10 @@
       Option Selected:
       <span class="highlight-text">{{ models.required }}</span>
 
-      <dec-autocomplete name="models.required" placeholder="models.required" [(ngModel)]="models.required" (optionSelected)="optionSelected($event)" [options]="fakeStringOptions"
+      <dec-autocomplete #requiredAutoc name="models.required" placeholder="models.required" [(ngModel)]="models.required" (optionSelected)="optionSelected($event)" [options]="fakeStringOptions"
         [required]="true"></dec-autocomplete>
+
+      <strong>Options:</strong> {{ requiredAutoc.options }}
     </div>
 
     <div fxFlex>
@@ -63,8 +67,10 @@
       Option Selected:
       <span class="highlight-text">{{ models.fromArrayOfStringOnly }}</span>
 
-      <dec-autocomplete name="models.fromArrayOfStringOnly" placeholder="models.fromArrayOfStringOnly" [(ngModel)]="models.fromArrayOfStringOnly" (optionSelected)="optionSelected($event)"
+      <dec-autocomplete #fromArrayOfStringOnly name="models.fromArrayOfStringOnly" placeholder="models.fromArrayOfStringOnly" [(ngModel)]="models.fromArrayOfStringOnly" (optionSelected)="optionSelected($event)"
         [options]="fakeStringOptions"></dec-autocomplete>
+
+      <strong>Options:</strong> {{ fromArrayOfStringOnly.options }}
     </div>
 
   </div>
@@ -75,8 +81,10 @@
     Options Selected:
     <span class="highlight-text">{{ models.multipleSelection | json }}</span>
 
-    <dec-autocomplete name="models.multipleSelection" placeholder="models.multipleSelection" [(ngModel)]="models.multipleSelection" (optionSelected)="optionSelected($event)"
+    <dec-autocomplete #multipleSelection name="models.multipleSelection" placeholder="models.multipleSelection" [(ngModel)]="models.multipleSelection" (optionSelected)="optionSelected($event)"
        [endpoint]="endpoint" [multi]="true"  [labelAttr]="labelAttr" [valueAttr]="valueAttr"></dec-autocomplete>
+
+    <strong>Options:</strong> {{ multipleSelection.options }}
   </div>
 </ng-template>
 

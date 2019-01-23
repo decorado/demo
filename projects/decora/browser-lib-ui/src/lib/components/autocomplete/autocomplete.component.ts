@@ -88,11 +88,10 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
 
   @Input()
   set options(v: any[]) {
-    this._options = v;
-    this.innerOptions = v;
+    this._innerOptions = v;
   }
   get options(): any[] {
-    return this._options;
+    return this._filteredOptions;
   }
 
   @Input() placeholder = '';
@@ -118,9 +117,10 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
   // private data;
   private _disabled: boolean;
 
-  private _options: any[];
 
-  private innerOptions: any[] = [];
+  private _filteredOptions: any[];
+
+  private _innerOptions: any[] = [];
 
   private responses: { [key: string]: any } = {};
 
@@ -128,6 +128,7 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
 
   private searchInputSubscription: Subscription;
 
+  private options$Subscription: Subscription;
 
   /*
   ** ngModel propertie
@@ -149,12 +150,14 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
     .then(() => {
       this.subscribeToInputValueChanges();
       this.subscribeToSearchAndSetOptionsObservable();
+      this.subscribeToSearchOptions();
     });
   }
 
   ngOnDestroy() {
     this.unsubscribeFromInputValueChanges();
     this.unsubscribeFromSearchAndSetOptionsObservable();
+    this.unsubscribeFromSearchOptions();
   }
 
   registerOnChange(fn: any) {
@@ -209,7 +212,7 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
         this.optionSelected.emit({
           value: this.value,
           option: selectedOption,
-          options: this.innerOptions,
+          options: this._innerOptions,
         });
       }
 
@@ -344,6 +347,16 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
     return show;
   }
 
+  private subscribeToSearchOptions() {
+    this.options$Subscription = this.options$.subscribe(options => {
+      this._filteredOptions = options;
+    });
+  }
+
+  private unsubscribeFromSearchOptions() {
+    this.options$Subscription.unsubscribe();
+  }
+
   private detectIfHasValue(variable) {
     let thereIsValueSet = false;
     if (variable) {
@@ -372,7 +385,7 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
 
   private searchBasedFetchingType(textSearch, rememberResponse = false): Observable<any[]> {
 
-    if (this.options) {
+    if (this._innerOptions) {
 
       return this.searchInLocalOptions(textSearch);
 
@@ -381,7 +394,7 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
       return this.customFetchFunction(textSearch)
         .pipe(
           tap(options => {
-            this.innerOptions = options;
+            this.options = options;
           })
         );
 
@@ -418,7 +431,7 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
       .pipe(
         map(res => this.extractRowsFn(res)),
         tap((options: any[]) => {
-          this.innerOptions = options;
+          this._innerOptions = options;
           if (rememberResponse) {
             this.responses[textSearch] = options;
           }
@@ -430,10 +443,10 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
   private searchInLocalOptions(term: string) {
     const termString = `${term}`;
 
-    let filteredData = this.innerOptions;
+    let filteredData = this._innerOptions;
 
     if (termString) {
-      filteredData = this.innerOptions
+      filteredData = this._innerOptions
         .filter(item => {
           const label: string = this.extractLabel(item);
           const lowerCaseLabel = label.toLowerCase();
@@ -560,7 +573,7 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
   private detectRequiredData(): Promise<any> {
     return new Promise((resolve, reject) => {
       let error: string;
-      if (!this.endpoint && !this.options && !this.customFetchFunction) {
+      if (!this.endpoint && !this._innerOptions && !this.customFetchFunction) {
         error = 'No endpoint | options | customFetchFunction set. You must provide one of them to be able to use the Autocomplete';
       }
       if (error) {
@@ -618,7 +631,7 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
   }
 
   private getOptionBasedOnValue(v: any) {
-    return this.innerOptions.find(item => {
+    return this._innerOptions.find(item => {
       const itemValue = this.extractValue(item);
       return this.compareAsString(itemValue, v);
     });
@@ -656,7 +669,7 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
           if (isStringTerm) {
             return this.searchBasedFetchingType(searchTerm);
           } else {
-            return of(this.innerOptions);
+            return of(this._innerOptions);
           }
 
         })
