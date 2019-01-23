@@ -2,7 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpRequest } from '@angular/common/http';
 import { Observable, throwError, BehaviorSubject, Subscription } from 'rxjs';
 import { catchError, share, tap, finalize, debounceTime, switchMap, map } from 'rxjs/operators';
-import { UserAuthData, LoginData, FacebookLoginData, DecFilter, SerializedDecFilter, QueryParams } from './decora-api.model';
+import { UserAuthData, LoginData, FacebookLoginData, DecFilter, SerializedDecFilter, QueryParams, DecApiGenericError, DecApiResponseError } from './decora-api.model';
 import { DecConfigurationService } from './../configuration/configuration.service';
 import { DecLanguageService } from './../language/dec-language.service';
 
@@ -66,7 +66,7 @@ export class DecApiService implements OnDestroy {
       return this.postMethod<UserAuthData>(endpoint, body, options)
         .pipe(
           tap((res) => {
-            this.extratSessionToken(res),
+            this.extractSessionToken(res),
               this.user$.next(res);
             return res;
           })
@@ -86,7 +86,7 @@ export class DecApiService implements OnDestroy {
       return this.postMethod<UserAuthData>(endpoint, body, options)
         .pipe(
           tap((res) => {
-            this.extratSessionToken(res),
+            this.extractSessionToken(res),
               this.user$.next(res);
             return res;
           })
@@ -190,6 +190,7 @@ export class DecApiService implements OnDestroy {
     options.headers = this.newHeaderWithSessionToken('application/json', options.headers);
     const callObservable = this.http.get<T>(url, options)
       .pipe(
+        tap(this.handleSuccess),
         finalize(() => this.stopLoading(uuid)),
         catchError(this.handleError)
       );
@@ -202,6 +203,7 @@ export class DecApiService implements OnDestroy {
     options.headers = this.newHeaderWithSessionToken('application/json', options.headers);
     const callObservable = this.http.patch<T>(url, body, options)
       .pipe(
+        tap(this.handleSuccess),
         finalize(() => this.stopLoading(uuid)),
         catchError(this.handleError)
       );
@@ -214,6 +216,7 @@ export class DecApiService implements OnDestroy {
     options.headers = this.newHeaderWithSessionToken('application/json', options.headers);
     const callObservable = this.http.post<T>(url, body, options)
       .pipe(
+        tap(this.handleSuccess),
         finalize(() => this.stopLoading(uuid)),
         catchError(this.handleError)
       );
@@ -226,6 +229,7 @@ export class DecApiService implements OnDestroy {
     options.headers = this.newHeaderWithSessionToken('application/json', options.headers);
     const callObservable = this.http.put<T>(url, body, options)
       .pipe(
+        tap(this.handleSuccess),
         finalize(() => this.stopLoading(uuid)),
         catchError(this.handleError)
       );
@@ -238,6 +242,7 @@ export class DecApiService implements OnDestroy {
     options.headers = this.newHeaderWithSessionToken('application/json', options.headers);
     const callObservable = this.http.delete<T>(url, options)
       .pipe(
+        tap(this.handleSuccess),
         finalize(() => this.stopLoading(uuid)),
         catchError(this.handleError)
       );
@@ -251,18 +256,37 @@ export class DecApiService implements OnDestroy {
     const req = new HttpRequest(type, url, body, options);
     const callObservable = this.http.request<T>(req)
       .pipe(
+        tap(this.handleSuccess),
         finalize(() => this.stopLoading(uuid)),
         catchError(this.handleError)
       );
     return this.shareObservable(callObservable);
   }
 
+  private handleSuccess = (res) => {
+
+    if (res && res.status === 207) { // multiple errors returned in batch requests
+
+      throw res;
+
+    } else {
+
+      return res;
+
+    }
+
+  }
+
   private handleError = (error: any) => {
+
     const message = error.message;
     const bodyMessage = (error && error.error) ? error.error.message : '';
     const bodyError = error.error;
     const status = error.status;
+    const timestamp = error.timestamp;
     const statusText = error.statusText;
+    const parsedError = { status, timestamp, error: statusText, message };
+    const errors: DecApiGenericError[] = status === 207 ? error.operations : [parsedError];
 
     switch (error.status) {
       case 401:
@@ -270,22 +294,12 @@ export class DecApiService implements OnDestroy {
           this.goToLoginPage();
         }
         break;
-        /* REMOVED handlers because the error must be handled by the caller not the api. Excepts the 401 that should redirect to login page
-              case 404:
-                this.snackbar.open(bodyMessage || 'message.http-status.404', 'error', undefined, !!!bodyMessage);
-                break;
 
-              case 409:
-                this.snackbar.open(bodyMessage || 'message.http-status.409', 'error', undefined, !!!bodyMessage);
-                break;
-
-              case 412:
-                this.snackbar.open(bodyMessage, 'error');
-                break;
-        */
+      default:
+        const persedErrorResponse: DecApiResponseError = { status, statusText, message, bodyMessage, bodyError, errors };
+        return throwError(persedErrorResponse);
     }
 
-    return throwError({ status, statusText, message, bodyMessage, bodyError });
   }
 
   // ******* //
@@ -328,7 +342,7 @@ export class DecApiService implements OnDestroy {
     const options = { headers: this.newHeaderWithSessionToken() };
     return this.getMethod<UserAuthData>(endpoint, {}, options)
       .pipe(
-        tap(this.extratSessionToken),
+        tap(this.extractSessionToken),
         switchMap(this.fetchUserProfile),
       );
   }
@@ -486,7 +500,7 @@ export class DecApiService implements OnDestroy {
     return headers;
   }
 
-  private extratSessionToken = (account) => {
+  private extractSessionToken = (account) => {
     this.sessionToken = account && account.session ? account.session.id : undefined;
   }
 
