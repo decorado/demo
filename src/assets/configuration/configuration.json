@@ -2,7 +2,7 @@
   "profile": "_PROFILE_ACTIVE_",
   "local": {
     "host": "//localhost:4200",
-    "api": "//qa-k8s.decora/api",
+    "api": "//development-k8s.decora/api",
     "authHost": "//localhost:4200/demo/service/api?DemoContainer-tab=examples",
     "useMockApi": false,
     "mockApiHost": "//localhost:3000",

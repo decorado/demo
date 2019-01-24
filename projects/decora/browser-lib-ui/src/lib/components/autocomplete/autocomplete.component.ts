@@ -120,7 +120,7 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
 
   private _filteredOptions: any[];
 
-  private _innerOptions: any[] = [];
+  private _innerOptions: any[];
 
   private responses: { [key: string]: any } = {};
 
