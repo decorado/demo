@@ -11,7 +11,7 @@
           [name]="name" [required]="required" [placeholder]="placeholder" (blur)="onBlur($event)"
           autocomplete="off" readonly onfocus="this.removeAttribute('readonly');"
           [matChipInputFor]="decAutocompleteChipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
-        <button mat-icon-button matSuffix (click)="clear(true)" *ngIf="showClearButton()">
+        <button mat-icon-button matSuffix (click)="clear()" *ngIf="showClearButton()">
           <mat-icon>close</mat-icon>
         </button>
         <button mat-icon-button matSuffix (click)="reset()" *ngIf="showResetButton()">
@@ -39,7 +39,7 @@
       <input matInput [attr.aria-label]="name" #termInput [matAutocomplete]="decAutocomplete" [formControl]="autocompleteInput"
         [name]="name" [required]="required" [placeholder]="placeholder" (blur)="onBlur($event)"
         autocomplete="off" readonly onfocus="this.removeAttribute('readonly');">
-      <button mat-icon-button matSuffix (click)="clear(true)" *ngIf="showClearButton()">
+      <button mat-icon-button matSuffix (click)="clear()" *ngIf="showClearButton()">
         <mat-icon>close</mat-icon>
       </button>
       <button mat-icon-button matSuffix (click)="reset()" *ngIf="showResetButton()">

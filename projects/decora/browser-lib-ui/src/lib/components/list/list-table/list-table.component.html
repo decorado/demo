@@ -17,7 +17,9 @@
     [width]="40"
     [canAutoResize]="false"
     [headerCheckboxable]="true"
-    [checkboxable]="true">
+    [checkboxable]="true"
+    [draggable]="false"
+    [resizeable]="false">
   </ngx-datatable-column>
 
   <ngx-datatable-column *ngFor="let column of columns;"
@@ -26,7 +28,9 @@
                          [minWidth]="column.minWidth"
                          [maxWidth]="column.maxWidth"
                          [prop]="column.prop"
-                         [sortable]="column.prop ? true : false">
+                         [sortable]="column.prop ? true : false"
+                         [draggable]="false"
+                         [resizeable]="false">
 
     <ng-template *ngIf="column.template ? true : false"
       let-row="row"
