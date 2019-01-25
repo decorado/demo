@@ -1,13 +1,18 @@
-import { Component, ContentChildren, QueryList, Input, Output, EventEmitter } from '@angular/core';
+import { Component, ContentChildren, QueryList, Input, Output, EventEmitter, ViewChild, ElementRef, OnInit, AfterViewInit } from '@angular/core';
 import { DecCarouselItemComponent } from './dec-carousel-item/dec-carousel-item.component';
-import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { Observable, fromEvent, timer } from 'rxjs';
+import { takeUntil, switchMap, debounce, throttle } from 'rxjs/operators';
 
 @Component({
   selector: 'dec-carousel',
   templateUrl: './dec-carousel.component.html',
   styleUrls: ['./dec-carousel.component.scss']
 })
-export class DecCarouselComponent {
+export class DecCarouselComponent implements AfterViewInit {
+
+  @ViewChild('itemsCarousel') itemsCarousel: ElementRef;
+  public itemsCarouselEl: HTMLDivElement;
 
   @Input()
   set selectedIndex(v: number) {
@@ -39,11 +44,13 @@ export class DecCarouselComponent {
 
   @Input() highlightSelected = true;
 
+  @Input() vertical = false;
+
   @Input() gap = '8px';
 
   @Input()
   set enableDrag(v) {
-      this._enableDrag = v;
+    this._enableDrag = v;
   }
 
   get enableDrag() {
@@ -101,15 +108,20 @@ export class DecCarouselComponent {
 
   constructor() { }
 
+  public ngAfterViewInit(): void {
+    this.itemsCarouselEl = this.itemsCarousel.nativeElement;
+    this.mousedownEvent();
+  }
+
   get itemWidth() {
     return 100 / this.itemsPerPage;
   }
 
-  get showPrevButton() {
+  enablePrevButton() {
     return this.initialIndex > 0;
   }
 
-  get showNextButton() {
+  enableNextButton() {
     const totalItems = this.items.length;
     return this.initialIndex < (totalItems - this.itemsPerPage);
   }
@@ -136,13 +148,17 @@ export class DecCarouselComponent {
   }
 
   goPrev() {
-    this.initialIndex--;
-    this.detectVisibleItems();
+    if (this.enablePrevButton()) {
+      this.initialIndex--;
+      this.detectVisibleItems();
+    }
   }
 
   goNext() {
-    this.initialIndex++;
-    this.detectVisibleItems();
+    if (this.enableNextButton()) {
+      this.initialIndex++;
+      this.detectVisibleItems();
+    }
   }
 
   selectItem(index) {
@@ -211,4 +227,64 @@ export class DecCarouselComponent {
     });
   }
 
+  // tslint:disable-next-line:member-ordering
+  private _mouseEventReference: MouseEvent;
+
+  private mousemoveEvent(): Observable<Event> {
+    return fromEvent(this.itemsCarouselEl, 'mousemove').pipe(
+      takeUntil(fromEvent(this.itemsCarouselEl, 'mouseup')),
+      takeUntil(fromEvent(this.itemsCarouselEl, 'mouseleave')),
+    );
+  }
+
+  private mousedownEvent(): void {
+
+    fromEvent(this.itemsCarouselEl, 'mousedown').pipe(
+      switchMap((event: MouseEvent) => {
+        this._mouseEventReference = event;
+        return this.mousemoveEvent();
+      }),
+      throttle(() => timer(100))
+    ).subscribe((event: MouseEvent) => {
+      this.onMousemove(event);
+    });
+
+  }
+
+  private onMousemove(event: MouseEvent): void {
+    if (!this._enableDrag) {
+      let distance = 0;
+      let lengthItems = 0;
+
+      if (this.vertical) {
+        distance = this._mouseEventReference.screenY - event.screenY;
+        lengthItems = this.itemsCarouselEl.offsetHeight;
+      } else {
+        distance = event.screenX - this._mouseEventReference.screenX;
+        lengthItems = this.itemsCarouselEl.offsetWidth;
+      }
+
+      if (Math.abs(distance) >= (lengthItems / this._itemsPerPage) - +this.gap.replace('px', '')) {
+        this._mouseEventReference = event;
+        let directionFunc;
+
+        if (this.vertical) {
+          if (distance < 0) {
+            directionFunc = this.goPrev;
+          } else {
+            directionFunc = this.goNext;
+          }
+        } else {
+          if (distance > 0) {
+            directionFunc = this.goPrev;
+          } else {
+            directionFunc = this.goNext;
+          }
+        }
+
+        directionFunc = directionFunc.bind(this);
+        directionFunc();
+      }
+    }
+  }
 }

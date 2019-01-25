@@ -1,30 +1,21 @@
-<div *ngIf="items" class="dec-carousel-wrapper" fxLayout="row" [fxLayoutGap]="gap" fxLayoutAlign="space-between center">
+<div *ngIf="items" class="dec-carousel-wrapper" [fxLayout]="vertical ? 'column' : 'row'" [fxLayoutGap]="gap"
+  fxLayoutAlign="space-between center">
 
-  <div fxFlex="24px" *ngIf="showNavigators">
-    <div (click)="goPrev()" *ngIf="showPrevButton" class="dec-carousel-navigator dec-carousel-navigator-left"></div>
+  <div class="dec-carousel-container-navigator">
+    <div (click)="goPrev()" class="dec-carousel-navigator" [ngClass]="{'dec-carousel-navigator-left': !vertical, 'dec-carousel-navigator-top': vertical, 'navigator-disabled': !enablePrevButton() }"></div>
   </div>
 
   <div fxFlex>
 
-  <div cdkDropList
-      cdkDropListOrientation="horizontal"
-      (cdkDropListDropped)="drop($event)"
-      [cdkDropListDisabled]="!enableDrag"
-      fxLayout="row"
-      class="dec-carousel-container"
-      [fxLayoutGap]="gap"
-      cdkDragHandle>
+    <div #itemsCarousel cdkDropList [cdkDropListOrientation]="vertical ? 'vertical' : 'horizontal'"
+      (cdkDropListDropped)="drop($event)" [cdkDropListDisabled]="!enableDrag" [fxLayout]="vertical ? 'column' : 'row'"
+      class="dec-carousel-container" [fxLayoutGap]="gap" cdkDragHandle>
 
-      <div
-        cdkDrag
-        cdkDragLockAxis="x"
-        cdkDragBoundary=".dec-carousel-container"
-        *ngFor="let item of visibleItems;"
-        class="dec-carousel-item"
-        [ngClass]="{'highlight-selected': highlightSelected}"
-        [fxFlex]="itemWidth">
+      <div cdkDrag [cdkDragLockAxis]="vertical ? 'y' : 'x'" cdkDragBoundary=".dec-carousel-container" *ngFor="let item of visibleItems;"
+        class="dec-carousel-item" [ngClass]="{'highlight-selected': highlightSelected}" [fxFlex]="itemWidth">
 
-        <div class="dec-carousel-item-content-wrapper" [ngClass]="{'dec-carousel-item-content-wrapper-selected': selectedIndex === item.index}" (click)="selectItem(item.index)">
+        <div class="dec-carousel-item-content-wrapper" [ngClass]="{'dec-carousel-item-content-wrapper-selected': selectedIndex === item.index}"
+          (click)="selectItem(item.index)">
 
           <div class="dec-carousel-item-content">
 
@@ -36,13 +27,12 @@
 
       </div>
 
+    </div>
+
   </div>
 
-
-  </div>
-
-  <div fxFlex="24px" *ngIf="showNavigators">
-    <div (click)="goNext()" *ngIf="showNextButton" class="dec-carousel-navigator dec-carousel-navigator-right"></div>
+  <div class="dec-carousel-container-navigator">
+    <div (click)="goNext()" class="dec-carousel-navigator" [ngClass]="{'dec-carousel-navigator-right': !vertical, 'dec-carousel-navigator-bottom': vertical, 'navigator-disabled': !enableNextButton() }"></div>
   </div>
 
 </div>

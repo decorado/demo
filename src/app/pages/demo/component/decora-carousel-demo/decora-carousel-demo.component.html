@@ -2,27 +2,22 @@
 
   <h1>Dec Carousel</h1>
 
-<p>Index selected = {{ carousel1?.selectedItem.index }}</p>
+  <p>Index selected = {{ carousel1?.selectedItem.index }}</p>
 
   <dec-carousel (itemSelected)="onItemSelected($event)" #carousel1>
 
-    <dec-carousel-item value="1">item 1</dec-carousel-item>
+    <dec-carousel-item value="1">
+      <div class="item-carousel">Item 1</div>
+    </dec-carousel-item>
 
-    <dec-carousel-item value="2">item 2</dec-carousel-item>
+    <dec-carousel-item value="2">
+      <div class="item-carousel">Item 2</div>
+    </dec-carousel-item>
 
-    <dec-carousel-item value="3">item 3</dec-carousel-item>
+    <dec-carousel-item value="3">
+      <div class="item-carousel">Item 3</div>
+    </dec-carousel-item>
 
-    <dec-carousel-item value="4">item 4</dec-carousel-item>
-
-    <dec-carousel-item value="5">item 5</dec-carousel-item>
-
-    <dec-carousel-item value="6">item 6</dec-carousel-item>
-
-    <dec-carousel-item value="7">item 7</dec-carousel-item>
-
-    <dec-carousel-item value="8">item 8</dec-carousel-item>
-
-    <dec-carousel-item value="9">item 9</dec-carousel-item>
 
   </dec-carousel>
 
@@ -32,23 +27,41 @@
 
   <dec-carousel (itemSelected)="onItemSelected($event)" #carousel2 [highlightSelected]="false">
 
-    <dec-carousel-item value="1">item 1</dec-carousel-item>
+    <dec-carousel-item value="1">
+      <div class="item-carousel">Item 1</div>
+    </dec-carousel-item>
 
-    <dec-carousel-item value="2">item 2</dec-carousel-item>
+    <dec-carousel-item value="2">
+      <div class="item-carousel">Item 2</div>
+    </dec-carousel-item>
 
-    <dec-carousel-item value="3">item 3</dec-carousel-item>
+    <dec-carousel-item value="3">
+      <div class="item-carousel">Item 3</div>
+    </dec-carousel-item>
 
-    <dec-carousel-item value="4">item 4</dec-carousel-item>
+    <dec-carousel-item value="4">
+      <div class="item-carousel">Item 4</div>
+    </dec-carousel-item>
 
-    <dec-carousel-item value="5">item 5</dec-carousel-item>
+    <dec-carousel-item value="5">
+      <div class="item-carousel">Item 5</div>
+    </dec-carousel-item>
 
-    <dec-carousel-item value="6">item 6</dec-carousel-item>
+    <dec-carousel-item value="6">
+      <div class="item-carousel">Item 6</div>
+    </dec-carousel-item>
 
-    <dec-carousel-item value="7">item 7</dec-carousel-item>
+    <dec-carousel-item value="7">
+      <div class="item-carousel">Item 7</div>
+    </dec-carousel-item>
 
-    <dec-carousel-item value="8">item 8</dec-carousel-item>
+    <dec-carousel-item value="8">
+      <div class="item-carousel">Item 8</div>
+    </dec-carousel-item>
 
-    <dec-carousel-item value="9">item 9</dec-carousel-item>
+    <dec-carousel-item value="9">
+      <div class="item-carousel">Item 9</div>
+    </dec-carousel-item>
 
   </dec-carousel>
 
@@ -56,14 +69,47 @@
 
   <p>Index selected = {{ carousel3?.selectedItem.index }}</p>
 
-  <dec-carousel (itemSelected)="onItemSelected($event)"
-    #carousel3
-    [enableDrag]="true"
-    [arrayToSort]="dragAndDropArray"
+  <dec-carousel (itemSelected)="onItemSelected($event)" #carousel3 [enableDrag]="true" [arrayToSort]="dragAndDropArray"
     [highlightSelected]="false">
 
-    <dec-carousel-item value="1" *ngFor="let item of dragAndDropArray">item {{ item }}</dec-carousel-item>
+    <dec-carousel-item [value]="item" *ngFor="let item of dragAndDropArray">
+      <div class="item-carousel">
+        Item {{ item }}
+      </div>
+    </dec-carousel-item>
 
   </dec-carousel>
 
+  <br>
+  <br>
+
+  <div style="display: flex;">
+    <div style="flex: 1;">
+      <h2>Vertical Carousel</h2>
+
+      <dec-carousel [vertical]="true" itemsPerPage="5">
+
+        <dec-carousel-item [value]="item" *ngFor="let item of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]">
+          <div class="item-carousel-vertical" [style.backgroundColor]="item % 2 ? 'blue' : 'red'">
+            {{ item }}
+          </div>
+        </dec-carousel-item>
+
+      </dec-carousel>
+    </div>
+
+    <div style="flex: 1;">
+      <h2>Drag and Drop Vertical Carousel</h2>
+
+      <dec-carousel [vertical]="true" [enableDrag]="true" [arrayToSort]="dragAndDropItemsVertical" itemsPerPage="5">
+
+        <dec-carousel-item [value]="item" *ngFor="let item of dragAndDropItemsVertical">
+          <div class="item-carousel-vertical" [style.backgroundColor]="item % 2 ? 'blueviolet' : 'chocolate'">
+            {{ item }}
+          </div>
+        </dec-carousel-item>
+
+      </dec-carousel>
+    </div>
+  </div>
 </app-demo-container>
