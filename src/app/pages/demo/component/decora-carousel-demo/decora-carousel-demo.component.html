@@ -101,7 +101,7 @@
     <div style="flex: 1;">
       <h2>Drag and Drop Vertical Carousel</h2>
 
-      <dec-carousel [vertical]="true" [enableDrag]="true" [arrayToSort]="dragAndDropItemsVertical" itemsPerPage="5">
+      <dec-carousel (lastItem)="onLastItem()" [vertical]="true" [enableDrag]="true" [arrayToSort]="dragAndDropItemsVertical" itemsPerPage="5">
 
         <dec-carousel-item [value]="item" *ngFor="let item of dragAndDropItemsVertical">
           <div class="item-carousel-vertical" [style.backgroundColor]="item % 2 ? 'blueviolet' : 'chocolate'">

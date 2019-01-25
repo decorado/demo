@@ -17,4 +17,8 @@ export class DecoraCarouselDemoComponent {
     console.log('onItemSelected', event);
   }
 
+
+  onLastItem() {
+    this.dragAndDropItemsVertical.push(...this.dragAndDropItemsVertical);
+  }
 }

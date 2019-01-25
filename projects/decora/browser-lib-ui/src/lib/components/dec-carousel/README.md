@@ -77,3 +77,7 @@ event {
 The index is the item index.
 
 The value is the `dec-carousel-item` `value` input
+
+## lastItem()
+
+Event return when list arrived in the last item

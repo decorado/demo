@@ -85,6 +85,8 @@ export class DecCarouselComponent implements AfterViewInit {
 
   @Output() sortedArray = new EventEmitter<any>();
 
+  @Output() lastItem = new EventEmitter<any>();
+
   visibleItems = [];
 
   selectedItem: { index: number, value: any } = {
@@ -121,7 +123,7 @@ export class DecCarouselComponent implements AfterViewInit {
     return this.initialIndex > 0;
   }
 
-  enableNextButton() {
+  get enableNextButton() {
     const totalItems = this.items.length;
     return this.initialIndex < (totalItems - this.itemsPerPage);
   }
@@ -144,7 +146,9 @@ export class DecCarouselComponent implements AfterViewInit {
     });
 
     this.visibleItems = itemsObjects.slice(this.initialIndex, this.finalIndex);
-
+    if (!this.enableNextButton) {
+      this.lastItem.emit();
+    }
   }
 
   goPrev() {
@@ -155,7 +159,7 @@ export class DecCarouselComponent implements AfterViewInit {
   }
 
   goNext() {
-    if (this.enableNextButton()) {
+    if (this.enableNextButton) {
       this.initialIndex++;
       this.detectVisibleItems();
     }
