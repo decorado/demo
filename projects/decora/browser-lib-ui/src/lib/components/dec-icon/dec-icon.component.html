@@ -1,6 +1,6 @@
 <span class="dec-icon">
 
-  <ng-container [ngSwitch]="font">
+  <ng-container [ngSwitch]="font" *ngIf="icon">
     <ng-container *ngSwitchCase="'mat'">
       <i class="material-icons dec-icon" aria-hidden="true">{{icon}}</i>
     </ng-container>

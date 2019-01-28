@@ -39,7 +39,7 @@ export class DecIconComponent implements OnChanges, OnDestroy {
   // for use within components that remove elements from document like mat-tab
   private watchNodeInsertion() {
     this.elementRef.nativeElement.addEventListener('DOMNodeInsertedIntoDocument', (e) => {
-      this.elementChanges.next(Date.now());
+      this.detectChanges();
     });
   }
 
@@ -51,14 +51,16 @@ export class DecIconComponent implements OnChanges, OnDestroy {
   private subscribeToChanges() {
     this.changesSubscription = this.elementChanges.pipe(
       distinctUntilChanged(),
-      debounceTime(50),
+      debounceTime(300),
     ).subscribe(this.detectChanges);
   }
 
   private extractIconName() {
     try {
       const element = this.textElement.nativeElement;
-      this.icon = element.textContent;
+      setTimeout(() => {
+        this.icon = element.textContent;
+      }, 0);
     } catch (error) { }
   }
 
