@@ -381,6 +381,9 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
 
   private searchBasedFetchingType(textSearch, rememberResponse = false): Observable<any[]> {
 
+    console.log('searchBasedFetchingType', textSearch);
+
+
     if (this._innerOptions) {
 
       return this.searchInLocalOptions(textSearch);
@@ -427,7 +430,7 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
       .pipe(
         map(res => this.extractRowsFn(res)),
         tap((options: any[]) => {
-          this._innerOptions = options;
+          this._filteredOptions = options;
           if (rememberResponse) {
             this.responses[textSearch] = options;
           }
@@ -627,7 +630,7 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
   }
 
   private getOptionBasedOnValue(v: any) {
-    return this._innerOptions.find(item => {
+    return this._filteredOptions.find(item => {
       const itemValue = this.extractValue(item);
       return this.compareAsString(itemValue, v);
     });
