@@ -2,7 +2,7 @@ import { DecImagewebWorkerBackEnd } from './image-web-worker-back-end';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { skipWhile, distinctUntilChanged } from 'rxjs/operators';
 import { ErrorImage } from './image.directive.constants';
-import { DecUID } from '../../../helpers/uid';
+import { DecUID } from './../../utilities/uid';
 
 const blob = new Blob([DecImagewebWorkerBackEnd], { type: 'application/javascript' });
 

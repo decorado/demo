@@ -326,5 +326,9 @@ export * from './lib/validators/validators';
 * HELPERS
 *
 **********************************************************/
-export * from './helpers/comparison';
-export * from './helpers/uid';
+export * from './lib/utilities/array';
+export * from './lib/utilities/comparison';
+export * from './lib/utilities/guid';
+export * from './lib/utilities/object';
+export * from './lib/utilities/urls';
+export * from './lib/utilities/uid';

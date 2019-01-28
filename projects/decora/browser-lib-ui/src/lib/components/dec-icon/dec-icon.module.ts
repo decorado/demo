@@ -4,6 +4,7 @@ import { DecIconComponent } from './dec-icon.component';
 import { MatIconModule, MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DecIconsMap } from './dec-icons.map';
+import { removeDuplicatedDashs } from '../../utilities/urls';
 
 @NgModule({
   imports: [
@@ -32,7 +33,13 @@ export class DecIconModule {
 
   private registerDecoraIcon = (icon) => {
     const baseHref = document.getElementsByTagName('base')[0].href;
-    const meshIconBlackUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(`${baseHref}/${icon.path}`);
+    const iconHref = removeDuplicatedDashs(`${baseHref}/${icon.path}`);
+
+    const meshIconBlackUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(iconHref);
+
+    console.log('AQUI ANTES', iconHref, meshIconBlackUrl);
+
     this.matIconRegistry.addSvgIcon(icon.name, meshIconBlackUrl);
   }
+
 }
