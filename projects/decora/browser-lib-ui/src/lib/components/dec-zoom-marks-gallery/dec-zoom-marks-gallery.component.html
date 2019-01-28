@@ -10,7 +10,7 @@
   </div>
 
   <div class="gallery-size container-carousel" fxLayout="row" fxLayoutAlign="center center">
-    <dec-carousel itemsPerPage="7" style="width:100%;" [selectedIndex]="glb ? 1 : 0">
+    <dec-carousel itemsPerPage="7" style="width:100%;" [selectedIndex]="(glb && markedObjs && markedObjs.length) ? 1 : 0">
 
       <dec-carousel-item *ngIf="glb">
         <div class="mesh-icon-container" (click)="onSelectMesh()">

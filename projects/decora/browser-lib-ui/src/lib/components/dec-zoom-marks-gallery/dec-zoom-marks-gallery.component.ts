@@ -84,6 +84,8 @@ export class DecZoomMarksGalleryComponent {
 
       if (!this._glb) {
         this.onSelectImage(null, null, 0);
+      } else if ((!this._markedObjs || !this._markedObjs.length)) {
+        this.onSelectMesh();
       }
     }
   }
