@@ -34,11 +34,7 @@ export class DecIconModule {
   private registerDecoraIcon = (icon) => {
     const baseHref = document.getElementsByTagName('base')[0].href;
     const iconHref = removeDuplicatedDashs(`${baseHref}/${icon.path}`);
-
     const meshIconBlackUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(iconHref);
-
-    console.log('AQUI ANTES', iconHref, meshIconBlackUrl);
-
     this.matIconRegistry.addSvgIcon(icon.name, meshIconBlackUrl);
   }
 

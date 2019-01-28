@@ -11,7 +11,7 @@ export class DecIconComponent implements OnChanges, OnDestroy {
 
   icon: string;
 
-  dinamicHeight = 'inherit';
+  dinamicHeight;
 
   @Input() font: 'dec' | 'mat' | 'fas';
 
@@ -25,6 +25,7 @@ export class DecIconComponent implements OnChanges, OnDestroy {
     private elementRef: ElementRef
   ) {
     this.subscribeToChanges();
+    this.watchNodeInsertion();
   }
 
   ngOnChanges() {
@@ -35,6 +36,13 @@ export class DecIconComponent implements OnChanges, OnDestroy {
     this.changesSubscription.unsubscribe();
   }
 
+  // for use within components that remove elements from document like mat-tab
+  private watchNodeInsertion() {
+    this.elementRef.nativeElement.addEventListener('DOMNodeInsertedIntoDocument', (e) => {
+      this.elementChanges.next(Date.now());
+    });
+  }
+
   private detectChanges = () => {
     this.extractIconName();
     this.extractIconHeight();
@@ -43,7 +51,7 @@ export class DecIconComponent implements OnChanges, OnDestroy {
   private subscribeToChanges() {
     this.changesSubscription = this.elementChanges.pipe(
       distinctUntilChanged(),
-      debounceTime(300),
+      debounceTime(50),
     ).subscribe(this.detectChanges);
   }
 
