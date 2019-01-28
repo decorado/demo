@@ -10,7 +10,7 @@
 
   </div>
 
-  <dec-carousel>
+  <dec-carousel itemsPerPage="7">
     <dec-carousel-item *ngFor="let image of images">
       <img [decImage]="image.file" [decImageSize]="{width:300, height:300}" (click)="onSelectImage($event,image)">
       <div class="has-marks" *ngIf="image?.comments?.length > 0">!</div>

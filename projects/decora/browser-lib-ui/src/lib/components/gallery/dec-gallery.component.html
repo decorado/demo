@@ -4,7 +4,7 @@
     <dec-image-zoom [permitUpload]="permitUpload" (uploaded)="uploadedFunction($event)" [image]="imageHighlight"></dec-image-zoom>
   </div>
 
-  <dec-carousel>
+  <dec-carousel itemsPerPage="7">
 
     <dec-carousel-item *ngFor="let image of images; let i = index;">
 

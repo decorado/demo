@@ -9,16 +9,16 @@
       (updateTagStructure)="updateTagStructure($event)"></dec-mesh-qa>
   </div>
 
-  <div class="gallery-size" fxLayout="row" fxLayoutAlign="center center">
-    <dec-carousel>
+  <div class="gallery-size container-carousel" fxLayout="row" fxLayoutAlign="center center">
+    <dec-carousel itemsPerPage="7" style="width:100%;" [selectedIndex]="glb ? 1 : 0">
 
-      <dec-carousel-item *ngIf="glb" (click)="onSelectMesh()" [class.active]="meshQaSelected">
-        <div class="image-container">
-          <img [src]="imageMeshUrl" style="width: 100%;height: 100%;" />
+      <dec-carousel-item *ngIf="glb">
+        <div class="mesh-icon-container" (click)="onSelectMesh()">
+          <dec-icon font="mat" class="mesh-icon">3d_rotation</dec-icon>
         </div>
       </dec-carousel-item>
 
-      <dec-carousel-item *ngFor="let image of markedObjs; let i = index;" [class.active]="image == markedObj">
+      <dec-carousel-item *ngFor="let image of markedObjs; let i = index;">
         <div class="image-container">
           <span *ngIf="showTags && (image?.tags && image?.tags?.length > 0) ||
             showTags && (image?.zoomAreas && image?.zoomAreas?.length > 0)"

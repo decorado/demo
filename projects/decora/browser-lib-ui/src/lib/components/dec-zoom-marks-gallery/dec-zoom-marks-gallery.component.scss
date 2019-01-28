@@ -76,6 +76,18 @@ a {
   font-size: 28px;
 }
 
+.mesh-icon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 64px;
+  width: 64px;
+
+  .mesh-icon {
+    font-size: 36px;
+  }
+}
+
 .dec-icon-text-size {
   font-size: 18px;
   position: relative;
@@ -135,4 +147,9 @@ a {
   width: 100%;
   max-width: 646px;
   padding-bottom: 48px;
+}
+
+.container-carousel {
+  height: 80px;
+  padding: 0px 8px;
 }

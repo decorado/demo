@@ -16,8 +16,6 @@ export class DecZoomMarksGalleryComponent {
 
   markedObj: any;
 
-  imageMeshUrl = `/d/assets/img/mesh-qa.png`;
-
   @Input() jobType;
 
   @Input() isProfessional: boolean;
@@ -118,7 +116,7 @@ export class DecZoomMarksGalleryComponent {
 
   constructor(
     private decRenderCommentService: DecRenderCommentService
-  ) {}
+  ) { }
 
   onSelectImage = ($event, sysFile, i) => {
     this.markedObj = this.markedObjs[i];
