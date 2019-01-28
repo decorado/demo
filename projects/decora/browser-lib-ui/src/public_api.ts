@@ -237,6 +237,9 @@ export * from './lib/directives/image/image.directive';
 // PERMISSIONS
 export * from './lib/directives/permission/dec-permission.directive';
 export * from './lib/directives/permission/dec-permission.module';
+// SCROLL
+export * from './lib/directives/scroll/dec-scroll.directive';
+export * from './lib/directives/scroll/dec-scroll.module';
 
 
 /*********************************************************
