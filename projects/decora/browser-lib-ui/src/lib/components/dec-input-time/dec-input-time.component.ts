@@ -134,28 +134,54 @@ export class DecInputTimeComponent implements ControlValueAccessor, AfterViewIni
       distinctUntilChanged(),
     )
     .subscribe(value => {
-      const firstFourNumbers = this.getFirstFourNumbers(value);
-      const maskedValue = this.maskValue(firstFourNumbers);
-      this.setValueBasedOnInput(firstFourNumbers);
+
+      const numbers = this.getNumbers(value);
+
+      console.log('.subscribe(value', value, numbers);
+
+      const maskedValue = this.maskValue(numbers);
+
+      this.setValueBasedOnInput(numbers);
+
       this.timeForm.controls.time.setValue(maskedValue);
+
     });
   }
 
-  private getFirstFourNumbers(value) {
-    const numbersArray = `${value}`.match(/[0-9]/gi);
-    const firstFourNumbersArray = numbersArray ? numbersArray.slice(0, 4) : [];
-    return firstFourNumbersArray.join('');
+  private getNumbers(value) {
+    const numbersArray = `${value}`.replace(/[a-zA-Z]/g, '');
+    return parseInt(numbersArray, 10);
   }
 
   private maskValue(value) {
-    const totalNumbers = value.length;
-    if (totalNumbers >= 3) {
-      return `${value[0]}${value[1] || 0}h${value[2] || 0}${value[3] || 0}m`;
-    } else if (totalNumbers > 0) {
-      return `${value}h`;
+
+    const valueString = `${value}`;
+
+    const totalNumbers = valueString.length;
+
+    console.log('maskValue', value, totalNumbers);
+
+    let maskedValue;
+
+    if (totalNumbers === 1) {
+
+      maskedValue = `0${valueString}m`;
+
+    } else if (totalNumbers === 2) {
+
+      maskedValue = `${valueString}m`;
+
     } else {
-      return '';
+
+      const minutes = valueString.slice(totalNumbers - 2, totalNumbers);
+
+      const hours = valueString.slice(0, totalNumbers - 2);
+
+      maskedValue = `${hours}h${minutes}m`;
+
     }
+
+    return maskedValue;
   }
 
   private setInputBasedOnValue() {
@@ -165,21 +191,13 @@ export class DecInputTimeComponent implements ControlValueAccessor, AfterViewIni
 
   private getMaskedInnerValue() {
     if (this.innerValue > 0) {
-
       const minutes = (this.innerValue % 60);
-
       const hours = (this.innerValue - minutes) / 60;
-
       const minutesString = `${minutes}`.length === 2 ? `${minutes}` : `${minutes}`.length === 1 ? `0${minutes}` : '';
-
       const hoursString = `${hours}`.length >= 2 ? `${hours}` : `${hours}`.length === 1 ? `0${hours}` : '';
-
       return `${hoursString}h${minutesString}m`;
-
     } else {
-
       return '';
-
     }
   }
 
