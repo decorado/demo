@@ -29,10 +29,6 @@ const AUTOCOMPLETE_CONTROL_VALUE_ACCESSOR: any = {
 })
 export class DecAutocompleteComponent implements ControlValueAccessor, AfterViewInit, OnDestroy {
 
-  @ViewChild(MatAutocompleteTrigger) autocompleteTrigger: MatAutocompleteTrigger;
-
-  @ContentChild(DecAutocompleteOptionTemplateComponent) optionTemplate: DecAutocompleteOptionTemplateComponent;
-
   autocompleteInput = new FormControl('');
 
   options$: Observable<any[]>;
@@ -43,20 +39,6 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
 
   separatorKeysCodes: number[] = [ENTER, COMMA];
 
-  /*
-  ** ngModel VALUE
-  */
-  set value(v: any) {
-    if (v !== this.innerValue) {
-      this.setInnerValue(v);
-      this.onChangeCallback(v);
-    }
-  }
-  get value(): any {
-    return this.innerValue;
-  }
-
-  // Params
   @Input() customFetchFunction: CustomFetchFunction;
 
   @Input() extractRowsFn = extractResOptions;
@@ -66,6 +48,30 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
   @Input() multi: boolean;
 
   @Input() repeat: boolean;
+
+  @Input() labelFn: LabelFunction;
+
+  @Input() labelAttr: string;
+
+  @Input() name = 'autocompleteInput';
+
+  @Input() placeholder = '';
+
+  @Input() required: boolean;
+
+  @Input() valueFn: ValueFunction;
+
+  @Input() valueAttr: string;
+
+  @Input() notFoundMessage: string;
+
+  @Input()
+  set options(v: any[]) {
+    this._innerOptions = v;
+  }
+  get options(): any[] {
+    return this._filteredOptions;
+  }
 
   @Input()
   set disabled(v: boolean) {
@@ -80,29 +86,16 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
     return this._disabled;
   }
 
-  @Input() labelFn: LabelFunction;
-
-  @Input() labelAttr: string;
-
-  @Input() name = 'autocompleteInput';
-
-  @Input()
-  set options(v: any[]) {
-    this._innerOptions = v;
+  // NG_MODEL vvalue
+  set value(v: any) {
+    if (v !== this.innerValue) {
+      this.setInnerValue(v);
+      this.onChangeCallback(v);
+    }
   }
-  get options(): any[] {
-    return this._filteredOptions;
+  get value(): any {
+    return this.innerValue;
   }
-
-  @Input() placeholder = '';
-
-  @Input() required: boolean;
-
-  @Input() valueFn: ValueFunction;
-
-  @Input() valueAttr: string;
-
-  @Input() notFoundMessage: string;
 
   // Events
   @Output() blur: EventEmitter<any> = new EventEmitter<any>();
@@ -113,6 +106,11 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
   @ViewChild('termInput') termInput;
 
   @ViewChild('chipList') chipList;
+
+  @ViewChild(MatAutocompleteTrigger) autocompleteTrigger: MatAutocompleteTrigger;
+
+  // content elements
+  @ContentChild(DecAutocompleteOptionTemplateComponent) optionTemplate: DecAutocompleteOptionTemplateComponent;
 
   // private data;
   private _disabled: boolean;
@@ -187,27 +185,16 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
   }
 
   onOptionSelected($event) {
-
     let shouldEmit = true;
-
     const selectedOption = $event.option.value;
-
     const selectedOptionValue = this.extractValue(selectedOption);
-
     if (selectedOptionValue !== this.value) {
-
       if (this.multi) {
-
         shouldEmit = this.addOptionToOptionsSelected(selectedOption);
-
         this.setInputValue(undefined);
-
       } else {
-
         this.value = selectedOptionValue;
-
       }
-
       if (shouldEmit) {
         this.optionSelected.emit({
           value: this.value,
@@ -215,11 +202,8 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
           options: this._innerOptions,
         });
       }
-
       this.blurInput();
-
     }
-
   }
 
   setFocus() {
@@ -280,53 +264,31 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
   }
 
   remove(option: string): void {
-
     const index = this.optionsSelected.indexOf(option);
-
     if (index >= 0) {
       this.optionsSelected.splice(index, 1);
     }
-
     this.updateValueWithOptionsSelected();
-
   }
 
   getSelectableOptions = (options) => {
-
     const isArray = options ? Array.isArray(options) : false;
-
     let selectableOptions = [];
-
     if (isArray && !this.repeat) {
-
       selectableOptions = [...options].filter(option => {
-
         const optionValue = this.extractValue(option);
-
         let alreadySelected: boolean;
-
         if (this.multi) {
-
           alreadySelected = this.optionsSelected && this.optionsSelected.find(selected => {
-
             const selectedValue = this.extractValue(selected);
-
             return this.compareAsString(selectedValue, optionValue);
-
           }) ? true : false;
-
         } else {
-
           alreadySelected = this.compareAsString(this.value, optionValue);
-
         }
-
         return !alreadySelected;
-
       });
-
     }
-
     return selectableOptions;
   }
 
@@ -373,87 +335,58 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
 
   private setInputValue(v) {
     this.autocompleteInput.setValue(v);
-
     if (!v) {
       this.termInput.nativeElement.value = '';
     }
   }
 
   private searchBasedFetchingType(textSearch, rememberResponse = false): Observable<any[]> {
-
-    console.log('searchBasedFetchingType', textSearch);
-
-
     if (this._innerOptions) {
-
       return this.searchInLocalOptions(textSearch);
-
     } else if (this.customFetchFunction) {
-
-      return this.customFetchFunction(textSearch)
-        .pipe(
-          tap(options => {
-            this.options = options;
-          })
-        );
-
+      return this.customFetchFunction(textSearch).pipe(
+        tap(options => {
+          this.options = options;
+        })
+      );
     } else {
-
       const body = textSearch ? { textSearch } : undefined;
-
       if (rememberResponse) {
-
         const dataInMemory = this.responses[textSearch];
-
         if (dataInMemory) {
-
           return of(dataInMemory);
-
         } else {
-
           return this.getRemoteData(textSearch, body, rememberResponse);
-
         }
-
       } else {
-
         return this.getRemoteData(textSearch, body, rememberResponse);
-
       }
-
     }
   }
 
   private getRemoteData(textSearch: string, body: any, rememberResponse = false) {
-
-    return this.service.get<any[]>(this.endpoint, body)
-      .pipe(
-        map(res => this.extractRowsFn(res)),
-        tap((options: any[]) => {
-          this._filteredOptions = options;
-          if (rememberResponse) {
-            this.responses[textSearch] = options;
-          }
-        })
-      );
-
+    return this.service.get<any[]>(this.endpoint, body).pipe(
+      map(res => this.extractRowsFn(res)),
+      tap((options: any[]) => {
+        this._filteredOptions = options;
+        if (rememberResponse) {
+          this.responses[textSearch] = options;
+        }
+      })
+    );
   }
 
   private searchInLocalOptions(term: string) {
     const termString = `${term}`;
-
     let filteredData = this._innerOptions;
-
     if (termString) {
-      filteredData = this._innerOptions
-        .filter(item => {
-          const label: string = this.extractLabel(item);
-          const lowerCaseLabel = label.toLowerCase();
-          const lowerCaseTerm = termString.toLowerCase();
-          return lowerCaseLabel.search(lowerCaseTerm) >= 0;
-        });
+      filteredData = this._innerOptions.filter(item => {
+        const label: string = this.extractLabel(item);
+        const lowerCaseLabel = label.toLowerCase();
+        const lowerCaseTerm = termString.toLowerCase();
+        return lowerCaseLabel.search(lowerCaseTerm) >= 0;
+      });
     }
-
     return of(filteredData);
   }
 
@@ -461,19 +394,13 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
     throw new Error(`DecAutocompleteComponent Error:: The autocomplete with name "${this.name}" had the follow problem: ${error}`);
   }
 
-
   private blurInput() {
-
     this.termInput.nativeElement.blur();
-
   }
 
   private addOptionToOptionsSelected(option): boolean {
-
     if (option) {
-
       let shouldEmit = true;
-
       if (this.optionsSelected && this.optionsSelected.length) {
         const index = this.optionsSelected.indexOf(option);
         if (index === -1) {
@@ -487,72 +414,38 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
         this.optionsSelected = [option];
         this.updateValueWithOptionsSelected();
       }
-
       return shouldEmit;
-
     } else {
-
       return false;
-
     }
-
   }
 
   private populateAutocompleteWithInitialValues(value, reloadOptions = false) {
-
     if (value) {
-
       if (this.multi) {
-
         const isArray = Array.isArray(value);
-
         if (isArray) {
-
           this.optionsSelected = [];
-
           value.forEach(optionValue => {
-
-            this.loadRemoteObjectByWrittenValue(optionValue)
-              .then((option) => {
-
-                this.addOptionToOptionsSelected(option);
-
-              });
-
+            this.loadRemoteObjectByWrittenValue(optionValue).then((option) => {
+              this.addOptionToOptionsSelected(option);
+            });
           });
-
         }
-
       } else {
-
-        this.loadRemoteObjectByWrittenValue(value)
-          .then((options) => {
-            this.setInnerValue(value);
-          });
-
+        this.loadRemoteObjectByWrittenValue(value).then((options) => {
+          this.setInnerValue(value);
+        });
       }
-
-    } else {
-
-      // this.innerValue = this.writtenValue;
-
     }
-
-
   }
 
   private updateValueWithOptionsSelected() {
-
     if (this.optionsSelected && this.optionsSelected.length) {
-
       this.value = this.optionsSelected.map(option => this.extractValue(option));
-
     } else {
-
       this.value = [];
-
     }
-
 
   }
 
@@ -630,14 +523,13 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
   }
 
   private getOptionBasedOnValue(v: any) {
-    return this._filteredOptions.find(item => {
+    return this.options.find(item => {
       const itemValue = this.extractValue(item);
       return this.compareAsString(itemValue, v);
     });
   }
 
   private subscribeToInputValueChanges() {
-
     this.searchInputSubscription = this.autocompleteInput.valueChanges
       .pipe(
         debounceTime(300),
@@ -646,13 +538,10 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
       .subscribe(searchText => {
         this.search$.next(searchText);
       });
-
   }
 
   private unsubscribeFromInputValueChanges() {
-
     this.searchInputSubscription.unsubscribe();
-
   }
 
   private subscribeToSearchAndSetOptionsObservable() {
@@ -660,20 +549,15 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
       .pipe(
         distinctUntilChanged(),
         switchMap((textSearch: string) => {
-
           const searchTerm = textSearch || '';
-
           const isStringTerm = typeof searchTerm === 'string';
-
           if (isStringTerm) {
             return this.searchBasedFetchingType(searchTerm);
           } else {
-            return of(this._innerOptions);
+            return of(this.options);
           }
-
         })
       );
-
   }
 
   private unsubscribeFromSearchAndSetOptionsObservable() {
