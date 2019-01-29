@@ -22,14 +22,16 @@
 
   <h3>Reactive Form Reactively disabled</h3>
 
-  <p><strong>Model value: {{ modelValue5 }}</strong></p>
+  <p><strong>Model value: {{ demoForm.controls.timeReactiveInput.value }}</strong></p>
 
   <form role="form" [formGroup]="demoForm">
 
-    <dec-input-time name="textareaInput" formControlName="textareaInput"></dec-input-time>
+    <dec-input-time name="timeReactiveInput" formControlName="timeReactiveInput"></dec-input-time>
 
   </form>
 
   <button (click)="disabled = !!!disabled;">Disabled {{ disabled | json }}</button>
+
+  <button (click)="setValue()">SET VALUE</button>
 
 </app-demo-container>

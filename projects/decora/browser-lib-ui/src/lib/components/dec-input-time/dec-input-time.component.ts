@@ -137,8 +137,6 @@ export class DecInputTimeComponent implements ControlValueAccessor, AfterViewIni
 
       const numbers = this.getNumbers(value);
 
-      console.log('.subscribe(value', value, numbers);
-
       const maskedValue = this.maskValue(numbers);
 
       this.setValueBasedOnInput(numbers);
@@ -158,8 +156,6 @@ export class DecInputTimeComponent implements ControlValueAccessor, AfterViewIni
     const valueString = `${value}`;
 
     const totalNumbers = valueString.length;
-
-    console.log('maskValue', value, totalNumbers);
 
     let maskedValue;
 
@@ -198,34 +194,29 @@ export class DecInputTimeComponent implements ControlValueAccessor, AfterViewIni
       return `${hoursString}h${minutesString}m`;
     } else {
       return '';
+
     }
   }
 
-  private setValueBasedOnInput(firstFourNumbers) {
-    const totalMinutes = this.getMinutesFromInputNumbersArray(firstFourNumbers);
+  private setValueBasedOnInput(numbers) {
+    const totalMinutes = this.getMinutesFromInputNumbersArray(numbers);
     this.value = totalMinutes;
   }
 
-  private getMinutesFromInputNumbersArray(firstFourNumbers) {
-    const totalNumbers = firstFourNumbers.length;
-    let hours = 0;
-    let minutes = 0;
-
-    if (totalNumbers === 4) {
-      hours = parseInt(`${firstFourNumbers[0]}${firstFourNumbers[1]}`, 10);
-      minutes = parseInt(`${firstFourNumbers[2]}${firstFourNumbers[3]}`, 10);
-    } else if (totalNumbers === 3) {
-      hours = parseInt(`${firstFourNumbers[0]}${firstFourNumbers[1]}`, 10);
-      minutes = parseInt(`${firstFourNumbers[2]}0`, 10);
-    } else if (totalNumbers === 2) {
-      hours = parseInt(`${firstFourNumbers[0]}${firstFourNumbers[1]}`, 10);
-    } else if (totalNumbers === 1) {
-      hours = parseInt(firstFourNumbers[0], 10);
+  private getMinutesFromInputNumbersArray(numbers) {
+    const numbersAsString = `${numbers}`;
+    const totalNumbers = numbersAsString.length;
+    let totalMinutes = 0;
+    if (totalNumbers < 3) {
+      totalMinutes = numbers;
+    } else {
+      const minutesString = numbersAsString.slice(totalNumbers - 2, totalNumbers);
+      const minutes = parseInt(minutesString, 10);
+      const hoursString = numbersAsString.slice(0, totalNumbers - 2);
+      const hours = parseInt(hoursString, 10);
+      totalMinutes = (hours * 60) + minutes;
     }
-
-    const totalMinutes = (hours * 60) + minutes;
-
-    return totalMinutes || '';
+    return totalMinutes;
   }
 
 }

@@ -38,14 +38,23 @@ export class DecoraInputTimeDemoComponent {
     this.initiateForm();
   }
 
+  setValue() {
+
+    this.demoForm.controls.timeReactiveInput.setValue('1234');
+
+  }
+
   private initiateForm() {
     this.demoForm = this.formBuilder.group({
-      textareaInput: new FormControl({ value: this.modelValue5, disabled: this.disabled }, Validators.required)
+      timeReactiveInput: new FormControl({ value: this.modelValue5, disabled: this.disabled }, Validators.required)
+    });
+
+    this.demoForm.controls.timeReactiveInput.valueChanges.subscribe((a) => {
+      console.log('DEMO:: valueChanges', a);
     });
   }
 
   private enableDisableFields() {
-    console.log('enableDisableFields');
     if (this.disabled) {
       this.demoForm.disable();
     } else {
