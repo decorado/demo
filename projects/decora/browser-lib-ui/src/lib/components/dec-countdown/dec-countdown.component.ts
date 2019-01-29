@@ -9,7 +9,7 @@ export class DecCountdownComponent implements OnInit {
 
   @Input() interval: number;
 
-  @Input() ommitZeroes: boolean;
+  @Input() fixed: 'h' | 'm' | 's' = 'h';
 
   @Output() finished = new EventEmitter();
 
@@ -41,25 +41,43 @@ export class DecCountdownComponent implements OnInit {
 
     let timeAsString;
 
-    if (!this.ommitZeroes) {
+    switch (this.fixed) {
+      case 'h':
+        timeAsString = this.formatWithHour(hours, minutes, seconds);
+        break;
 
-      timeAsString = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      case 'm':
+        if (hours > 0) {
+          timeAsString = this.formatWithHour(hours, minutes, seconds);
+        } else {
+          timeAsString = this.formatWithMinutes(hours, minutes, seconds);
+        }
+        break;
 
-    } else {
-
-      timeAsString = `${seconds.toString().padStart(2, '0')}`;
-
-      if (minutes > 0) {
-        timeAsString = `${minutes.toString().padStart(2, '0')}:${ timeAsString }`;
-      }
-
-      if (hours > 0) {
-        timeAsString = `${hours.toString().padStart(2, '0')}:${timeAsString}`;
-      }
-
+      case 's':
+        if (hours > 0) {
+          timeAsString = this.formatWithHour(hours, minutes, seconds);
+        } else if (minutes > 0) {
+          timeAsString = this.formatWithMinutes(hours, minutes, seconds);
+        } else {
+          timeAsString = this.formatWithSeconds(hours, minutes, seconds);
+        }
+        break;
     }
 
     return timeAsString;
+  }
+
+  private formatWithHour(hours, minutes, seconds) {
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+
+  private formatWithMinutes(hours, minutes, seconds) {
+    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+
+  private formatWithSeconds(hours, minutes, seconds) {
+    return `${seconds.toString().padStart(2, '0')}`;
   }
 
   private manipulateInterval() {
