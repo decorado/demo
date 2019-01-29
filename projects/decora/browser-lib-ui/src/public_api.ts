@@ -217,6 +217,9 @@ export * from './lib/components/dec-product-similar-models/dec-product-similar-m
 // CARD-SIMILAR-PRODUCT
 export * from './lib/components/dec-mesh-qa/dec-mesh-qa.component';
 export * from './lib/components/dec-mesh-qa/dec-mesh-qa.module';
+// SUGGESTED-TIME
+export * from './lib/components/dec-suggested-time/dec-suggested-time.component';
+export * from './lib/components/dec-suggested-time/dec-suggested-time.module';
 
 /*********************************************************
 *

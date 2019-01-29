@@ -1,0 +1,13 @@
+<h2>Select with ngModel</h2>
+
+<dec-suggested-time [(ngModel)]="selected" [time]="time" [placeholder]="'Suggested_Time'" [interval]="interval">
+</dec-suggested-time>
+
+Selected Time: {{ selected }}
+
+<h2>Selecte with ReactiveForm</h2>
+<form [formGroup]="form" name="form" role="form">
+  <dec-suggested-time [time]="time" [placeholder]="'Suggested_Time'" [interval]="interval" name="selectedTime" formControlName="selectedTime">
+  </dec-suggested-time>
+</form>
+Selected Time ReactiveForm: {{ selectedReactive }}
