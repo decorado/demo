@@ -314,7 +314,7 @@ export class DecApiService implements OnDestroy {
 
   private extractBulkOperationErrors(res) {
 
-    return res.operations.filter(operation => operation.status >= 200 && operation.status < 300);
+    return res.operations.filter(operation => !(operation.status >= 200 && operation.status < 300));
 
   }
 
