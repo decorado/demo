@@ -46,6 +46,7 @@ const routes: Routes = [
   { path: 'sketchfab', loadChildren: './decora-dec-sketchfab-demo/dec-sketchfab-demo.module#DecSketchfabDemoModule' },
   { path: 'sketchfab-view', loadChildren: './decora-sketchfab-view-demo/decora-sketchfab-view-demo.module#DecoraSketchfabViewDemoModule' },
   { path: 'steps-list', loadChildren: './decora-steps-list-demo/decora-steps-list-demo.module#DecoraStepsListDemoModule' },
+  { path: 'suggested-time', loadChildren: './decora-suggested-time-demo/decora-suggested-time-demo.module#DecoraSuggestedTimeDemoModule' },
   { path: 'tabs', loadChildren: './decora-tabs-demo/decora-tabs-demo.module#DecoraTabsDemoModule' },
   { path: 'upload', loadChildren: './decora-upload-demo/decora-upload-demo.module#DecoraUploadDemoModule' },
   { path: 'render-comment', loadChildren: './decora-render-comment/decora-render-comment.module#DecoraRenderCommentModule' },
