@@ -39,9 +39,9 @@ export class DecoraInputTimeDemoComponent {
   }
 
   setValue() {
-
-    this.demoForm.controls.timeReactiveInput.setValue('1234');
-
+    const datestring = `${Date.now()}`;
+    const newValue = datestring.slice(datestring.length - 4, datestring.length);
+    this.demoForm.controls.timeReactiveInput.setValue(newValue, { emitEvent: false });
   }
 
   private initiateForm() {
