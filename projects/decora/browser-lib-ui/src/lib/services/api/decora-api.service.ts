@@ -164,8 +164,7 @@ export class DecApiService implements OnDestroy {
     return this.requestMethod('POST', endopintUrl, formData, options);
   }
 
-
-
+  // used by DecAppInitializer
   handShake() {
     return this.tryToLoadSignedInUser();
   }
@@ -267,7 +266,19 @@ export class DecApiService implements OnDestroy {
 
     if (res && res.status === 207) { // multiple errors returned in batch requests
 
-      throw res;
+      const errors = this.extractBulkOperationErrors(res);
+
+      if (errors && errors.length) {
+
+        res.operations = errors;
+
+        throw res;
+
+      } else {
+
+        return res;
+
+      }
 
     } else {
 
@@ -298,6 +309,12 @@ export class DecApiService implements OnDestroy {
         const persedErrorResponse: DecApiResponseError = { status, statusText, message, bodyMessage, bodyError, errors };
         return throwError(persedErrorResponse);
     }
+
+  }
+
+  private extractBulkOperationErrors(res) {
+
+    return res.operations.filter(operation => operation.status >= 200 && operation.status < 300);
 
   }
 
