@@ -26,6 +26,12 @@ export class DecSuggestedTimeComponent implements ControlValueAccessor {
     if (v) {
       this._time = v;
       this.formatTimeArray();
+<<<<<<< HEAD
+=======
+    } else {
+      this.timeArray = [];
+      this.value = '';
+>>>>>>> origin/beta
     }
   }
 
@@ -81,7 +87,6 @@ export class DecSuggestedTimeComponent implements ControlValueAccessor {
     if (v !== this.innerValue) {
       this.innerValue = v;
       this.selected = v / 60;
-      this.onChangeCallback(this.innerValue || 0);
     }
   }
 
@@ -117,6 +122,10 @@ export class DecSuggestedTimeComponent implements ControlValueAccessor {
     if (!this.time || !this.interval) {
       return;
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/beta
     let min = ((this.time / 60) - this.interval);
     const interator = (this.interval * 2) * 2;
     let aux = [];
@@ -136,5 +145,11 @@ export class DecSuggestedTimeComponent implements ControlValueAccessor {
 
   private getFirstNumber(number) {
     return number.toString().split('.')[0];
+
+
+  }
+
+  onSelectionChange() {
+    this.onChangeCallback(this.innerValue || 0);
   }
 }
