@@ -20,6 +20,7 @@ const routes: Routes = [
   { path: 'breadcrumb', loadChildren: './decora-breadcrumb-demo/decora-breadcrumb-demo.module#DecoraBreadcrumbDemoModule' },
   { path: 'carousel', loadChildren: './decora-carousel-demo/decora-carousel-demo.module#DecoraCarouselDemoModule' },
   { path: 'color-picker', loadChildren: './decora-color-picker-demo/decora-color-picker-demo.module#DecoraColorPickerDemoModule' },
+  { path: 'countdown', loadChildren: './decora-countdown-demo/decora-countdown-demo.module#DecoraCountdownDemoModule' },
   { path: 'date-picker', loadChildren: './decora-date-picker-demo/decora-date-picker-demo.module#DecoraDatePickerDemoModule' },
   { path: 'events-list', loadChildren: './decora-events-list-demo/decora-events-list-demo.module#DecoraEventsListDemoModule' },
   { path: 'gallery', loadChildren: './decora-gallery-demo/decora-gallery-demo.module#DecoraGalleryDemoModule' },

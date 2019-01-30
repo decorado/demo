@@ -65,7 +65,7 @@ export class DecCountdownComponent implements OnInit {
         break;
     }
 
-    return timeAsString;
+    return `${this.completed ? '-' : ''}${timeAsString}`;
   }
 
   private formatWithHour(hours, minutes, seconds) {
