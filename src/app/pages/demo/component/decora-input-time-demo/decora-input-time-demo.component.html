@@ -16,7 +16,7 @@
   <h3>Template Form Reactively disabled</h3>
 
   <p><strong>Model value: {{ modelValue4 }}</strong></p>
-  <dec-input-time [required]="true" [(ngModel)]="modelValue4" [disabled]="disabled"></dec-input-time>
+  <dec-input-time [required]="true" [(ngModel)]="modelValue4" [disabled]="disabled" (ngModelChange)="onModelChanged($event)"></dec-input-time>
 
   <button (click)="disabled = !!!disabled;">Disabled {{ disabled | json }}</button>
 

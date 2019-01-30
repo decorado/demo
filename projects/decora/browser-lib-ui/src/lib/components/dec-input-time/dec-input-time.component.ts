@@ -26,8 +26,6 @@ export class DecInputTimeComponent implements ControlValueAccessor, AfterViewIni
 
   @Input() name = 'time';
 
-  @Output() onInputChange = new EventEmitter();
-
   @Input() set required(v: boolean) {
     this._required = v;
     this.bindRequiredAndDisabled();
@@ -136,17 +134,10 @@ export class DecInputTimeComponent implements ControlValueAccessor, AfterViewIni
       distinctUntilChanged(),
     )
     .subscribe(value => {
-
       const numbers = this.getNumbers(value);
-
       const maskedValue = this.maskValue(numbers);
-
-      this.setValueBasedOnInput(numbers);
-
       this.timeForm.controls.time.setValue(maskedValue);
-
-      this.onInputChange.emit(maskedValue);
-
+      this.setValueBasedOnInput(numbers);
     });
   }
 

@@ -44,6 +44,10 @@ export class DecoraInputTimeDemoComponent {
     this.demoForm.controls.timeReactiveInput.setValue(newValue, { emitEvent: false });
   }
 
+  onModelChanged($event) {
+    console.log('MODEL CHANGED', $event);
+  }
+
   private initiateForm() {
     this.demoForm = this.formBuilder.group({
       timeReactiveInput: new FormControl({ value: this.modelValue5, disabled: this.disabled }, Validators.required)
