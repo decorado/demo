@@ -26,6 +26,9 @@ export class DecSuggestedTimeComponent implements ControlValueAccessor {
     if (v) {
       this._time = v;
       this.formatTimeArray();
+    } else {
+      this.timeArray = [];
+      this.value = '';
     }
   }
 
@@ -81,7 +84,6 @@ export class DecSuggestedTimeComponent implements ControlValueAccessor {
     if (v !== this.innerValue) {
       this.innerValue = v;
       this.selected = v / 60;
-      this.onChangeCallback(this.innerValue || 0);
     }
   }
 
@@ -136,5 +138,9 @@ export class DecSuggestedTimeComponent implements ControlValueAccessor {
 
   private getFirstNumber(number) {
     return number.toString().split('.')[0];
+  }
+
+  onSelectionChange() {
+    this.onChangeCallback(this.innerValue || 0);
   }
 }
