@@ -1,9 +1,6 @@
 <mat-form-field>
-  <mat-select
-    [disabled]="disabled"
-    placeholder="{{ 'label.'+placeholder | translate }}"
-    [(value)]="selected"
-    name="suggestedTime">
+  <mat-select (selectionChange)="onSelectionChange()" [disabled]="disabled" placeholder="{{ 'label.'+placeholder | translate }}"
+    [(value)]="selected" name="suggestedTime">
     <mat-option *ngFor="let time of timeArray" [value]="time.value"> {{ time.label }}
     </mat-option>
   </mat-select>
