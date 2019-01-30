@@ -9,5 +9,4 @@ This component is used to manage time. It receives the time in minutes and displ
 
 ```html
 <dec-input-time [(ngModel)]="modelValue"></dec-input-time>
-
 ```
