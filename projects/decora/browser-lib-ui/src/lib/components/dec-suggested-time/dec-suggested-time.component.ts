@@ -29,6 +29,7 @@ export class DecSuggestedTimeComponent implements ControlValueAccessor {
     } else {
       this.timeArray = [];
       this.value = '';
+      this._selected = '';
     }
   }
 
