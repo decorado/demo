@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, Input, forwardRef } from '@angular/core';
+import {Component, AfterViewInit, Input, forwardRef, Output, EventEmitter} from '@angular/core';
 import { Validators, FormGroup, FormBuilder, NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
@@ -25,6 +25,8 @@ export class DecInputTimeComponent implements ControlValueAccessor, AfterViewIni
   @Input() placeholder = 'Time';
 
   @Input() name = 'time';
+
+  @Output() onInputChange = new EventEmitter();
 
   @Input() set required(v: boolean) {
     this._required = v;
@@ -142,6 +144,8 @@ export class DecInputTimeComponent implements ControlValueAccessor, AfterViewIni
       this.setValueBasedOnInput(numbers);
 
       this.timeForm.controls.time.setValue(maskedValue);
+
+      this.onInputChange.emit(maskedValue);
 
     });
   }
