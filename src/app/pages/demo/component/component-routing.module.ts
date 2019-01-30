@@ -46,6 +46,7 @@ const routes: Routes = [
   { path: 'sidenav', loadChildren: './decora-sidenav-demo/sidenav-demo.module#SidenavDemoModule' },
   { path: 'sketchfab', loadChildren: './decora-dec-sketchfab-demo/dec-sketchfab-demo.module#DecSketchfabDemoModule' },
   { path: 'sketchfab-view', loadChildren: './decora-sketchfab-view-demo/decora-sketchfab-view-demo.module#DecoraSketchfabViewDemoModule' },
+  { path: 'spinner', loadChildren: './decora-spinner-demo/decora-spinner-demo.module#DecoraSpinnerDemoModule' },
   { path: 'steps-list', loadChildren: './decora-steps-list-demo/decora-steps-list-demo.module#DecoraStepsListDemoModule' },
   { path: 'suggested-time', loadChildren: './decora-suggested-time-demo/decora-suggested-time-demo.module#DecoraSuggestedTimeDemoModule' },
   { path: 'tabs', loadChildren: './decora-tabs-demo/decora-tabs-demo.module#DecoraTabsDemoModule' },
