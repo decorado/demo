@@ -20,6 +20,7 @@ const routes: Routes = [
   { path: 'breadcrumb', loadChildren: './decora-breadcrumb-demo/decora-breadcrumb-demo.module#DecoraBreadcrumbDemoModule' },
   { path: 'carousel', loadChildren: './decora-carousel-demo/decora-carousel-demo.module#DecoraCarouselDemoModule' },
   { path: 'color-picker', loadChildren: './decora-color-picker-demo/decora-color-picker-demo.module#DecoraColorPickerDemoModule' },
+  { path: 'countdown', loadChildren: './decora-countdown-demo/decora-countdown-demo.module#DecoraCountdownDemoModule' },
   { path: 'date-picker', loadChildren: './decora-date-picker-demo/decora-date-picker-demo.module#DecoraDatePickerDemoModule' },
   { path: 'events-list', loadChildren: './decora-events-list-demo/decora-events-list-demo.module#DecoraEventsListDemoModule' },
   { path: 'gallery', loadChildren: './decora-gallery-demo/decora-gallery-demo.module#DecoraGalleryDemoModule' },
@@ -41,9 +42,11 @@ const routes: Routes = [
   { path: 'product-features', loadChildren: './decora-products-features-demo/decora-products-features-demo.module#DecoraProductsFeaturesDemoModule' },
   { path: 'product-measures', loadChildren: './decora-product-measures-comparison-demo/decora-product-measures-comparison-demo.module#DecoraProductMeasuresComparisonDemoModule' },
   { path: 'product-spin', loadChildren: './decora-product-spin-demo/decora-product-spin-demo.module#DecoraProductSpinDemoModule' },
+  { path: 'section', loadChildren: './decora-section-demo/decora-section-demo.module#DecoraSectionDemoModule' },
   { path: 'sidenav', loadChildren: './decora-sidenav-demo/sidenav-demo.module#SidenavDemoModule' },
   { path: 'sketchfab', loadChildren: './decora-dec-sketchfab-demo/dec-sketchfab-demo.module#DecSketchfabDemoModule' },
   { path: 'sketchfab-view', loadChildren: './decora-sketchfab-view-demo/decora-sketchfab-view-demo.module#DecoraSketchfabViewDemoModule' },
+  { path: 'spinner', loadChildren: './decora-spinner-demo/decora-spinner-demo.module#DecoraSpinnerDemoModule' },
   { path: 'steps-list', loadChildren: './decora-steps-list-demo/decora-steps-list-demo.module#DecoraStepsListDemoModule' },
   { path: 'suggested-time', loadChildren: './decora-suggested-time-demo/decora-suggested-time-demo.module#DecoraSuggestedTimeDemoModule' },
   { path: 'tabs', loadChildren: './decora-tabs-demo/decora-tabs-demo.module#DecoraTabsDemoModule' },
@@ -51,6 +54,7 @@ const routes: Routes = [
   { path: 'render-comment', loadChildren: './decora-render-comment/decora-render-comment.module#DecoraRenderCommentModule' },
   { path: 'card-similar-product', loadChildren: './decora-card-similar-product/decora-card-similar-product.module#DecoraCardSimilarProductModule' },
   { path: 'decora-fbx-qa', loadChildren: './decora-fbx-qa/decora-fbx-qa.module#DecoraFbxQaModule' },
+  { path: 'download-button', loadChildren: './decora-download-button-demo/decora-download-button-demo.module#DecoraDownloadButtonDemoModule' },
 ];
 
 @NgModule({

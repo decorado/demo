@@ -1,6 +1,7 @@
-import { Component, Input, forwardRef, Output, EventEmitter } from '@angular/core';
+import { Component, Input, forwardRef, Output, EventEmitter, ViewChild } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { DecApiService } from './../../services/api/decora-api.service';
+import { DecAutocompleteComponent } from './../autocomplete/autocomplete.component';
 
 export const BASE_AUTOCOMPLETE_PROJECT_ENDPOINT = '/projects/options';
 
@@ -53,11 +54,15 @@ export class DecAutocompleteProjectComponent implements ControlValueAccessor {
 
   @Input() multi: boolean;
 
+  @Input() notFoundMessage: string;
+
   @Input() repeat: boolean;
 
   @Output() blur: EventEmitter<any> = new EventEmitter<any>();
 
   @Output() optionSelected: EventEmitter<any> = new EventEmitter<any>();
+
+  @ViewChild(DecAutocompleteComponent) autocompleteComponent: DecAutocompleteComponent;
 
   private _companyId: string;
 
@@ -103,6 +108,11 @@ export class DecAutocompleteProjectComponent implements ControlValueAccessor {
   // From ControlValueAccessor interface
   registerOnTouched(fn: any) {
     this.onTouchedCallback = fn;
+  }
+
+  // From ControlValueAccessor interface
+  setDisabledState(disabled = false) {
+    this.disabled = disabled;
   }
 
   onValueChanged(event: any) {

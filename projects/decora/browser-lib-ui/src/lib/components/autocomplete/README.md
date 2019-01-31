@@ -55,6 +55,9 @@ Enable multiple options selection;
 #### `name: string`
 The input element name;
 
+#### `notFoundMessage: string`
+Message to be displayed if no option is found;
+
 #### `options: any[]`
 An array of options to be used as autocomplete options;
 
@@ -73,6 +76,10 @@ Defines an object property to be used as option value;
 #### `valueFn: string`
 Defines a function to extract a value from an option;
 
+
+### Custom option template
+
+`dec-autocomplete-option-template` is used to create custom options template as we can see in the example bellow.
 
 ### Output
 
@@ -97,5 +104,12 @@ As we have three different ways to retrieve options, when more than one is set, 
   (optionSelected)="optionSelected($event)"
   [endpoint]="endpoint"
   [labelAttr]="labelAttr"
-  [valueAttr]="valueAttr"></dec-autocomplete>
+  [valueAttr]="valueAttr">
+
+    <dec-autocomplete-option-template>
+      <ng-template let-row="row">
+        {{ row.name }}
+      </ng-template>
+    </dec-autocomplete-option-template>
+  </dec-autocomplete>
 ```

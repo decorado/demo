@@ -128,20 +128,53 @@ export class DecListTabsFilterComponent implements OnDestroy {
     this.wathUrlSubscription = this.route.queryParams
       .subscribe((params) => {
 
-        const tab = params[this.componentTabName()] || this.defaultTab;
+        const tabUid = params[this.componentTabName()] || this.defaultTab;
 
+        const tab = this.getTabByUid(tabUid);
 
-        if (tab !== this.selectedTabUid) {
+        if (tab) {
 
-          const selectedTab = this.filters.find(filter => filter.uid === tab);
+          this.selectTabByUid(tabUid);
 
-          this.onSearch(selectedTab);
+        } else {
 
-          this.tabChange.emit(tab);
+          this.selectFirstTab(); // fallback for invalid tabs
 
         }
 
       });
+
+  }
+
+  private selectTabByUid(tabUid) {
+
+    if (tabUid !== this.selectedTabUid) {
+
+      const selectedTab = this.filters.find(filter => filter.uid === tabUid);
+
+      this.onSearch(selectedTab);
+
+      this.tabChange.emit(tabUid);
+
+    }
+
+  }
+
+  private selectFirstTab() {
+
+    if (this.filters) {
+
+      const firstTabUid = this.filters[0].uid;
+
+      this.setTabInUrlQuery(firstTabUid);
+
+    }
+
+  }
+
+  private getTabByUid(uid) {
+
+    return this.filters.find(filter => filter.uid === uid);
 
   }
 

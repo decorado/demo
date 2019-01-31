@@ -1,4 +1,4 @@
-export const FAKE_COUNTRY_DATA = [
+export const FAKE_DATA = [
   { 'code': 'AD', 'name': 'Andorra' },
   { 'code': 'AE', 'name': 'United Arab Emirates' },
   { 'code': 'AF', 'name': 'Afghanistan' },
@@ -29,7 +29,7 @@ export const FAKE_COUNTRY_DATA = [
   { 'code': 'BM', 'name': 'Bermuda' },
   { 'code': 'BN', 'name': 'Brunei' },
   { 'code': 'BO', 'name': 'Bolivia' },
-  { 'code': 'BQ', 'name': 'Bonaire,Sint Eustatius and Saba' },
+  { 'code': 'BQ', 'name': 'Bonaire, Sint Eustatius and Saba' },
   { 'code': 'BR', 'name': 'Brazil' },
   { 'code': 'BS', 'name': 'Bahamas' },
   { 'code': 'BT', 'name': 'Bhutan' },

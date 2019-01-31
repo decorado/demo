@@ -6,6 +6,8 @@
 // AUTOCOMPLETE
 export * from './lib/components/autocomplete/autocomplete.component';
 export * from './lib/components/autocomplete/autocomplete.module';
+export * from './lib/components/autocomplete/dec-autocomplete-option-template/dec-autocomplete-option-template.component';
+export * from './lib/components/autocomplete/dec-autocomplete-option-template/dec-autocomplete-option-template.module';
 // AUTOCOMPLETE ACCOUNT
 export * from './lib/components/autocomplete-account/autocomplete-account.component';
 export * from './lib/components/autocomplete-account/autocomplete-account.module';
@@ -48,6 +50,9 @@ export * from './lib/components/autocomplete-tags/autocomplete-tags.module';
 // BREADCRUMB
 export * from './lib/components/breadcrumb/breadcrumb.component';
 export * from './lib/components/breadcrumb/breadcrumb.module';
+// BUTTON > DOWNLOAD BUTTON
+export * from './lib/components/button/download-button/dec-download-button.component';
+export * from './lib/components/button/download-button/dec-download-button.module';
 // CAROUSEL
 export * from './lib/components/dec-carousel/dec-carousel.component';
 export * from './lib/components/dec-carousel/dec-carousel.module';
@@ -151,6 +156,9 @@ export * from './lib/components/dec-job-details/dec-job-details.module';
 // JOB ROUND
 export * from './lib/components/dec-job-round/dec-job-round.component';
 export * from './lib/components/dec-job-round/dec-job-round.module';
+// SECTION
+export * from './lib/components/dec-section/dec-section.module';
+export * from './lib/components/dec-section/dec-section.component';
 // SIDENAV
 export * from './lib/components/sidenav/sidenav.module';
 export * from './lib/components/sidenav/sidenav.component';
@@ -235,6 +243,9 @@ export * from './lib/directives/image/image.directive';
 // PERMISSIONS
 export * from './lib/directives/permission/dec-permission.directive';
 export * from './lib/directives/permission/dec-permission.module';
+// SCROLL
+export * from './lib/directives/scroll/dec-scroll.directive';
+export * from './lib/directives/scroll/dec-scroll.module';
 
 
 /*********************************************************
@@ -253,6 +264,9 @@ export * from './lib/guard/auth-guard.service';
 **********************************************************/
 export * from './lib/pipes/category/category-pipe.module';
 export * from './lib/pipes/category/category-pipe.service';
+
+// SAFE
+export * from './lib/pipes/safe/safe.module';
 
 /*********************************************************
 *
@@ -306,3 +320,21 @@ export * from './lib/components/dec-spinner/dec-spinner.module';
 export * from './lib/services/ws-client/ws-client.service';
 export * from './lib/services/ws-client/ws-client.module';
 export * from './lib/services/ws-client/ws-client.models';
+
+/*********************************************************
+*
+* VALIDATORS
+*
+**********************************************************/
+export * from './lib/validators/validators';
+/*********************************************************
+*
+* HELPERS
+*
+**********************************************************/
+export * from './lib/utilities/array';
+export * from './lib/utilities/comparison';
+export * from './lib/utilities/guid';
+export * from './lib/utilities/object';
+export * from './lib/utilities/urls';
+export * from './lib/utilities/uid';

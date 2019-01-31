@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter, forwardRef, AfterViewInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, forwardRef, AfterViewInit, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { DecAutocompleteComponent } from './../autocomplete/autocomplete.component';
 
 //  Return an empty function to be used as default trigger functions
 const noop = () => {
@@ -54,6 +55,8 @@ export class AutocompleteComplexityComponent implements ControlValueAccessor {
 
   @Input() multi: boolean;
 
+  @Input() notFoundMessage: string;
+
   @Input() repeat: boolean;
 
   @Input() placeholder = 'Complexity autocomplete';
@@ -62,7 +65,7 @@ export class AutocompleteComplexityComponent implements ControlValueAccessor {
 
   @Output() optionSelected: EventEmitter<any> = new EventEmitter<any>();
 
-  @Output() enterButton: EventEmitter<any> = new EventEmitter<any>();
+  @ViewChild(DecAutocompleteComponent) autocompleteComponent: DecAutocompleteComponent;
 
   /*
   ** ngModel propertie
@@ -106,6 +109,11 @@ export class AutocompleteComplexityComponent implements ControlValueAccessor {
   // From ControlValueAccessor interface
   registerOnTouched(fn: any) {
     this.onTouchedCallback = fn;
+  }
+
+  // From ControlValueAccessor interface
+  setDisabledState(disabled = false) {
+    this.disabled = disabled;
   }
 
   onValueChanged(event: any) {

@@ -5,25 +5,46 @@
   .snack-success {
     color: #FFF !important;
     background: $dec-color-green !important;
+
+    .mat-simple-snackbar-action {
+      color: rgba(#FFF, 0.7) !important;
+    }
   }
 
   .snack-primary {
     color: #FFF !important;
     background: $dec-color-blue-dark !important;
+
+    .mat-simple-snackbar-action {
+      color: rgba(#FFF, 0.7) !important;
+    }
   }
 
   .snack-info {
     color: #FFF !important;
     background: $dec-color-blue !important;
+
+    .mat-simple-snackbar-action {
+      color: rgba(#FFF, 0.7) !important;
+    }
   }
 
   .snack-warn {
-    color: #FFF !important;
+    color: $dec-color-grey-dark !important;
     background: $dec-color-yellow !important;
+
+    .mat-simple-snackbar-action {
+      color: rgba($dec-color-grey-dark, 0.7) !important;
+    }
   }
 
   .snack-error {
     color: #FFF;
     background: $dec-color-red-dark !important;
+
+    .mat-simple-snackbar-action {
+      color: rgba(#FFF, 0.7) !important;
+    }
   }
+
 }

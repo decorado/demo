@@ -25,6 +25,18 @@ Include the [Material Icons][mat-docs] and [Font Awesome][fa-docs] in your `angu
 ],
 ```
 
+```javascript
+"assets": [
+  ...
+  {
+    "glob": "**/*",
+    "input": "dist/decora/browser-lib-ui/bootstrap/assets",
+    "output": "assets/browser-lib-ui"
+  },
+  ...
+],
+```
+
 ## Usage
 
 ### Material icons
@@ -41,6 +53,12 @@ Include the [Material Icons][mat-docs] and [Font Awesome][fa-docs] in your `angu
 
 ```html
 <dec-icon font="fas">home</dec-icon> Home icon
+```
+
+### Decora icons
+
+```html
+<dec-icon font="dec">mesh</dec-icon> Mesh icon
 ```
 
 ## Icon Size

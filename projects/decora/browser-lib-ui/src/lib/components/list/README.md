@@ -218,7 +218,9 @@ Used to define the template of each column in the table. Can be used with the `@
 
 |Property  |Type |Default  |Description  |
 |-         |-    |-        |-            |
-|colSpan|number|1|the number of horizontal spaces used by the column|
+|colSpan|number|1| The number of columns span the column will use|
+|minWidth|number|undefined|The minimum width in pixels the column can use|
+|maxWidth|number|undefined|The maximum width in pixels the column can use|
 |title| string| undefined| The title of the column to be used in the table header|
 |prop| string | undefined | The row object property to be displayed in the cell and to be used in the sort functions |
 

@@ -5,6 +5,7 @@
   [labelFn]="labelFn"
   [name]="name"
   [multi]="multi"
+  [notFoundMessage]="notFoundMessage"
   [repeat]="repeat"
   [placeholder]="placeholder"
   [required]="required"
@@ -12,7 +13,17 @@
   [(ngModel)]="value"
   [disabled]="disabled"
   (optionSelected)="optionSelected.emit($event)"
-  (blur)="blur.emit($event)"></dec-autocomplete>
+  (blur)="blur.emit($event)">
+
+  <dec-autocomplete-option-template>
+    <ng-template let-row="row">
+      <div *ngIf="row" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" class="option-wrapper">
+        <img [decImage]="row.referenceImages[0].sysFile" [decImageSize]="{width:50, height:50}">
+        <div>{{labelFn(row)}}</div>
+      </div>
+    </ng-template>
+  </dec-autocomplete-option-template>
+</dec-autocomplete>
 </div>
 
 <ng-template #fakeDisabled>

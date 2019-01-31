@@ -7,33 +7,34 @@
   <div class="container-mesh-qa" *ngIf="glb" [hidden]="!meshQaSelected">
     <dec-mesh-qa [isProfessional]="isProfessional" [glbReadonly]="glbReadonly" [glb]="glb" [mesh]="qualityAssurance?.mesh"
       (updateTagStructure)="updateTagStructure($event)"></dec-mesh-qa>
+
+    <div class="max-file">
+      <mat-icon *ngIf="maxFile" class="click" matTooltip="{{ 'label.max-file' | translate }}" (click)="openMaxFile()">
+        cloud_download
+      </mat-icon>
+    </div>
+
   </div>
 
-  <div class="gallery-size" fxLayout="row" fxLayoutAlign="center center">
-    <ngu-carousel #carouselGallery class="carousel-wrapper" [inputs]="carouselConfig" (initData)="onInitDataFn($event)"
-      (onMove)="onMoveFn($event)">
+  <div class="gallery-size container-carousel" fxLayout="row" fxLayoutAlign="center center">
+    <dec-carousel itemsPerPage="7" style="width:100%;" [selectedIndex]="(glb && markedObjs && markedObjs.length) ? 1 : 0">
 
-      <ngu-item *ngIf="glb" (swipe)="onSwipe($event)" NguCarouselItem (click)="onSelectMesh()" [class.active]="meshQaSelected">
-        <div class="image-container">
-          <img [src]="imageMeshUrl" style="width: 100%;height: 100%;" />
+      <dec-carousel-item *ngIf="glb">
+        <div class="mesh-icon-container" (click)="onSelectMesh()">
+          <dec-icon font="mat" class="mesh-icon">3d_rotation</dec-icon>
         </div>
-      </ngu-item>
+      </dec-carousel-item>
 
-      <ngu-item (swipe)="onSwipe($event)" NguCarouselItem *ngFor="let image of markedObjs; let i = index;"
-        [class.active]="image == markedObj">
+      <dec-carousel-item *ngFor="let image of markedObjs; let i = index;">
         <div class="image-container">
           <span *ngIf="showTags && (image?.tags && image?.tags?.length > 0) ||
             showTags && (image?.zoomAreas && image?.zoomAreas?.length > 0)"
             class="has-comment">!</span>
           <img [decImage]="image.file" [decImageSize]="{width:300, height:300}" draggable="false" (click)="onSelectImage($event,image, i)">
         </div>
-      </ngu-item>
+      </dec-carousel-item>
 
-      <mat-icon NguCarouselPrev class="left-previous" [ngClass]="{'disabled': isFirst}">chevron_left</mat-icon>
-
-      <mat-icon NguCarouselNext class="right-next" [ngClass]="{'disabled': isLast}">chevron_right</mat-icon>
-
-    </ngu-carousel>
+    </dec-carousel>
   </div>
 
   <div *ngIf="showTags" class="container-comments" fxLayout="column" fxLayoutGap="16px">

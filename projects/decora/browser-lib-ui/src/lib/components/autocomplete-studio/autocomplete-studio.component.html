@@ -1,5 +1,7 @@
 <dec-autocomplete
 [endpoint]="endpoint"
+[multi]="multi"
+[notFoundMessage]="notFoundMessage"
 [labelAttr]="labelAttr"
 [valueAttr]="valueAttr"
 [disabled]="disabled"
@@ -8,5 +10,4 @@
 [placeholder]="placeholder"
 (blur)="blur.emit($event)"
 (optionSelected)="optionSelected.emit($event)"
-(enterButton)="enterButton.emit($event)"
 [(ngModel)]="value"></dec-autocomplete>

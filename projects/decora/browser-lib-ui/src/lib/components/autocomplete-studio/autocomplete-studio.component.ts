@@ -1,5 +1,6 @@
-import { Component, Input, Output, EventEmitter, forwardRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter, forwardRef, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { DecAutocompleteComponent } from './../autocomplete/autocomplete.component';
 
 //  Return an empty function to be used as default trigger functions
 const noop = () => {
@@ -25,13 +26,23 @@ export class AutocompleteStudioComponent implements ControlValueAccessor {
   labelAttr = 'name';
 
   @Input() disabled: boolean;
+
   @Input() required: boolean;
+
+
   @Input() name = 'Studio autocomplete';
+
   @Input() placeholder = 'Studio autocomplete';
 
+  @Input() multi: boolean;
+
+  @Input() notFoundMessage: string;
+
   @Output() blur: EventEmitter<any> = new EventEmitter<any>();
+
   @Output() optionSelected: EventEmitter<any> = new EventEmitter<any>();
-  @Output() enterButton: EventEmitter<any> = new EventEmitter<any>();
+
+  @ViewChild(DecAutocompleteComponent) autocompleteComponent: DecAutocompleteComponent;
 
   /*
   ** ngModel propertie
@@ -71,6 +82,11 @@ export class AutocompleteStudioComponent implements ControlValueAccessor {
   // From ControlValueAccessor interface
   registerOnTouched(fn: any) {
     this.onTouchedCallback = fn;
+  }
+
+  // From ControlValueAccessor interface
+  setDisabledState(disabled = false) {
+    this.disabled = disabled;
   }
 
   onValueChanged(event: any) {
