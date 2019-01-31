@@ -73,7 +73,7 @@
           <span class="dec-icon-text-size-zoom-area"> Mesh </span>
         </h3>
       </div>
-      <dec-markdowns-mesh-qa [mesh]="qualityAssurance?.mesh"></dec-markdowns-mesh-qa>
+      <dec-markdowns-mesh-qa [mesh]="qualityAssurance?.mesh" (isThereAnyMeshTag)="thereIsAMeshTag()"></dec-markdowns-mesh-qa>
     </div>
 
   </div>

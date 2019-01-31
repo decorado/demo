@@ -24,6 +24,8 @@ export class DecZoomMarksGalleryComponent {
 
   @Input() glbReadonly: boolean;
 
+  isThereAnyMeshTag: boolean;
+
   @Input()
   set qualityAssurance(v: any) {
     this._qualityAssurance = v;
@@ -190,5 +192,9 @@ export class DecZoomMarksGalleryComponent {
 
   openMaxFile() {
     window.open(this.maxFile, '_blank');
+  }
+
+  thereIsAMeshTag() {
+    this.isThereAnyMeshTag = true;
   }
 }
