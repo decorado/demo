@@ -14,9 +14,13 @@ This component is used to facilitate scrolling into sections of the view.
 
 ## Properties
 
+### @Input() component: any
+
+Property to be used to pass the child component along the view;
+
 ### @Input() data: any
 
-Property to be used to passa data along the view (like is the section content is valid so the navigator can point out this info)
+Property to be used to pass data along the view (like is the section content is valid so the navigator can point out this info)
 
 ### @Input() name: string
 

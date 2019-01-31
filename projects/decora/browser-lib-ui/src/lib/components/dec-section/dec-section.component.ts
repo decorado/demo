@@ -28,6 +28,8 @@ export class DecSectionComponent {
 
   @Input() data: any;
 
+  @Input() component: any;
+
   @Input() scrollingStyle = new DecSectionScrollingStyle();
 
   @Input() name: string;
