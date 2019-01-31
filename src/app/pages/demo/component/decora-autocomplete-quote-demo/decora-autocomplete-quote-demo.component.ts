@@ -11,7 +11,7 @@ export class DecoraAutocompleteQuoteDemoComponent implements OnInit {
 
   companyId = 1;
 
-  quote: number;
+  quote = 637;
 
   quotes = [];
 

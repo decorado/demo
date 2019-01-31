@@ -8,10 +8,10 @@
           <mat-icon matChipRemove>cancel</mat-icon>
         </mat-chip>
         <input matInput [attr.aria-label]="name" #termInput [matAutocomplete]="decAutocomplete" [formControl]="autocompleteInput"
-          [name]="name" [required]="required" [placeholder]="placeholder" (keyup.enter)="onEnterButton($event)" (blur)="onBlur($event)"
+          [name]="name" [required]="required" [placeholder]="placeholder" (blur)="onBlur($event)"
           autocomplete="off" readonly onfocus="this.removeAttribute('readonly');"
           [matChipInputFor]="decAutocompleteChipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
-        <button mat-icon-button matSuffix (click)="clear(true)" *ngIf="showClearButton()">
+        <button mat-icon-button matSuffix (click)="clear()" *ngIf="showClearButton()">
           <mat-icon>close</mat-icon>
         </button>
         <button mat-icon-button matSuffix (click)="reset()" *ngIf="showResetButton()">
@@ -21,7 +21,14 @@
       <mat-autocomplete #decAutocomplete="matAutocomplete" [displayWith]="extractTrimmedLabel" (optionSelected)="onOptionSelected($event)"
         name="autocompleteValue">
         <mat-option *ngFor="let item of getSelectableOptions(options$ | async)" [value]="item">
-          <span class="option-value-pre">{{ extractLabel(item) }}</span>
+          <ng-container [ngSwitch]="optionTemplate ? true : false">
+            <div *ngSwitchCase="true">
+              <ng-container [ngTemplateOutlet]="optionTemplate.template" [ngTemplateOutletContext]="{row: item}"></ng-container>
+            </div>
+            <div *ngSwitchCase="false">
+              <span class="option-value-pre">{{ extractLabel(item) }}</span>
+            </div>
+          </ng-container>
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>
@@ -30,9 +37,9 @@
   <ng-container *ngSwitchCase="false">
     <mat-form-field>
       <input matInput [attr.aria-label]="name" #termInput [matAutocomplete]="decAutocomplete" [formControl]="autocompleteInput"
-        [name]="name" [required]="required" [placeholder]="placeholder" (keyup.enter)="onEnterButton($event)" (blur)="onBlur($event)"
+        [name]="name" [required]="required" [placeholder]="placeholder" (blur)="onBlur($event)"
         autocomplete="off" readonly onfocus="this.removeAttribute('readonly');">
-      <button mat-icon-button matSuffix (click)="clear(true)" *ngIf="showClearButton()">
+      <button mat-icon-button matSuffix (click)="clear()" *ngIf="showClearButton()">
         <mat-icon>close</mat-icon>
       </button>
       <button mat-icon-button matSuffix (click)="reset()" *ngIf="showResetButton()">
@@ -43,9 +50,18 @@
       name="autocompleteValue">
       <mat-option *ngIf="!required" [value]=""></mat-option>
       <mat-option *ngFor="let item of getSelectableOptions(options$ | async)" [value]="item">
-        <span class="option-value-pre">{{ extractLabel(item) }}</span>
+        <ng-container [ngSwitch]="optionTemplate ? true : false">
+          <div *ngSwitchCase="true">
+            <ng-container [ngTemplateOutlet]="optionTemplate.template" [ngTemplateOutletContext]="{row: item}"></ng-container>
+          </div>
+          <div *ngSwitchCase="false">
+            <span class="option-value-pre">{{ extractLabel(item) }}</span>
+          </div>
+        </ng-container>
       </mat-option>
     </mat-autocomplete>
   </ng-container>
 
 </ng-container>
+
+<p *ngIf="notFoundMessage && options?.length === 0">{{ notFoundMessage }}</p>

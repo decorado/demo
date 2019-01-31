@@ -10,7 +10,7 @@ export class DecSidenavToolbarTitleComponent implements OnInit {
 
   @Input() routerLink;
 
-  @Input() openedPass = true;
+  @Input() leftMenuVisible = true;
 
   opened = true;
 
@@ -31,7 +31,7 @@ export class DecSidenavToolbarTitleComponent implements OnInit {
     'right',
     'down',
     'arrows-container'
-  ]
+  ];
 
   classesIn = [
     'menuClass',
@@ -47,48 +47,46 @@ export class DecSidenavToolbarTitleComponent implements OnInit {
     'right',
     'down',
     'arrows-container'
-  ]
+  ];
 
   constructor(private navService: DecSidenavService) { }
 
   ngOnInit() {
     setTimeout(() => {
       this.opened = this.navService.getSidenavVisibility('leftMenuHidden');
-    }, 0)
+    }, 0);
   }
 
 
   @HostListener('document:mouseover', ['$event'])
   onHover($event) {
-    if (!$event) {
-      return;
-    }
-    const el = $event.target;
-    if (this.verifyItemContent(el, this.classesIn)&& this.navService.getSidenavVisibility('leftMenuHidden')) {
-      this.openedPass = true;
+    if ($event) {
+      const el = $event.target;
+      if (this.verifyItemContent(el, this.classesIn) && this.navService.getSidenavVisibility('leftMenuHidden')) {
+        this.leftMenuVisible = true;
+      }
     }
   }
 
   @HostListener('document:mousemove', ['$event'])
   onOut($event) {
-    if (!$event) {
-      return;
-    }
-    const el = $event.target;
-    if (!this.verifyItemContent(el, this.classesOut) && this.navService.getSidenavVisibility('leftMenuHidden')) {
-      this.openedPass = false;
+    if ($event) {
+      const el = $event.target;
+      if (!this.verifyItemContent(el, this.classesOut) && this.navService.getSidenavVisibility('leftMenuHidden')) {
+        this.leftMenuVisible = false;
+      }
     }
   }
 
   verifyItemContent(div, array) {
     let exists = false;
-    for (let i=0;i<array.length;i++) {
+    for (let i = 0; i < array.length; i++) {
       if (div.classList.contains(array[i])) {
         exists = true;
       }
     }
     return exists;
   }
-  
+
 
 }

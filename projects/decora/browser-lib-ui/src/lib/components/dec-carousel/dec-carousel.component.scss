@@ -6,21 +6,14 @@
   .dec-carousel-item {
 
     .dec-carousel-item-content-wrapper {
-
       text-align: center;
 
       .dec-carousel-item-content {
-
         text-align: left;
-
         cursor: pointer;
-
         display: inline-block;
-
         position: relative;
-
       }
-
     }
 
     &.highlight-selected {
@@ -29,24 +22,27 @@
         border: 2px solid rgba(0, 0, 0, 0);
 
         &.dec-carousel-item-content-wrapper-selected {
-
           border-color: $dec-color-primary;
-
         }
-
       }
-
-
     }
 
   }
 
+  .dec-carousel-container-navigator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 48px;
+    width: 48px;
+  }
+
   .dec-carousel-navigator {
     cursor: pointer;
-    border: solid rgba(0, 0, 0, 0.5);
-    border-width: 0 4px 4px 0;
+    border: solid rgba(0, 0, 0, 0.87);
+    border-width: 0 2px 2px 0;
     display: inline-block;
-    padding: 12px;
+    padding: 6px;
     margin: 4px;
 
     -webkit-touch-callout: none;
@@ -55,16 +51,57 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+
+    &.navigator-disabled {
+      cursor: default;
+      border: solid rgba(0, 0, 0, 0.33);
+      border-width: 0 2px 2px 0;
+    }
   }
+
 
   .dec-carousel-navigator-left {
     transform: rotate(135deg);
     -webkit-transform: rotate(135deg);
   }
 
+  .dec-carousel-navigator-top {
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+  }
+
   .dec-carousel-navigator-right {
     transform: rotate(-45deg);
     -webkit-transform: rotate(-45deg);
-    margin-left: -8px;
   }
+
+  .dec-carousel-navigator-bottom {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+  }
+}
+
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0 8px 10px 1px rgba(0, 0, 0, 0.14),
+    0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drop-list-dragging .dec-carousel-item:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.disabled {
+  display: none
 }

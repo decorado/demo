@@ -1,6 +1,4 @@
 import { Component, Input, ViewChild } from '@angular/core';
-import { CarouselConfig } from './../gallery/carousel-config';
-import { NguCarouselStore } from '@ngu/carousel/src/ngu-carousel/ngu-carousel.interface';
 import { DecImageMarkerComponent } from './../dec-image-marker/dec-image-marker.component';
 
 @Component({
@@ -15,12 +13,6 @@ export class DecGalleryMarksComponent {
   activeImage: Element;
 
   imgExternalLink: string;
-
-  isFirst: boolean;
-
-  isLast: boolean;
-
-  carouselConfig = CarouselConfig;
 
   @ViewChild(DecImageMarkerComponent) imgMarker: DecImageMarkerComponent;
 
@@ -117,29 +109,6 @@ export class DecGalleryMarksComponent {
       this.imgExternalLink = this.imageHighlight.file.fileUrl;
 
     }
-
-  }
-
-  onInitDataFn(event: NguCarouselStore) {
-    this.setPrevNextCheckers(event.isFirst, event.items >= this.images.length);
-
-  }
-
-  onMoveFn(event: NguCarouselStore) {
-
-    this.setPrevNextCheckers(event.isFirst, event.isLast);
-
-  }
-
-  setPrevNextCheckers(first: boolean, last: boolean) {
-
-    setTimeout(() => {
-
-      this.isFirst = first;
-
-      this.isLast = last;
-
-    }, 0);
 
   }
 

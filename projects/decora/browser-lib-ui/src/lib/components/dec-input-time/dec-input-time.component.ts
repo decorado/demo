@@ -1,5 +1,5 @@
-import { Component, AfterViewInit, Input, forwardRef } from '@angular/core';
-import { Validators, FormGroup, FormBuilder, NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import {Component, AfterViewInit, Input, forwardRef, Output, EventEmitter} from '@angular/core';
+import { Validators, FormGroup, FormBuilder, NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 const noop = () => {
@@ -26,7 +26,27 @@ export class DecInputTimeComponent implements ControlValueAccessor, AfterViewIni
 
   @Input() name = 'time';
 
-  @Input() required: boolean;
+  @Input() set required(v: boolean) {
+    this._required = v;
+    this.bindRequiredAndDisabled();
+  }
+
+  get required() {
+    return this._required;
+  }
+
+  @Input() set disabled(v: boolean) {
+    this._disabled = v;
+    this.bindRequiredAndDisabled();
+  }
+
+  get disabled() {
+    return this._disabled;
+  }
+
+  private _required;
+
+  private _disabled;
 
   //  The internal data model
   private innerValue: number;
@@ -37,7 +57,7 @@ export class DecInputTimeComponent implements ControlValueAccessor, AfterViewIni
 
   constructor(
     private fb: FormBuilder,
-  ) { }
+  ) {}
 
   ngAfterViewInit() {
     setTimeout(() => {
@@ -69,17 +89,38 @@ export class DecInputTimeComponent implements ControlValueAccessor, AfterViewIni
     this.onTouchedCallback = fn;
   }
 
+  // From ControlValueAccessor interface
+  setDisabledState(disabled = false) {
+    this.disabled = disabled;
+  }
+
+  // From ControlValueAccessor interface
   writeValue(value: any) {
-    value = value === null ? undefined : value; // v7 bug. remove it when the issue is closed: https://github.com/angular/angular/issues/14988
+    value = value === null ? '' : value; // v7 bug. remove it when the issue is closed: https://github.com/angular/angular/issues/14988
     if (`${value}` !== `${this.value}`) { // convert to string to avoid problems comparing values
       this.value = value;
+    }
+  }
+
+  private bindRequiredAndDisabled() {
+    if (this.timeForm) {
+      if (this.disabled) {
+        this.timeForm.disable();
+      } else {
+        this.timeForm.enable();
+      }
+      if (this.required) {
+        this.timeForm.setValidators([Validators.required]);
+      } else {
+        this.timeForm.clearValidators();
+      }
     }
   }
 
   private initInputControl() {
     if (!this.timeForm) {
       this.timeForm = this.fb.group({
-        time: ['', this.required ? [Validators.required] : []],
+        time: new FormControl({ value: this.value, disabled: this.disabled }, this.required ? [Validators.required] : []),
       });
       this.setInputBasedOnValue();
       this.subscribeToInputchanges();
@@ -93,28 +134,45 @@ export class DecInputTimeComponent implements ControlValueAccessor, AfterViewIni
       distinctUntilChanged(),
     )
     .subscribe(value => {
-      const firstFourNumbers = this.getFirstFourNumbers(value);
-      const maskedValue = this.maskValue(firstFourNumbers);
-      this.setValueBasedOnInput(firstFourNumbers);
+      const numbers = this.getNumbers(value);
+      const maskedValue = this.maskValue(numbers);
       this.timeForm.controls.time.setValue(maskedValue);
+      this.setValueBasedOnInput(numbers);
     });
   }
 
-  private getFirstFourNumbers(value) {
-    const numbersArray = `${value}`.match(/[0-9]/gi);
-    const firstFourNumbersArray = numbersArray ? numbersArray.slice(0, 4) : [];
-    return firstFourNumbersArray.join('');
+  private getNumbers(value) {
+    const numbersArray = `${value}`.replace(/[a-zA-Z]/g, '');
+    return parseInt(numbersArray, 10);
   }
 
   private maskValue(value) {
-    const totalNumbers = value.length;
-    if (totalNumbers >= 3) {
-      return `${value[0]}${value[1] || 0}h${value[2] || 0}${value[3] || 0}m`;
-    } else if (totalNumbers > 0) {
-      return `${value}h`;
+
+    const valueString = `${value}`;
+
+    const totalNumbers = valueString.length;
+
+    let maskedValue;
+
+    if (totalNumbers === 1) {
+
+      maskedValue = `0${valueString}m`;
+
+    } else if (totalNumbers === 2) {
+
+      maskedValue = `${valueString}m`;
+
     } else {
-      return '';
+
+      const minutes = valueString.slice(totalNumbers - 2, totalNumbers);
+
+      const hours = valueString.slice(0, totalNumbers - 2);
+
+      maskedValue = `${hours}h${minutes}m`;
+
     }
+
+    return maskedValue;
   }
 
   private setInputBasedOnValue() {
@@ -127,37 +185,32 @@ export class DecInputTimeComponent implements ControlValueAccessor, AfterViewIni
       const minutes = (this.innerValue % 60);
       const hours = (this.innerValue - minutes) / 60;
       const minutesString = `${minutes}`.length === 2 ? `${minutes}` : `${minutes}`.length === 1 ? `0${minutes}` : '';
-      const hoursString = `${hours}`.length === 2 ? `${hours}` : `${hours}`.length === 1 ? `0${hours}` : '';
+      const hoursString = `${hours}`.length >= 2 ? `${hours}` : `${hours}`.length === 1 ? `0${hours}` : '';
       return `${hoursString}h${minutesString}m`;
     } else {
       return '';
+
     }
   }
 
-  private setValueBasedOnInput(firstFourNumbers) {
-    const totalMinutes = this.getMinutesFromInputNumbersArray(firstFourNumbers);
+  private setValueBasedOnInput(numbers) {
+    const totalMinutes = this.getMinutesFromInputNumbersArray(numbers);
     this.value = totalMinutes;
   }
 
-  private getMinutesFromInputNumbersArray(firstFourNumbers) {
-    const totalNumbers = firstFourNumbers.length;
-    let hours = 0;
-    let minutes = 0;
-
-    if (totalNumbers === 4) {
-      hours = parseInt(`${firstFourNumbers[0]}${firstFourNumbers[1]}`, 10);
-      minutes = parseInt(`${firstFourNumbers[2]}${firstFourNumbers[3]}`, 10);
-    } else if (totalNumbers === 3) {
-      hours = parseInt(`${firstFourNumbers[0]}${firstFourNumbers[1]}`, 10);
-      minutes = parseInt(`${firstFourNumbers[2]}0`, 10);
-    } else if (totalNumbers === 2) {
-      hours = parseInt(`${firstFourNumbers[0]}${firstFourNumbers[1]}`, 10);
-    } else if (totalNumbers === 1) {
-      hours = parseInt(firstFourNumbers[0], 10);
+  private getMinutesFromInputNumbersArray(numbers) {
+    const numbersAsString = `${numbers}`;
+    const totalNumbers = numbersAsString.length;
+    let totalMinutes = 0;
+    if (totalNumbers < 3) {
+      totalMinutes = numbers;
+    } else {
+      const minutesString = numbersAsString.slice(totalNumbers - 2, totalNumbers);
+      const minutes = parseInt(minutesString, 10);
+      const hoursString = numbersAsString.slice(0, totalNumbers - 2);
+      const hours = parseInt(hoursString, 10);
+      totalMinutes = (hours * 60) + minutes;
     }
-
-    const totalMinutes = (hours * 60) + minutes;
-
     return totalMinutes;
   }
 

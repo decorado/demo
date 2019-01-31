@@ -1,10 +1,10 @@
-<div class="menuClass" [ngClass]="{menuOpen: openedPass, menuClose: !openedPass}">
+<div class="menuClass" [ngClass]="{menuOpen: leftMenuVisible, menuClose: !leftMenuVisible}">
   <mat-list>
     <ng-container *ngFor="let item of items">
       <ng-container *ngIf="item.started && item.template ? true : false">
-        <ng-template 
-          [ngTemplateOutlet]="item.template" 
-          [ngTemplateOutletContext]="{treeLevel: treeLevel + 1, iconMode: openedPass}">
+        <ng-template
+          [ngTemplateOutlet]="item.template"
+          [ngTemplateOutletContext]="{treeLevel: treeLevel + 1, iconMode: leftMenuVisible}">
         </ng-template>
       </ng-container>
     </ng-container>

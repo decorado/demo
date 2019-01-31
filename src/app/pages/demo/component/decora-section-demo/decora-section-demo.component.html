@@ -1,0 +1,14 @@
+<app-demo-container readmeSrc="assets/docs/browser-lib-ui/components/dec-section/README.md">
+
+  <h1>Decora Section Component</h1>
+
+  <div *ngIf="initialized">
+    <button mat-raised-button color="primery" *ngFor="let sectionComponent of sectionComponents" (click)="sectionComponent.scrollIntoView()">{{ sectionComponent.name }}</button>
+  </div>
+
+  <br>
+
+  <dec-section [name]="section.name" *ngFor="let section of sections">
+    <div class="section-content-container">Section name: {{ section.name }}</div>
+  </dec-section>
+</app-demo-container>

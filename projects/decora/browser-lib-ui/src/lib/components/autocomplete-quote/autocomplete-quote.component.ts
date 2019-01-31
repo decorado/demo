@@ -1,8 +1,7 @@
-import { Component, Input, forwardRef, Output, EventEmitter, AfterViewInit } from '@angular/core';
+import { Component, Input, forwardRef, Output, EventEmitter, AfterViewInit, ViewChild } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { Observable } from 'rxjs';
 import { DecApiService } from './../../services/api/decora-api.service';
-import { map } from 'rxjs/operators';
+import { DecAutocompleteComponent } from './../autocomplete/autocomplete.component';
 
 //  Return an empty function to be used as default trigger functions
 const noop = () => {
@@ -38,6 +37,8 @@ export class DecAutocompleteQuoteComponent implements ControlValueAccessor, Afte
   @Input() placeholder = 'Quote autocomplete';
 
   @Input() multi: boolean;
+
+  @Input() notFoundMessage: string;
 
   @Input() repeat: boolean;
 
@@ -92,6 +93,8 @@ export class DecAutocompleteQuoteComponent implements ControlValueAccessor, Afte
     return this._decoraProductVariant;
   }
 
+  @ViewChild(DecAutocompleteComponent) autocompleteComponent: DecAutocompleteComponent;
+
   private _projectId: string;
 
   private _decoraProduct: string;
@@ -145,6 +148,11 @@ export class DecAutocompleteQuoteComponent implements ControlValueAccessor, Afte
     this.onTouchedCallback = fn;
   }
 
+  // From ControlValueAccessor interface
+  setDisabledState(disabled = false) {
+    this.disabled = disabled;
+  }
+
   onValueChanged(event: any) {
     this.value = event.toString();
   }
@@ -168,8 +176,6 @@ export class DecAutocompleteQuoteComponent implements ControlValueAccessor, Afte
   private setEndpointBasedOnInputs() {
 
     let endpoint;
-
-    this.value = undefined;
 
     if (this.projectId) {
 

@@ -1,11 +1,6 @@
 // body
-$min-body-width: 1200px;
+$min-body-width: 1280px;
+$max-body-width: 1920px;
+
 // default padding
 $default-content-padding: 32px;
-// Sidenav
-$sidenav-content-padding: $default-content-padding;
-$sidenav-menu-width: 220px;
-$min-body-width-without-sidenav: 944px;
-
-// Dialog
-$dialog-content-padding: 0px $default-content-padding $default-content-padding $default-content-padding;

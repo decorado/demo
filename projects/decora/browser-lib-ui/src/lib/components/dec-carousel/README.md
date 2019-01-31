@@ -49,6 +49,14 @@ Number of items per page.
 
 Space between items.
 
+## enabelDrag
+
+Allow drag and drop items.
+
+## arrayToSort
+
+Array to sort.
+
 # dec-carousel-item  Inputs
 
 ## value
@@ -69,3 +77,7 @@ event {
 The index is the item index.
 
 The value is the `dec-carousel-item` `value` input
+
+## lastItem()
+
+Event return when list arrived in the last item

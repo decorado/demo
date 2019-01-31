@@ -14,8 +14,8 @@ export class DecoraSnackBarDemoComponent implements OnInit {
   }
 
 
-  openSnack(msg, type) {
-    const s = this.snackBarService.open(msg, type);
+  openSnack(msg, type, time?, action?) {
+    const s = this.snackBarService.open(msg, type, time, action);
   }
 
 }

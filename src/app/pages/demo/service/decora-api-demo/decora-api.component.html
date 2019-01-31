@@ -78,6 +78,10 @@
       Response message: {{ response | json }}
     </p>
 
+    <p *ngIf="errors">
+      Response errors: {{ errors | json }}
+    </p>
+
   </div>
 
 </app-demo-container>

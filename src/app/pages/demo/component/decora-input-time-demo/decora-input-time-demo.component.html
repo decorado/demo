@@ -1,21 +1,37 @@
 <app-demo-container readmeSrc="/assets/docs/browser-lib-ui/components/dec-input-time/README.md">
 
   <p><strong>Model value: {{ modelValue }}</strong></p>
-  <dec-input-time [(ngModel)]="modelValue"></dec-input-time>
+  <dec-input-time [required]="true" [(ngModel)]="modelValue"></dec-input-time>
 
-  <br>
+  <h3>Disabled</h3>
 
   <p><strong>Model value: {{ modelValue2 }}</strong></p>
-  <dec-input-time [(ngModel)]="modelValue2"></dec-input-time>
+  <dec-input-time [disabled]="true" [(ngModel)]="modelValue2"></dec-input-time>
 
-  <br>
+  <h3>Required</h3>
 
   <p><strong>Model value: {{ modelValue3 }}</strong></p>
-  <dec-input-time [(ngModel)]="modelValue3"></dec-input-time>
+  <dec-input-time [required]="true" [(ngModel)]="modelValue3"></dec-input-time>
 
-  <br>
+  <h3>Template Form Reactively disabled</h3>
 
   <p><strong>Model value: {{ modelValue4 }}</strong></p>
-  <dec-input-time [(ngModel)]="modelValue4"></dec-input-time>
+  <dec-input-time [required]="true" [(ngModel)]="modelValue4" [disabled]="disabled" (ngModelChange)="onModelChanged($event)"></dec-input-time>
+
+  <button (click)="disabled = !!!disabled;">Disabled {{ disabled | json }}</button>
+
+  <h3>Reactive Form Reactively disabled</h3>
+
+  <p><strong>Model value: {{ demoForm.controls.timeReactiveInput.value }}</strong></p>
+
+  <form role="form" [formGroup]="demoForm">
+
+    <dec-input-time name="timeReactiveInput" formControlName="timeReactiveInput"></dec-input-time>
+
+  </form>
+
+  <button (click)="disabled = !!!disabled;">Disabled {{ disabled | json }}</button>
+  &nbsp;
+  <button (click)="setValue()">SET RANDOM VALUE</button>
 
 </app-demo-container>
