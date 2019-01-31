@@ -80,6 +80,7 @@ $color-updated: rgb(109, 100, 100);
 
       &.status-new {
         background-color: $color-new;
+
         &:before {
           background-color: $color-new;
         }
@@ -87,17 +88,19 @@ $color-updated: rgb(109, 100, 100);
 
       &.status-deleted {
         background-color: $color-deleted;
+
         &:before {
           background-color: $color-deleted;
         }
-      } 
+      }
 
       &.status-updated {
         background-color: $color-updated;
+
         &:before {
           background-color: $color-updated;
         }
-      } 
+      }
 
       &:hover {
         border-color: $color-red;
@@ -140,11 +143,11 @@ $color-updated: rgb(109, 100, 100);
 
       &.status-deleted {
         background-color: $color-deleted;
-      } 
+      }
 
       &.status-updated {
         background-color: $color-updated;
-      } 
+      }
     }
 
     .square-tag {
@@ -161,11 +164,11 @@ $color-updated: rgb(109, 100, 100);
 
       &.status-deleted {
         border-color: $color-deleted;
-      } 
+      }
 
       &.status-updated {
         border-color: $color-updated;
-      } 
+      }
     }
   }
 
@@ -218,10 +221,11 @@ $color-updated: rgb(109, 100, 100);
 /deep/ .icon-label {
   position: relative;
   top: -5px;
+  left: 4px;
 }
 
 /deep/ .icon-delete-label {
   position: relative;
   top: -5px;
-  left: 3px;
+  left: 4px;
 }

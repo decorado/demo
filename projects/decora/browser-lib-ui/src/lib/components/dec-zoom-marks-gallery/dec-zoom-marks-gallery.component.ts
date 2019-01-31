@@ -36,11 +36,11 @@ export class DecZoomMarksGalleryComponent {
   @Input()
   set markedObjs(v) {
     if (this._markedObjs !== v) {
-      this._markedObjs = v;
-      this.generateCacheForImages(v);
+      this._markedObjs = this.sortRenders(v);
       this.markedObj = this.markedObjs[0];
-      this.sortRenders();
+
       this.bindRenderDescriptions();
+      this.generateCacheForImages(v);
     }
   }
 
@@ -83,7 +83,7 @@ export class DecZoomMarksGalleryComponent {
       this._glb = v;
 
       if (!this._glb) {
-        this.onSelectImage(null, null, 0);
+        this.onSelectImage(0);
       } else if ((!this._markedObjs || !this._markedObjs.length)) {
         this.onSelectMesh();
       }
@@ -120,7 +120,7 @@ export class DecZoomMarksGalleryComponent {
     private decRenderCommentService: DecRenderCommentService
   ) { }
 
-  onSelectImage = ($event, sysFile, i) => {
+  onSelectImage = (i: number) => {
     this.markedObj = this.markedObjs[i];
     this.imageIndex = i;
     this.meshQaSelected = false;
@@ -147,18 +147,15 @@ export class DecZoomMarksGalleryComponent {
     return this.imageIndex;
   }
 
-  sortRenders() {
-    const aux = [];
-    for (let i = 0; i < this.markedObjs.length; i++) {
-      if ((this.markedObjs[i].tags && this.markedObjs[i].tags.length > 0) ||
-        (this.markedObjs[i].zoomAreas && this.markedObjs[i].zoomAreas.length > 0)) {
-        aux.push(this.markedObjs.splice(i, 1));
-        i = 0;
-      }
+  private sortRenders(markedObjs) {
+    const rendersWithMark = markedObjs.filter(render => (render.tags && render.tags.length) || (render.zoomAreas && render.zoomAreas.length));
+    const rendersWithoutMark = markedObjs.filter(render => (render.tags && !render.tags.length) && (render.zoomAreas && !render.zoomAreas.length));
+
+    if (!rendersWithMark.length && !rendersWithoutMark.length) {
+      return markedObjs;
     }
-    for (let i = (aux.length - 1); i >= 0; i--) {
-      this.markedObjs.splice(0, 0, aux[i][0]);
-    }
+
+    return [...rendersWithMark, ...rendersWithoutMark];
   }
 
   deleteArea($event) {

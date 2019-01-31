@@ -30,7 +30,7 @@
           <span *ngIf="showTags && (image?.tags && image?.tags?.length > 0) ||
             showTags && (image?.zoomAreas && image?.zoomAreas?.length > 0)"
             class="has-comment">!</span>
-          <img [decImage]="image.file" [decImageSize]="{width:300, height:300}" draggable="false" (click)="onSelectImage($event,image, i)">
+          <img [decImage]="image.file" [decImageSize]="{width:300, height:300}" draggable="false" (click)="onSelectImage(i)">
         </div>
       </dec-carousel-item>
 

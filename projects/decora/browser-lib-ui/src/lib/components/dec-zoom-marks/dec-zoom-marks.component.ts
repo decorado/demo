@@ -528,27 +528,43 @@ export class DecZoomMarksComponent implements AfterViewChecked {
     const [x, y] = coordinates;
     const menu = document.createElement('div');
     menu.id = 'tagMenu';
-    menu.style.top = `calc(${y}% - 50px)`;
-    menu.style.left = `calc(${x}% + 18px)`;
+
+    if (x > 80) {
+      menu.style.left = `calc(${x}% - 120px)`;
+    } else {
+      menu.style.left = `calc(${x}% + 18px)`;
+    }
+
+    if (y > 80) {
+      menu.style.top = `calc(${y}% - 100px)`;
+    } else {
+      menu.style.top = `calc(${y}%)`;
+    }
+
     menu.style.position = 'absolute';
     menu.style.width = '100px';
     menu.style.height = '100px';
     menu.style.backgroundColor = 'white';
     menu.style.border = '1px solid rgba(0,0,0,0.15)';
+    menu.style.zIndex = '1';
     menu.setAttribute('comment', JSON.stringify(comment));
 
     const edit = document.createElement('div');
     edit.style.cursor = 'pointer';
     edit.setAttribute('type', 'edit');
     edit.style.marginTop = '15px';
-    edit.innerHTML = '<img width="24" height="24" src="'+this.getBasePath()+'edit-icon.svg"> <span class="icon-label">' + this.editLabel + '</span>';
+    edit.style.textAlign = 'left';
+    edit.style.marginLeft = '8px';
+    edit.innerHTML = '<img width="24" height="24" src="' + this.getBasePath() + 'edit-icon.svg"> <span class="icon-label">' + this.editLabel + '</span>';
 
 
     const deleteDiv = document.createElement('div');
     deleteDiv.style.cursor = 'pointer';
     deleteDiv.setAttribute('type', 'delete');
     deleteDiv.style.marginTop = '15px';
-    deleteDiv.innerHTML = '<img width="24" height="24" src="'+this.getBasePath()+'delete-icon.svg"> <span class="icon-delete-label">' + this.deleteLabel + ' </span>';
+    deleteDiv.style.textAlign = 'left';
+    deleteDiv.style.marginLeft = '8px';
+    deleteDiv.innerHTML = '<img width="24" height="24" src="' + this.getBasePath() + 'delete-icon.svg"> <span class="icon-delete-label">' + this.deleteLabel + ' </span>';
 
     menu.appendChild(edit);
     menu.appendChild(deleteDiv);
