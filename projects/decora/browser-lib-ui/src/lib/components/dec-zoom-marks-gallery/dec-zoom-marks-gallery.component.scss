@@ -146,7 +146,14 @@ a {
 .container-mesh-qa {
   width: 100%;
   max-width: 646px;
-  padding-bottom: 48px;
+
+  .max-file {
+    display: flex;
+    justify-content: flex-end;
+    height: 48px;
+    align-items: center;
+    margin-right: 28px;
+  }
 }
 
 .container-carousel {

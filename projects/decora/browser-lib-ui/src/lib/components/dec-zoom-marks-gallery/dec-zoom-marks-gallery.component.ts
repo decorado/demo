@@ -190,4 +190,8 @@ export class DecZoomMarksGalleryComponent {
       image.src = mark.file.fileUrl;
     });
   }
+
+  openMaxFile() {
+    window.open(this.maxFile, '_blank');
+  }
 }

@@ -7,6 +7,13 @@
   <div class="container-mesh-qa" *ngIf="glb" [hidden]="!meshQaSelected">
     <dec-mesh-qa [isProfessional]="isProfessional" [glbReadonly]="glbReadonly" [glb]="glb" [mesh]="qualityAssurance?.mesh"
       (updateTagStructure)="updateTagStructure($event)"></dec-mesh-qa>
+
+    <div class="max-file">
+      <mat-icon *ngIf="maxFile" class="click" matTooltip="{{ 'label.max-file' | translate }}" (click)="openMaxFile()">
+        cloud_download
+      </mat-icon>
+    </div>
+
   </div>
 
   <div class="gallery-size container-carousel" fxLayout="row" fxLayoutAlign="center center">
