@@ -21,6 +21,7 @@
 
       <dec-carousel-item *ngIf="glb">
         <div class="mesh-icon-container" (click)="onSelectMesh()">
+          <span *ngIf="isThereAnyMeshTag" class="has-comment">!</span>
           <dec-icon font="mat" class="mesh-icon">3d_rotation</dec-icon>
         </div>
       </dec-carousel-item>
