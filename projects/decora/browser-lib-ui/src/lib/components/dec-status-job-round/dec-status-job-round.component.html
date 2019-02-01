@@ -2,58 +2,66 @@
   <dec-grid-row>
     <dec-grid-column>
       <div class="header-title">
-        <div *ngIf="job?.type == 'MODELING_FIX'" class="left-triangle modeling-fix">
-          <mat-icon class="icon-position">build</mat-icon>
-        </div>
-        <div *ngIf="job?.type == 'COLOR'" class="left-triangle texture-color-swap">
-          <mat-icon class="icon-position">palette</mat-icon>
-        </div>
-        <div *ngIf="job?.type == 'MODELING' || job?.type == 'COLOR_FATHER'" class="left-triangle full-model">
-          <dec-icon font="fas" class="icon-position icon-modeling">cubes</dec-icon>
+        <div [ngSwitch]="job?.type" >
+          <div *ngSwitchCase="'MODELING_FIX'" class="left-triangle modeling-fix">
+            <dec-icon font="mat" class="icon-position">build</dec-icon></div>
+          <div *ngSwitchCase="'COLOR'" class="left-triangle texture-color-swap">
+            <dec-icon font="mat" class="icon-position">palette</dec-icon></div>
+          <div *ngSwitchCase="'MODELING' || 'COLOR_FATHER'" class="left-triangle full-model">
+            <dec-icon font="fas" class="icon-position icon-modeling">cubes</dec-icon></div>
+          <div *ngSwitchCase="'MESH_ONLY'" class="left-triangle full-model">
+            <dec-icon font="fas" class="icon-position icon-modeling">connectdevelop</dec-icon></div>
         </div>
         <div class="text-header" fxLayout="column" fxLayoutGap="2px">
           <span class="smaller-font dec-color-grey uppercase">{{ 'label.type' | translate }}</span>
-          <span *ngIf="job?.type == 'MODELING_FIX'" class="font-text dec-font-500 uppercase">{{
-            'label.modeling-fix-info' | translate }}</span>
-          <span *ngIf="job?.type == 'COLOR'" class="font-text dec-font-500 uppercase">{{ 'label.color-variation-info' |
-            translate }}</span>
-          <span *ngIf="job?.type == 'MODELING' || job?.type == 'COLOR_FATHER'" class="font-text dec-font-500 uppercase">{{
-            'label.full-model-info' |
-            translate }}</span>
-          <span *ngIf="job?.type == 'MESH_ONLY'" class="font-text dec-font-500 uppercase">{{
-            'label.mesh-only' | translate }}</span>
+          <div [ngSwitch]="job?.type" >
+            <span *ngSwitchCase="'MODELING_FIX'" class="font-text dec-font-500 uppercase">
+              {{ 'label.modeling-fix-info' | translate }}</span>
+            <span *ngSwitchCase="'COLOR'" class="font-text dec-font-500 uppercase">
+              {{ 'label.color-variation-info' | translate }}</span>
+            <span *ngSwitchCase="'MODELING' || 'COLOR_FATHER'" class="font-text dec-font-500 uppercase">
+              {{ 'label.full-model-info' | translate }}</span>
+            <span *ngSwitchCase="'MESH_ONLY'" class="font-text dec-font-500 uppercase">
+              {{ 'label.Mesh_Only' | translate }}</span>
+          </div>
         </div>
       </div>
     </dec-grid-column>
   </dec-grid-row>
+
   <dec-grid-row>
     <dec-grid-column span="8">
       <dec-status-job-round-item [jobId]="job?.id" [round]="job?.rounds[0]" [roundQnt]="roundsQnt" [roundNumber]="1"
         [readonly]="readonly" [showQaStatus]="showQaStatus" [showReportedError]="!!job?.errorReported && numberOfActualRound === 1"></dec-status-job-round-item>
     </dec-grid-column>
   </dec-grid-row>
+
   <dec-grid-row>
     <dec-grid-column span="8">
       <dec-status-job-round-item [jobId]="job?.id" [round]="job?.rounds[1]" [roundQnt]="roundsQnt" [roundNumber]="2"
         [readonly]="readonly" [showQaStatus]="showQaStatus" [showReportedError]="!!job?.errorReported && numberOfActualRound === 2"></dec-status-job-round-item>
     </dec-grid-column>
   </dec-grid-row>
+
   <dec-grid-row>
     <dec-grid-column span="8">
       <dec-status-job-round-item [jobId]="job?.id" [round]="job?.rounds[2]" [roundQnt]="roundsQnt" [roundNumber]="3"
         [readonly]="readonly" [showQaStatus]="showQaStatus" [showReportedError]="!!job?.errorReported && numberOfActualRound === 3"></dec-status-job-round-item>
     </dec-grid-column>
   </dec-grid-row>
+
   <dec-grid-row>
     <dec-grid-column span="8">
       <dec-status-job-round-item [jobId]="job?.id" *ngIf="job?.rounds[3]" [round]="job?.rounds[3]" [roundQnt]="roundsQnt"
         [roundNumber]="4" [readonly]="readonly" [showQaStatus]="showQaStatus" [showReportedError]="!!job?.errorReported && numberOfActualRound === 4"></dec-status-job-round-item>
     </dec-grid-column>
   </dec-grid-row>
+
   <dec-grid-row>
     <dec-grid-column span="8">
       <dec-status-job-round-item [jobId]="job?.id" *ngIf="job?.rounds[4]" [round]="job?.rounds[4]" [roundQnt]="roundsQnt"
         [roundNumber]="5" [readonly]="readonly" [showQaStatus]="showQaStatus" [showReportedError]="!!job?.errorReported && numberOfActualRound === 5"></dec-status-job-round-item>
     </dec-grid-column>
   </dec-grid-row>
+
 </dec-grid>
