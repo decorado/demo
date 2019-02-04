@@ -94,6 +94,9 @@ export * from './lib/components/dec-image-zoom/dec-image-zoom.component';
 // ICON
 export * from './lib/components/dec-icon/dec-icon.module';
 export * from './lib/components/dec-icon/dec-icon.component';
+// INPUT TIME
+export * from './lib/components/dec-i18n-input/dec-i18n-input.module';
+export * from './lib/components/dec-i18n-input/dec-i18n-input.component';
 // LABEL
 export * from './lib/components/dec-label/dec-label.component';
 export * from './lib/components/dec-label/dec-label.module';

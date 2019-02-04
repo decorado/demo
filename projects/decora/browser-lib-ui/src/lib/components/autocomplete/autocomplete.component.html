@@ -2,7 +2,7 @@
 
   <ng-container *ngSwitchCase="true">
     <mat-form-field>
-      <mat-chip-list #decAutocompleteChipList>
+      <mat-chip-list #decAutocompleteChipList [required]="required">
         <mat-chip *ngFor="let option of optionsSelected" [removable]="true" (removed)="remove(option)">
           {{ extractLabel(option) }}
           <mat-icon matChipRemove>cancel</mat-icon>

@@ -1,0 +1,16 @@
+.text-area-note {
+
+  width: calc(100% - 2px); // removes border width
+
+  border: 1px solid rgba(0,0,0,0.25);
+
+  &.invalid{
+    border-color: #EA4E4E;
+  }
+}
+
+.mat-stroked-button {
+  &.invalid {
+    border-color: #EA4E4E;
+  }
+}

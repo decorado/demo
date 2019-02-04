@@ -1,7 +1,7 @@
-import { Component, Input, forwardRef, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, Input, forwardRef, Output, EventEmitter, ViewChild, OnDestroy, ElementRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { DecLanguageService } from '../../services/language/dec-language.service';
-import { of, Observable } from 'rxjs';
+import { of, Observable, Subscription, timer } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 import { DecAutocompleteComponent } from './../autocomplete/autocomplete.component';
 import { CategoryService } from './../../services/category/category.service';
@@ -25,9 +25,11 @@ const AUTOCOMPLETE_PRODUCT_CATEGORY_CONTROL_VALUE_ACCESSOR: any = {
   styles: [],
   providers: [AUTOCOMPLETE_PRODUCT_CATEGORY_CONTROL_VALUE_ACCESSOR]
 })
-export class DecAutocompleteProductCategoryComponent implements ControlValueAccessor {
+export class DecAutocompleteProductCategoryComponent implements ControlValueAccessor, OnDestroy {
 
   endpoint;
+
+  touched: boolean;
 
   @Input() valueAttr = 'key';
 
@@ -55,6 +57,10 @@ export class DecAutocompleteProductCategoryComponent implements ControlValueAcce
 
   private categories;
 
+  private classWatcher: Subscription;
+
+  private classesString: string;
+
   /*
   ** ngModel propertie
   ** Used to two way data bind using [(ngModel)]
@@ -68,8 +74,15 @@ export class DecAutocompleteProductCategoryComponent implements ControlValueAcce
 
   constructor(
     private categoryService: CategoryService,
+    private elementRef: ElementRef<HTMLElement>,
     private languageService: DecLanguageService,
-  ) { }
+  ) {
+    this.subscribeToClassChange();
+  }
+
+  ngOnDestroy() {
+    this.unsubscribeToClassChange();
+  }
 
   /*
   ** ngModel API
@@ -224,6 +237,23 @@ export class DecAutocompleteProductCategoryComponent implements ControlValueAcce
       }
     });
     return list;
+  }
+
+  private subscribeToClassChange() {
+    this.classWatcher = timer(100, 250).subscribe(this.detectClassChanges);
+  }
+
+  private detectClassChanges = () => {
+    const classesString = this.elementRef.nativeElement.classList.value;
+    if (this.classesString !== classesString) {
+      this.classesString = classesString;
+      const hasTouchedClass = classesString.search('ng-touched') >= 0;
+      this.touched = hasTouchedClass;
+    }
+  }
+
+  private unsubscribeToClassChange() {
+    this.classWatcher.unsubscribe();
   }
 
 }

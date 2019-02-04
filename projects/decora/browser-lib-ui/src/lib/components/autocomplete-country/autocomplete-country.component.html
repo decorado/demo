@@ -8,6 +8,7 @@
 [placeholder]="placeholder"
 (optionSelected)="optionSelected.emit($event)"
 [options]="(countries$ | async)"
+[touched]="touched"
 [(ngModel)]="value"
 [labelFn]="labelFn"
 [valueFn]="valueFn"

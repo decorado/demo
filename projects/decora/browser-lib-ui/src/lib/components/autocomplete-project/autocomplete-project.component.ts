@@ -1,7 +1,7 @@
-import { Component, Input, forwardRef, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, Input, forwardRef, Output, EventEmitter, ViewChild, OnDestroy, ElementRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { DecApiService } from './../../services/api/decora-api.service';
 import { DecAutocompleteComponent } from './../autocomplete/autocomplete.component';
+import { Subscription, timer } from 'rxjs';
 
 export const BASE_AUTOCOMPLETE_PROJECT_ENDPOINT = '/projects/options';
 
@@ -22,27 +22,13 @@ const AUTOCOMPLETE_PROJECT_CONTROL_VALUE_ACCESSOR: any = {
   styles: [],
   providers: [AUTOCOMPLETE_PROJECT_CONTROL_VALUE_ACCESSOR]
 })
-export class DecAutocompleteProjectComponent implements ControlValueAccessor {
+export class DecAutocompleteProjectComponent implements ControlValueAccessor, OnDestroy {
 
   endpoint;
 
   valueAttr = 'key';
 
-  @Input()
-  set companyId(v: string) {
-    if (this._companyId !== v) {
-      this._companyId = v;
-      this.value = undefined;
-      this.endpoint = undefined; // enforce autocomplete reload
-      setTimeout(() => { // ensures a digest cicle before reseting the endpoint
-        this.setEndpointBasedOnInputs();
-      }, 0);
-    }
-  }
-
-  get companyId() {
-    return this._companyId;
-  }
+  touched: boolean;
 
   @Input() disabled: boolean;
 
@@ -64,7 +50,24 @@ export class DecAutocompleteProjectComponent implements ControlValueAccessor {
 
   @ViewChild(DecAutocompleteComponent) autocompleteComponent: DecAutocompleteComponent;
 
+  @Input()
+  get companyId() { return this._companyId; }
+  set companyId(v: string) {
+    if (this._companyId !== v) {
+      this._companyId = v;
+      this.value = undefined;
+      this.endpoint = undefined; // enforce autocomplete reload
+      setTimeout(() => { // ensures a digest cicle before reseting the endpoint
+        this.setEndpointBasedOnInputs();
+      }, 0);
+    }
+  }
+
   private _companyId: string;
+
+  private classWatcher: Subscription;
+
+  private classesString: string;
 
   /*
   ** ngModel propertie
@@ -77,7 +80,15 @@ export class DecAutocompleteProjectComponent implements ControlValueAccessor {
   //  Placeholders for the callbacks which are later provided by the Control Value Accessor
   private onChangeCallback: (_: any) => void = noop;
 
-  constructor(private decoraApi: DecApiService) { }
+  constructor(
+    private elementRef: ElementRef<HTMLElement>,
+  ) {
+    this.subscribeToClassChange();
+  }
+
+  ngOnDestroy() {
+    this.unsubscribeToClassChange();
+  }
 
   /*
   ** ngModel API
@@ -136,6 +147,23 @@ export class DecAutocompleteProjectComponent implements ControlValueAccessor {
   onAutocompleteBlur($event) {
     this.onTouchedCallback();
     this.blur.emit(this.value);
+  }
+
+  private subscribeToClassChange() {
+    this.classWatcher = timer(100, 250).subscribe(this.detectClassChanges);
+  }
+
+  private detectClassChanges = () => {
+    const classesString = this.elementRef.nativeElement.classList.value;
+    if (this.classesString !== classesString) {
+      this.classesString = classesString;
+      const hasTouchedClass = classesString.search('ng-touched') >= 0;
+      this.touched = hasTouchedClass;
+    }
+  }
+
+  private unsubscribeToClassChange() {
+    this.classWatcher.unsubscribe();
   }
 
 }

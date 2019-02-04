@@ -289,6 +289,7 @@ export class DecApiService implements OnDestroy {
   }
 
   private handleError = (err: any) => {
+
     const message = err.message;
     const bodyMessage = (err && err.error) ? err.error.message : '';
     const bodyError = err.error;
@@ -298,18 +299,16 @@ export class DecApiService implements OnDestroy {
     const parsedError = (err.error && err.error.errors) ? err.error.errors : [{ status, timestamp, error: statusText, message }];
     const errors: DecApiGenericError[] = status === 207 ? err.operations : parsedError;
 
+    const persedErrorResponse: DecApiResponseError = { status, statusText, message, bodyMessage, bodyError, errors };
+
     switch (err.status) {
       case 401:
         if (this.decConfig.config.authHost) {
           this.goToLoginPage();
         }
-        break;
-
-      default:
-        const persedErrorResponse: DecApiResponseError = { status, statusText, message, bodyMessage, bodyError, errors };
-        return throwError(persedErrorResponse);
     }
 
+    return throwError(persedErrorResponse);
   }
 
   private extractBulkOperationErrors(res) {

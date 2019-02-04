@@ -227,7 +227,7 @@
       "root": "projects/decora/browser-lib-ui",
       "sourceRoot": "projects/decora/browser-lib-ui/src",
       "projectType": "library",
-      "prefix": "lib",
+      "prefix": "dec",
       "schematics": {
         "@schematics/angular:component": {
           "styleext": "scss"

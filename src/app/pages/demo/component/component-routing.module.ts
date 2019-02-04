@@ -33,6 +33,7 @@ const routes: Routes = [
   { path: 'zoom-area', loadChildren: './decora-zoom-area-demo/decora-zoom-area-demo.module#DecoraZoomAreaDemoModule' },
   { path: 'zoom-marks', loadChildren: './decora-zoom-marks-demo/decora-zoom-marks-demo.module#DecoraZoomMarksDemoModule' },
   { path: 'image-zoom', loadChildren: './decora-image-zoom-demo/decora-image-zoom-demo.module#DecoraImageZoomDemoModule' },
+  { path: 'i18n-input', loadChildren: './decora-i18n-input-demo/decora-i18n-input-demo.module#DecoraI18nInputDemoModule' },
   { path: 'label', loadChildren: './decora-label-demo/decora-label-demo.module#DecoraLabelDemoModule' },
   { path: 'list', loadChildren: './decora-list-demo/decora-list-demo.module#DecoraListDemoModule' },
   { path: 'markdowns-comment', loadChildren: './decora-markdowns-comment-demo/decora-markdowns-comment-demo.module#DecoraMarkdownsCommentDemoModule' },

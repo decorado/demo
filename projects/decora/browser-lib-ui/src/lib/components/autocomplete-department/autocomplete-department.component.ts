@@ -1,6 +1,7 @@
-import { Component, Input, forwardRef, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, Input, forwardRef, Output, EventEmitter, ViewChild, OnDestroy, ElementRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { DecAutocompleteComponent } from './../autocomplete/autocomplete.component';
+import { Subscription, timer } from 'rxjs';
 
 export const BASE_ENDPOINT = 'companies/${companyId}/departments/options';
 
@@ -21,7 +22,7 @@ const AUTOCOMPLETE_DEPARTMENT_CONTROL_VALUE_ACCESSOR: any = {
   styles: [],
   providers: [AUTOCOMPLETE_DEPARTMENT_CONTROL_VALUE_ACCESSOR]
 })
-export class DecAutocompleteDepartmentComponent implements ControlValueAccessor {
+export class DecAutocompleteDepartmentComponent implements ControlValueAccessor, OnDestroy {
 
   endpoint: string;
 
@@ -29,7 +30,10 @@ export class DecAutocompleteDepartmentComponent implements ControlValueAccessor 
 
   valueAttr = 'key';
 
+  touched: boolean;
+
   @Input()
+  get companyId() { return this._companyId; }
   set companyId(v: string) {
     this._companyId = v;
     this.value = undefined;
@@ -37,10 +41,6 @@ export class DecAutocompleteDepartmentComponent implements ControlValueAccessor 
     setTimeout(() => { // ensures a digest cicle before reseting the endpoint
       this.setEndpointBasedInputs();
     });
-  }
-
-  get companyId() {
-    return this._companyId;
   }
 
   @Input() disabled: boolean;
@@ -65,6 +65,10 @@ export class DecAutocompleteDepartmentComponent implements ControlValueAccessor 
 
   private _companyId: string;
 
+  private classWatcher: Subscription;
+
+  private classesString: string;
+
   /*
   ** ngModel propertie
   ** Used to two way data bind using [(ngModel)]
@@ -76,7 +80,15 @@ export class DecAutocompleteDepartmentComponent implements ControlValueAccessor 
   //  Placeholders for the callbacks which are later provided by the Control Value Accessor
   private onChangeCallback: (_: any) => void = noop;
 
-  constructor() { }
+  constructor(
+    private elementRef: ElementRef<HTMLElement>,
+  ) {
+    this.subscribeToClassChange();
+  }
+
+  ngOnDestroy() {
+    this.unsubscribeToClassChange();
+  }
 
   /*
   ** ngModel API
@@ -127,6 +139,23 @@ export class DecAutocompleteDepartmentComponent implements ControlValueAccessor 
 
   setEndpointBasedInputs() {
     this.endpoint = !this.companyId ? undefined : BASE_ENDPOINT.replace('${companyId}', this.companyId);
+  }
+
+  private subscribeToClassChange() {
+    this.classWatcher = timer(100, 250).subscribe(this.detectClassChanges);
+  }
+
+  private detectClassChanges = () => {
+    const classesString = this.elementRef.nativeElement.classList.value;
+    if (this.classesString !== classesString) {
+      this.classesString = classesString;
+      const hasTouchedClass = classesString.search('ng-touched') >= 0;
+      this.touched = hasTouchedClass;
+    }
+  }
+
+  private unsubscribeToClassChange() {
+    this.classWatcher.unsubscribe();
   }
 
 }

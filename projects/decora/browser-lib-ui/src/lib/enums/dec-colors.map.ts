@@ -1,0 +1,13 @@
+export const DEC_COLORS = {
+  GREEN: '#4DBD74',
+  DARK_GREEN: '#00796B',
+  RED: '#E94040',
+  BLUE: '#63C2DE',
+  YELLOW: '#F8CB00',
+  GREY: '#757575',
+  LIGHT_GREY_I: '#F4F4F4',
+  LIGHT_GREY_II: '#F9F9F9',
+  WHITE: '#FFFFFF',
+  LILAC: '#BA68C8',
+  CHARCOAL: '#212529',
+};

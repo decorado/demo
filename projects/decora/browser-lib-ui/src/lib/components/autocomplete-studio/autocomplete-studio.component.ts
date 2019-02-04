@@ -1,6 +1,7 @@
-import { Component, Input, Output, EventEmitter, forwardRef, ViewChild } from '@angular/core';
+import { Component, Input, Output, EventEmitter, forwardRef, ViewChild, OnDestroy, ElementRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DecAutocompleteComponent } from './../autocomplete/autocomplete.component';
+import { Subscription, timer } from 'rxjs';
 
 //  Return an empty function to be used as default trigger functions
 const noop = () => {
@@ -19,16 +20,19 @@ const AUTOCOMPLETE_ROLES_CONTROL_VALUE_ACCESSOR: any = {
   styleUrls: ['./autocomplete-studio.component.scss'],
   providers: [AUTOCOMPLETE_ROLES_CONTROL_VALUE_ACCESSOR]
 })
-export class AutocompleteStudioComponent implements ControlValueAccessor {
+export class AutocompleteStudioComponent implements ControlValueAccessor, OnDestroy {
 
   endpoint = '/legacy/product/modeling/studio/search';
+
   valueAttr = 'id';
+
   labelAttr = 'name';
+
+  touched: boolean;
 
   @Input() disabled: boolean;
 
   @Input() required: boolean;
-
 
   @Input() name = 'Studio autocomplete';
 
@@ -44,6 +48,10 @@ export class AutocompleteStudioComponent implements ControlValueAccessor {
 
   @ViewChild(DecAutocompleteComponent) autocompleteComponent: DecAutocompleteComponent;
 
+  private classWatcher: Subscription;
+
+  private classesString: string;
+
   /*
   ** ngModel propertie
   ** Used to two way data bind using [(ngModel)]
@@ -55,8 +63,15 @@ export class AutocompleteStudioComponent implements ControlValueAccessor {
   //  Placeholders for the callbacks which are later provided by the Control Value Accessor
   private onChangeCallback: (_: any) => void = noop;
 
-  constructor() { }
+  constructor(
+    private elementRef: ElementRef<HTMLElement>,
+  ) {
+    this.subscribeToClassChange();
+  }
 
+  ngOnDestroy() {
+    this.unsubscribeToClassChange();
+  }
   /*
   ** ngModel API
   */
@@ -104,6 +119,23 @@ export class AutocompleteStudioComponent implements ControlValueAccessor {
   onAutocompleteBlur($event) {
     this.onTouchedCallback();
     this.blur.emit(this.value);
+  }
+
+  private subscribeToClassChange() {
+    this.classWatcher = timer(100, 250).subscribe(this.detectClassChanges);
+  }
+
+  private detectClassChanges = () => {
+    const classesString = this.elementRef.nativeElement.classList.value;
+    if (this.classesString !== classesString) {
+      this.classesString = classesString;
+      const hasTouchedClass = classesString.search('ng-touched') >= 0;
+      this.touched = hasTouchedClass;
+    }
+  }
+
+  private unsubscribeToClassChange() {
+    this.classWatcher.unsubscribe();
   }
 
 }

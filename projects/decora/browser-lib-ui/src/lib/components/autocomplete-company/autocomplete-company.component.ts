@@ -1,6 +1,7 @@
-import { Component, Input, forwardRef, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, Input, forwardRef, Output, EventEmitter, ViewChild, OnDestroy, ElementRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { DecAutocompleteComponent } from './../autocomplete/autocomplete.component';
+import { timer, Subscription } from 'rxjs';
 
 //  Return an empty function to be used as default trigger functions
 const noop = () => {
@@ -19,11 +20,13 @@ const AUTOCOMPLETE_COMPANY_CONTROL_VALUE_ACCESSOR: any = {
   styles: [],
   providers: [AUTOCOMPLETE_COMPANY_CONTROL_VALUE_ACCESSOR]
 })
-export class DecAutocompleteCompanyComponent implements ControlValueAccessor {
+export class DecAutocompleteCompanyComponent implements ControlValueAccessor, OnDestroy {
 
   endpoint = 'companies/options';
 
   valueAttr = 'key';
+
+  touched: boolean;
 
   @Input() disabled: boolean;
 
@@ -45,6 +48,10 @@ export class DecAutocompleteCompanyComponent implements ControlValueAccessor {
 
   @ViewChild(DecAutocompleteComponent) autocompleteComponent: DecAutocompleteComponent;
 
+  private classWatcher: Subscription;
+
+  private classesString: string;
+
   /*
   ** ngModel propertie
   ** Used to two way data bind using [(ngModel)]
@@ -56,7 +63,15 @@ export class DecAutocompleteCompanyComponent implements ControlValueAccessor {
   //  Placeholders for the callbacks which are later provided by the Control Value Accessor
   private onChangeCallback: (_: any) => void = noop;
 
-  constructor() {}
+  constructor(
+    private elementRef: ElementRef<HTMLElement>,
+  ) {
+    this.subscribeToClassChange();
+  }
+
+  ngOnDestroy() {
+    this.unsubscribeToClassChange();
+  }
 
   /*
   ** ngModel API
@@ -107,6 +122,23 @@ export class DecAutocompleteCompanyComponent implements ControlValueAccessor {
   onAutocompleteBlur($event) {
     this.onTouchedCallback();
     this.blur.emit(this.value);
+  }
+
+  private subscribeToClassChange() {
+    this.classWatcher = timer(100, 250).subscribe(this.detectClassChanges);
+  }
+
+  private detectClassChanges = () => {
+    const classesString = this.elementRef.nativeElement.classList.value;
+    if (this.classesString !== classesString) {
+      this.classesString = classesString;
+      const hasTouchedClass = classesString.search('ng-touched') >= 0;
+      this.touched = hasTouchedClass;
+    }
+  }
+
+  private unsubscribeToClassChange() {
+    this.classWatcher.unsubscribe();
   }
 
 }

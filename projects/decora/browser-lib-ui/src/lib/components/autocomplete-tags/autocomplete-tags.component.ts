@@ -1,6 +1,7 @@
-import { Component, Input, Output, EventEmitter, forwardRef, ViewChild } from '@angular/core';
+import { Component, Input, Output, EventEmitter, forwardRef, ViewChild, OnDestroy, ElementRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DecAutocompleteComponent } from './../autocomplete/autocomplete.component';
+import { Subscription, timer } from 'rxjs';
 
 //  Return an empty function to be used as default trigger functions
 const noop = () => {
@@ -19,28 +20,13 @@ const AUTOCOMPLETE_TAGS_CONTROL_VALUE_ACCESSOR: any = {
   styleUrls: ['./autocomplete-tags.component.css'],
   providers: [AUTOCOMPLETE_TAGS_CONTROL_VALUE_ACCESSOR]
 })
-export class DecAutocompleteTagsComponent implements ControlValueAccessor {
-
-  @Input()
-  set endpoint(v) {
-    if (v && v !== this._endpoint) {
-      this.value = undefined;
-      this._endpoint = undefined; // enforce autocomplete reload
-      setTimeout(() => { // ensures a digest cicle before reseting the endpoint
-        this._endpoint = v;
-      }, 0);
-    }
-  }
-
-  get endpoint() {
-    return this._endpoint;
-  }
+export class DecAutocompleteTagsComponent implements ControlValueAccessor, OnDestroy {
 
   valueAttr = 'key';
 
   labelAttr = 'value';
 
-  _endpoint: string;
+  touched: boolean;
 
   @Input() disabled: boolean;
 
@@ -62,6 +48,25 @@ export class DecAutocompleteTagsComponent implements ControlValueAccessor {
 
   @ViewChild(DecAutocompleteComponent) autocompleteComponent: DecAutocompleteComponent;
 
+  @Input()
+  get endpoint() { return this._endpoint; }
+  set endpoint(v) {
+    if (v && v !== this._endpoint) {
+      this.value = undefined;
+      this._endpoint = undefined; // enforce autocomplete reload
+      setTimeout(() => { // ensures a digest cicle before reseting the endpoint
+        this._endpoint = v;
+      }, 0);
+    }
+  }
+
+
+  private classWatcher: Subscription;
+
+  private classesString: string;
+
+  private _endpoint: string;
+
   /*
   ** ngModel propertie
   ** Used to two way data bind using [(ngModel)]
@@ -73,7 +78,15 @@ export class DecAutocompleteTagsComponent implements ControlValueAccessor {
   //  Placeholders for the callbacks which are later provided by the Control Value Accessor
   private onChangeCallback: (_: any) => void = noop;
 
-  constructor() {}
+  constructor(
+    private elementRef: ElementRef<HTMLElement>,
+  ) {
+    this.subscribeToClassChange();
+  }
+
+  ngOnDestroy() {
+    this.unsubscribeToClassChange();
+  }
 
   /*
   ** ngModel API
@@ -124,5 +137,22 @@ export class DecAutocompleteTagsComponent implements ControlValueAccessor {
   onAutocompleteBlur($event) {
     this.onTouchedCallback();
     this.blur.emit(this.value);
+  }
+
+  private subscribeToClassChange() {
+    this.classWatcher = timer(100, 250).subscribe(this.detectClassChanges);
+  }
+
+  private detectClassChanges = () => {
+    const classesString = this.elementRef.nativeElement.classList.value;
+    if (this.classesString !== classesString) {
+      this.classesString = classesString;
+      const hasTouchedClass = classesString.search('ng-touched') >= 0;
+      this.touched = hasTouchedClass;
+    }
+  }
+
+  private unsubscribeToClassChange() {
+    this.classWatcher.unsubscribe();
   }
 }

@@ -1,6 +1,7 @@
-import {Component, AfterViewInit, Input, forwardRef, Output, EventEmitter} from '@angular/core';
+import {Component, AfterViewInit, Input, forwardRef, OnDestroy, ElementRef} from '@angular/core';
 import { Validators, FormGroup, FormBuilder, NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Subscription, timer } from 'rxjs';
 
 const noop = () => {
 };
@@ -18,7 +19,7 @@ const INPUT_TIME_CONTROL_VALUE_ACCESSOR: any = {
   styleUrls: ['./dec-input-time.component.scss'],
   providers: [INPUT_TIME_CONTROL_VALUE_ACCESSOR]
 })
-export class DecInputTimeComponent implements ControlValueAccessor, AfterViewInit {
+export class DecInputTimeComponent implements ControlValueAccessor, AfterViewInit, OnDestroy {
 
   timeForm: FormGroup;
 
@@ -26,23 +27,23 @@ export class DecInputTimeComponent implements ControlValueAccessor, AfterViewIni
 
   @Input() name = 'time';
 
-  @Input() set required(v: boolean) {
+  @Input()
+  get required() { return this._required; }
+  set required(v: boolean) {
     this._required = v;
     this.bindRequiredAndDisabled();
   }
 
-  get required() {
-    return this._required;
-  }
-
-  @Input() set disabled(v: boolean) {
+  @Input()
+  get disabled() { return this._disabled; }
+  set disabled(v: boolean) {
     this._disabled = v;
     this.bindRequiredAndDisabled();
   }
 
-  get disabled() {
-    return this._disabled;
-  }
+  private classWatcher: Subscription;
+
+  private classesString: string;
 
   private _required;
 
@@ -57,11 +58,17 @@ export class DecInputTimeComponent implements ControlValueAccessor, AfterViewIni
 
   constructor(
     private fb: FormBuilder,
+    private elementRef: ElementRef<HTMLElement>,
   ) {}
+
+  ngOnDestroy() {
+    this.unsubscribeToClassChange();
+  }
 
   ngAfterViewInit() {
     setTimeout(() => {
       this.initInputControl();
+      this.subscribeToClassChange();
     }, 0);
   }
 
@@ -212,6 +219,27 @@ export class DecInputTimeComponent implements ControlValueAccessor, AfterViewIni
       totalMinutes = (hours * 60) + minutes;
     }
     return totalMinutes;
+  }
+
+  private subscribeToClassChange() {
+    this.classWatcher = timer(100, 250).subscribe(this.detectClassChanges);
+  }
+
+  private detectClassChanges = () => {
+    const classesString = this.elementRef.nativeElement.classList.value;
+    if (this.classesString !== classesString) {
+      this.classesString = classesString;
+      const hasTouchedClass = classesString.search('ng-touched') >= 0;
+      if (hasTouchedClass) {
+        this.timeForm.controls.time.markAsTouched();
+      } else {
+        this.timeForm.controls.time.markAsUntouched();
+      }
+    }
+  }
+
+  private unsubscribeToClassChange() {
+    this.classWatcher.unsubscribe();
   }
 
 }

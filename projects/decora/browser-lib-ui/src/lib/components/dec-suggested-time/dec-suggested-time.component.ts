@@ -1,5 +1,6 @@
-import { Component, forwardRef, Input } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { Component, forwardRef, Input, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor, NgModel } from '@angular/forms';
+import { Subscription, timer } from 'rxjs';
 
 
 //  Return an empty function to be used as default trigger functions
@@ -19,9 +20,20 @@ const SUGGESTED_TIME_CONTROL_VALUE_ACCESSOR: any = {
   styleUrls: ['./dec-suggested-time.component.scss'],
   providers: [SUGGESTED_TIME_CONTROL_VALUE_ACCESSOR]
 })
-export class DecSuggestedTimeComponent implements ControlValueAccessor {
+export class DecSuggestedTimeComponent implements ControlValueAccessor, OnDestroy {
+
+  timeArray = [];
+
+  ngModelValue;
+
+  @Input() disabled: boolean;
+
+  @Input() required: boolean;
+
+  @Input() placeholder: string;
 
   @Input()
+  get time(): number { return this._time; }
   set time(v: number) {
     if (v) {
       this._time = v;
@@ -33,11 +45,8 @@ export class DecSuggestedTimeComponent implements ControlValueAccessor {
     }
   }
 
-  get time(): number {
-    return this._time;
-  }
-
   @Input()
+  get interval(): number { return this._interval; }
   set interval(v: number) {
     if (v) {
       this._interval = v;
@@ -45,11 +54,8 @@ export class DecSuggestedTimeComponent implements ControlValueAccessor {
     }
   }
 
-  get interval(): number {
-    return this._interval;
-  }
-
   @Input()
+  get selected(): number { return this._selected; }
   set selected(v: number) {
     if (v && v !== this._selected) {
       this._selected = v;
@@ -57,46 +63,35 @@ export class DecSuggestedTimeComponent implements ControlValueAccessor {
     }
   }
 
-  get selected(): number {
-    return this._selected;
-  }
-
-  @Input() disabled: boolean;
-
-  @Input() placeholder: string;
+  @ViewChild(NgModel) ngModelElement: NgModel;
 
   private _time: number;
+
   private _interval: number;
+
   private _selected;
 
-  timeArray = [];
+  private classWatcher: Subscription;
 
-  /*
-   ** ngModel API
-   */
+  private classesString: string;
 
-  // Get accessor
-  get value(): any {
-    return this.innerValue;
+ /*
+ ** ngModel propertie
+ ** Used to two way data bind using [(ngModel)]
+ */
+ private innerValue: any;
+ private onTouchedCallback: () => void = noop;
+ private onChangeCallback: (_: any) => void = noop;
+
+  constructor(
+    private elementRef: ElementRef<HTMLElement>,
+  ) {
+    this.subscribeToClassChange();
   }
 
-  // Set accessor including call the onchange callback
-  set value(v: any) {
-    if (v !== this.innerValue) {
-      this.innerValue = v;
-      this.selected = v / 60;
-    }
+  ngOnDestroy() {
+    this.unsubscribeToClassChange();
   }
-
-  constructor() { }
-
-  /*
-  ** ngModel propertie
-  ** Used to two way data bind using [(ngModel)]
-  */
-  private innerValue: any;
-  private onTouchedCallback: () => void = noop;
-  private onChangeCallback: (_: any) => void = noop;
 
   writeValue(value: any) {
     if (`${value}` !== `${this.value}`) {
@@ -114,6 +109,18 @@ export class DecSuggestedTimeComponent implements ControlValueAccessor {
 
   setDisabledState(isDisabled: boolean) {
     this.disabled = isDisabled;
+  }
+
+  onSelectionChange() {
+    this.onChangeCallback(this.innerValue || 0);
+  }
+
+  get value(): any { return this.innerValue; }
+  set value(v: any) {
+    if (v !== this.innerValue) {
+      this.innerValue = v;
+      this.selected = v / 60;
+    }
   }
 
   private formatTimeArray() {
@@ -141,7 +148,25 @@ export class DecSuggestedTimeComponent implements ControlValueAccessor {
     return number.toString().split('.')[0];
   }
 
-  onSelectionChange() {
-    this.onChangeCallback(this.innerValue || 0);
+  private subscribeToClassChange() {
+    this.classWatcher = timer(100, 250).subscribe(this.detectClassChanges);
   }
+
+  private detectClassChanges = () => {
+    const classesString = this.elementRef.nativeElement.classList.value;
+    if (this.classesString !== classesString) {
+      this.classesString = classesString;
+      const hasTouchedClass = classesString.search('ng-touched') >= 0;
+      if (hasTouchedClass) {
+        this.ngModelElement.control.markAsTouched();
+      } else {
+        this.ngModelElement.control.markAsUntouched();
+      }
+    }
+  }
+
+  private unsubscribeToClassChange() {
+    this.classWatcher.unsubscribe();
+  }
+
 }

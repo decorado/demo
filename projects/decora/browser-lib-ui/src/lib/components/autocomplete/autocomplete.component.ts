@@ -1,11 +1,11 @@
-import { Component, AfterViewInit, Input, forwardRef, ViewChild, Output, EventEmitter, OnDestroy, ContentChild } from '@angular/core';
+import { Component, AfterViewInit, Input, forwardRef, ViewChild, Output, EventEmitter, OnDestroy, ContentChild, ElementRef } from '@angular/core';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { FormControl, NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { DecApiService } from './../../services/api/decora-api.service';
 import { Observable, of, BehaviorSubject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap, tap, map } from 'rxjs/operators';
 import { LabelFunction, ValueFunction, SelectionEvent, CustomFetchFunction } from './autocomplete.models';
-import { MatAutocompleteTrigger } from '@angular/material';
+import { MatAutocompleteTrigger, MatChipList } from '@angular/material';
 import { DecAutocompleteOptionTemplateComponent } from './dec-autocomplete-option-template/dec-autocomplete-option-template.component';
 
 //  Return an empty function to be used as default trigger functions
@@ -57,8 +57,6 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
 
   @Input() placeholder = '';
 
-  @Input() required: boolean;
-
   @Input() valueFn: ValueFunction;
 
   @Input() valueAttr: string;
@@ -66,14 +64,21 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
   @Input() notFoundMessage: string;
 
   @Input()
+  get required(): boolean { return this._required; }
+  set required(v: boolean) {
+    this._required = v;
+    this.refreshChipsListError();
+  }
+
+
+  @Input()
+  get options(): any[] { return this._filteredOptions; }
   set options(v: any[]) {
     this._innerOptions = v;
   }
-  get options(): any[] {
-    return this._filteredOptions;
-  }
 
   @Input()
+  get disabled(): boolean { return this._disabled; }
   set disabled(v: boolean) {
     this._disabled = v;
     if (v) {
@@ -82,19 +87,26 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
       this.autocompleteInput.enable();
     }
   }
-  get disabled(): boolean {
-    return this._disabled;
+
+  @Input()
+  get touched() { return this._touched; }
+  set touched(v: boolean) {
+    this._touched = v;
+    if (v) {
+      this.setTouched();
+    } else {
+      this.setUntouched();
+    }
   }
 
   // NG_MODEL vvalue
+  get value(): any { return this.innerValue; }
   set value(v: any) {
     if (v !== this.innerValue) {
       this.setInnerValue(v);
       this.onChangeCallback(v);
+      this.refreshChipsListError();
     }
-  }
-  get value(): any {
-    return this.innerValue;
   }
 
   // Events
@@ -103,11 +115,15 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
   @Output() optionSelected: EventEmitter<SelectionEvent> = new EventEmitter<SelectionEvent>();
 
   // View elements
-  @ViewChild('termInput') termInput;
+  @ViewChild('termInput') termInput: ElementRef;
+
+  @ViewChild('decAutocompleteForm') decAutocompleteForm: ElementRef;
 
   @ViewChild('chipList') chipList;
 
   @ViewChild(MatAutocompleteTrigger) autocompleteTrigger: MatAutocompleteTrigger;
+
+  @ViewChild(MatChipList) decAutocompleteChipList: MatChipList;
 
   // content elements
   @ContentChild(DecAutocompleteOptionTemplateComponent) optionTemplate: DecAutocompleteOptionTemplateComponent;
@@ -115,10 +131,13 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
   // private data;
   private _disabled: boolean;
 
-
   private _filteredOptions: any[];
 
   private _innerOptions: any[];
+
+  private _touched: boolean;
+
+  private _required: boolean;
 
   private responses: { [key: string]: any } = {};
 
@@ -303,6 +322,34 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
     const writtenValueAsString = Array.isArray(this.writtenValue) ? JSON.stringify(this.writtenValue) : this.writtenValue;
     const show = !this.disabled && (valueAsString !== writtenValueAsString);
     return show;
+  }
+
+  private setTouched() {
+    if (this.multi) {
+      this.refreshChipsListError();
+    } else {
+      this.autocompleteInput.markAsTouched();
+    }
+  }
+
+  private setUntouched() {
+    this.autocompleteInput.markAsUntouched();
+    this.refreshChipsListError();
+  }
+
+  private refreshChipsListError() {
+    if (this.decAutocompleteChipList) {
+      const hasMultipleValue = this.value && this.value.length > 0;
+      if (this.required && !hasMultipleValue) {
+        if (this.touched) {
+          this.decAutocompleteChipList.errorState = true;
+        } else {
+          this.decAutocompleteChipList.errorState = false;
+        }
+      } else {
+        this.decAutocompleteChipList.errorState = false;
+      }
+    }
   }
 
   private subscribeToSearchOptions() {

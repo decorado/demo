@@ -5,7 +5,8 @@
     type="text"
     [name]="name"
     [(ngModel)]="valueAsString"
-    [placeholder]="placeholder">
+    [placeholder]="placeholder"
+    #ngModelElement="ngModel">
   </mat-form-field>
 
   <mat-form-field *ngSwitchCase="false">
@@ -13,7 +14,8 @@
     [rows]="rows"
     [name]="name"
     [(ngModel)]="valueAsString"
-    [placeholder]="placeholder">
+    [placeholder]="placeholder"
+    #ngModelElement="ngModel">
     </textarea>
   </mat-form-field>
 

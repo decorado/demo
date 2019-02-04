@@ -1,0 +1,21 @@
+<app-demo-container readmeSrc="/assets/docs/browser-lib-ui/components/dec-i18n-input/README.md">
+
+  <h1>Decora I18n Input</h1>
+
+  <form role="form" #inputsForm="ngForm">
+
+    <dec-i18n-input [(ngModel)]="testModel1" name="testModel1" type="input" [required]="true"></dec-i18n-input>
+
+    <dec-i18n-input [(ngModel)]="testModel2" name="testModel2" type="textarea" [required]="true"></dec-i18n-input>
+
+    <dec-i18n-input [(ngModel)]="testModel2" name="testModel2" type="textarea" [required]="true">
+      <dec-icon font="mat">close</dec-icon>
+      CONTENT HERE
+    </dec-i18n-input>
+
+  </form>
+
+  <button (click)="setTouched()">setTouched</button>
+
+</app-demo-container>
+

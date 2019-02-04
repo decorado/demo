@@ -1,7 +1,6 @@
 import { Injectable, Inject, Optional } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DecConfigurationForRootConfig } from './configuration-service.models';
-import { tap } from 'rxjs/operators';
 
 const CONFIG_PATH = 'assets/configuration/configuration.json';
 

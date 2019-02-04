@@ -1,9 +1,10 @@
-import { Component, ViewEncapsulation, Input, forwardRef } from '@angular/core';
+import { Component, ViewEncapsulation, Input, forwardRef, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { DecColorPickerModalComponent } from './dec-color-picker-modal/dec-color-picker-modal.component';
 import { ColorPickerService } from './../../services/color-picker/color-picker.service';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgModel } from '@angular/forms';
 import { DecColorService } from './../../services/color/dec-color.service';
+import { Subscription, timer } from 'rxjs';
 
 const noop = () => { };
 
@@ -20,7 +21,13 @@ const COLOR_PICKER_CONTROL_VALUE_ACCESSOR = {
   encapsulation: ViewEncapsulation.None,
   providers: [COLOR_PICKER_CONTROL_VALUE_ACCESSOR]
 })
-export class DecColorPickerComponent implements ControlValueAccessor {
+export class DecColorPickerComponent implements ControlValueAccessor, OnDestroy {
+
+  autocomplete = 'off';
+
+  pattern = '^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$';
+
+  hexValue;
 
   @Input() disabled: boolean;
 
@@ -28,28 +35,11 @@ export class DecColorPickerComponent implements ControlValueAccessor {
 
   @Input() placeholder = 'Color';
 
-  autocomplete = 'off';
+  @ViewChild(NgModel) ngModelElement: NgModel;
 
-  pattern = '^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$';
+  private classWatcher: Subscription;
 
-  set value(v: any) {
-
-    if (this.modelValueReference !== v) {
-
-      this.modelValueReference = v;
-
-    }
-
-    this.onChangeCallback(this.value);
-
-    this.onTouchedCallback();
-
-  }
-  get value(): any {
-    return this.modelValueReference;
-  }
-
-  hexValue;
+  private classesString: string;
 
   private modelValueReference: any;
 
@@ -57,7 +47,18 @@ export class DecColorPickerComponent implements ControlValueAccessor {
 
   private onChangeCallback: (_: any) => void = noop;
 
-  constructor(private dialog: MatDialog, private colorPickerService: ColorPickerService, public colorService: DecColorService) { }
+  constructor(
+    private dialog: MatDialog,
+    private colorPickerService: ColorPickerService,
+    public colorService: DecColorService,
+    private elementRef: ElementRef<HTMLElement>,
+  ) {
+    this.subscribeToClassChange();
+  }
+
+  ngOnDestroy() {
+    this.unsubscribeToClassChange();
+  }
 
   writeValue(value: any): void {
 
@@ -112,6 +113,14 @@ export class DecColorPickerComponent implements ControlValueAccessor {
     }
   }
 
+  get value(): any { return this.modelValueReference; }
+  set value(v: any) {
+    if (this.modelValueReference !== v) {
+      this.modelValueReference = v;
+    }
+    this.onChangeCallback(this.value);
+    this.onTouchedCallback();
+  }
 
   private updateHexValueBasedOnModelValueAndFormat() {
     const color = this.modelValueReference;
@@ -124,6 +133,27 @@ export class DecColorPickerComponent implements ControlValueAccessor {
     } else {
       this.hexValue = '';
     }
+  }
+
+  private subscribeToClassChange() {
+    this.classWatcher = timer(100, 250).subscribe(this.detectClassChanges);
+  }
+
+  private detectClassChanges = () => {
+    const classesString = this.elementRef.nativeElement.classList.value;
+    if (this.classesString !== classesString) {
+      this.classesString = classesString;
+      const hasTouchedClass = classesString.search('ng-touched') >= 0;
+      if (hasTouchedClass) {
+        this.ngModelElement.control.markAsTouched();
+      } else {
+        this.ngModelElement.control.markAsUntouched();
+      }
+    }
+  }
+
+  private unsubscribeToClassChange() {
+    this.classWatcher.unsubscribe();
   }
 
 }

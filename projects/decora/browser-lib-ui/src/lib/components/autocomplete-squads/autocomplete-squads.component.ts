@@ -1,6 +1,7 @@
-import { Component, Input, Output, EventEmitter, forwardRef, ViewChild } from '@angular/core';
+import { Component, Input, Output, EventEmitter, forwardRef, ViewChild, OnDestroy, ElementRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DecAutocompleteComponent } from './../autocomplete/autocomplete.component';
+import { timer, Subscription } from 'rxjs';
 
 //  Return an empty function to be used as default trigger functions
 const noop = () => {
@@ -19,13 +20,15 @@ const AUTOCOMPLETE_ROLES_CONTROL_VALUE_ACCESSOR: any = {
   styleUrls: ['./autocomplete-squads.component.scss'],
   providers: [AUTOCOMPLETE_ROLES_CONTROL_VALUE_ACCESSOR]
 })
-export class AutocompleteSquadsComponent implements ControlValueAccessor {
+export class AutocompleteSquadsComponent implements ControlValueAccessor, OnDestroy {
 
   endpoint = 'jobs/squads/options';
 
   valueAttr = 'key';
 
   labelAttr = 'value';
+
+  touched: boolean;
 
   @Input() disabled: boolean;
 
@@ -45,19 +48,20 @@ export class AutocompleteSquadsComponent implements ControlValueAccessor {
 
   @ViewChild(DecAutocompleteComponent) autocompleteComponent: DecAutocompleteComponent;
 
-  private _type: string;
-  public get type(): string {
-    return this._type;
-  }
   @Input()
-  public set type(v: string) {
+  get type(): string { return this._type; }
+  set type(v: string) {
     if (this._type !== v) {
       this._type = v;
-
       this.setEndpointBasedOnInputs();
     }
   }
 
+  private _type: string;
+
+  private classWatcher: Subscription;
+
+  private classesString: string;
   /*
   ** ngModel propertie
   ** Used to two way data bind using [(ngModel)]
@@ -69,7 +73,15 @@ export class AutocompleteSquadsComponent implements ControlValueAccessor {
   //  Placeholders for the callbacks which are later provided by the Control Value Accessor
   private onChangeCallback: (_: any) => void = noop;
 
-  constructor() { }
+  constructor(
+    private elementRef: ElementRef<HTMLElement>,
+  ) {
+    this.subscribeToClassChange();
+  }
+
+  ngOnDestroy() {
+    this.unsubscribeToClassChange();
+  }
 
   /*
   ** ngModel API
@@ -137,6 +149,23 @@ export class AutocompleteSquadsComponent implements ControlValueAccessor {
     }
 
     this.endpoint = endpoint;
+  }
+
+  private subscribeToClassChange() {
+    this.classWatcher = timer(100, 250).subscribe(this.detectClassChanges);
+  }
+
+  private detectClassChanges = () => {
+    const classesString = this.elementRef.nativeElement.classList.value;
+    if (this.classesString !== classesString) {
+      this.classesString = classesString;
+      const hasTouchedClass = classesString.search('ng-touched') >= 0;
+      this.touched = hasTouchedClass;
+    }
+  }
+
+  private unsubscribeToClassChange() {
+    this.classWatcher.unsubscribe();
   }
 
 }

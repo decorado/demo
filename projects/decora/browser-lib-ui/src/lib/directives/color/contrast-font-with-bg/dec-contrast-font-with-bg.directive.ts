@@ -1,4 +1,6 @@
-import { Directive, ElementRef, Input, DoCheck } from '@angular/core';
+import { Directive, ElementRef, Input, OnDestroy } from '@angular/core';
+import { DEC_COLORS } from './../../../enums/dec-colors.map';
+import { Subscription, timer } from 'rxjs';
 
 /**
  * Cotrast configuration
@@ -11,7 +13,7 @@ export interface DecContrastFontWithBgDirectiveConfig {
   darkColor: string;
 }
 
-const DEFAULT_LUMA_BREAKPOINT = 200;
+const DEFAULT_LUMA_BREAKPOINT = 195;
 
 /*
 * Contrast Font With Background Directive
@@ -38,13 +40,9 @@ export function hexToRgbNew(hex) {
 }
 
 export function standardize_color(bgColor) {
-
   const canvas = document.createElement('canvas');
-
   const ctx = canvas.getContext('2d');
-
   ctx.fillStyle = bgColor;
-
   return ctx.fillStyle;
 }
 
@@ -52,60 +50,58 @@ export function standardize_color(bgColor) {
 @Directive({
   selector: '[decContrastFontWithBg]'
 })
-export class DecContrastFontWithBgDirective implements DoCheck {
+export class DecContrastFontWithBgDirective implements OnDestroy {
 
   private config;
 
   private bgColor;
 
+  private changesSubscription: Subscription;
+
   @Input() set decContrastFontWithBg(config: DecContrastFontWithBgDirectiveConfig) {
-
     this.config = config;
-
     this.doDecContrastFontWithBg();
-
   }
 
   constructor(private el: ElementRef) {
-
-    this.bgColor = this.el.nativeElement.style.backgroundColor;
-
+    this.subscribeToChanges();
   }
 
-  ngDoCheck() {
-
-    const bgColor = this.el.nativeElement.style.backgroundColor;
-
-    if (bgColor !== this.bgColor) {
-
-      this.bgColor = bgColor;
-
-      this.doDecContrastFontWithBg();
-
-    }
-
+  ngOnDestroy() {
+    this.unsubscribeToChanges();
   }
 
   private doDecContrastFontWithBg() {
-
     const lumaBreakPoint = (this.config && this.config.lumaBreakPoint) ? this.config.lumaBreakPoint : DEFAULT_LUMA_BREAKPOINT;
-
     const hexaBgColor = standardize_color(this.bgColor);
-
     const rgbColor = hexToRgbNew(hexaBgColor);
-
     const luma = 0.2126 * rgbColor.r + 0.7152 * rgbColor.g + 0.0722 * rgbColor.b; // per ITU-R BT.709
-
     if (luma < lumaBreakPoint) {
-
-      this.el.nativeElement.style.color = (this.config && this.config.lightColor) ? this.config.lightColor : 'rgba(255,255,255,1)';
-
+      this.el.nativeElement.style.color = (this.config && this.config.lightColor) ? this.config.lightColor : DEC_COLORS.WHITE;
     } else {
-
-      this.el.nativeElement.style.color = (this.config && this.config.darkColor) ? this.config.darkColor : '#232e38';
-
+      this.el.nativeElement.style.color = (this.config && this.config.darkColor) ? this.config.darkColor : DEC_COLORS.CHARCOAL;
     }
+  }
 
+  private getElementBgColor = () => {
+    const element = this.el.nativeElement;
+    const elementStyles = getComputedStyle(element);
+    const bgColor = elementStyles.backgroundColor;
+    if (this.bgColor !== bgColor) {
+      this.bgColor = bgColor;
+      this.doDecContrastFontWithBg();
+    }
+  }
+
+  private subscribeToChanges() {
+
+    this.changesSubscription = timer(100, 500)
+    .subscribe(this.getElementBgColor);
+
+  }
+
+  private unsubscribeToChanges() {
+    this.changesSubscription.unsubscribe();
   }
 }
 
