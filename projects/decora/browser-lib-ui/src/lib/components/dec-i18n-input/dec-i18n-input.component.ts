@@ -28,6 +28,8 @@ export class DecI18nInputComponent implements ControlValueAccessor, AfterViewIni
 
   selectedLanguage: i18nLanguage = 'PT';
 
+  thereIsContent: boolean;
+
   @Input() type: i18nInputType = 'input';
 
   @Input() placeholder;
@@ -49,6 +51,15 @@ export class DecI18nInputComponent implements ControlValueAccessor, AfterViewIni
   }
 
   @ViewChild(NgForm) i18nInputForm: NgForm;
+
+  @ViewChild('contentContainer')
+  get contentContainer() { return this._contentContainer; }
+  set contentContainer(v: ElementRef) {
+    this._contentContainer = v;
+    this.checkContentPresence();
+  }
+
+  private _contentContainer;
 
   private classWatcher: Subscription;
 
@@ -113,14 +124,24 @@ export class DecI18nInputComponent implements ControlValueAccessor, AfterViewIni
     }
   }
 
-  selectLanguage(language: i18nLanguage) {
+  selectLanguage(language: i18nLanguage, inputElement: any) {
     this.selectedLanguage = language;
+
+    setTimeout(() => {
+      inputElement.focus();
+    }, 0);
   }
 
   showInvalidStyle(control: NgControl): boolean {
 
     return control ? control.invalid && control.touched : false;
 
+  }
+
+  private checkContentPresence() {
+    setTimeout(() => {
+      this.thereIsContent = this.contentContainer ? this.contentContainer.nativeElement.innerHTML.trim().length : false;
+    }, 0);
   }
 
   private ensureValueStructure(value) {

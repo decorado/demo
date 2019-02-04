@@ -5,14 +5,14 @@
     <div *ngSwitchCase="'input'" fxLayout="row" fxLayoutGap="4px">
 
       <div fxLayout="row" fxLayoutGap="2px">
-        <div><button mat-stroked-button (click)="selectLanguage('PT')" [color]="selectedLanguage === 'PT' ? 'accent' : ''" [ngClass]="{invalid: showInvalidStyle(ctrlInputPT)}">PT</button></div>
-        <div><button mat-stroked-button (click)="selectLanguage('EN')" [color]="selectedLanguage === 'EN' ? 'accent' : ''" [ngClass]="{invalid: showInvalidStyle(ctrlInputEN)}">EN</button></div>
+        <div><button mat-stroked-button (click)="selectLanguage('PT', elementInputPT)" [color]="selectedLanguage === 'PT' ? 'accent' : ''" [ngClass]="{invalid: showInvalidStyle(ctrlInputPT)}">PT</button></div>
+        <div><button mat-stroked-button (click)="selectLanguage('EN', elementInputEN)" [color]="selectedLanguage === 'EN' ? 'accent' : ''" [ngClass]="{invalid: showInvalidStyle(ctrlInputEN)}">EN</button></div>
       </div>
 
       <div fxFlex>
         <mat-form-field>
-          <input matInput [(ngModel)]="value.pt" #ctrlInputPT="ngModel" name="namePT" [hidden]="selectedLanguage !== 'PT'" [required]="required" [disabled]="disabled">
-          <input matInput [(ngModel)]="value.en" #ctrlInputEN="ngModel" name="nameEN" [hidden]="selectedLanguage !== 'EN'" [required]="required" [disabled]="disabled">
+          <input matInput [(ngModel)]="value.pt" #elementInputPT #ctrlInputPT="ngModel" name="namePT" [hidden]="selectedLanguage !== 'PT'" [required]="required" [disabled]="disabled">
+          <input matInput [(ngModel)]="value.en" #elementInputEN #ctrlInputEN="ngModel" name="nameEN" [hidden]="selectedLanguage !== 'EN'" [required]="required" [disabled]="disabled">
         </mat-form-field>
       </div>
 
@@ -26,17 +26,17 @@
           <ng-content></ng-content>
         </span>
 
-        <div fxFlex *ngIf="contentContainer?.innerHTML"></div>
+        <div fxFlex *ngIf="thereIsContent"></div>
 
         <div fxLayout="row" fxLayoutGap="2px">
-          <button mat-stroked-button (click)="selectLanguage('PT')" [color]="selectedLanguage === 'PT' ? 'accent' : ''" [ngClass]="{invalid: showInvalidStyle(ctrlNotePT)}">PT</button>
-          <button mat-stroked-button (click)="selectLanguage('EN')" [color]="selectedLanguage === 'EN' ? 'accent' : ''" [ngClass]="{invalid: showInvalidStyle(ctrlNoteEN)}">EN</button>
+          <button mat-stroked-button (click)="selectLanguage('PT', elementNotePT)" [color]="selectedLanguage === 'PT' ? 'accent' : ''" [ngClass]="{invalid: showInvalidStyle(ctrlNotePT)}">PT</button>
+          <button mat-stroked-button (click)="selectLanguage('EN', elementNoteEN)" [color]="selectedLanguage === 'EN' ? 'accent' : ''" [ngClass]="{invalid: showInvalidStyle(ctrlNoteEN)}">EN</button>
         </div>
 
       </div>
 
-      <textarea matInput [(ngModel)]="value.pt" name="namePT" class="text-area-note" #ctrlNotePT="ngModel" [ngClass]="{invalid: showInvalidStyle(ctrlNotePT)}" [hidden]="selectedLanguage !== 'PT'" [required]="required" [disabled]="disabled" [rows]="rows"></textarea>
-      <textarea matInput [(ngModel)]="value.en" name="nameEN" class="text-area-note" #ctrlNoteEN="ngModel" [ngClass]="{invalid: showInvalidStyle(ctrlNoteEN)}" [hidden]="selectedLanguage !== 'EN'" [required]="required" [disabled]="disabled" [rows]="rows"></textarea>
+      <textarea matInput [(ngModel)]="value.pt" name="namePT" class="text-area-note" #elementNotePT #ctrlNotePT="ngModel" [ngClass]="{invalid: showInvalidStyle(ctrlNotePT)}" [hidden]="selectedLanguage !== 'PT'" [required]="required" [disabled]="disabled" [rows]="rows"></textarea>
+      <textarea matInput [(ngModel)]="value.en" name="nameEN" class="text-area-note" #elementNoteEN #ctrlNoteEN="ngModel" [ngClass]="{invalid: showInvalidStyle(ctrlNoteEN)}" [hidden]="selectedLanguage !== 'EN'" [required]="required" [disabled]="disabled" [rows]="rows"></textarea>
     </div>
 
   </ng-container>
