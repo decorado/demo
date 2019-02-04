@@ -1,18 +1,16 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { CategoryPipeService } from './category-pipe.service';
 import { Observable } from 'rxjs';
-
-
+import { CategoryService } from './../../services/category/category.service';
 
 @Pipe({
   name: 'decCategory'
 })
 export class CategoryPipe implements PipeTransform {
 
-  constructor(private categoryPipeService: CategoryPipeService) {
+  constructor(private categoryService: CategoryService) {
   }
 
   transform(value: string): Observable<string> {
-    return this.categoryPipeService.getNameByCode(value);
+    return this.categoryService.getNameByCode(value);
   }
 }

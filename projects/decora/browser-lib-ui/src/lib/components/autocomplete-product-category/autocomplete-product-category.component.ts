@@ -1,10 +1,10 @@
 import { Component, Input, forwardRef, Output, EventEmitter, ViewChild } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { DecApiService } from './../../services/api/decora-api.service';
 import { DecLanguageService } from '../../services/language/dec-language.service';
 import { of, Observable } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 import { DecAutocompleteComponent } from './../autocomplete/autocomplete.component';
+import { CategoryService } from './../../services/category/category.service';
 
 const BASE_AUTOCOMPLETE_PRODUCT_CATEGORY_ENDPOINT = `/legacy/product/category`;
 
@@ -67,7 +67,7 @@ export class DecAutocompleteProductCategoryComponent implements ControlValueAcce
   private onChangeCallback: (_: any) => void = noop;
 
   constructor(
-    private decoraApi: DecApiService,
+    private categoryService: CategoryService,
     private languageService: DecLanguageService,
   ) { }
 
@@ -155,7 +155,7 @@ export class DecAutocompleteProductCategoryComponent implements ControlValueAcce
 
           this.setEndpointBasedOnLang(lang.decoraLanguageCode);
 
-          return this.decoraApi.get(this.endpoint).pipe(
+          return this.categoryService.fetchCategories().pipe(
 
             map(res => {
 

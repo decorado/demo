@@ -263,7 +263,6 @@ export * from './lib/guard/auth-guard.service';
 *
 **********************************************************/
 export * from './lib/pipes/category/category-pipe.module';
-export * from './lib/pipes/category/category-pipe.service';
 
 // SAFE
 export * from './lib/pipes/safe/safe.module';
@@ -279,6 +278,9 @@ export * from './lib/services/initializer/dec-app-initializer';
 export * from './lib/services/api/decora-api.service';
 export * from './lib/services/api/decora-api.module';
 export * from './lib/services/api/decora-api.model';
+// CATEGORY
+export * from './lib/services/category/category.service';
+export * from './lib/services/category/category-service.module';
 // COLOR
 export * from './lib/services/color/dec-color.service';
 export * from './lib/services/color/dec-color-service.module';

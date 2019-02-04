@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
-import { DecApiService } from './../../services/api/decora-api.service';
-import { DecLanguageService } from '../../services/language/dec-language.service';
-import { of, Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { DecApiService } from '../api/decora-api.service';
+import { DecLanguageService } from '../language/dec-language.service';
+import { of, Observable, ReplaySubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 const CATEGORY_ENDPOINT = '/legacy/product/category?language={i18n}';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CategoryPipeService {
+export class CategoryService {
+
+  private _categoriesObservable: ReplaySubject<any>;
 
   constructor(
     private decApi: DecApiService,
@@ -30,32 +32,37 @@ export class CategoryPipeService {
 
   }
 
-  private getCategoryNameByCode(code) {
+  fetchCategories() {
 
-    return this.langService.lang$.pipe(
+    if (!this._categoriesObservable) {
 
-      switchMap(lang => {
+      this._categoriesObservable = new ReplaySubject<any>(undefined);
+
+      this.langService.lang$.subscribe(lang => {
 
         const endpoint = CATEGORY_ENDPOINT.replace('{i18n}', lang.decoraLanguageCode);
 
-        return this.decApi.get(endpoint).pipe(
+        return this.decApi.get(endpoint).subscribe(response => {
 
-          map(response => {
+          this._categoriesObservable.next(response);
 
-            const categories = response.sub;
+        });
 
-            const name = this.mountCategorieNameByCode(categories, code);
+      });
 
-            return name;
+    }
 
-          })
+    return this._categoriesObservable;
 
-        );
+  }
 
+  private getCategoryNameByCode(code: string | number) {
+
+    return this.fetchCategories().pipe(
+      map((categories: { sub: any }) => {
+        return categories ? this.mountCategorieNameByCode(categories.sub, code) : '';
       })
-
     );
-
   }
 
   private mountCategorieNameByCode(categories, code) {

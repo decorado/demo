@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CategoryPipe } from './category.pipe';
-import { CategoryPipeService } from './category-pipe.service';
+import { CategoryServiceModule } from './../../services/category/category-service.module';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    CategoryServiceModule,
   ],
   declarations: [
     CategoryPipe
@@ -14,8 +15,7 @@ import { CategoryPipeService } from './category-pipe.service';
     CategoryPipe
   ],
   providers: [
-    CategoryPipe,
-    CategoryPipeService
+    CategoryPipe
   ]
 })
 export class CategoryPipeModule { }
