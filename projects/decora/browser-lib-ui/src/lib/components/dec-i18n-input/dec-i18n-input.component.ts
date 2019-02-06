@@ -118,7 +118,6 @@ export class DecI18nInputComponent implements ControlValueAccessor, AfterViewIni
 
   // From ControlValueAccessor interface
   writeValue(value: any) {
-    value = this.ensureValueStructure(value);
     if (JSON.stringify(value) !== JSON.stringify(this.value)) {
       this.value = value;
     }
@@ -144,16 +143,10 @@ export class DecI18nInputComponent implements ControlValueAccessor, AfterViewIni
     }, 0);
   }
 
-  private ensureValueStructure(value: any) {
-    value = !value ? {} : value; // v7 bug. remove it when the issue is closed: https://github.com/angular/angular/issues/14988
-    if (!value.pt && !value.en) {
-      value = { pt: undefined, en: undefined };
-    }
-    return value;
-  }
-
   private subscribeToClassChange() {
+
     this.classWatcher = timer(100, 250).subscribe(this.detectClassChanges);
+
   }
 
   private detectClassChanges = () => {

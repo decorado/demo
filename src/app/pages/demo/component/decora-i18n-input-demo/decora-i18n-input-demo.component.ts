@@ -11,12 +11,12 @@ export class DecoraI18nInputDemoComponent implements OnInit {
 
   testModel1 = {
     en: '',
-    pt: '',
+    pt: 'sss',
   };
 
   testModel2 = {
     en: '',
-    pt: '',
+    pt: 'sss',
   };
 
   @ViewChild(NgForm) inputsForm: NgForm;

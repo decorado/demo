@@ -4,6 +4,8 @@
 
   <form role="form" #inputsForm="ngForm">
 
+    value: {{ testModel1 | json }}
+
     <dec-i18n-input [(ngModel)]="testModel1" name="testModel1" type="input" [required]="true"></dec-i18n-input>
 
     <dec-i18n-input [(ngModel)]="testModel2" name="testModel2" type="textarea" [required]="true"></dec-i18n-input>
