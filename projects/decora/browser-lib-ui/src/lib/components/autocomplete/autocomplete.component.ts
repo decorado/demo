@@ -388,34 +388,47 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
   }
 
   private searchBasedFetchingType(textSearch, rememberResponse = false): Observable<any[]> {
+
     if (this._innerOptions) {
+
       return this.searchInLocalOptions(textSearch);
+
     } else if (this.customFetchFunction) {
-      return this.customFetchFunction(textSearch).pipe(
-        tap(options => {
-          this.options = options;
-        })
-      );
+
+      return this.customFetchFunction(textSearch);
+
     } else {
+
       const body = textSearch ? { textSearch } : undefined;
+
       if (rememberResponse) {
+
         const dataInMemory = this.responses[textSearch];
+
         if (dataInMemory) {
+
           return of(dataInMemory);
+
         } else {
+
           return this.getRemoteData(textSearch, body, rememberResponse);
+
         }
+
       } else {
+
         return this.getRemoteData(textSearch, body, rememberResponse);
+
       }
+
     }
+
   }
 
   private getRemoteData(textSearch: string, body: any, rememberResponse = false) {
     return this.service.get<any[]>(this.endpoint, body).pipe(
       map(res => this.extractRowsFn(res)),
       tap((options: any[]) => {
-        this._filteredOptions = options;
         if (rememberResponse) {
           this.responses[textSearch] = options;
         }
