@@ -3,15 +3,15 @@
   <ng-container [ngSwitch]="font" *ngIf="icon">
 
     <ng-container *ngSwitchCase="'mat'">
-      <i class="material-icons dec-icon" aria-hidden="true">{{icon}}</i>
+      <i class="material-icons" aria-hidden="true">{{icon}}</i>
     </ng-container>
 
     <ng-container *ngSwitchCase="'fas'">
-      <i class="fa {{'fa-'+icon}} dec-icon" aria-hidden="true"></i>
+      <i class="fa {{'fa-'+icon}}" aria-hidden="true"></i>
     </ng-container>
 
     <ng-container *ngSwitchCase="'dec'">
-      <mat-icon class="dec-icon" svgIcon="{{icon}}" aria-hidden="true" [style.height]="dinamicHeight" [style.marginTop]="0"></mat-icon>
+      <mat-icon svgIcon="{{icon}}" aria-hidden="true" [style.height]="dinamicHeight" [style.marginTop]="0"></mat-icon>
     </ng-container>
 
   </ng-container>
