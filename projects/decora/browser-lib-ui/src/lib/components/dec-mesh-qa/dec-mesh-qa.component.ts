@@ -40,7 +40,7 @@ export class DecMeshQaComponent {
   }
 
   private async getRenderfeedbacktree() {
-    const ErrorCode = await this.decRenderCommentService.getRenderfeedbacktree(null);
+    const ErrorCode = await this.decRenderCommentService.getRenderfeedbacktreeOnlyEnglish(null);
     this._meshBase = { ErrorCode };
   }
 
