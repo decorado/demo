@@ -4,16 +4,26 @@
 
   <form role="form" #inputsForm="ngForm">
 
-    value: {{ testModel1 | json }}
+    <div>
+      value: {{ testModel1 | json }}
 
-    <dec-i18n-input [(ngModel)]="testModel1" name="testModel1" type="input" [required]="true"></dec-i18n-input>
+      <dec-i18n-input [(ngModel)]="testModel1" name="testModel1" type="input" [required]="true" (ngModelChange)="onModelChanged('model 1')" (changeLanguage)="onModelChanged($event)"></dec-i18n-input>
+    </div>
 
-    <dec-i18n-input [(ngModel)]="testModel2" name="testModel2" type="textarea" [required]="true"></dec-i18n-input>
+    <div>
+      value: {{ testModel2 | json }}
 
-    <dec-i18n-input [(ngModel)]="testModel2" name="testModel2" type="textarea" [required]="true">
-      <dec-icon font="mat">close</dec-icon>
-      CONTENT HERE
-    </dec-i18n-input>
+      <dec-i18n-input [(ngModel)]="testModel2" name="testModel2" type="textarea" [required]="true"></dec-i18n-input>
+    </div>
+
+    <div>
+      value: {{ testModel3 | json }}
+
+      <dec-i18n-input [(ngModel)]="testModel3" name="testModel3" type="textarea" [required]="true">
+        <dec-icon font="mat">close</dec-icon>
+        CONTENT HERE
+      </dec-i18n-input>
+    </div>
 
   </form>
 

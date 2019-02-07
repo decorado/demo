@@ -19,6 +19,8 @@ export class DecoraI18nInputDemoComponent implements OnInit {
     pt: 'sss',
   };
 
+  testModel3;
+
   @ViewChild(NgForm) inputsForm: NgForm;
 
   constructor() { }
@@ -30,6 +32,10 @@ export class DecoraI18nInputDemoComponent implements OnInit {
     Object.values(this.inputsForm.controls).forEach(control => {
       control.markAsTouched();
     });
+  }
+
+  onModelChanged(model) {
+    console.log(`changed ${model}`);
   }
 
 }

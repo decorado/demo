@@ -1,8 +1,8 @@
-import { Component, AfterViewInit, Input, OnDestroy, ElementRef, forwardRef, ViewChild } from '@angular/core';
+import { Component, AfterViewInit, Input, OnDestroy, ElementRef, forwardRef, ViewChild, Output, EventEmitter } from '@angular/core';
 import { timer, Subscription } from 'rxjs';
 import { NG_VALUE_ACCESSOR, NgForm, ControlValueAccessor, NgControl } from '@angular/forms';
 
-type i18nLanguage = 'PT' | 'EN';
+type i18nLanguage = 'pt' | 'en';
 
 type i18nInputType = 'input' | 'textarea';
 
@@ -26,7 +26,7 @@ const INPUT_I18N_CONTROL_VALUE_ACCESSOR: any = {
 })
 export class DecI18nInputComponent implements ControlValueAccessor, AfterViewInit, OnDestroy {
 
-  selectedLanguage: i18nLanguage = 'PT';
+  selectedLanguage: i18nLanguage = 'pt';
 
   thereIsContent: boolean;
 
@@ -50,6 +50,8 @@ export class DecI18nInputComponent implements ControlValueAccessor, AfterViewIni
     this._disabled = v;
   }
 
+  @Output() changeLanguage = new EventEmitter();
+
   @ViewChild(NgForm) i18nInputForm: NgForm;
 
   @ViewChild('contentContainer')
@@ -68,6 +70,8 @@ export class DecI18nInputComponent implements ControlValueAccessor, AfterViewIni
   private _required;
 
   private _disabled;
+
+  private _lastValueEmitted;
 
   //  The internal data model
   private innerValue: I18nInput = { pt: '', en: '' };
@@ -93,7 +97,6 @@ export class DecI18nInputComponent implements ControlValueAccessor, AfterViewIni
   set value(v: I18nInput) {
     if (v !== this.innerValue) {
       this.innerValue = v;
-      this.onChangeCallback(v);
     }
   }
 
@@ -117,24 +120,37 @@ export class DecI18nInputComponent implements ControlValueAccessor, AfterViewIni
   }
 
   // From ControlValueAccessor interface
-  writeValue(value: any) {
+  writeValue(value: any = {}) {
     if (JSON.stringify(value) !== JSON.stringify(this.value)) {
       this.value = value;
+      this.setLastValueEmitted(this.value);
     }
   }
 
   selectLanguage(language: i18nLanguage, inputElement: any) {
     this.selectedLanguage = language;
-
+    this.changeLanguage.emit(language);
+    this.detectAndEmitChange();
     setTimeout(() => {
       inputElement.focus();
     }, 0);
   }
 
   showInvalidStyle(control: NgControl): boolean {
-
     return control ? control.invalid && control.touched : false;
+  }
 
+  detectAndEmitChange() {
+    const lastValue = JSON.stringify(this._lastValueEmitted);
+    const newValue = JSON.stringify(this.value);
+    if (newValue !== lastValue) {
+      this.setLastValueEmitted(this.value);
+      this.onChangeCallback(this.value);
+    }
+  }
+
+  private setLastValueEmitted(v) {
+    this._lastValueEmitted = JSON.parse(JSON.stringify(v));
   }
 
   private checkContentPresence() {
@@ -144,9 +160,7 @@ export class DecI18nInputComponent implements ControlValueAccessor, AfterViewIni
   }
 
   private subscribeToClassChange() {
-
     this.classWatcher = timer(100, 250).subscribe(this.detectClassChanges);
-
   }
 
   private detectClassChanges = () => {
