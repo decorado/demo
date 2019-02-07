@@ -513,8 +513,13 @@ export class DecAutocompleteComponent implements ControlValueAccessor, AfterView
     return new Promise<any>((resolve, reject) => {
       if (writtenValue) {
         this.searchBasedFetchingType(writtenValue, true)
-          .subscribe((res) => {
-            resolve(res[0]);
+          .subscribe((res: any[]) => {
+            if (Array.isArray(res)) {
+              this._filteredOptions = Array.isArray(res) ? res : [];
+              resolve(res[0]);
+            } else {
+              reject();
+            }
           });
       } else {
         resolve(writtenValue);
