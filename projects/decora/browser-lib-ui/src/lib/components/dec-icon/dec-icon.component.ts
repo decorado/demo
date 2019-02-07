@@ -66,21 +66,25 @@ export class DecIconComponent implements OnChanges, OnDestroy {
 
   private extractIconHeight() {
 
-    const element = this.elementRef.nativeElement;
+    if (this.font === 'dec') {
 
-    const elementStyles = getComputedStyle(element);
+      const element = this.elementRef.nativeElement;
 
-    const fontSize = elementStyles.fontSize;
+      const elementStyles = getComputedStyle(element);
 
-    const measureType = fontSize.replace(/^\d+\.\d+|\d+/g, '');
+      const fontSize = elementStyles.fontSize;
 
-    const heightString = fontSize.replace(measureType, '');
+      const measureType = fontSize.replace(/^\d+\.\d+|\d+/g, '');
 
-    const height = heightString ? parseInt(heightString, 10) : 0;
+      const heightString = fontSize.replace(measureType, '');
 
-    const calculedHeigth = height ? height * 0.72 : '';
+      const height = heightString ? parseInt(heightString, 10) : 0;
 
-    this.dinamicHeight = `${calculedHeigth}${measureType}`;
+      const calculedHeigth = height ? height * 0.72 : '';
+
+      this.dinamicHeight = `${calculedHeigth}${measureType}`;
+
+    }
 
   }
 
