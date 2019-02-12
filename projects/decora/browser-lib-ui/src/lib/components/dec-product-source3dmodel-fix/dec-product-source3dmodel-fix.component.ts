@@ -70,10 +70,14 @@ export class DecProductSource3dmodelFixComponent {
   }
 
   public downloadMax(): void {
-    if (this.product.max && this.product.max.fileUrl) {
-      window.open(this.product.max.fileUrl, '_blank');
+    const actualRound = this.job.rounds && this.job.rounds.length ? this.job.rounds[this.job.rounds.length - 1] : null;
+
+    if (actualRound && actualRound.max && actualRound.max.fileUrl) {
+      window.open(actualRound.max.fileUrl, '_blank');
     } else if (this.job.actualMax && this.job.actualMax.fileUrl) {
       window.open(this.job.actualMax.fileUrl, '_blank');
+    } else if (this.product.max && this.product.max.fileUrl) {
+      window.open(this.product.max.fileUrl, '_blank');
     }
   }
 
