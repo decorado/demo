@@ -232,7 +232,7 @@ export class DecJobRoundComponent {
   }
 
   private openZoomAreaModal(canEdit: boolean) {
-    const dialogRef = this.dialog.open(DecZoomAreaComponent, { height: '90vh', width: '71vw' });
+    const dialogRef = this.dialog.open(DecZoomAreaComponent, { height: '90vh', width: '1340px' });
     dialogRef.componentInstance.reference = this.reference;
     dialogRef.componentInstance.editMode = this.editZoomArea;
     dialogRef.componentInstance.note = this.note;

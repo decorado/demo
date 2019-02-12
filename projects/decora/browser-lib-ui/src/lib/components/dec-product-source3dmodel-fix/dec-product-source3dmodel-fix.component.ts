@@ -70,7 +70,11 @@ export class DecProductSource3dmodelFixComponent {
   }
 
   public downloadMax(): void {
-    window.open(this.product.max.fileUrl, '_blank');
+    if (this.product.max && this.product.max.fileUrl) {
+      window.open(this.product.max.fileUrl, '_blank');
+    } else if (this.job.actualMax && this.job.actualMax.fileUrl) {
+      window.open(this.job.actualMax.fileUrl, '_blank');
+    }
   }
 
   private getReferences() {
@@ -137,7 +141,7 @@ export class DecProductSource3dmodelFixComponent {
   }
 
   private openZoomAreaModal() {
-    const dialogRef = this.matDialog.open(DecZoomAreaComponent, { height: '90vh', width: '71vw' });
+    const dialogRef = this.matDialog.open(DecZoomAreaComponent, { height: '90vh', width: '1340px' });
 
     dialogRef.componentInstance.reference = this._zoomArea.reference;
     dialogRef.componentInstance.editMode = this._zoomArea.editZoomArea;
