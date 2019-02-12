@@ -72,6 +72,7 @@ export class DecJobRoundComponent {
   }
 
   public reviewers: any = {};
+  public previousRoundReviewers: any = {};
 
   @Output() setZoomAreaOpen = new EventEmitter();
 
@@ -174,6 +175,16 @@ export class DecJobRoundComponent {
     const { lastCheck } = qualityAssurance;
 
     this.reviewers = {
+      qualityAgent: { ...qualityAssurance.qualityAgent, date: qualityAssurance.start },
+      lastChecker: lastCheck ? { ...lastCheck.reviewer, date: lastCheck.start } : undefined
+    };
+  }
+
+  private populatePreviousRoundReviewers(round: any) {
+    const { qualityAssurance } = round;
+    const { lastCheck } = qualityAssurance;
+
+    this.previousRoundReviewers = {
       qualityAgent: { ...qualityAssurance.qualityAgent, date: qualityAssurance.start },
       lastChecker: lastCheck ? { ...lastCheck.reviewer, date: lastCheck.start } : undefined
     };
@@ -317,37 +328,42 @@ export class DecJobRoundComponent {
         this.referenceMax = 'remove';
         this.glbReference = null;
         this.qualityAssuranceReference = null;
-
+        this.previousRoundReviewers = null;
         break;
       case 'reference':
         this.formatMarkedReference(this.product);
         this.referenceMax = 'remove';
         this.glbReference = null;
         this.qualityAssuranceReference = null;
+        this.previousRoundReviewers = null;
         break;
       case 'round1':
         this.markedReference = this.formatRenderReference(this.rounds[0]);
         this.referenceMax = this.rounds[0].max.fileUrl;
         this.glbReference = this.rounds[0].glb;
         this.qualityAssuranceReference = this.rounds[0].qualityAssurance;
+        this.populatePreviousRoundReviewers(this.rounds[0]);
         break;
       case 'round2':
         this.markedReference = this.formatRenderReference(this.rounds[1]);
         this.referenceMax = this.rounds[1].max.fileUrl;
         this.glbReference = this.rounds[1].glb;
         this.qualityAssuranceReference = this.rounds[1].qualityAssurance;
+        this.populatePreviousRoundReviewers(this.rounds[1]);
         break;
       case 'round3':
         this.markedReference = this.formatRenderReference(this.rounds[2]);
         this.referenceMax = this.rounds[2].max.fileUrl;
         this.glbReference = this.rounds[2].glb;
         this.qualityAssuranceReference = this.rounds[2].qualityAssurance;
+        this.populatePreviousRoundReviewers(this.rounds[2]);
         break;
       case 'round4':
         this.markedReference = this.formatRenderReference(this.rounds[3]);
         this.referenceMax = this.rounds[3].max.fileUrl;
         this.glbReference = this.rounds[3].glb;
         this.qualityAssuranceReference = this.rounds[3].qualityAssurance;
+        this.populatePreviousRoundReviewers(this.rounds[3]);
         break;
     }
     this.activeTab = $event.value;

@@ -21,7 +21,7 @@
 
         <dec-zoom-marks-gallery *ngIf="markedReference" [isProfessional]="isProfessional" (openZoomArea)="openEditZoomArea($event, false)"
           [maxFile]="referenceMax" #referenceGallery [markedObjs]="markedReference" [showTags]="activeTab !== 'reference'"
-          [glb]="glbReference" [glbReadonly]="true" [qualityAssurance]="qualityAssuranceReference">
+          [glb]="glbReference" [glbReadonly]="true" [qualityAssurance]="qualityAssuranceReference" [reviewers]="previousRoundReviewers">
         </dec-zoom-marks-gallery>
 
         <div class="measures-container">
