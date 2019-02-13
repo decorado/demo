@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { objectKeysToCamelCase } from '../../utilities/object';
+import { objectKeysToLowerCamelCase } from '../../utilities/object';
 import { sortBy } from '../../utilities/array';
 
 @Component({
@@ -21,7 +21,7 @@ export class DecMarkdownsMeshQaComponent {
   @Input()
   public set mesh(v: any) {
     if (this._mesh !== v) {
-      this._mesh = objectKeysToCamelCase(v);
+      this._mesh = objectKeysToLowerCamelCase(v);
 
       this.tags = [];
       this.bindTags(this._mesh);

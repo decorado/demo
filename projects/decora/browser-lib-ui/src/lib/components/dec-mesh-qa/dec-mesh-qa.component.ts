@@ -3,6 +3,7 @@ import { TagWrapper, enumTagWrapperContext } from './dec-mesh-qa.models';
 import { DecConfigurationService } from '../../services/configuration/configuration.service';
 import { Guid } from '../../utilities/guid';
 import { DecRenderCommentService } from '../dec-render-comment/dec-render-comment.service';
+import { objectKeysToUpperCamelCase, objectKeysToLowerCamelCase } from '../../utilities/object';
 
 @Component({
   selector: 'dec-mesh-qa',
@@ -22,8 +23,15 @@ export class DecMeshQaComponent {
   @Input()
   public glbReadonly: boolean;
 
+  private _mesh: any;
+  public get mesh(): any {
+    return this._mesh;
+  }
+
   @Input()
-  public mesh: any;
+  public set mesh(v: any) {
+    this._mesh = objectKeysToUpperCamelCase(v);
+  }
 
   @ViewChild('iframeUnity') iframeUnity: ElementRef<HTMLIFrameElement>;
 
@@ -77,7 +85,7 @@ export class DecMeshQaComponent {
 
   SetTagStructure = (tagStructureString: string): void => {
     this.mesh = JSON.parse(tagStructureString);
-    this.updateTagStructure.emit(this.mesh);
+    this.updateTagStructure.emit(objectKeysToLowerCamelCase(this.mesh));
   }
 
   AddTag = (tagWrapperString: string): void => {
@@ -94,7 +102,7 @@ export class DecMeshQaComponent {
         break;
     }
 
-    this.updateTagStructure.emit(this.mesh);
+    this.updateTagStructure.emit(objectKeysToLowerCamelCase(this.mesh));
   }
 
   EditTag = (tagWrapperString: string): void => {
@@ -113,7 +121,7 @@ export class DecMeshQaComponent {
         break;
     }
 
-    this.updateTagStructure.emit(this.mesh);
+    this.updateTagStructure.emit(objectKeysToLowerCamelCase(this.mesh));
   }
 
   RemoveTag = (tagWrapperString: string): void => {
@@ -132,7 +140,7 @@ export class DecMeshQaComponent {
         break;
     }
 
-    this.updateTagStructure.emit(this.mesh);
+    this.updateTagStructure.emit(objectKeysToLowerCamelCase(this.mesh));
   }
 
   //// Unity Functions
@@ -145,7 +153,8 @@ export class DecMeshQaComponent {
       const editMode = this.glbReadonly ? false : !this.isProfessional;
 
       const fullMesh = { editMode, model, tags, ...this._meshBase };
-      this.iframeUnity.nativeElement.contentWindow.postMessage({ type: 'SetData', payload: fullMesh }, '*');
+
+      this.iframeUnity.nativeElement.contentWindow.postMessage({ type: 'SetData', payload: objectKeysToLowerCamelCase(fullMesh) }, '*');
     }
   }
   EnableEdit = (enable: boolean): void => {
