@@ -7,15 +7,16 @@
 </div>
 
 <div class="container-slider" fxLayoutAlign="center center" fxLayoutGap="8px">
-  <button mat-icon-button color="primary" (click)="zoomOut()" [disabled]="zoomScale == minZoomLevel">
+  <button mat-icon-button color="primary" (click)="zoomOut()" [disabled]="zoomScale == minZoomLevel || !contentDone">
     <mat-icon aria-label="Zoom out">remove</mat-icon>
   </button>
+
   <mat-slider class="slider-width" color="primary" [min]="minZoomLevel" [max]="maxZoomLevel" [step]="stepZoomLevel"
-    [(ngModel)]="zoomScale" (input)="onZoomSlide($event.value)"></mat-slider>
-  <button mat-icon-button color="primary" (click)="zoomIn()" [disabled]="zoomScale == maxZoomLevel">
+    [(ngModel)]="zoomScale" (input)="onZoomSlide($event.value)" [disabled]="!contentDone"></mat-slider>
+
+  <button mat-icon-button color="primary" (click)="zoomIn()" [disabled]="zoomScale == maxZoomLevel || !contentDone">
     <mat-icon aria-label="Zoom in">add</mat-icon>
   </button>
-
 
   <mat-icon *ngIf="maxFile" class="max-link-position click" matTooltip="{{ 'label.max-file' | translate }}" (click)="openMaxFile()">
     cloud_download
