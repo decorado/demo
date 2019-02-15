@@ -1,18 +1,24 @@
 <div fxLayout="row" fxLayoutAlign="space-between center" *ngFor="let render of renders; let indexRender = index;">
-  <div *ngIf="render?.tags?.length > 0" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="space-between start">
+
+  <div class="container" *ngIf="render?.tags?.length > 0" fxLayout="column" fxLayoutGap="16px" fxLayoutAlign="space-between start">
+
     <h4 class="title-render">
       {{ 'label.Render' | translate }} {{ parentId ? parentId : (indexRender + 1) }}
     </h4>
 
-    <div fxLayout="row" fxFill fxLayoutGap="16px" class="markdown-item" *ngFor="let tag of render?.tags; let indexTag = index">
-      <span [class]="getClass(tag)" fxFlex="30px">
+    <div class="container-list-tags" *ngFor="let tag of render?.tags; let indexTag = index">
+
+      <span [class]="getClass(tag)">
         {{ parentId ? parentId+'.'+(indexTag + 1) : tag.reference }}
       </span>
-      <span *ngIf="tag?.comment" class="text-markdown" fxFlex="calc(100% - 46px)">
+
+      <span *ngIf="tag?.comment" class="text-markdown">
         {{ getDescription(tag) }}
       </span>
+
       <div class="container-delete" *ngIf="qaMode">
-        <button mat-button [matMenuTriggerFor]="tagMenu" matPrefix>
+
+        <button mat-button [matMenuTriggerFor]="tagMenu" matPrefix style="width: 40px;display: flex;justify-content: center;">
           <mat-icon>more_vert</mat-icon>
         </button>
 
@@ -26,6 +32,9 @@
         </mat-menu>
 
       </div>
+
     </div>
+
   </div>
+
 </div>

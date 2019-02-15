@@ -2,7 +2,21 @@
 
 :host {
   --tag-size: 30px;
-  --tag-line-height: calc(var(--tag-size) - 3px);
+  --tag-line-height: calc(var(--tag-size) - 6px);
+}
+
+.container {
+  width: 100%;
+}
+
+.container-list-tags {
+  display: flex;
+  width: 100%;
+}
+
+.markdown-item {
+  display: flex;
+  width: 100%;
 }
 
 .markdown-item:last-child {
@@ -10,20 +24,24 @@
 }
 
 .text-markdown {
+  display: flex;
   font-size: 13px;
   line-height: var(--tag-line-height);
-  color: #656d74;
-  min-width: 496px;
-  text-align: justify;
-  justify-content: left;
+  align-items: center;
+  text-align: left;
+  flex: auto;
 }
 
 .tags-item {
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--tag-size);
+  min-width: var(--tag-size);
+  height: var(--tag-size);
   color: $dec-color-red;
   font-weight: 500;
-  height: var(--tag-size);
-  line-height: var(--tag-line-height);
+  margin-right: 16px;
 }
 
 .type-square {
@@ -32,11 +50,7 @@
   border-style: solid dotted dotted solid;
 }
 
-.markdown-item:hover .icon-delete {
-  display: block;
-}
-
-.icon-delete {
-  display: none;
-  cursor: pointer;
+.container-delete {
+  width: 40px;
+  height: 30px;
 }
