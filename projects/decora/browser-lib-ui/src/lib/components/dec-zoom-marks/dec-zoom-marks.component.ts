@@ -758,6 +758,8 @@ export class DecZoomMarksComponent implements AfterViewChecked {
     this.zoomScale = 1;
     this.zoom(this.zoomScale);
     this.drawMarks();
+
+    this._startX = this._startY = this.canvasEl.width / 2;
   }
 
   public recalculateReferences(tag: Tag): void {
