@@ -25,8 +25,6 @@ export class DecImageWebWorker {
 
   constructor() {
 
-    console.log('DecImageWebWorker');
-
     this.watchWorker();
 
   }
