@@ -1,6 +1,6 @@
 import { DecImagewebWorkerBackEnd } from './image-web-worker-back-end';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { skipWhile, distinctUntilChanged } from 'rxjs/operators';
+import { skipWhile, distinctUntilChanged, first } from 'rxjs/operators';
 import { ErrorImage } from './image.directive.constants';
 import { DecUID } from './../../utilities/uid';
 
@@ -25,6 +25,8 @@ export class DecImageWebWorker {
 
   constructor() {
 
+    console.log('DecImageWebWorker');
+
     this.watchWorker();
 
   }
@@ -40,6 +42,26 @@ export class DecImageWebWorker {
   ensureImage(url): Observable<string> {
 
     return this.getProcessByTypeAndId('testUrl', url, url);
+
+  }
+
+  tryToLoadImage(url) {
+
+    return new Promise((resolve, reject) => {
+
+      const img = new Image();
+
+      img.onload = function () {
+        resolve(url);
+      };
+
+      img.onerror = function () {
+        reject(url);
+      };
+
+      img.src = url;
+
+    });
 
   }
 
@@ -62,6 +84,7 @@ export class DecImageWebWorker {
     return process.pipe(
       skipWhile(v => v === undefined),
       distinctUntilChanged(),
+      first(),
     );
   }
 

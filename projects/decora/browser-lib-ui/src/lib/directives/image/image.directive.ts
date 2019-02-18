@@ -78,19 +78,43 @@ export class DecImageDirective implements AfterViewInit {
     this.containerElementType = this.containerElement.tagName === 'IMG' ? 'IMG' : 'NOT-IMG';
   }
 
+  private isImageCached(imageUrl) {
+
+    const imgEle = document.createElement('img');
+
+    imgEle.src = imageUrl;
+
+    return imgEle.complete || (imgEle.width + imgEle.height) > 0;
+
+  }
+
   private processGivenImage() {
 
     const containerWidth = this.containerElement.offsetWidth;
 
     worker.detectImageUrlFromImageType(this.innerImage, this.thumborize, this.decImageSize, containerWidth, this.fitIn, this.trim).subscribe(imageUrl => {
 
-      if (imageUrl !== 'ErrorImage') {
+      if (imageUrl !== ErrorImage) {
 
-        worker.ensureImage(imageUrl).subscribe(finalImageUrl => {
+        const imagesIsCached = this.isImageCached(imageUrl);
 
-          this.setFinalImageBasedOnContainerType(finalImageUrl);
+        if (imagesIsCached) {
 
-        });
+          this.setFinalImageBasedOnContainerType(imageUrl);
+
+        } else {
+
+          worker.tryToLoadImage(imageUrl).then(finalImageUrl => {
+
+            this.setFinalImageBasedOnContainerType(finalImageUrl);
+
+          }, err => {
+
+            this.setFinalImageBasedOnContainerType(ErrorImage);
+
+          });
+
+        }
 
       } else {
 
