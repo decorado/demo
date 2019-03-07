@@ -147,7 +147,7 @@ All filters an active tab are persisted in the URL so the user can share a view 
 
   // HERE YOU CAN SEE THE SELECTED TAB AND COLLAPSABLE
 
-  selectedCollapsable: {{ list4.selectedCollapsable }}
+  selectedSubfilter: {{ list4.selectedSubfilter }}
 
   selectedTab: {{ list4.selectedTab }}
 ```
@@ -174,7 +174,7 @@ Used to enabling list filtering.
 |rowClick   |event  | -       | Emits an event when one row or card is clicked |
 |searchableProperties| string[] | undefined | Used to define which properties the basic search should look for |
 |selected | any[] | [] | Array of selected rows |
-|selectedCollapsable | FilterGroup | undefined | accessor for selected Collapsable |
+|selectedSubfilter | FilterGroup | undefined | accessor for selected Collapsable |
 |selectedTab | FilterGroup | undefined | accessor for selected Tab |
 
 
@@ -190,6 +190,7 @@ Used to enabling list filtering.
 |showInfoButton| boolean| false| Used to display an Info icon |
 |hasPersistence| boolean| true| Used to control the filter url persistence|
 |loadCountReport| boolean| false| get the count of available reccords for each filter|
+|defaultSublistMode| string| `tabs` or `collapse` for subfilters | specify the list structure based on the filter type `tabs` or `subtabs` or `collapse`|
 
 ### Grid
 Used to enable tabs filtering. With a pre defined filter for each tab.
@@ -300,6 +301,7 @@ export interface DecListFilter {
   hide?: boolean;
   label: string;
   listMode?: DecListType;
+  sublistMode?: SublistMode;
   permissions?: string[];
   uid?: string;
 }

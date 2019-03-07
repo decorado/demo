@@ -5,7 +5,7 @@ import { DecListFilterComponent } from './list-filter/list-filter.component';
 import { Observable, BehaviorSubject, Subscription, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap, switchMap } from 'rxjs/operators';
 import { DecApiService } from './../../services/api/decora-api.service';
-import { DecListFetchMethod, CountReport } from './list.models';
+import { DecListFetchMethod, CountReport, DecSublistMode, DecListType } from './list.models';
 import { FilterData, DecFilter, FilterGroups, FilterGroup } from './../../services/api/decora-api.model';
 import { DecListFilter } from './list.models';
 
@@ -26,19 +26,18 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
   countReport: CountReport;
 
   /*
-  * filterMode
+  * subfilter
   *
   *
   */
-  filterMode: 'tabs' | 'collapse' = 'tabs';
-
+  subfilter: { tab: string, children: DecListFilter[] };
 
   /*
-  * collapsableFilters
+  * sublistMode
   *
   *
   */
-  collapsableFilters: { tab: string, children: DecListFilter[] };
+  sublistMode: DecSublistMode;
 
   /*
    * loading
@@ -71,11 +70,11 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   /*
-   * selectedCollapsable
+   * selectedSubfilter
    *
    *
    */
-  selectedCollapsable;
+  selectedSubfilter;
 
   /*
    * report
@@ -300,7 +299,7 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
    *
    *
    */
-  @Input() listMode;
+  @Input() listMode: DecListType;
 
   /*
    * scrollableContainerClass
@@ -536,15 +535,15 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   /*
-   * searchCollapsable
+   * searchSubfilter
    *
-   * search by collapsable filter
+   * search by subfilter filter
    */
-  searchCollapsable(filter: DecListFilter) {
+  searchSubfilter(filter: DecListFilter) {
 
-    if (this.selectedCollapsable !== filter.uid) {
+    if (this.selectedSubfilter !== filter.uid) {
 
-      this.loadByOpennedCollapse(filter.uid);
+      this.loadByOpennedSubfilter(filter.uid);
 
     }
 
@@ -581,11 +580,11 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   /*
-   * getCollapsableCount
+   * getSubfilterCount
    *
-   * get Collapsable Count from countReport
+   * get subfilter Count from countReport
    */
-  getCollapsableCount(uid) {
+  getSubfilterCount(uid) {
 
     try {
 
@@ -881,14 +880,14 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   /*
-   * loadByOpennedCollapse
+   * loadByOpennedSubfilter
    *
-   * This method is triggered when a collapsable table is open.
+   * This method is triggered when a collapsable table is open or a tab is selected.
    *
    */
-  private loadByOpennedCollapse(filterUid) {
+  private loadByOpennedSubfilter(filterUid) {
 
-    const filter = this.collapsableFilters.children.find(item => item.uid === filterUid);
+    const filter = this.subfilter.children.find(item => item.uid === filterUid);
 
     const filterGroup: FilterGroup = { filters: filter.filters };
 
@@ -896,7 +895,7 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
 
     setTimeout(() => {
 
-      this.selectedCollapsable = filter.uid;
+      this.selectedSubfilter = filter.uid;
 
     }, 0);
 
@@ -1388,13 +1387,14 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   private watchFilter() {
     if (this.filter) {
+
       this.filterSubscription = this.filter.search.subscribe(event => {
 
         const tabChanged = !this.previousSelectedTab || (this.previousSelectedTab !== this.selectedTab);
 
-        const filterModeChanged = this.filterMode !== event.filterMode;
+        const sublistModeChanged = this.sublistMode !== event.sublistMode;
 
-        if (!this.previousSelectedTab || tabChanged) {
+        if (tabChanged) {
 
           this.previousSelectedTab = this.selectedTab;
 
@@ -1402,17 +1402,17 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
 
         }
 
-        if (filterModeChanged) {
+        if (sublistModeChanged) {
 
-          this.filterMode = event.filterMode;
+          this.sublistMode = event.sublistMode;
 
         }
 
-        if (this.filterMode === 'tabs') {
+        if (!this.sublistMode) {
 
-          this.selectedCollapsable = undefined;
+          this.selectedSubfilter = undefined;
 
-          this.collapsableFilters = undefined;
+          this.subfilter = undefined;
 
           this.loadReport(true).then((res) => {
 
@@ -1432,18 +1432,16 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
 
           }
 
-          if (this.selectedCollapsable && !tabChanged) {
+          if (this.selectedSubfilter) {
 
-            this.loadByOpennedCollapse(this.selectedCollapsable);
+            this.loadByOpennedSubfilter(this.selectedSubfilter);
 
           } else {
 
-            this.collapsableFilters = {
+            this.subfilter = {
               tab: this.selectedTab,
               children: event.children ? event.children : []
             };
-
-            this.selectedCollapsable = undefined;
 
           }
 
@@ -1491,12 +1489,16 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
    *
    */
   private watchTabsChange() {
+
     if (this.filter && this.filter.tabsFilterComponent) {
+
       this.selectedTab = this.filter.tabsFilterComponent.selectedTab;
+
       this.tabsChangeSubscription = this.filter.tabsFilterComponent.tabChange.subscribe(tab => {
         this.selectedTab = tab;
         this.detectListMode();
       });
+
     }
   }
 
@@ -1523,9 +1525,9 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
 
           this.columnsSortConfig = columnsSortConfig;
 
-          if (this.collapsableFilters) {
+          if (this.subfilter) {
 
-            this.loadByOpennedCollapse(this.selectedCollapsable);
+            this.loadByOpennedSubfilter(this.selectedSubfilter);
 
           } else {
 

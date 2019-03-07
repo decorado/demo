@@ -84,9 +84,16 @@ This is the tab declaration. Each one needs to have a name set in order to avoid
   | ----------------| --------- | -------- |
   | label           | undefined | The label displayed the tab |
   | name            | undefined | The name of the tabs group to be used when persisting the selected tab in the URL |
+  | color            | undefined | The color of the active tabs underline |
   | total           | undefined | The total to be shown in the side of the label |
   | padding         | true      | Insert a 16px padding at top and bottom of the tab |
   | disabled        | boolean   | Controls if the tab has it selection disabled |
+
+### Events
+
+  | Event           | Type    | Function |
+  | ----------------| ------- | -------- |
+  | active | void  | Emits an event when the tab is selected |
 
 ## Dec Tab Menu
 This part is replicated inside each tab so you need to declare it once and use in each tab

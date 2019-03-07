@@ -32,6 +32,13 @@ export type DecListFetchMethod = (endpoint: string, filter: any) => Observable<D
 export type DecListType = 'table' | 'grid';
 
 /*
+  * SublistMode
+  *
+  * List types
+  */
+export type DecSublistMode = 'tabs' | 'collapse';
+
+/*
   * DecListFetchMethodResponse
   *
   * Response received by fetch DecListFetchMethod
@@ -57,6 +64,7 @@ export class DecListFilter {
   label: string;
   color?: string;
   listMode?: DecListType;
+  sublistMode?: DecSublistMode;
   permissions?: string[];
   uid?: string;
 
@@ -69,6 +77,7 @@ export class DecListFilter {
     this.label = data.label || undefined;
     this.color = data.color || '#6E757A';
     this.listMode = data.listMode || undefined;
+    this.sublistMode = data.sublistMode || undefined;
     this.permissions = data.permissions || undefined;
     this.uid = data.uid || data.label;
   }

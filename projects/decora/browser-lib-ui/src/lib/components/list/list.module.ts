@@ -16,6 +16,7 @@ import { DecListAdvancedFilterModule } from './list-advanced-filter/list-advance
 import { DecSpinnerModule } from './../dec-spinner/dec-spinner.module';
 import { DecListActionsModule } from './list-actions/list-actions.module';
 import { DecLabelModule } from './../dec-label/dec-label.module';
+import { DecTabsModule } from './../tabs/tabs.module';
 
 @NgModule({
   imports: [
@@ -33,6 +34,7 @@ import { DecLabelModule } from './../dec-label/dec-label.module';
     DecListFilterModule,
     DecListTableModule,
     DecSpinnerModule,
+    DecTabsModule
   ],
   declarations: [
     DecListComponent,

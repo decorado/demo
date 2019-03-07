@@ -3,7 +3,7 @@ import { ActivatedRoute, Router, Params } from '@angular/router';
 import { DecListTabsFilterComponent } from './list-tabs-filter/list-tabs-filter.component';
 import { DecListAdvancedFilterComponent } from './../list-advanced-filter/list-advanced-filter.component';
 import { Subscription } from 'rxjs';
-import { DecListPreSearch, DecListFilter } from './../list.models';
+import { DecListPreSearch, DecListFilter, DecSublistMode } from './../list.models';
 import { FilterGroups } from './../../../services/api/decora-api.model';
 
 const DEFAULT_FILTER = [{ label: 'default', filters: [] }];
@@ -20,17 +20,6 @@ export class DecListFilterComponent implements OnInit, OnDestroy {
   countReport;
 
   showSearchInput: boolean;
-
-  set showAdvancedFilter(v: boolean) {
-    if (this._showAdvancedFilter !== v) {
-      this._showAdvancedFilter = !!v;
-      this.setAdvancedFilterState(v);
-    }
-  }
-
-  get showAdvancedFilter() {
-    return this._showAdvancedFilter;
-  }
 
   filterForm: any = {
     search: undefined
@@ -52,9 +41,50 @@ export class DecListFilterComponent implements OnInit, OnDestroy {
 
   isItFirstLoad = true;
 
-  filterMode: 'tabs' | 'collapse';
-
   childrenFilters;
+
+  sublistMode: DecSublistMode;
+
+  @Input() defaultSublistMode: DecSublistMode;
+
+  get showAdvancedFilter() { return this._showAdvancedFilter; }
+  set showAdvancedFilter(v: boolean) {
+    if (this._showAdvancedFilter !== v) {
+      this._showAdvancedFilter = !!v;
+      this.setAdvancedFilterState(v);
+    }
+  }
+
+  @Input() preSearch: DecListPreSearch;
+
+  @Input() showInfoButton;
+
+  @Input() hasPersistence = true;
+
+  @Input()
+  get filters(): DecListFilter[] { return this._filters; }
+  set filters(v: DecListFilter[]) {
+    v = (v && v.length > 0) ? v : DEFAULT_FILTER;
+    if (this._filters !== v) {
+      this._filters = v.map(filter => new DecListFilter(filter));
+    }
+  }
+
+  @Input()
+  get loadCountReport(): boolean { return this._loadCountReport; }
+  set loadCountReport(v: boolean) {
+    if (v !== false) {
+      this._loadCountReport = true;
+    }
+  }
+
+  @Output() search: EventEmitter<any> = new EventEmitter<any>();
+
+  @ViewChild('inputSearch') inputSearch;
+
+  @ViewChild(DecListTabsFilterComponent) tabsFilterComponent: DecListTabsFilterComponent;
+
+  @ContentChild(DecListAdvancedFilterComponent) advancedFilterComponent: DecListAdvancedFilterComponent;
 
   /*
    * clickableContainerClass
@@ -76,48 +106,6 @@ export class DecListFilterComponent implements OnInit, OnDestroy {
   private _loadCountReport: boolean;
 
   private _showAdvancedFilter: boolean;
-
-  @Input() preSearch: DecListPreSearch;
-
-  @Input() showInfoButton;
-
-  @Input() hasPersistence = true;
-
-  @Input()
-  set filters(v: DecListFilter[]) {
-
-    v = (v && v.length > 0) ? v : DEFAULT_FILTER;
-
-    if (this._filters !== v) {
-
-      this._filters = v.map(filter => new DecListFilter(filter));
-
-    }
-
-  }
-
-  get loadCountReport(): boolean {
-    return this._loadCountReport;
-  }
-
-  @Input()
-  set loadCountReport(v: boolean) {
-    if (v !== false) {
-      this._loadCountReport = true;
-    }
-  }
-
-  get filters(): DecListFilter[] {
-    return this._filters;
-  }
-
-  @Output() search: EventEmitter<any> = new EventEmitter<any>();
-
-  @ViewChild('inputSearch') inputSearch;
-
-  @ViewChild(DecListTabsFilterComponent) tabsFilterComponent: DecListTabsFilterComponent;
-
-  @ContentChild(DecListAdvancedFilterComponent) advancedFilterComponent: DecListAdvancedFilterComponent;
 
   constructor(
     private route: ActivatedRoute,
@@ -175,7 +163,6 @@ export class DecListFilterComponent implements OnInit, OnDestroy {
           newDecFilterGroup.filters.push(filter);
 
         }
-
 
       });
 
@@ -321,21 +308,18 @@ export class DecListFilterComponent implements OnInit, OnDestroy {
     this.emitCurrentDecFilterGroups(recount)
       .then(() => {
 
-        if (!this.hasPersistence) {
+        if (this.hasPersistence) {
 
-          return;
+          this.refreshFilterInUrlQuery()
+            .then(() => {
+
+              this.closeFilters();
+
+              this.clearFilterForm();
+
+            });
 
         }
-
-        this.refreshFilterInUrlQuery()
-          .then(() => {
-
-            this.closeFilters();
-
-            this.clearFilterForm();
-
-          });
-
 
       });
 
@@ -392,18 +376,20 @@ export class DecListFilterComponent implements OnInit, OnDestroy {
   }
 
   private watchTabsFilter() {
+
     if (this.tabsFilterComponent) {
+
       this.tabsFilterSubscription = this.tabsFilterComponent.search.subscribe(filterEvent => {
 
         if (filterEvent.children) {
 
-          this.filterMode = 'collapse';
+          this.sublistMode = filterEvent.sublistMode || this.defaultSublistMode; // defaults to collapse
 
           this.childrenFilters = filterEvent.children;
 
         } else {
 
-          this.filterMode = 'tabs';
+          this.sublistMode = undefined;
 
           this.childrenFilters = undefined;
 
@@ -416,7 +402,9 @@ export class DecListFilterComponent implements OnInit, OnDestroy {
         this.isItFirstLoad = false;
 
       });
+
     }
+
   }
 
   private stopWatchingTabsFilter() {
@@ -485,7 +473,7 @@ export class DecListFilterComponent implements OnInit, OnDestroy {
       this.search.emit({
         filterGroups: filterGroups,
         recount: recount,
-        filterMode: this.filterMode,
+        sublistMode: this.sublistMode,
         children: this.childrenFilters,
       });
 
@@ -563,44 +551,43 @@ export class DecListFilterComponent implements OnInit, OnDestroy {
    */
   private watchUrlFilter() {
 
-    if (!this.hasPersistence) {
+    if (this.hasPersistence) {
 
-      return;
+      this.watchUrlFilterSubscription = this.route.queryParams
+        .subscribe((params) => {
 
-    }
+          const interval = window.setInterval(() => {
 
-    this.watchUrlFilterSubscription = this.route.queryParams
-      .subscribe((params) => {
+            if (this.name) {
 
-        const interval = window.setInterval(() => {
+              const base64Filter = params[this.componentFilterName()];
 
-          if (this.name) {
+              if (base64Filter) {
 
-            const base64Filter = params[this.componentFilterName()];
+                if (base64Filter !== this.currentUrlEncodedFilter) {
 
-            if (base64Filter) {
+                  const filter = this.getJsonFromBase64Filter(base64Filter);
 
-              if (base64Filter !== this.currentUrlEncodedFilter) {
+                  this.innerDecFilterGroups = filter;
 
-                const filter = this.getJsonFromBase64Filter(base64Filter);
+                  this.mountCurrentDecFilterGroups();
 
-                this.innerDecFilterGroups = filter;
+                  this.onSearch();
 
-                this.mountCurrentDecFilterGroups();
-
-                this.onSearch();
+                }
 
               }
 
+              window.clearInterval(interval);
+
             }
 
-            window.clearInterval(interval);
+          }, 10);
 
-          }
+        });
 
-        }, 10);
+    }
 
-      });
   }
 
   /*

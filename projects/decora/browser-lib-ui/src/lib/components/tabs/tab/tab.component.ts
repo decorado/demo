@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ContentChild, Input, TemplateRef } from '@angular/core';
+import { AfterViewInit, Component, ContentChild, Input, TemplateRef, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'dec-tab',
@@ -18,6 +18,8 @@ export class DecTabComponent implements AfterViewInit {
   @ContentChild(TemplateRef) content: TemplateRef<DecTabComponent>;
 
   @Input() disabled: boolean;
+
+  @Output() select = new EventEmitter();
 
   constructor() {}
 

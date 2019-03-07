@@ -31,6 +31,8 @@ export class DecTabsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input() name: string;
 
+  @Input() color: string;
+
   @Input() padding = true;
 
   @Input()
@@ -182,6 +184,7 @@ export class DecTabsComponent implements OnInit, AfterViewInit, OnDestroy {
       this._activeTabObject = this.tabs.toArray().filter(tab => tab.name === tabName)[0];
       this._activeTabIndex = this.tabs.toArray().indexOf(this._activeTabObject);
       this.activeTabChange.emit(tabName);
+      this._activeTabObject.select.emit();
     }
   }
 
