@@ -278,6 +278,7 @@ export interface DecListFilterData {
 export interface DecListFilter {
   property: string;
   value: string;
+  type: 'EQUAL' | ' EXISTS' | 'BETWEEN' = 'EQUAL';
 }
 
 /*

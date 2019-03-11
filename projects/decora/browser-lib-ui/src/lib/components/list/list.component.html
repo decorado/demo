@@ -21,7 +21,7 @@
 
   <div *ngIf="report || sublistMode">
     <ng-container [ngSwitch]="sublistMode">
-      <ng-container *ngSwitchCase="undefined" [ngTemplateOutlet]="tabsTemplate"></ng-container>
+      <ng-container *ngSwitchCase="undefined" [ngTemplateOutlet]="listTemplate"></ng-container>
       <ng-container *ngSwitchCase="'tabs'" [ngTemplateOutlet]="subtabsTemplate"></ng-container>
       <ng-container *ngSwitchCase="'collapse'" [ngTemplateOutlet]="collapseTemplate"></ng-container>
     </ng-container>
@@ -34,7 +34,7 @@
 </ng-template>
 
 <!-- TABLE TEMPLATE -->
-<ng-template #listTemplate>
+<ng-template #tableTemplate>
   <ng-content select="dec-list-table"></ng-content>
 </ng-template>
 
@@ -52,9 +52,9 @@
 </ng-template>
 
 <!-- SIMPLE TABS TEMPLATE -->
-<ng-template #tabsTemplate>
+<ng-template #listTemplate>
   <div fxLayout="column" fxLayoutGap="16px">
-    <div *ngIf="listMode == 'grid' then gridTemplate else listTemplate"></div>
+    <div *ngIf="listMode === 'grid' then gridTemplate else tableTemplate"></div>
     <!-- FOOTER CONTENT -->
     <div fxFlex>
       <div *ngIf="showFooter && !loading then footerTemplate"></div>
@@ -72,11 +72,11 @@
 
 <!-- SUBTABS TEMPLATE -->
 <ng-template #subtabsTemplate>
-  <dec-tabs [name]="name + '-subfilter'" color="accent">
+  <dec-tabs [name]="name + '-subfilter'" color="accent" [destroyOnBlur]="true">
     <ng-container *ngFor="let filter of subfilter.children">
       <dec-tab (select)="searchSubfilter(filter)" [name]="filter.uid" label="{{ 'label.' + filter.label | translate }}" [total]="getSubfilterCount(filter.uid)">
         <ng-template>
-          <ng-template [ngTemplateOutlet]="tabsTemplate"></ng-template>
+          <ng-template [ngTemplateOutlet]="listTemplate"></ng-template>
         </ng-template>
       </dec-tab>
     </ng-container>
@@ -98,7 +98,7 @@
           </div>
         </mat-expansion-panel-header>
         <div *ngIf="selectedSubfilter === filter.uid">
-          <ng-container [ngTemplateOutlet]="tabsTemplate"></ng-container>
+          <ng-container [ngTemplateOutlet]="listTemplate"></ng-container>
         </div>
       </mat-expansion-panel>
     </ng-container>

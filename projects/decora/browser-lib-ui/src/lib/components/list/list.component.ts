@@ -1436,14 +1436,12 @@ export class DecListComponent implements OnInit, OnDestroy, AfterViewInit {
 
             this.loadByOpennedSubfilter(this.selectedSubfilter);
 
-          } else {
-
-            this.subfilter = {
-              tab: this.selectedTab,
-              children: event.children ? event.children : []
-            };
-
           }
+
+          this.subfilter = {
+            tab: this.selectedTab,
+            children: event.children ? event.children : []
+          };
 
         }
 

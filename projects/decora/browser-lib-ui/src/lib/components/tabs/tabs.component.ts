@@ -69,6 +69,8 @@ export class DecTabsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private _tabs: QueryList<DecTabComponent>;
 
+  private urlTab: string;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -100,21 +102,14 @@ export class DecTabsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   shouldTabBeDisplayed(tab) {
-
     const isSelected = this.activeTab === tab.name;
-
     const wasAlreadyOpenned = this.activatedTabs[tab.name];
-
     return isSelected || (!this.destroyOnBlur && wasAlreadyOpenned);
-
   }
 
   onChangeTab($event) {
-
     const activeTabObject = this.tabs.toArray()[$event.index];
-
     this.selectTab(activeTabObject.name);
-
   }
 
   parseTotal(total) {
@@ -160,27 +155,19 @@ export class DecTabsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private persistTab(tab) {
-
     if (this.persist) {
-
       const queryParams: Params = Object.assign({}, this.route.snapshot.queryParams);
-
       queryParams[this.componentTabName()] = tab;
-
       this.router.navigate([], { relativeTo: this.route, queryParams: queryParams, replaceUrl: true });
-
     } else {
-
       this.selectTab(tab);
-
     }
-
   }
 
   private selectTab = (tabName) => {
-    this.activeTab = tabName;
-    this.activatedTabs[tabName] = true;
-    if (this.tabs) {
+    if (this.activeTab !== tabName && this.tabs) {
+      this.activeTab = tabName;
+      this.activatedTabs[tabName] = true;
       this._activeTabObject = this.tabs.toArray().filter(tab => tab.name === tabName)[0];
       this._activeTabIndex = this.tabs.toArray().indexOf(this._activeTabObject);
       this.activeTabChange.emit(tabName);
@@ -199,8 +186,8 @@ export class DecTabsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.queryParamsSubscription = this.route.queryParams
     .subscribe((params) => {
       if (this.persist) {
-        const tab: string = params[this.componentTabName()];
-        this.selectTab(tab);
+        this.urlTab = params[this.componentTabName()];
+        this.selectTab(this.urlTab);
       }
     });
   }
@@ -212,10 +199,11 @@ export class DecTabsComponent implements OnInit, AfterViewInit, OnDestroy {
   private setSelectedTabBasedOnActiveTab() {
     const tabsList = this.tabs.toArray();
     if (tabsList) {
-      if (this.activeTab) {
-        const activeTabExist = tabsList.find(tab => tab.name === this.activeTab);
+      const currentTab = this.activeTab || this.urlTab;
+      if (currentTab) {
+        const activeTabExist = tabsList.find(tab => tab.name === currentTab);
         if (activeTabExist) {
-          this.selectTab(this.activeTab);
+          this.selectTab(currentTab);
         } else {
           this.selectFirstTab();
         }

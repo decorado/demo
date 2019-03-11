@@ -93,10 +93,12 @@ export interface SerializedDecFilter {
 export class Filter {
   property: string;
   value: number | boolean | string | number[] | boolean[] | string[];
+  type?: 'EQUAL' | ' EXISTS' | 'BETWEEN';
 
   constructor(data: any = {}) {
     this.property = data.property;
     this.value = Array.isArray(data.property) ? data.property : [data.property];
+    this.type = data.type || 'EQUAL';
   }
 }
 
