@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   { path: 'classes', loadChildren: './classes/classes.module#ClassesModule' },
+  { path: 'coding-assessment-evaluation', loadChildren: './coding-assessment-evaluation/coding-assessment-evaluation.module#CodingAssessmentEvaluationModule' },
   { path: 'component-styles', loadChildren: './component-styles/component-styles.module#ComponentStylesModule' },
   { path: 'presentation-components', loadChildren: './presentation-components/presentation-components.module#PresentationComponentsModule' },
   { path: 'forms', loadChildren: './forms/forms.module#FormsBestPracticesModule' },

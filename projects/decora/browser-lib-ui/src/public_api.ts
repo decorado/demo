@@ -270,6 +270,10 @@ export * from './lib/pipes/category/category-pipe.module';
 // SAFE
 export * from './lib/pipes/safe/safe.module';
 
+// TIMEAGO
+export * from './lib/pipes/time-ago/time-ago.module';
+
+
 /*********************************************************
 *
 * SERVICES
