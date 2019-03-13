@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DEC_COLOR_BY_STATUS } from './dec-colors.map';
+import { DEC_COLOR_BY_STATUS } from './../../enums/dec-status-colors.map';
 
 @Injectable()
 export class DecColorService {

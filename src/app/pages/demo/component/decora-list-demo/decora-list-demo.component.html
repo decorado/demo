@@ -23,8 +23,18 @@
     </mat-expansion-panel>
 
     <mat-expansion-panel>
-      <mat-expansion-panel-header>Using sub filter (accordion)</mat-expansion-panel-header>
+      <mat-expansion-panel-header>Using sub filter (subtabs)</mat-expansion-panel-header>
       <ng-container [ngTemplateOutlet]="example4"></ng-container>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>Using sub filter (accordion)</mat-expansion-panel-header>
+      <ng-container [ngTemplateOutlet]="example5"></ng-container>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>Using sub filter (accordion) by default and tab in specific filter</mat-expansion-panel-header>
+      <ng-container [ngTemplateOutlet]="example6"></ng-container>
     </mat-expansion-panel>
   </mat-accordion>
 
@@ -153,13 +163,98 @@
 
 <ng-template #example4>
 
-  <div>selectedCollapsable: {{ list4.selectedCollapsable }}</div>
+  <div>selectedSubfilter: {{ list4.selectedSubfilter }}</div>
 
   <div>selectedTab: {{ list4.selectedTab }}</div>
 
-  <dec-list #list4 name="list-test-subfilter" endpoint="report/accounts" [searchableProperties]="['name', '_id', 'email']">
+  <dec-list #list4 name="list-test-subfilter-tabs" endpoint="report/accounts"
+    [searchableProperties]="['name', '_id', 'email']">
 
-    <dec-list-filter [filters]="filtersWithSubfilters" loadCountReport>
+    <dec-list-filter [filters]="filtersWithTabsSubfilters" loadCountReport defaultSublistMode="tabs">
+
+      <dec-list-advanced-filter>
+
+        <ng-template let-form="form">
+
+          <input type="text" placeholder="Input filter">
+
+          <dec-autocomplete-company></dec-autocomplete-company>
+
+        </ng-template>
+
+      </dec-list-advanced-filter>
+
+    </dec-list-filter>
+
+    <dec-list-grid>
+      <ng-template let-row="row">
+        <div class="test-grid-wrapper">
+          <p>teste grid</p>
+          {{ row.id }}
+        </div>
+      </ng-template>
+    </dec-list-grid>
+
+    <dec-list-table>
+      <dec-list-table-column title="Name" prop="name"></dec-list-table-column>
+      <dec-list-table-column title="Email" prop="email"></dec-list-table-column>
+    </dec-list-table>
+
+  </dec-list>
+</ng-template>
+
+<ng-template #example5>
+
+  <div>selectedSubfilter: {{ list4.selectedSubfilter }}</div>
+
+  <div>selectedTab: {{ list4.selectedTab }}</div>
+
+  <dec-list #list4 name="list-test-subfilter-collapse" endpoint="report/accounts" [searchableProperties]="['name', '_id', 'email']">
+
+    <dec-list-filter [filters]="filtersWithCollapseSubfilters" loadCountReport defaultSublistMode="collapse">
+
+      <dec-list-advanced-filter>
+
+        <ng-template let-form="form">
+
+          <input type="text" placeholder="Input filter">
+
+          <dec-autocomplete-company></dec-autocomplete-company>
+
+        </ng-template>
+
+      </dec-list-advanced-filter>
+
+    </dec-list-filter>
+
+    <dec-list-grid>
+      <ng-template let-row="row">
+        <div class="test-grid-wrapper">
+          <p>teste grid</p>
+          {{ row.id }}
+        </div>
+      </ng-template>
+    </dec-list-grid>
+
+    <dec-list-table>
+      <dec-list-table-column title="Name" prop="name"></dec-list-table-column>
+      <dec-list-table-column title="Email" prop="email"></dec-list-table-column>
+    </dec-list-table>
+
+  </dec-list>
+</ng-template>
+
+<ng-template #example6>
+
+  <div>selectedSubfilter: {{ list4.selectedSubfilter }}</div>
+
+  <div>selectedTab: {{ list4.selectedTab }}</div>
+
+  <dec-list #list4 name="list-test-subfilter-collapse-tabs" endpoint="report/accounts"
+    [searchableProperties]="['name', '_id', 'email']">
+
+    <dec-list-filter [filters]="filtersWithCollapseAsDefaultAndTabForSpecificFilter" loadCountReport
+      defaultSublistMode="collapse">
 
       <dec-list-advanced-filter>
 

@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { DecListFetchMethod, DecListFilter } from './../../list.models';
+import { DecListFetchMethod, DecListFilter, DecSublistMode } from './../../list.models';
+import { map, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'dec-list-tabs-filter',
@@ -17,6 +18,8 @@ export class DecListTabsFilterComponent implements OnDestroy {
   selectedTabUid: string;
 
   service: any;
+
+  @Input() sublistMode: DecSublistMode;
 
   @Input() countReport: any;
 
@@ -102,6 +105,7 @@ export class DecListTabsFilterComponent implements OnDestroy {
       const event = {
         filters: tab.filters,
         children: tab.children,
+        sublistMode: tab.sublistMode,
         recount: recount,
       };
 
@@ -116,9 +120,19 @@ export class DecListTabsFilterComponent implements OnDestroy {
   }
 
   private setTabInUrlQuery(tab) {
+
     const queryParams: Params = Object.assign({}, this.route.snapshot.queryParams);
-    queryParams[this.componentTabName()] = tab;
-    this.router.navigate(['.'], { relativeTo: this.route, queryParams: queryParams, replaceUrl: true });
+
+    const currentTab = queryParams[this.componentTabName()];
+
+    if (currentTab !== tab) {
+
+      queryParams[this.componentTabName()] = tab;
+
+      this.router.navigate(['.'], { relativeTo: this.route, queryParams: queryParams, replaceUrl: true });
+
+    }
+
   }
 
   private watchTabInUrlQuery() {
@@ -126,22 +140,57 @@ export class DecListTabsFilterComponent implements OnDestroy {
     this.detectDefaultTab();
 
     this.wathUrlSubscription = this.route.queryParams
-      .subscribe((params) => {
+      .pipe(
+        map(params => params[this.componentTabName()] || this.defaultTab),
+        distinctUntilChanged()
+      )
+      .subscribe((tabUid) => {
 
-        const tab = params[this.componentTabName()] || this.defaultTab;
+        const tab = this.getTabByUid(tabUid);
 
+        if (tab) {
 
-        if (tab !== this.selectedTabUid) {
+          this.selectTabByUid(tabUid);
 
-          const selectedTab = this.filters.find(filter => filter.uid === tab);
+        } else {
 
-          this.onSearch(selectedTab);
-
-          this.tabChange.emit(tab);
+          this.selectFirstTab(); // fallback for invalid tabs
 
         }
 
       });
+
+  }
+
+  private selectTabByUid(tabUid, ) {
+
+    if (tabUid !== this.selectedTabUid) {
+
+      const selectedTab = this.filters.find(filter => filter.uid === tabUid);
+
+      this.onSearch(selectedTab);
+
+      this.tabChange.emit(tabUid);
+
+    }
+
+  }
+
+  private selectFirstTab() {
+
+    if (this.filters) {
+
+      const firstTabUid = this.filters[0].uid;
+
+      this.setTabInUrlQuery(firstTabUid);
+
+    }
+
+  }
+
+  private getTabByUid(uid) {
+
+    return this.filters.find(filter => filter.uid === uid);
 
   }
 

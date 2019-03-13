@@ -15,12 +15,24 @@
   border-width: 58px 58px 0px 0px;
   text-indent: 1px;
   line-height: 1px;
-  color: #FFF;
-  border-color: #FF8F00 transparent transparent transparent;
+  color: #fff;
+  border-color: #ff8f00 transparent transparent transparent;
+
+  .icon-position {
+    position: absolute;
+    top: -56px;
+    left: 3px;
+  }
+
+  .icon-modeling {
+    font-size: 16px;
+    margin-left: 4px;
+    margin-top: 4px;
+  }
 }
 
 .modeling-fix {
-  border-color: #FF8F00 transparent transparent transparent;
+  border-color: #ff8f00 transparent transparent transparent;
 }
 
 .texture-color-swap {
@@ -29,12 +41,6 @@
 
 .full-model {
   border-color: #263238 transparent transparent transparent;
-}
-
-.icon-position {
-  position: absolute;
-  top: -56px;
-  left: 3px;
 }
 
 .text-header {
@@ -47,10 +53,4 @@
 
 .font-text {
   font-size: 16px;
-}
-
-.icon-modeling {
-  font-size: 16px;
-  margin-left: 4px;
-  margin-top: 4px;
 }

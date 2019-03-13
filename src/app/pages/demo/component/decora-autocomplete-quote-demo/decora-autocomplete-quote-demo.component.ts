@@ -1,23 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { NgModel } from '@angular/forms';
 
 @Component({
   selector: 'app-decora-autocomplete-quote-demo',
   templateUrl: './decora-autocomplete-quote-demo.component.html',
   styleUrls: ['./decora-autocomplete-quote-demo.component.css']
 })
-export class DecoraAutocompleteQuoteDemoComponent implements OnInit {
+export class DecoraAutocompleteQuoteDemoComponent {
 
   projectId = 1136;
 
   companyId = 1;
 
-  quote: number;
+  quote = 637;
 
   quotes = [];
 
   constructor() { }
 
-  ngOnInit() {
+  setTouched(ngModelEl: NgModel) {
+    ngModelEl.control.markAsTouched();
   }
 
 }

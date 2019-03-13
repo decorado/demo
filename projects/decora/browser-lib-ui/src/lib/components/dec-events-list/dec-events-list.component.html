@@ -1,8 +1,8 @@
 <div fxLayout="column">
   <div fxFlex *ngFor="let event of events">
     <div fxLayout="row" fxLayoutGap="8px">
-      <div fxFlex="72px" class="text-right">{{ event.label }}</div>
-      <div fxFlex="80px">
+      <div fxFlex="80px" class="text-right event-text">{{ event.label }}</div>
+      <div class="event-text">
         <strong>
           <ng-container [ngTemplateOutlet]="event.contentTemplate"></ng-container>
         </strong>

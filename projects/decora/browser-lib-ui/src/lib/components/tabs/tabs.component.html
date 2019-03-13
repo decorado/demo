@@ -1,18 +1,25 @@
 <div *ngIf="!hidden">
 
   <!-- TABS -->
-  <mat-tab-group [selectedIndex]="activeTabIndex" (focusChange)="onChangeTab($event)" [dynamicHeight]="true">
+  <mat-tab-group [selectedIndex]="activeTabIndex" (selectedTabChange)="onChangeTab($event)" [dynamicHeight]="true" [color]="color">
 
     <!-- TAB -->
     <mat-tab *ngFor="let tab of tabs;" [disabled]="tab.disabled">
 
       <!-- TAB LABEL -->
       <ng-template mat-tab-label>
+
         {{ tab.label }}
+
         <span *ngIf="tab.feedback" class="badge badge-pill badge-small dec-color-warn">
           <mat-icon>info</mat-icon>
         </span>
-        <span class="badge badge-pill badge-small" *ngIf="tab.total >= 0">{{ parseTotal(tab.total) }}</span>
+
+        <span class="badge badge-pill badge-small" *ngIf="tab.total >= 0">
+          &nbsp;
+          ({{ parseTotal(tab.total) }})
+        </span>
+
       </ng-template>
 
       <!-- TAB CONTENT WRAPPER -->

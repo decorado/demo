@@ -5,10 +5,12 @@
   [labelFn]="labelFn"
   [name]="name"
   [multi]="multi"
+  [notFoundMessage]="notFoundMessage"
   [repeat]="repeat"
   [placeholder]="placeholder"
   [required]="required"
   [valueAttr]="valueAttr"
+  [touched]="touched"
   [(ngModel)]="value"
   (optionSelected)="optionSelected.emit($event)"
   (blur)="blur.emit($event)"></dec-autocomplete>

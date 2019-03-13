@@ -22,6 +22,18 @@ export class DecRenderCommentService {
     return this.decApi.get(this.RENDERFEEDBACKTREE_ENDPOINT, queryParams).toPromise();
   }
 
+  public getRenderfeedbacktreeOnlyEnglish(version: number): Promise<any> {
+    const queryParams = {
+      language: 'en',
+    };
+
+    if (version) {
+      queryParams['version'] = version.toString();
+    }
+
+    return this.decApi.get(this.RENDERFEEDBACKTREE_ENDPOINT, queryParams).toPromise();
+  }
+
   public getRenderDescriptionsByCode(comments: Tag[]): Tag[] {
     const groupedComments = comments.reduce((r, v, i, a, k = v.version) => ((r[k] || (r[k] = [])).push(v), r), {});
     Object.keys(groupedComments).forEach(async key => {

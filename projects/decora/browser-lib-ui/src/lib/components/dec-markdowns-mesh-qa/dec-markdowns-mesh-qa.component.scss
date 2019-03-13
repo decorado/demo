@@ -1,3 +1,10 @@
+@import './../../../../bootstrap/constants/_colors';
+
+:host {
+  --tag-size: 30px;
+  --tag-line-height: calc(var(--tag-size) - 3px);
+}
+
 .markdowns-mesh {
   display: flex;
   flex-direction: column;
@@ -5,30 +12,25 @@
 }
 
 .tag-item {
-  display: flex;
-  width: 100%;
-  align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: 16px;
 }
 
 .tag-point {
-  min-width: 24px;
-  min-height: 24px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  text-align: center;
+  color: $dec-color-red;
   font-weight: 500;
-  color: #f44336;
-  user-select: none;
-  cursor: pointer;
-  margin-right: 8px;
-  border-width: 1px;
-  border-color: #f44336;
+  height: var(--tag-size);
+  line-height: var(--tag-line-height);
+  border-color: $dec-color-red;
+  border-width: 2px;
   border-style: solid dotted dotted solid;
 }
 
-.truncate {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.text-markdown {
+  font-size: 13px;
+  line-height: var(--tag-line-height);
+  color: #656d74;
+  min-width: 496px;
+  text-align: justify;
+  justify-content: left;
 }

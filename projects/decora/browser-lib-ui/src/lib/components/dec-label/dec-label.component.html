@@ -1,3 +1,3 @@
-<div [ngStyle]="{'background-color': colorHex}" [ngClass]="colorClass" [class.stretched]="stretched" decContrastFontWithBg>
+<div [ngStyle]="{'background-color': colorHex, 'border': borderColor ? '1px solid '+borderColor : ''}" [ngClass]="colorClass" [class.stretched]="stretched" decContrastFontWithBg>
   <ng-content></ng-content>
 </div>

@@ -1,6 +1,6 @@
 <div class="markdowns-mesh">
-  <div *ngFor="let tag of tags" class="tag-item">
-    <div class="tag-point">{{tag.reference}}</div>
-    <span class="truncate">{{tag.errorCode ? tag.errorCode + ' - ' : '' }}{{tag.description}}</span>
+  <div fxLayout="row" fxLayoutGap="16px" *ngFor="let tag of tags" class="tag-item">
+    <span class="tag-point" fxFlex="30px">{{tag.reference}}</span>
+    <span class="text-markdown">{{tag.errorCode ? tag.errorCode + ' - ' : '' }}{{tag.description}}</span>
   </div>
 </div>

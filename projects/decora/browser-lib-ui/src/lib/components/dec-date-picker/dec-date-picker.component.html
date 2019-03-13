@@ -1,6 +1,7 @@
 <mat-form-field>
   <input matInput
   #dueDateInput
+  #ngModelElement="ngModel"
   [matDatepicker]="decPicker"
   [placeholder]="placeholder"
   [(ngModel)]="dateValue"

@@ -37,6 +37,7 @@ export interface CameraAngle {
   Position: MeshPoint;
   Rotation: MeshPoint;
   Orthographic: boolean;
+  OrthographicSize?: number;
 }
 
 export interface MeshPoint {

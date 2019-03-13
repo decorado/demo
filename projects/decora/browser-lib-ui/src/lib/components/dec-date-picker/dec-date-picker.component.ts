@@ -1,5 +1,6 @@
-import { Component, Input, forwardRef } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { Component, Input, forwardRef, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor, NgModel } from '@angular/forms';
+import { timer, Subscription } from 'rxjs';
 
 const noop = () => { };
 
@@ -15,31 +16,17 @@ const DATE_PICKER_CONTROL_VALUE_ACCESSOR = {
   styleUrls: ['./dec-date-picker.component.scss'],
   providers: [DATE_PICKER_CONTROL_VALUE_ACCESSOR]
 })
-export class DecDatePickerComponent implements ControlValueAccessor {
+export class DecDatePickerComponent implements ControlValueAccessor, OnDestroy {
 
   @Input() placeholder = 'Date';
 
   @Input() mode: 'date' | 'timestamp' = 'date';
 
-  set dateValue(v: Date) {
+  @ViewChild(NgModel) ngModelElement: NgModel;
 
-    if (this.innerDateValue !== v) {
+  private classWatcher: Subscription;
 
-      this.innerDateValue = v;
-
-      this.innerValue = this.mode === 'date' ? v : v.getTime();
-
-      this.onChangeCallback(this.innerValue);
-
-    }
-
-  }
-
-  get dateValue(): Date {
-
-    return this.innerDateValue;
-
-  }
+  private classesString: string;
 
   private innerDateValue: Date;
 
@@ -49,7 +36,15 @@ export class DecDatePickerComponent implements ControlValueAccessor {
 
   private onChangeCallback: (_: any) => void = noop;
 
-  constructor() { }
+  constructor(
+    private elementRef: ElementRef<HTMLElement>,
+  ) {
+    this.subscribeToClassChange();
+  }
+
+  ngOnDestroy() {
+    this.unsubscribeToClassChange();
+  }
 
   writeValue(value: Date | number): void {
 
@@ -79,6 +74,15 @@ export class DecDatePickerComponent implements ControlValueAccessor {
 
   }
 
+  get dateValue(): Date { return this.innerDateValue; }
+  set dateValue(v: Date) {
+    if (this.innerDateValue !== v) {
+      this.innerDateValue = v;
+      this.innerValue = this.mode === 'date' ? v : v.getTime();
+      this.onChangeCallback(this.innerValue);
+    }
+  }
+
   private detectModeBasedOnInputType(value) {
 
     if (value) {
@@ -97,6 +101,27 @@ export class DecDatePickerComponent implements ControlValueAccessor {
 
     }
 
+  }
+
+  private subscribeToClassChange() {
+    this.classWatcher = timer(100, 250).subscribe(this.detectClassChanges);
+  }
+
+  private detectClassChanges = () => {
+    const classesString = this.elementRef.nativeElement.classList.value;
+    if (this.classesString !== classesString) {
+      this.classesString = classesString;
+      const hasTouchedClass = classesString.search('ng-touched') >= 0;
+      if (hasTouchedClass) {
+        this.ngModelElement.control.markAsTouched();
+      } else {
+        this.ngModelElement.control.markAsUntouched();
+      }
+    }
+  }
+
+  private unsubscribeToClassChange() {
+    this.classWatcher.unsubscribe();
   }
 
 }

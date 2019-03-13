@@ -39,7 +39,7 @@
 
         <!--Refresh search-->
         <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
-          <a class="btn-info margin-icon" (click)="onSearch()">
+          <a class="btn-info" (click)="onSearch()">
             <mat-icon>refresh</mat-icon>
           </a>
         </div>
@@ -92,5 +92,5 @@
     (remove)="removeDecFilterGroup($event)"
     (edit)="editDecFilterGroup($event)"></dec-list-active-filter-resume>
 
-  <dec-list-tabs-filter [filters]="filters" [countReport]="countReport"></dec-list-tabs-filter>
+  <dec-list-tabs-filter [filters]="filters" [countReport]="countReport" [sublistMode]="sublistMode"></dec-list-tabs-filter>
 </div>

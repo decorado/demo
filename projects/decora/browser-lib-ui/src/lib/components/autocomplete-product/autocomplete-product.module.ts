@@ -4,13 +4,17 @@ import { CommonModule } from '@angular/common';
 import { DecAutocompleteModule } from './../autocomplete/autocomplete.module';
 import { DecAutocompleteProductComponent } from './autocomplete-product.component';
 import { MatInputModule } from '@angular/material';
+import { DecImageModule } from './../../directives/image/image.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     DecAutocompleteModule,
-    MatInputModule
+    MatInputModule,
+    DecImageModule,
+    FlexLayoutModule,
   ],
   declarations: [
     DecAutocompleteProductComponent

@@ -1,7 +1,5 @@
 import { DecRenderCommentService } from './../dec-render-comment/dec-render-comment.service';
 import { Component, Input, ViewChild, Output, EventEmitter } from '@angular/core';
-import { NguCarouselStore } from '@ngu/carousel';
-import { CarouselZoomConfig } from './../gallery/carousel-config';
 import { DecZoomMarksComponent } from './../dec-zoom-marks/dec-zoom-marks.component';
 import { DecMeshQaComponent } from '../dec-mesh-qa/dec-mesh-qa.component';
 
@@ -12,27 +10,39 @@ import { DecMeshQaComponent } from '../dec-mesh-qa/dec-mesh-qa.component';
 })
 export class DecZoomMarksGalleryComponent {
 
-  carouselConfig = CarouselZoomConfig;
+  meshQaSelected = false;
 
-  private _qualityAssurance: any;
-  public get qualityAssurance(): any {
-    return this._qualityAssurance;
-  }
+  imageIndex = 0;
+
+  markedObj: any;
+
+  @Input() jobType;
+
+  @Input() isProfessional: boolean;
+
+  @Input() qaModeActive: boolean;
+
+  @Input() glbReadonly: boolean;
+
+  isThereAnyMeshTag: boolean;
+
   @Input()
-  public set qualityAssurance(v: any) {
+  set qualityAssurance(v: any) {
     this._qualityAssurance = v;
   }
 
-  @Input() jobType;
+  get qualityAssurance(): any {
+    return this._qualityAssurance;
+  }
 
   @Input()
   set markedObjs(v) {
     if (this._markedObjs !== v) {
-      this._markedObjs = v;
-      this.generateCacheForImages(v);
+      this._markedObjs = this.sortRenders(v);
       this.markedObj = this.markedObjs[0];
-      this.sortRenders();
+
       this.bindRenderDescriptions();
+      this.generateCacheForImages(v);
     }
   }
 
@@ -49,13 +59,13 @@ export class DecZoomMarksGalleryComponent {
     return this._showTags;
   }
 
-  private _reviewers: any;
-  public get reviewers(): any {
-    return this._reviewers;
-  }
   @Input()
-  public set reviewers(v: any) {
+  set reviewers(v: any) {
     this._reviewers = v;
+  }
+
+  get reviewers(): any {
+    return this._reviewers;
   }
 
   @Input()
@@ -70,61 +80,93 @@ export class DecZoomMarksGalleryComponent {
   }
 
   @Input()
-  public isProfessional: boolean;
+  set glb(v: any) {
+    if (this._glb !== v) {
+      this._glb = v;
 
+      if (!this._glb) {
+        this.onSelectImage(0);
+      } else if ((!this._markedObjs || !this._markedObjs.length)) {
+        this.onSelectMesh();
+      }
+    }
+  }
+
+  get glb(): any {
+    return this._glb;
+  }
 
   @Output() deleteZoomArea = new EventEmitter();
 
-  _maxFile: any;
-
-  imageIndex = 0;
+  @Output() openZoomArea = new EventEmitter();
 
   @ViewChild('carouselGallery') carouselGallery;
 
   @ViewChild(DecMeshQaComponent) meshQa: DecMeshQaComponent;
 
-  @Input() qaModeActive: boolean;
-
   @ViewChild(DecZoomMarksComponent) zoomMarks: DecZoomMarksComponent;
 
-  @Output() openZoomArea = new EventEmitter();
+  private _markedObjs: any;
 
-  markedObj: any;
-  _markedObjs: any;
-
-  _showTags: boolean;
-
-  isFirst: boolean;
-
-  isLast: boolean;
-
-  public imageMeshUrl = `/d/assets/img/mesh-qa.png`;
+  private _showTags: boolean;
 
   private _glb: any;
-  public get glb(): any {
-    return this._glb;
-  }
-  @Input()
-  public set glb(v: any) {
-    if (this._glb !== v) {
-      this._glb = v;
 
-      if (!this._glb) {
-        this.onSelectImage(null, null, 0);
-      }
+  private _qualityAssurance: any;
+
+  private _reviewers: any;
+
+  private _maxFile: any;
+
+  constructor(
+    private decRenderCommentService: DecRenderCommentService
+  ) { }
+
+  onSelectImage = (i: number) => {
+    this.markedObj = this.markedObjs[i];
+    this.imageIndex = i;
+    this.meshQaSelected = false;
+  }
+
+  onSelectMesh = () => {
+    this.markedObj = {};
+    this.meshQaSelected = true;
+  }
+
+  getFormatedPositionAndScale() {
+    return this.zoomMarks.getFormatedPositionAndScale();
+  }
+
+  addNewZoomArea(addNewZoomArea) {
+    this.zoomMarks.addNewZoomArea(addNewZoomArea);
+  }
+
+  onOpenZoomArea($event) {
+    this.openZoomArea.emit($event);
+  }
+
+  getImageIndex() {
+    return this.imageIndex;
+  }
+
+  private sortRenders(markedObjs) {
+    const rendersWithMark = markedObjs.filter(render => (render.tags && render.tags.length) || (render.zoomAreas && render.zoomAreas.length));
+    const rendersWithoutMark = markedObjs.filter(render => (render.tags && !render.tags.length) && (render.zoomAreas && !render.zoomAreas.length));
+
+    if (!rendersWithMark.length && !rendersWithoutMark.length) {
+      return markedObjs;
     }
+
+    return [...rendersWithMark, ...rendersWithoutMark];
   }
 
-  @Input()
-  public glbReadonly: boolean;
-
-  public meshQaSelected = false;
+  deleteArea($event) {
+    this.deleteZoomArea.emit($event);
+  }
 
   updateTagStructure(tagStructure) {
     this.qualityAssurance.mesh = { ...tagStructure };
   }
-
-  constructor(private decRenderCommentService: DecRenderCommentService) { }
 
   private bindRenderDescriptions(): void {
     this.markedObjs.forEach(item => {
@@ -148,97 +190,11 @@ export class DecZoomMarksGalleryComponent {
     });
   }
 
-  onSwipe(event) {
-    const orientation = Math.abs(event.deltaX) > 40 ? (event.deltaX > 0 ? 'right' : 'left') : '';
-    let direction;
-    if (orientation === 'left') {
-      direction = this.carouselGallery.next.nativeElement;
-    } else if (orientation === 'right') {
-      direction = this.carouselGallery.prev.nativeElement;
-    } else {
-      return false;
-    }
-
-    direction.click();
-    if (Math.abs(event.deltaX) > 100) {
-      direction.click();
-      if (Math.abs(event.deltaX) > 150) {
-        direction.click();
-        if (Math.abs(event.deltaX) > 200) {
-          direction.click();
-          if (Math.abs(event.deltaX) > 250) {
-            direction.click();
-          }
-        }
-      }
-    }
+  openMaxFile() {
+    window.open(this.maxFile, '_blank');
   }
 
-  onInitDataFn(event: NguCarouselStore) {
-    if (!this.markedObjs || this.markedObjs.length === 0) {
-      return;
-    }
-    this.setPrevNextCheckers(event.isFirst, event.items >= this.markedObjs.length);
-  }
-
-  onMoveFn(event: NguCarouselStore) {
-    this.setPrevNextCheckers(event.isFirst, event.isLast);
-  }
-
-  onSelectImage = ($event, sysFile, i) => {
-    this.markedObj = this.markedObjs[i];
-    this.imageIndex = i;
-    this.meshQaSelected = false;
-  }
-
-  onSelectMesh = () => {
-    this.markedObj = {};
-    this.meshQaSelected = true;
-  }
-
-  setPrevNextCheckers(first: boolean, last: boolean) {
-
-    setTimeout(() => {
-
-      this.isFirst = first;
-
-      this.isLast = last;
-
-    }, 0);
-
-  }
-
-  public getFormatedPositionAndScale() {
-    return this.zoomMarks.getFormatedPositionAndScale();
-  }
-
-  public addNewZoomArea(addNewZoomArea) {
-    this.zoomMarks.addNewZoomArea(addNewZoomArea);
-  }
-
-  public onOpenZoomArea($event) {
-    this.openZoomArea.emit($event);
-  }
-
-  public getImageIndex() {
-    return this.imageIndex;
-  }
-
-  sortRenders() {
-    const aux = [];
-    for (let i = 0; i < this.markedObjs.length; i++) {
-      if ((this.markedObjs[i].tags && this.markedObjs[i].tags.length > 0) ||
-        (this.markedObjs[i].zoomAreas && this.markedObjs[i].zoomAreas.length > 0)) {
-        aux.push(this.markedObjs.splice(i, 1));
-        i = 0;
-      }
-    }
-    for (let i = (aux.length - 1); i >= 0; i--) {
-      this.markedObjs.splice(0, 0, aux[i][0]);
-    }
-  }
-
-  deleteArea($event) {
-    this.deleteZoomArea.emit($event);
+  thereIsAMeshTag() {
+    this.isThereAnyMeshTag = true;
   }
 }

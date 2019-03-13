@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { DecApiService } from '@projects/decora/browser-lib-ui/src/public_api';
+import { DecApiService, DecApiResponseError, DecApiGenericError } from '@projects/decora/browser-lib-ui/src/public_api';
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { DecSidenavService } from '@projects/decora/browser-lib-ui/src/lib/components/sidenav/sidenav.service';
+
+// /modeling-briefing/bulk/publish
+
+// {"ids": [14]}
 
 @Component({
   selector: 'app-decora-api',
@@ -28,6 +32,8 @@ export class DecApiComponent implements OnInit {
   email: string;
 
   password: string;
+
+  errors: DecApiGenericError[];
 
   callType = 'get';
 
@@ -96,7 +102,7 @@ export class DecApiComponent implements OnInit {
     const options: any = { headers: new HttpHeaders({ 'content-type': this.callContentType }), loadingMessage: this.loadingMessage};
 
     this.decoraApi[this.callType](this.resource, body, options)
-    .subscribe(this.handleSuccess, this.handleError);
+      .subscribe(this.handleSuccess, (a: DecApiResponseError) => this.handleError(a));
 
   }
 
@@ -136,9 +142,11 @@ export class DecApiComponent implements OnInit {
     this.clearPreviousRequest();
   }
 
-  private handleError = (err) => {
+  private handleError = (err: DecApiResponseError) => {
+    console.log('ERROR', err);
     this.responseStatus = err.status;
     this.responseMessage = err.message;
+    this.errors = err.errors;
   }
 
   private goToRedirectUrl() {

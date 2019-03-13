@@ -4,19 +4,17 @@
     <dec-image-zoom [permitUpload]="permitUpload" (uploaded)="uploadedFunction($event)" [image]="imageHighlight"></dec-image-zoom>
   </div>
 
-  <ngu-carousel class="carousel-wrapper" [inputs]="carouselConfig" (initData)="onInitDataFn($event)" (onMove)="onMoveFn($event)">
+  <dec-carousel itemsPerPage="7">
 
-    <ngu-item NguCarouselItem *ngFor="let image of images; let i = index;" [class.active]="image == imageHighlight">
+    <dec-carousel-item *ngFor="let image of images; let i = index;">
+
       <img [decImage]="image" [decImageSize]="{width:300, height:300}" (click)="onSelectImage($event,image, i)">
       <span *ngIf="image.order">{{ 'label.shot-order' | translate }}: {{ image.order }}</span>
       <span *ngIf="resolutions.length > 0">{{ 'label.size' | translate }}: {{ resolutions[i]}}</span>
       <span *ngIf="showThumbIndex">{{ i + 1 }}</span>
-    </ngu-item>
 
-    <mat-icon NguCarouselPrev class="left-previous" [ngClass]="{'disabled': isFirst}">chevron_left</mat-icon>
+    </dec-carousel-item>
 
-    <mat-icon NguCarouselNext class="right-next" [ngClass]="{'disabled': isLast}">chevron_right</mat-icon>
-
-  </ngu-carousel>
+  </dec-carousel>
 
 </div>

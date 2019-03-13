@@ -1,4 +1,4 @@
-<div class="list-tabs-filter-wrapper" *ngIf="visibleFilters as filters">
+<div class="list-tabs-filter-wrapper" *ngIf="visibleFilters as filters" [class.no-border]="sublistMode === 'tabs'">
   <div fxLayout="row" class="dec-tab-header">
     <ng-container *ngFor="let tabFilter of filters">
       <button type="button"
@@ -6,9 +6,9 @@
               mat-button
               class="uppercase"
               (click)="selectTab(tabFilter.uid)"
-              [class.selected]="selectedTabUid == (tabFilter.uid)">
-        <span>{{ 'label.' + tabFilter.label | translate | uppercase }}</span>
-        <span *ngIf="countReport" class="badge badge-pill badge-small">{{ countReport[tabFilter.uid].count }}</span>
+              [class.selected]="selectedTabUid === (tabFilter.uid)">
+        <span>{{ 'label.' + tabFilter.label | translate }}</span>
+        <span *ngIf="countReport && countReport[tabFilter.uid]" class="badge badge-pill badge-small">{{ countReport[tabFilter.uid].count }}</span>
       </button>
     </ng-container>
   </div>

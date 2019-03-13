@@ -3,14 +3,38 @@
 // Sidenav custom style
 @mixin dec-list-theming($theme) {
   .list-tabs-filter-wrapper {
+
+    margin-bottom: 32px;
+
     .selected {
       border-bottom: 2px solid $dec-color-accent !important;
+      background-color: #f4f4f4;
+    }
+
+    &.no-border {
+      margin-bottom: 0;
+
+      .selected {
+        border-bottom-color: #f4f4f4 !important;
+      }
     }
 
     .badge {
       &.badge-pill {
         background-color: $dec-color-grey;
         color: #fff;
+      }
+    }
+  }
+
+  .list-component-wrapper {
+    dec-tabs {
+      .mat-tab-group {
+        .mat-tab-header {
+          .mat-tab-label-container {
+            background-color: #f4f4f4 !important;
+          }
+        }
       }
     }
   }

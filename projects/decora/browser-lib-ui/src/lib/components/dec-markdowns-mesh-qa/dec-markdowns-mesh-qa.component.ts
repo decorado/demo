@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { objectKeysToCamelCase } from '../../utilities/object';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { objectKeysToLowerCamelCase } from '../../utilities/object';
 import { sortBy } from '../../utilities/array';
 
 @Component({
@@ -11,6 +11,9 @@ export class DecMarkdownsMeshQaComponent {
 
   public tags: any[] = [];
 
+  @Output()
+  isThereAnyMeshTag: EventEmitter<boolean> = new EventEmitter();
+
   private _mesh: any;
   public get mesh(): any {
     return this._mesh;
@@ -18,7 +21,7 @@ export class DecMarkdownsMeshQaComponent {
   @Input()
   public set mesh(v: any) {
     if (this._mesh !== v) {
-      this._mesh = objectKeysToCamelCase(v);
+      this._mesh = objectKeysToLowerCamelCase(v);
 
       this.tags = [];
       this.bindTags(this._mesh);
@@ -34,6 +37,9 @@ export class DecMarkdownsMeshQaComponent {
         this.tags.push(data[key]);
       }
     });
+    if (this.tags.length > 0) {
+      this.isThereAnyMeshTag.emit();
+    }
   }
 
   private orderTags() {

@@ -1,0 +1,44 @@
+<form role="form" #i18nInputForm="ngForm">
+
+  <ng-container [ngSwitch]="type">
+
+    <div *ngSwitchCase="'input'" fxLayout="row" fxLayoutGap="4px">
+
+      <div fxLayout="row" fxLayoutGap="2px">
+        <div><button mat-stroked-button (click)="selectLanguage('pt', elementInputPT)" [color]="selectedLanguage === 'pt' ? 'accent' : ''" [ngClass]="{invalid: showInvalidStyle(ctrlInputPT)}">PT</button></div>
+        <div><button mat-stroked-button (click)="selectLanguage('en', elementInputEN)" [color]="selectedLanguage === 'en' ? 'accent' : ''" [ngClass]="{invalid: showInvalidStyle(ctrlInputEN)}">EN</button></div>
+      </div>
+
+      <div fxFlex>
+        <mat-form-field>
+          <input matInput (blur)="detectAndEmitChange()" [(ngModel)]="value.pt" #elementInputPT #ctrlInputPT="ngModel" name="namePT" [hidden]="selectedLanguage !== 'pt'" [required]="required" [disabled]="disabled">
+          <input matInput (blur)="detectAndEmitChange()" [(ngModel)]="value.en" #elementInputEN #ctrlInputEN="ngModel" name="nameEN" [hidden]="selectedLanguage !== 'en'" [required]="required" [disabled]="disabled">
+        </mat-form-field>
+      </div>
+
+    </div>
+
+    <div *ngSwitchCase="'textarea'" fxLayout="column" fxLayoutGap="4px">
+
+      <div fxLayout="row" fxLayoutAlign="start center">
+
+        <span #contentContainer>
+          <ng-content></ng-content>
+        </span>
+
+        <div fxFlex *ngIf="thereIsContent"></div>
+
+        <div fxLayout="row" fxLayoutGap="2px">
+          <button mat-stroked-button (click)="selectLanguage('pt', elementNotePT)" [color]="selectedLanguage === 'pt' ? 'accent' : ''" [ngClass]="{invalid: showInvalidStyle(ctrlNotePT)}">PT</button>
+          <button mat-stroked-button (click)="selectLanguage('en', elementNoteEN)" [color]="selectedLanguage === 'en' ? 'accent' : ''" [ngClass]="{invalid: showInvalidStyle(ctrlNoteEN)}">EN</button>
+        </div>
+
+      </div>
+
+      <textarea matInput (blur)="detectAndEmitChange()" [(ngModel)]="value.pt" name="namePT" class="text-area-note" #elementNotePT #ctrlNotePT="ngModel" [ngClass]="{invalid: showInvalidStyle(ctrlNotePT)}" [hidden]="selectedLanguage !== 'pt'" [required]="required" [disabled]="disabled" [rows]="rows"></textarea>
+      <textarea matInput (blur)="detectAndEmitChange()" [(ngModel)]="value.en" name="nameEN" class="text-area-note" #elementNoteEN #ctrlNoteEN="ngModel" [ngClass]="{invalid: showInvalidStyle(ctrlNoteEN)}" [hidden]="selectedLanguage !== 'en'" [required]="required" [disabled]="disabled" [rows]="rows"></textarea>
+    </div>
+
+  </ng-container>
+
+</form>

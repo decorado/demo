@@ -92,11 +92,13 @@ export interface SerializedDecFilter {
   */
 export class Filter {
   property: string;
-  value: string | string[];
+  value: number | boolean | string | number[] | boolean[] | string[];
+  type?: 'EQUAL' | ' EXISTS' | 'BETWEEN';
 
   constructor(data: any = {}) {
     this.property = data.property;
     this.value = Array.isArray(data.property) ? data.property : [data.property];
+    this.type = data.type || 'EQUAL';
   }
 }
 
@@ -128,4 +130,31 @@ export interface ColumnsSortConfig {
   */
 export interface QueryParams {
   [key: string]: string | string[];
+}
+
+
+/*
+  * Respose Error
+  *
+  * Response error structure
+  */
+export interface DecApiGenericError {
+  status: number;
+  timestamp: string;
+  error: string;
+  message: string;
+}
+
+/*
+  * Respose Error
+  *
+  * Response error structure
+  */
+export interface DecApiResponseError {
+  status: number;
+  statusText: string;
+  message: string;
+  bodyMessage: string;
+  bodyError: string;
+  errors: DecApiGenericError[];
 }

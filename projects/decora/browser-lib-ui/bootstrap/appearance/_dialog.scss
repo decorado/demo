@@ -1,3 +1,5 @@
+@import './../constants/positioning';
+
 .dec-dialog-container {
 
   max-height: 80vh;
@@ -13,13 +15,20 @@
 
   height: 100vh;
   width: 100vw !important;
-  max-width: none !important;
+  margin: auto !important;
+  // MINIMUM WIDTH
+  min-width: $min-body-width !important;
+  // MAXIMUM WIDTH
+  max-width: $max-body-width !important;
 
   .mat-dialog-container {
     padding: 0;
-    margin: 0;
-    max-width: 100vw;
-    width: 100vw;
+    margin: auto;
+    width: 100%;
+    // MINIMUM WIDTH
+    min-width: $min-body-width;
+    // MAXIMUM WIDTH
+    max-width: $max-body-width;
   }
 
 }

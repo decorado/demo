@@ -2,7 +2,7 @@
   <div fxFlex="32px" class="color-picker" [ngStyle]="{'backgroundColor': hexValue}" (click)="openColorBox()"></div>
   <mat-form-field>
     <input matInput [(ngModel)]="hexValue" [disabled]="disabled" [autocomplete]="autocomplete" [placeholder]="placeholder"
-      [pattern]="pattern" (ngModelChange)="setValueBasedOnColorFormat()">
+      [pattern]="pattern" (ngModelChange)="setValueBasedOnColorFormat()" #ngModelElement="ngModel">
     <dec-icon font="mat" matSuffix (click)="startColorPicker()">colorize</dec-icon>
   </mat-form-field>
 </div>

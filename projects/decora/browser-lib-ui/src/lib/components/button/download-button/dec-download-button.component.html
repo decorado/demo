@@ -1,0 +1,5 @@
+<button mat-stroked-button (click)="download(url)">
+  <ng-content></ng-content>
+  <span *ngIf="!buttonText">{{ 'label.Download' | translate }}</span>
+  <dec-icon font="mat">vertical_align_bottom</dec-icon>
+</button>

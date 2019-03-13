@@ -1,5 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter, forwardRef, AfterViewInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, forwardRef, AfterViewInit, ViewChild, OnDestroy, ElementRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { DecAutocompleteComponent } from './../autocomplete/autocomplete.component';
+import { Subscription, timer } from 'rxjs';
 
 //  Return an empty function to be used as default trigger functions
 const noop = () => {
@@ -20,7 +22,7 @@ const BASIC_ENDPOINT = 'jobs/complexities/options';
   styleUrls: ['./autocomplete-complexity.component.scss'],
   providers: [AUTOCOMPLETE_ROLES_CONTROL_VALUE_ACCESSOR]
 })
-export class AutocompleteComplexityComponent implements ControlValueAccessor {
+export class AutocompleteComplexityComponent implements ControlValueAccessor, OnDestroy {
 
   endpoint = 'jobs/complexities/options';
 
@@ -28,7 +30,10 @@ export class AutocompleteComplexityComponent implements ControlValueAccessor {
 
   labelAttr = 'value';
 
+  touched: boolean;
+
   @Input()
+  get type() { return this._type; }
   set type(v) {
     if (v !== this._type) {
       this._type = v;
@@ -40,12 +45,6 @@ export class AutocompleteComplexityComponent implements ControlValueAccessor {
     }
   }
 
-  get type() {
-    return this._type;
-  }
-
-  private _type: string;
-
   @Input() disabled: boolean;
 
   @Input() required: boolean;
@@ -53,6 +52,8 @@ export class AutocompleteComplexityComponent implements ControlValueAccessor {
   @Input() name = 'Complexity autocomplete';
 
   @Input() multi: boolean;
+
+  @Input() notFoundMessage: string;
 
   @Input() repeat: boolean;
 
@@ -62,7 +63,13 @@ export class AutocompleteComplexityComponent implements ControlValueAccessor {
 
   @Output() optionSelected: EventEmitter<any> = new EventEmitter<any>();
 
-  @Output() enterButton: EventEmitter<any> = new EventEmitter<any>();
+  @ViewChild(DecAutocompleteComponent) autocompleteComponent: DecAutocompleteComponent;
+
+  private _type: string;
+
+  private classWatcher: Subscription;
+
+  private classesString: string;
 
   /*
   ** ngModel propertie
@@ -75,7 +82,15 @@ export class AutocompleteComplexityComponent implements ControlValueAccessor {
   //  Placeholders for the callbacks which are later provided by the Control Value Accessor
   private onChangeCallback: (_: any) => void = noop;
 
-  constructor() { }
+  constructor(
+    private elementRef: ElementRef<HTMLElement>,
+  ) {
+    this.subscribeToClassChange();
+  }
+
+  ngOnDestroy() {
+    this.unsubscribeToClassChange();
+  }
 
   /*
   ** ngModel API
@@ -108,6 +123,11 @@ export class AutocompleteComplexityComponent implements ControlValueAccessor {
     this.onTouchedCallback = fn;
   }
 
+  // From ControlValueAccessor interface
+  setDisabledState(disabled = false) {
+    this.disabled = disabled;
+  }
+
   onValueChanged(event: any) {
     this.value = event.toString();
   }
@@ -132,5 +152,22 @@ export class AutocompleteComplexityComponent implements ControlValueAccessor {
     endpoint += `?${params.join('&')}`;
 
     this.endpoint = endpoint;
+  }
+
+  private subscribeToClassChange() {
+    this.classWatcher = timer(100, 250).subscribe(this.detectClassChanges);
+  }
+
+  private detectClassChanges = () => {
+    const classesString = this.elementRef.nativeElement.classList.value;
+    if (this.classesString !== classesString) {
+      this.classesString = classesString;
+      const hasTouchedClass = classesString.search('ng-touched') >= 0;
+      this.touched = hasTouchedClass;
+    }
+  }
+
+  private unsubscribeToClassChange() {
+    this.classWatcher.unsubscribe();
   }
 }

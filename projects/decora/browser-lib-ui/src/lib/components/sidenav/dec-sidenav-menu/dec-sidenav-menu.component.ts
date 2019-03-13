@@ -14,7 +14,7 @@ export class DecSidenavMenuComponent {
   set opened(v) {
     if (v !== this._opened) {
       this._opened = v;
-      this.openedPass = JSON.parse(JSON.stringify(v));
+      this.leftMenuVisible = JSON.parse(JSON.stringify(v));
     }
   }
 
@@ -24,11 +24,11 @@ export class DecSidenavMenuComponent {
 
   _opened = true;
 
-  openedPass = true;
+  leftMenuVisible = true;
 
   @Input() treeLevel = -1;
 
-  // 
+  //
   classesOut = [
     'mat-list-item-content',
     'dec-icon',
@@ -46,7 +46,7 @@ export class DecSidenavMenuComponent {
     'right',
     'down',
     'arrows-container'
-  ]
+  ];
 
   classesIn = [
     'menuClass',
@@ -62,42 +62,40 @@ export class DecSidenavMenuComponent {
     'right',
     'down',
     'arrows-container'
-  ]
+  ];
 
   constructor() { }
 
 
   @HostListener('document:mouseover', ['$event'])
   onHover($event) {
-    if (!$event) {
-      return;
-    }
-    const el = $event.target;
-    if (this.verifyItemContent(el, this.classesIn)&& !this.opened) {
-      this.openedPass = true;
+    if ($event) {
+      const el = $event.target;
+      if (this.verifyItemContent(el, this.classesIn) && !this.opened) {
+        this.leftMenuVisible = true;
+      }
     }
   }
 
   @HostListener('document:mousemove', ['$event'])
   onOut($event) {
-    if (!$event) {
-      return;
-    }
-    const el = $event.target;
-    // console.log(el.classList);
-    if (!this.verifyItemContent(el, this.classesOut) && !this.opened) {
-      this.openedPass = false;
+    if ($event) {
+      const el = $event.target;
+      // console.log(el.classList);
+      if (!this.verifyItemContent(el, this.classesOut) && !this.opened) {
+        this.leftMenuVisible = false;
+      }
     }
   }
 
   verifyItemContent(div, array) {
     let exists = false;
-    for (let i=0;i<array.length;i++) {
+    for (let i = 0; i < array.length; i++) {
       if (div.classList.contains(array[i])) {
         exists = true;
       }
     }
     return exists;
   }
-  
+
 }

@@ -2,7 +2,7 @@
 
 :host {
   --tag-size: 30px;
-  --tag-line-height: calc(var(--tag-size) - 3px);
+  --tag-line-height: calc(var(--tag-size) - 6px);
 }
 
 .markdown-item:last-child {

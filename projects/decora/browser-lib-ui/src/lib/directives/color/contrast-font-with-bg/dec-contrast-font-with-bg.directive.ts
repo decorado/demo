@@ -1,4 +1,6 @@
-import { Directive, ElementRef, Input, DoCheck } from '@angular/core';
+import { Directive, ElementRef, Input, OnDestroy } from '@angular/core';
+import { DEC_COLORS } from './../../../enums/dec-colors.map';
+import { Subscription, timer } from 'rxjs';
 
 /**
  * Cotrast configuration
@@ -11,7 +13,9 @@ export interface DecContrastFontWithBgDirectiveConfig {
   darkColor: string;
 }
 
-const DEFAULT_LUMA_BREAKPOINT = 200;
+const DEFAULT_LUMA_BREAKPOINT = 195;
+
+const ColorsMap: {[key: string]: string} = {};
 
 /*
 * Contrast Font With Background Directive
@@ -27,9 +31,10 @@ const DEFAULT_LUMA_BREAKPOINT = 200;
 * darkColor: the text color used in ligth backgrounds
 */
 
-export function hexToRgbNew(hex) {
+export function hexToRgb(hex) {
 
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+
   return result ? {
     r: parseInt(result[1], 16),
     g: parseInt(result[2], 16),
@@ -37,75 +42,123 @@ export function hexToRgbNew(hex) {
   } : null;
 }
 
-export function standardize_color(bgColor) {
+export function anyToHex(bgColor = DEC_COLORS.CHARCOAL) {
 
-  const canvas = document.createElement('canvas');
+  const isRgb = bgColor.search('rgb');
 
-  const ctx = canvas.getContext('2d');
+  if (!isRgb) {
 
-  ctx.fillStyle = bgColor;
+    const canvas = document.createElement('canvas');
 
-  return ctx.fillStyle;
+    const ctx = canvas.getContext('2d');
+
+    ctx.fillStyle = bgColor;
+
+    return ctx.fillStyle;
+
+  } else {
+
+    return bgColor;
+
+  }
+
 }
 
 
 @Directive({
   selector: '[decContrastFontWithBg]'
 })
-export class DecContrastFontWithBgDirective implements DoCheck {
+export class DecContrastFontWithBgDirective implements OnDestroy {
 
   private config;
 
   private bgColor;
 
+  private changesSubscription: Subscription;
+
   @Input() set decContrastFontWithBg(config: DecContrastFontWithBgDirectiveConfig) {
-
     this.config = config;
-
-    this.doDecContrastFontWithBg();
-
   }
 
   constructor(private el: ElementRef) {
-
-    this.bgColor = this.el.nativeElement.style.backgroundColor;
-
+    this.subscribeToChanges();
   }
 
-  ngDoCheck() {
-
-    const bgColor = this.el.nativeElement.style.backgroundColor;
-
-    if (bgColor !== this.bgColor) {
-
-      this.bgColor = bgColor;
-
-      this.doDecContrastFontWithBg();
-
-    }
-
+  ngOnDestroy() {
+    this.unsubscribeToChanges();
   }
 
   private doDecContrastFontWithBg() {
 
     const lumaBreakPoint = (this.config && this.config.lumaBreakPoint) ? this.config.lumaBreakPoint : DEFAULT_LUMA_BREAKPOINT;
 
-    const hexaBgColor = standardize_color(this.bgColor);
+    const hexaBgColor = anyToHex(this.bgColor);
 
-    const rgbColor = hexToRgbNew(hexaBgColor);
+    const rgbColor = hexToRgb(hexaBgColor);
 
     const luma = 0.2126 * rgbColor.r + 0.7152 * rgbColor.g + 0.0722 * rgbColor.b; // per ITU-R BT.709
 
+    let color: string;
+
     if (luma < lumaBreakPoint) {
 
-      this.el.nativeElement.style.color = (this.config && this.config.lightColor) ? this.config.lightColor : 'rgba(255,255,255,1)';
+      color = (this.config && this.config.lightColor) ? this.config.lightColor : DEC_COLORS.WHITE;
 
     } else {
 
-      this.el.nativeElement.style.color = (this.config && this.config.darkColor) ? this.config.darkColor : '#232e38';
+      color = (this.config && this.config.darkColor) ? this.config.darkColor : DEC_COLORS.CHARCOAL;
 
     }
 
+    this.setElementColor(color);
+
+  }
+
+  private getElementBgColor = () => {
+
+    const element = this.el.nativeElement;
+
+    const elementStyles = getComputedStyle(element);
+
+    const bgColor = elementStyles.backgroundColor;
+
+    if (this.bgColor !== bgColor) {
+
+      this.bgColor = bgColor;
+
+      const mappedColor = ColorsMap[this.bgColor];
+
+      if (mappedColor) {
+
+        this.setElementColor(mappedColor);
+
+      } else {
+
+        this.doDecContrastFontWithBg();
+
+      }
+
+    }
+
+  }
+
+  private setElementColor(color) {
+
+    ColorsMap[this.bgColor] = color;
+
+    this.el.nativeElement.style.color = color;
+
+  }
+
+  private subscribeToChanges() {
+
+    this.changesSubscription = timer(100, 500)
+    .subscribe(this.getElementBgColor);
+
+  }
+
+  private unsubscribeToChanges() {
+    this.changesSubscription.unsubscribe();
   }
 }
 

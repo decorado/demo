@@ -23,7 +23,7 @@
           <dec-zoom-marks-gallery *ngSwitchCase="'reference'" [markedObjs]="references"></dec-zoom-marks-gallery>
 
           <dec-zoom-marks-gallery *ngSwitchCase="'render'" [markedObjs]="renders"></dec-zoom-marks-gallery>
-          
+
           <dec-product-measures-comparison style="margin-top: 32px;" [measures]="measures"></dec-product-measures-comparison>
         </ng-container>
 
@@ -41,7 +41,8 @@
 
         </div>
 
-        <dec-gallery-marks *ngIf="contentDone" [images]="skuFix?.requestAdjustment"></dec-gallery-marks>
+        <dec-zoom-marks-gallery #requestAdjustmentsGallery *ngIf="contentDone" [markedObjs]="requestAdjustment"
+          [showTags]="true" (openZoomArea)="openZoomArea($event)"></dec-zoom-marks-gallery>
 
       </dec-grid-column>
 

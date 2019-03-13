@@ -71,11 +71,12 @@ export class DecZoomMarksComponent implements AfterViewChecked {
 
   private commentsArraySize: number;
 
-  private contentDone: boolean;
+  public contentDone: boolean;
 
   private zoomPosition: ZoomPosition;
-  private startX: number;
-  private startY: number;
+  private _startX: number;
+  private _startY: number;
+
   private mouseMoved: boolean;
 
   public zoomScale: number;
@@ -155,6 +156,9 @@ export class DecZoomMarksComponent implements AfterViewChecked {
 
   private setupMarksWrapper(): void {
     this.marksWrapperEl = this.marksWrapper.nativeElement;
+
+    this._startX = this._startY = this.canvasEl.width / 2;
+
     this.setWrapperSize(this.canvasEl.width);
     this.setWrapperCursor();
   }
@@ -175,14 +179,15 @@ export class DecZoomMarksComponent implements AfterViewChecked {
           this.setZoomPosition(
             ((100 * event.offsetX) / this.marksWrapperEl.offsetWidth * this.canvasEl.offsetWidth) / 100,
             ((100 * event.offsetY) / this.marksWrapperEl.offsetHeight * this.canvasEl.offsetHeight) / 100);
+
           if (event.deltaY < 0) {
             this.zoomIn(0.5);
-            this.startX = ((100 * event.offsetX) / this.marksWrapperEl.offsetWidth * this.canvasEl.offsetWidth) / 100 * this.zoomScale;
-            this.startY = ((100 * event.offsetY) / this.marksWrapperEl.offsetHeight * this.canvasEl.offsetHeight) / 100 * this.zoomScale;
+            this._startX = ((100 * event.offsetX) / this.marksWrapperEl.offsetWidth * this.canvasEl.offsetWidth) / 100 * this.zoomScale;
+            this._startY = ((100 * event.offsetY) / this.marksWrapperEl.offsetHeight * this.canvasEl.offsetHeight) / 100 * this.zoomScale;
           } else {
             this.zoomOut(0.5);
-            this.startX = ((100 * event.offsetX) / this.marksWrapperEl.offsetWidth * this.canvasEl.offsetWidth) / 100 * this.zoomScale;
-            this.startY = ((100 * event.offsetY) / this.marksWrapperEl.offsetHeight * this.canvasEl.offsetHeight) / 100 * this.zoomScale;
+            this._startX = ((100 * event.offsetX) / this.marksWrapperEl.offsetWidth * this.canvasEl.offsetWidth) / 100 * this.zoomScale;
+            this._startY = ((100 * event.offsetY) / this.marksWrapperEl.offsetHeight * this.canvasEl.offsetHeight) / 100 * this.zoomScale;
           }
         }
       }
@@ -219,6 +224,7 @@ export class DecZoomMarksComponent implements AfterViewChecked {
   private mousedownEvent(): void {
     const mouseup = this.mouseupEvent();
     mouseup.subscribe((event: any) => {
+
       if (this.verifyMenu(event.target)) {
         const parent = event.target.parentElement.id === 'tagMenu' ? event.target.parentElement : event.target.parentElement.parentElement;
         const comment = parent.getAttribute('comment');
@@ -236,8 +242,8 @@ export class DecZoomMarksComponent implements AfterViewChecked {
       const target = event.target as HTMLDivElement;
       this.enablePointEvents(this.marksWrapperEl.querySelectorAll('.point-tag'));
       if (this.qaMode && this.zoomScale === 1) {
-        const x = Math.round(((this.startX / this.marksWrapperEl.offsetHeight) * 100) * 100) / 100;
-        const y = Math.round(((this.startY / this.marksWrapperEl.offsetWidth) * 100) * 100) / 100;
+        const x = Math.round(((this._startX / this.marksWrapperEl.offsetHeight) * 100) * 100) / 100;
+        const y = Math.round(((this._startY / this.marksWrapperEl.offsetWidth) * 100) * 100) / 100;
         const x2 = Math.round(((event.offsetX / this.marksWrapperEl.offsetHeight) * 100) * 100) / 100;
         const y2 = Math.round(((event.offsetY / this.marksWrapperEl.offsetWidth) * 100) * 100) / 100;
         if (this.mouseMoved) {
@@ -292,8 +298,8 @@ export class DecZoomMarksComponent implements AfterViewChecked {
 
     fromEvent(this.marksWrapperEl, 'mousedown').pipe(
       switchMap((event: MouseEvent) => {
-        this.startX = event.offsetX;
-        this.startY = event.offsetY;
+        this._startX = event.offsetX;
+        this._startY = event.offsetY;
         this.setWrapperCursor(true);
         return fromEvent(this.marksWrapperEl, 'mousemove').pipe(
           takeUntil(mouseup),
@@ -307,10 +313,10 @@ export class DecZoomMarksComponent implements AfterViewChecked {
         this.clearSquare();
         const square = this.renderer.createElement('div');
         square.id = 'squareMark';
-        square.style.top = this.startY > event.offsetY ? `${event.offsetY}px` : `${this.startY}px`;
-        square.style.left = this.startX > event.offsetX ? `${event.offsetX}px` : `${this.startX}px`;
-        square.style.width = `${Math.abs(this.startX - event.offsetX)}px`;
-        square.style.height = `${Math.abs(this.startY - event.offsetY)}px`;
+        square.style.top = this._startY > event.offsetY ? `${event.offsetY}px` : `${this._startY}px`;
+        square.style.left = this._startX > event.offsetX ? `${event.offsetX}px` : `${this._startX}px`;
+        square.style.width = `${Math.abs(this._startX - event.offsetX)}px`;
+        square.style.height = `${Math.abs(this._startY - event.offsetY)}px`;
         this.marksWrapperEl.appendChild(square);
       } else {
         this.zoomPosition.x -= event.movementX / this.zoomScale;
@@ -528,27 +534,43 @@ export class DecZoomMarksComponent implements AfterViewChecked {
     const [x, y] = coordinates;
     const menu = document.createElement('div');
     menu.id = 'tagMenu';
-    menu.style.top = `calc(${y}% - 50px)`;
-    menu.style.left = `calc(${x}% + 18px)`;
+
+    if (x > 80) {
+      menu.style.left = `calc(${x}% - 120px)`;
+    } else {
+      menu.style.left = `calc(${x}% + 18px)`;
+    }
+
+    if (y > 80) {
+      menu.style.top = `calc(${y}% - 100px)`;
+    } else {
+      menu.style.top = `calc(${y}%)`;
+    }
+
     menu.style.position = 'absolute';
     menu.style.width = '100px';
     menu.style.height = '100px';
     menu.style.backgroundColor = 'white';
     menu.style.border = '1px solid rgba(0,0,0,0.15)';
+    menu.style.zIndex = '1';
     menu.setAttribute('comment', JSON.stringify(comment));
 
     const edit = document.createElement('div');
     edit.style.cursor = 'pointer';
     edit.setAttribute('type', 'edit');
     edit.style.marginTop = '15px';
-    edit.innerHTML = '<img width="24" height="24" src="'+this.getBasePath()+'edit-icon.svg"> <span class="icon-label">' + this.editLabel + '</span>';
+    edit.style.textAlign = 'left';
+    edit.style.marginLeft = '8px';
+    edit.innerHTML = '<img width="24" height="24" src="' + this.getBasePath() + 'edit-icon.svg"> <span class="icon-label">' + this.editLabel + '</span>';
 
 
     const deleteDiv = document.createElement('div');
     deleteDiv.style.cursor = 'pointer';
     deleteDiv.setAttribute('type', 'delete');
     deleteDiv.style.marginTop = '15px';
-    deleteDiv.innerHTML = '<img width="24" height="24" src="'+this.getBasePath()+'delete-icon.svg"> <span class="icon-delete-label">' + this.deleteLabel + ' </span>';
+    deleteDiv.style.textAlign = 'left';
+    deleteDiv.style.marginLeft = '8px';
+    deleteDiv.innerHTML = '<img width="24" height="24" src="' + this.getBasePath() + 'delete-icon.svg"> <span class="icon-delete-label">' + this.deleteLabel + ' </span>';
 
     menu.appendChild(edit);
     menu.appendChild(deleteDiv);
@@ -630,6 +652,9 @@ export class DecZoomMarksComponent implements AfterViewChecked {
   }
 
   public zoom(zoomScale: number = 1) {
+    this._startX = (this._startX * zoomScale) / this.zoomScale;
+    this._startY = (this._startY * zoomScale) / this.zoomScale;
+
     this.zoomScale = zoomScale;
     this.resizeMarker(zoomScale);
     this.setWrapperCursor();
@@ -643,15 +668,30 @@ export class DecZoomMarksComponent implements AfterViewChecked {
 
   public zoomIn(amount: number = 1) {
     if (this.zoomScale < parseInt(this.maxZoomLevel, 10)) {
-      (this.zoomScale + amount) < this.maxZoomLevel ? this.zoomScale += amount : this.zoomScale = +this.maxZoomLevel;
-      this.zoom(this.zoomScale);
+
+      let newZoomScale: number;
+
+      if ((this.zoomScale + amount) < this.maxZoomLevel) {
+        newZoomScale = this.zoomScale + amount;
+      } else {
+        newZoomScale = +this.maxZoomLevel;
+      }
+
+      this.zoom(newZoomScale);
     }
   }
 
   public zoomOut(amount: number = 1) {
     if (this.zoomScale > parseInt(this.minZoomLevel, 10)) {
-      (this.zoomScale - amount) > this.minZoomLevel ? this.zoomScale -= amount : this.zoomScale = +this.minZoomLevel;
-      this.zoom(this.zoomScale);
+
+      let newZoomScale: number;
+
+      if ((this.zoomScale - amount) > this.minZoomLevel) {
+        newZoomScale = this.zoomScale - amount;
+      } else {
+        newZoomScale = +this.minZoomLevel;
+      }
+      this.zoom(newZoomScale);
     }
   }
 
@@ -677,8 +717,9 @@ export class DecZoomMarksComponent implements AfterViewChecked {
       this.editZoomArea(newZoomArea);
       return;
     }
-    newZoomArea.coordinates.push(Math.round(this.startX / this.canvasEl.offsetWidth * 100 / this.zoomScale));
-    newZoomArea.coordinates.push(Math.round(this.startY / this.canvasEl.offsetHeight * 100 / this.zoomScale));
+
+    newZoomArea.coordinates.push(Math.round(this._startX / this.canvasEl.offsetWidth * 100 / this.zoomScale));
+    newZoomArea.coordinates.push(Math.round(this._startY / this.canvasEl.offsetHeight * 100 / this.zoomScale));
     newZoomArea.reference = this.commentsArraySize + 1;
     this.marker.zoomAreas.push(newZoomArea);
     this.commentsArraySize++;
@@ -717,6 +758,8 @@ export class DecZoomMarksComponent implements AfterViewChecked {
     this.zoomScale = 1;
     this.zoom(this.zoomScale);
     this.drawMarks();
+
+    this._startX = this._startY = this.canvasEl.width / 2;
   }
 
   public recalculateReferences(tag: Tag): void {

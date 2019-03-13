@@ -1,8 +1,7 @@
-import { Component, Input, forwardRef, Output, EventEmitter } from '@angular/core';
+import { Component, Input, forwardRef, Output, EventEmitter, ViewChild, OnDestroy, ElementRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { DecApiService } from './../../services/api/decora-api.service';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { DecAutocompleteComponent } from './../autocomplete/autocomplete.component';
+import { timer, Subscription } from 'rxjs';
 
 //  Return an empty function to be used as default trigger functions
 const noop = () => {
@@ -21,13 +20,15 @@ const AUTOCOMPLETE_ROLES_CONTROL_VALUE_ACCESSOR: any = {
   styles: [],
   providers: [AUTOCOMPLETE_ROLES_CONTROL_VALUE_ACCESSOR]
 })
-export class DecAutocompleteRoleComponent implements ControlValueAccessor {
+export class DecAutocompleteRoleComponent implements ControlValueAccessor, OnDestroy {
 
   endpoint = 'roles/options';
 
   labelAttr = 'value';
 
   valueAttr = 'key';
+
+  touched: boolean;
 
   @Input() types: string[];
 
@@ -41,11 +42,19 @@ export class DecAutocompleteRoleComponent implements ControlValueAccessor {
 
   @Input() multi: boolean;
 
+  @Input() notFoundMessage: string;
+
   @Input() repeat: boolean;
 
   @Output() blur: EventEmitter<any> = new EventEmitter<any>();
 
   @Output() optionSelected: EventEmitter<any> = new EventEmitter<any>();
+
+  @ViewChild(DecAutocompleteComponent) autocompleteComponent: DecAutocompleteComponent;
+
+  private classWatcher: Subscription;
+
+  private classesString: string;
 
   /*
   ** ngModel propertie
@@ -59,8 +68,14 @@ export class DecAutocompleteRoleComponent implements ControlValueAccessor {
   private onChangeCallback: (_: any) => void = noop;
 
   constructor(
-    private decoraApi: DecApiService
-  ) {}
+    private elementRef: ElementRef<HTMLElement>,
+  ) {
+    this.subscribeToClassChange();
+  }
+
+  ngOnDestroy() {
+    this.unsubscribeToClassChange();
+  }
 
   /*
   ** ngModel API
@@ -89,6 +104,11 @@ export class DecAutocompleteRoleComponent implements ControlValueAccessor {
     this.onTouchedCallback = fn;
   }
 
+  // From ControlValueAccessor interface
+  setDisabledState(disabled = false) {
+    this.disabled = disabled;
+  }
+
   onValueChanged(event: any) {
     this.value = event.toString();
   }
@@ -102,6 +122,23 @@ export class DecAutocompleteRoleComponent implements ControlValueAccessor {
   onAutocompleteBlur($event) {
     this.onTouchedCallback();
     this.blur.emit(this.value);
+  }
+
+  private subscribeToClassChange() {
+    this.classWatcher = timer(100, 250).subscribe(this.detectClassChanges);
+  }
+
+  private detectClassChanges = () => {
+    const classesString = this.elementRef.nativeElement.classList.value;
+    if (this.classesString !== classesString) {
+      this.classesString = classesString;
+      const hasTouchedClass = classesString.search('ng-touched') >= 0;
+      this.touched = hasTouchedClass;
+    }
+  }
+
+  private unsubscribeToClassChange() {
+    this.classWatcher.unsubscribe();
   }
 
 }

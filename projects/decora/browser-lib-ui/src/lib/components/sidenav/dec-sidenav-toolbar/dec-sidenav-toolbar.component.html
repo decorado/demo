@@ -1,7 +1,7 @@
 <mat-toolbar *ngIf="initialized" class="dec-sidenav-toolbar">
 
   <span>
-    <dec-sidenav-toolbar-title [openedPass]="leftMenu.leftMenuVisible | async"></dec-sidenav-toolbar-title>
+    <dec-sidenav-toolbar-title [leftMenuVisible]="leftMenu.leftMenuVisible | async"></dec-sidenav-toolbar-title>
   </span>
 
   <span class="items-icon item-left item-icon-left" *ngIf="leftMenu" (click)="toggleLeftMenu.emit()">

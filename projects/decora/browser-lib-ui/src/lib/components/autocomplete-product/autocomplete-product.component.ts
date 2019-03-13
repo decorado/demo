@@ -1,8 +1,9 @@
-import { Component, Input, forwardRef, Output, EventEmitter, AfterViewInit } from '@angular/core';
+import { Component, Input, forwardRef, Output, EventEmitter, AfterViewInit, ViewChild, OnDestroy, ElementRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { DecApiService } from './../../services/api/decora-api.service';
+import { DecAutocompleteComponent } from './../autocomplete/autocomplete.component';
+import { Subscription, timer } from 'rxjs';
 
-const BASE_AUTOCOMPLETE_PRODUCT_ENDPOINT = '/products/options';
+const BASE_AUTOCOMPLETE_PRODUCT_ENDPOINT = '/legacy/product/search';
 
 //  Return an empty function to be used as default trigger functions
 const noop = () => {
@@ -18,44 +19,16 @@ const AUTOCOMPLETE_PRODUCT_CONTROL_VALUE_ACCESSOR: any = {
 @Component({
   selector: 'dec-autocomplete-product',
   templateUrl: './autocomplete-product.component.html',
-  styles: [],
+  styleUrls: ['./autocomplete-product.component.scss'],
   providers: [AUTOCOMPLETE_PRODUCT_CONTROL_VALUE_ACCESSOR]
 })
-export class DecAutocompleteProductComponent implements ControlValueAccessor, AfterViewInit {
+export class DecAutocompleteProductComponent implements ControlValueAccessor, AfterViewInit, OnDestroy {
 
   endpoint;
 
-  @Input() valueAttr = 'key';
+  touched: boolean;
 
-  @Input()
-  set companyId(v: string) {
-    if (this._companyId !== v) {
-      this._companyId = v;
-      this.value = undefined;
-      this.endpoint = undefined; // enforce autocomplete reload
-      if (this.initialized) {
-        this.setEndpointBasedOnInputs();
-      }
-    }
-  }
-
-  get companyId() {
-    return this._companyId;
-  }
-
-  @Input()
-  set modelApproved(v: boolean) {
-    if (this._modelApproved !== v) {
-      this._modelApproved = v;
-      if (this.initialized) {
-        this.setEndpointBasedOnInputs();
-      }
-    }
-  }
-
-  get modelApproved() {
-    return this._modelApproved;
-  }
+  @Input() valueAttr = 'id';
 
   @Input() disabled: boolean;
 
@@ -67,11 +40,39 @@ export class DecAutocompleteProductComponent implements ControlValueAccessor, Af
 
   @Input() multi: boolean;
 
+  @Input() notFoundMessage: string;
+
   @Input() repeat: boolean;
 
   @Output() blur: EventEmitter<any> = new EventEmitter<any>();
 
   @Output() optionSelected: EventEmitter<any> = new EventEmitter<any>();
+
+  @ViewChild(DecAutocompleteComponent) autocompleteComponent: DecAutocompleteComponent;
+
+  @Input()
+  get companyId() { return this._companyId; }
+  set companyId(v: string) {
+    if (this._companyId !== v) {
+      this._companyId = v;
+      this.value = undefined;
+      this.endpoint = undefined; // enforce autocomplete reload
+      if (this.initialized) {
+        this.setEndpointBasedOnInputs();
+      }
+    }
+  }
+
+  @Input()
+  get modelApproved() { return this._modelApproved; }
+  set modelApproved(v: boolean) {
+    if (this._modelApproved !== v) {
+      this._modelApproved = v;
+      if (this.initialized) {
+        this.setEndpointBasedOnInputs();
+      }
+    }
+  }
 
   private _companyId: string;
 
@@ -80,6 +81,10 @@ export class DecAutocompleteProductComponent implements ControlValueAccessor, Af
   private params: any = [];
 
   private initialized;
+
+  private classWatcher: Subscription;
+
+  private classesString: string;
 
   /*
   ** ngModel propertie
@@ -92,7 +97,15 @@ export class DecAutocompleteProductComponent implements ControlValueAccessor, Af
   //  Placeholders for the callbacks which are later provided by the Control Value Accessor
   private onChangeCallback: (_: any) => void = noop;
 
-  constructor(private decoraApi: DecApiService) { }
+  constructor(
+    private elementRef: ElementRef<HTMLElement>,
+  ) {
+    this.subscribeToClassChange();
+  }
+
+  ngOnDestroy() {
+    this.unsubscribeToClassChange();
+  }
 
   ngAfterViewInit() {
     this.initialized = true;
@@ -121,7 +134,7 @@ export class DecAutocompleteProductComponent implements ControlValueAccessor, Af
   }
 
   labelFn(company) {
-    return `${company.value} #${company.key}`;
+    return `#${company.sku} - ${company.name}`;
   }
 
   // From ControlValueAccessor interface
@@ -132,6 +145,11 @@ export class DecAutocompleteProductComponent implements ControlValueAccessor, Af
   // From ControlValueAccessor interface
   registerOnTouched(fn: any) {
     this.onTouchedCallback = fn;
+  }
+
+  // From ControlValueAccessor interface
+  setDisabledState(disabled = false) {
+    this.disabled = disabled;
   }
 
   onValueChanged(event: any) {
@@ -146,17 +164,18 @@ export class DecAutocompleteProductComponent implements ControlValueAccessor, Af
 
   setEndpointBasedOnInputs() {
     this.indentifyParams();
-    this.endpoint = BASE_AUTOCOMPLETE_PRODUCT_ENDPOINT;
+    let endpoint = BASE_AUTOCOMPLETE_PRODUCT_ENDPOINT;
     if (this.params.length > 0) {
-      this.params.forEach(function(param, index) {
+      this.params.forEach((param, index) => {
         const paramName = Object.keys(param)[0];
         const paramValue = param[paramName];
-        this.endpoint += index === 0 ? '?' : '&';
-        this.endpoint += paramName;
-        this.endpoint += '=';
-        this.endpoint += paramValue;
-      }, this);
+        endpoint += index === 0 ? '?' : '&';
+        endpoint += paramName;
+        endpoint += '=';
+        endpoint += paramValue;
+      });
     }
+    this.endpoint = endpoint;
   }
 
   onAutocompleteBlur($event) {
@@ -179,6 +198,23 @@ export class DecAutocompleteProductComponent implements ControlValueAccessor, Af
         modelApproved: this.modelApproved
       });
     }
+  }
+
+  private subscribeToClassChange() {
+    this.classWatcher = timer(100, 250).subscribe(this.detectClassChanges);
+  }
+
+  private detectClassChanges = () => {
+    const classesString = this.elementRef.nativeElement.classList.value;
+    if (this.classesString !== classesString) {
+      this.classesString = classesString;
+      const hasTouchedClass = classesString.search('ng-touched') >= 0;
+      this.touched = hasTouchedClass;
+    }
+  }
+
+  private unsubscribeToClassChange() {
+    this.classWatcher.unsubscribe();
   }
 
 }

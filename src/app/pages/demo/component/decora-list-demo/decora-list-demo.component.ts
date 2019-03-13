@@ -26,7 +26,7 @@ export class DecoraListDemoComponent implements OnInit {
     { label: 'bruno OR rene', default: true, filters: [{ property: 'name', value: ['bruno', 'rene'] }] },
   ];
 
-  filtersWithSubfilters = [
+  filtersWithCollapseSubfilters = [
     { label: 'bruno', filters: [{ property: 'name', value: 'bruno' }] },
     { label: 'bruno OR rene', default: true, filters: [{ property: 'name', value: ['bruno', 'rene'] }] },
     { label: 'With sub', children: [
@@ -37,6 +37,42 @@ export class DecoraListDemoComponent implements OnInit {
       { label: 'rafael', filters: [{ property: 'name', value: 'rafael' }] },
       { label: 'rafael OR eduardo', color: '#1a1aff', filters: [{ property: 'name', value: ['rafael', 'eduardo'] }] },
     ]},
+  ];
+
+  filtersWithTabsSubfilters = [
+    { label: 'bruno', filters: [{ property: 'name', value: 'bruno' }] },
+    { label: 'bruno OR rene', default: true, filters: [{ property: 'name', value: ['bruno', 'rene'] }] },
+    {
+      label: 'With sub BR', children: [
+        { label: 'bruno', filters: [{ property: 'name', value: 'bruno' }] },
+        { label: 'bruno OR rene', color: '#1a1aff', filters: [{ property: 'name', value: ['bruno', 'rene'] }] },
+      ]
+    },
+    {
+      label: 'With sub RE', children: [
+        { label: 'rafael OR eduardo', color: '#1a1aff', filters: [{ property: 'name', value: ['rafael', 'eduardo'] }] },
+        { label: 'rafael', filters: [{ property: 'name', value: 'rafael' }] },
+        { label: 'rafael2', filters: [{ property: 'name', value: 'rafael' }] },
+        { label: 'rafael3', filters: [{ property: 'name', value: 'rafael' }] },
+      ]
+    },
+  ];
+
+  filtersWithCollapseAsDefaultAndTabForSpecificFilter = [
+    { label: 'bruno', filters: [{ property: 'name', value: 'bruno' }] },
+    { label: 'bruno OR rene', default: true, filters: [{ property: 'name', value: ['bruno', 'rene'] }] },
+    {
+      label: 'With sub', sublistMode: 'tabs', children: [
+        { label: 'bruno', filters: [{ property: 'name', value: 'bruno' }] },
+        { label: 'bruno OR rene', color: '#1a1aff', filters: [{ property: 'name', value: ['bruno', 'rene'] }] },
+      ]
+    },
+    {
+      label: 'With sub 2', children: [
+        { label: 'rafael', filters: [{ property: 'name', value: 'rafael' }] },
+        { label: 'rafael OR eduardo', color: '#1a1aff', filters: [{ property: 'name', value: ['rafael', 'eduardo'] }] },
+      ]
+    },
   ];
 
   constructor() { }

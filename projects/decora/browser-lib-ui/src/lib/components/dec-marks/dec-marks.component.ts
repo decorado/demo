@@ -484,21 +484,34 @@ export class DecMarksComponent implements AfterViewChecked {
     const [x, y] = coordinates;
     const menu = document.createElement('div');
     menu.id = 'tagMenu';
-    menu.style.top = `calc(${y}% - 50px)`;
-    menu.style.left = `calc(${x}% + 18px)`;
+
+    if (x > 80) {
+      menu.style.left = `calc(${x}% - 120px)`;
+    } else {
+      menu.style.left = `calc(${x}% + 18px)`;
+    }
+
+    if (y > 80) {
+      menu.style.top = `calc(${y}% - 100px)`;
+    } else {
+      menu.style.top = `calc(${y}%)`;
+    }
+
     menu.style.position = 'absolute';
     menu.style.width = '100px';
     menu.style.height = '100px';
     menu.style.backgroundColor = 'white';
     menu.style.zIndex = '99';
     menu.style.border = '1px solid rgba(0,0,0,0.15)';
+    menu.style.zIndex = '1';
     menu.setAttribute('comment', JSON.stringify(comment));
 
     const edit = document.createElement('div');
     edit.style.cursor = 'pointer';
     edit.setAttribute('type', 'edit');
     edit.style.marginTop = '15px';
-    edit.style.textAlign = 'center';
+    edit.style.textAlign = 'left';
+    edit.style.marginLeft = '8px';
     edit.innerHTML = '<img class="img-menu" width="24" height="24" src="/d/assets/img/edit-icon.svg"> <span class="icon-label">' + this.editLabel + '</span>';
 
 
@@ -506,7 +519,8 @@ export class DecMarksComponent implements AfterViewChecked {
     deleteDiv.style.cursor = 'pointer';
     deleteDiv.setAttribute('type', 'delete');
     deleteDiv.style.marginTop = '15px';
-    deleteDiv.style.textAlign = 'center';
+    deleteDiv.style.textAlign = 'left';
+    deleteDiv.style.marginLeft = '8px';
     deleteDiv.innerHTML = '<img class="img-menu" width="24" height="24" src="/d/assets/img/delete-icon.svg"> <span class="icon-delete-label">' + this.deleteLabel + ' </span>';
 
     menu.appendChild(edit);

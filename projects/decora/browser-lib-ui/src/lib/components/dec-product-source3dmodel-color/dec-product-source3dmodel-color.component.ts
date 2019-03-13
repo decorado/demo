@@ -58,9 +58,9 @@ export class DecProductSource3dmodelColorComponent {
   }
 
   referencesSysFiles() {
-    this.references = this.productColorVariationFather ? this.productColorVariationFather.referenceImages.map(images => {
+    this.references = this.productColorVariationFather ? this.productColorVariationFather.referenceImages.map(referenceImage => {
       return {
-        file: images.sysFile,
+        file: referenceImage.sysFile || referenceImage,
         tags: [],
         zoomAreas: []
       };

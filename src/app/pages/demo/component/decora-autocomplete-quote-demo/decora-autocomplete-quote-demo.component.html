@@ -14,28 +14,37 @@
   Quote Selected: {{ quote }}
 
   <dec-autocomplete-quote
-    [(ngModel)]="quote"
-    [projectId]="projectId"
-    name="single-quote"
-    decoraProduct="RENDERING"
-    decoraProductVariant="RENDERING_MODEL"
+  [(ngModel)]="quote"
+  [projectId]="projectId"
+  name="single-quote"
+  decoraProduct="RENDERING"
+  decoraProductVariant="RENDERING_MODEL"
+  #demoComponent1="ngModel"
+  [required]="true"
   ></dec-autocomplete-quote>
 
   <button type="button" mat-stroked-button (click)="quote = undefined">Clear quote</button>
+  &nbsp;
+  <button type="button" mat-stroked-button (click)="setTouched(demoComponent1)">Set touched</button>
+
 
   <h2>Multi</h2>
 
   Quote Selected: {{ quotes | json }}
 
   <dec-autocomplete-quote
-    [(ngModel)]="quotes"
-    [projectId]="projectId"
-    [multi]="true"
-    name="multi-quote"
-    decoraProduct="RENDERING"
-    decoraProductVariant="RENDERING_MODEL"
+  [(ngModel)]="quotes"
+  [projectId]="projectId"
+  [multi]="true"
+  name="multi-quote"
+  decoraProduct="RENDERING"
+  decoraProductVariant="RENDERING_MODEL"
+  #demoComponent2="ngModel"
+  [required]="true"
   ></dec-autocomplete-quote>
 
   <button type="button" mat-stroked-button (click)="quotes = undefined">Clear quote</button>
+  &nbsp;
+  <button type="button" mat-stroked-button (click)="setTouched(demoComponent2)">Set touched</button>
 
 </app-demo-container>
